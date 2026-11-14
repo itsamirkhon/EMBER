@@ -241,7 +241,7 @@ function CoverageTable({ rows, total }: { rows: CoverageRow[]; total: CoverageRo
 }
 
 export default function Trust() {
-  const { validation, extractionEval, fixtureFiles, tests } = useData();
+  const { validation, extractionEval, outcomeAudit, fixtureFiles, tests } = useData();
   const fixtureVal = fixtureFiles.includes('validation.json');
   const loto = validation?.backtests.find((b) => b.name === 'leave-one-test-out');
   const lotoG = validation?.backtests.find((b) => b.name === 'leave-one-test-out-grouped');
@@ -438,6 +438,49 @@ export default function Trust() {
             <CoverageTable rows={coverage.perInvestigation} total={coverage.total} />
           </section>
         </div>
+      )}
+
+      {outcomeAudit && (
+        <section className="card" style={{ marginTop: 16 }}>
+          <h2>{outcomeAudit.inv} outcomes parsed from notes: manual check</h2>
+          <p className="small">
+            {outcomeAudit.inv} outcomes come from keyword rules over the free-text test observations (no result column exists and the
+            final report is unavailable). Manual check of {outcomeAudit.n} random rows:{' '}
+            <strong>
+              {outcomeAudit.agree} of {outcomeAudit.n} agree, {outcomeAudit.wrong} wrong
+            </strong>
+            . Where the rule gave a burn / no-burn answer ({outcomeAudit.ruleAnswered} rows), it was wrong {outcomeAudit.wrong} times
+            {outcomeAudit.wrong === 0 && outcomeAudit.ruleAnswered > 0
+              ? ` (with this sample size the error rate could still be up to ~${Math.round((3 / outcomeAudit.ruleAnswered) * 100)}%, rule of three)`
+              : ''}
+            ; it abstained {outcomeAudit.missed} time{outcomeAudit.missed === 1 ? '' : 's'} where the notes allow an answer, and gave a
+            finer category that differs from the reading in {outcomeAudit.subtypeDisagreements} rows without changing burn / no-burn.
+          </p>
+          <p className="small muted">{outcomeAudit.method}</p>
+          <div className="table-wrap" style={{ marginTop: 12, maxHeight: 420 }}>
+            <table>
+              <thead>
+                <tr><th>Test</th><th>Rule</th><th>Manual</th><th>Verdict</th><th>Why (from the notes)</th></tr>
+              </thead>
+              <tbody>
+                {outcomeAudit.items.map((it) => (
+                  <tr key={it.testId}>
+                    <td className="mono small">{it.testId}</td>
+                    <td className="small">{it.ruleOutcome}</td>
+                    <td className="small">{it.manualBinary ?? 'no answer'}</td>
+                    <td className="small">
+                      {it.verdict === 'agree' ? '✓ agree' : it.verdict === 'missed' ? '◐ missed' : '✗ ' + it.verdict}
+                    </td>
+                    <td className="small" title={it.observations ?? undefined}>
+                      {it.note}
+                      {it.subtypeNote && <div className="muted">{it.subtypeNote}</div>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
 
       <h2 style={{ marginTop: 28 }}>2. Claim extraction accuracy</h2>

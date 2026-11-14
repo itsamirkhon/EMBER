@@ -784,6 +784,22 @@ def _pos(v):
     return v if v is not None and v > 0 else None
 
 
+# SAME / SAME-R give no O2 or pressure. Both ran in the MSG work volume on the ISS; neither final report states the
+# atmosphere or mentions a purge / backfill gas (N2 only diluted the sampled aerosol before the instruments), and MSG
+# work-volume N2 dilution was first used later by BASS-II (NTRS 20150019858). So cabin air is assumed, and flagged.
+CABIN_ASSUMED = dict(o2Pct=21.0, pressureKpa=101.3)
+CABIN_ASSUMPTION = (
+    "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science "
+    "Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report "
+    "states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). "
+    "MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
+)
+
+
+def cabin_assumed_extra() -> dict:
+    return {"conditionsAssumed": ["o2Pct", "pressureKpa"], "o2PressureBasis": CABIN_ASSUMPTION}
+
+
 def same():
     """SAME (PSI-102): per-test rows from the 'SAME1 Flight Tests 8-27-09' sheet of the SAME/SAME-R results workbook."""
     inv, src = "SAME", "psi-101"
@@ -811,13 +827,14 @@ def same():
                  "aged": same_no.endswith("a"),
                  "testType": "smoke generation by heating below ignition (not a flame test)",
                  "resultsSheet": "SAME1 Flight Tests 8-27-09"}
-        extra = {k: v for k, v in extra.items() if v is not None}
+        extra = {k: v for k, v in extra.items() if v is not None} | cabin_assumed_extra()
         out.append(row(inv, f"SAME-{same_no}", src, xname, rn, fuel=mat, fuelPhase="solid" if mat != "DBP" else "liquid",
                        geometry="heated sample in smoke-generation tube" if mat != "DBP" else "heated DBP reference aerosol source",
                        flowCmS=num(r[col["Inlet Velocity (cm/sec)"]]), outcome="unknown", outcomeRaw=SMOKE_OUTCOME_RAW,
-                       particleSizeNm=_um_to_nm(r[c_amd]), extra=extra))
+                       particleSizeNm=_um_to_nm(r[c_amd]), extra=extra, **CABIN_ASSUMED))
     FILES_USED.append((inv, psi_file(psi, xname), len(out)))
     FILES_USED.append((inv, psi_file("PSI-102", "PSI-102_Experimental table_SAME.csv"), 0))
+    note(inv, "o2Pct and pressureKpa are an " + CABIN_ASSUMPTION + " Flagged per row in extra.conditionsAssumed.")
     n_size = sum(1 for t in out if t["particleSizeNm"] is not None)
     note(inv, f"Rows come from the per-test sheet 'SAME1 Flight Tests 8-27-09' of '{xname}' (PSI-101 science data, covers SAME and SAME-R): {len(out)} test points incl. 'a' (secondarily aged) rows. "
               "The PSI-102 experimental table is only an 8-row condition summary (Teflon at 5–10 cm/s, 1–20 min aging, 'same conditions' for other materials) and is not used for rows; the workbook gives 2–8 cm/s for the flown tests.")
@@ -868,9 +885,11 @@ def same_r():
             extra.update({k: v for k, v in add.items() if v is not None})
         out.append(row(inv, tid, src, fname, rn, fuel=d["Sample Type"], fuelPhase="solid",
                        geometry="heated sample (smoke source)", flowCmS=num(d["Inlet velocity (cm/s)"]),
-                       outcome="unknown", outcomeRaw=SMOKE_OUTCOME_RAW, particleSizeNm=size, extra=extra))
+                       outcome="unknown", outcomeRaw=SMOKE_OUTCOME_RAW, particleSizeNm=size,
+                       extra=extra | cabin_assumed_extra(), **CABIN_ASSUMED))
     FILES_USED.append((inv, psi_file(psi, fname), len(out)))
     FILES_USED.append((inv, psi_file(xpsi, xname), joined))
+    note(inv, "o2Pct and pressureKpa are an " + CABIN_ASSUMPTION + " Flagged per row in extra.conditionsAssumed.")
     n_size = sum(1 for t in out if t["particleSizeNm"] is not None)
     unmatched = [t["testId"] for t in out if "resultsRow" not in t["extra"]]
     if unmatched:
@@ -1184,6 +1203,10 @@ def build_investigations(tests):
                 else:
                     cond.setdefault(k, None)
             c["nTests"] = len(rows)
+            assumed = sorted({k for t in rows for k in t["extra"].get("conditionsAssumed", [])})
+            if assumed:
+                cond["assumed"] = assumed
+                cond["assumptionNote"] = next(t["extra"]["o2PressureBasis"] for t in rows if t["extra"].get("conditionsAssumed"))
         else:
             for k in ("o2Pct", "pressureKpa", "flowCmS", "gravityG", "diluents"):
                 cond.setdefault(k, None)

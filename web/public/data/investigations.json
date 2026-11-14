@@ -949,8 +949,14 @@
    "size": null
   },
   "conditions": {
-   "o2Pct": null,
-   "pressureKpa": null,
+   "o2Pct": [
+    21.0,
+    21.0
+   ],
+   "pressureKpa": [
+    101.3,
+    101.3
+   ],
    "flowCmS": [
     2.0,
     8.1
@@ -959,7 +965,12 @@
     0,
     0
    ],
-   "diluents": null
+   "diluents": null,
+   "assumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "assumptionNote": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "varied": [
    "material",
@@ -1032,6 +1043,7 @@
   ],
   "dataNotes": [
    "Flight year: NTRS 20130000422 says the original SAME flew during ISS Expedition 15; PSI record dates (2001–2008) are the project period.",
+   "o2Pct and pressureKpa are an assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858). Flagged per row in extra.conditionsAssumed.",
    "Rows come from the per-test sheet 'SAME1 Flight Tests 8-27-09' of 'PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx' (PSI-101 science data, covers SAME and SAME-R): 64 test points incl. 'a' (secondarily aged) rows. The PSI-102 experimental table is only an 8-row condition summary (Teflon at 5–10 cm/s, 1–20 min aging, 'same conditions' for other materials) and is not used for rows; the workbook gives 2–8 cm/s for the flown tests.",
    "particleSizeNm = arithmetic (count) mean diameter M1/M0 ('Computed arithmetic mean diameter', µm x1000), available for 25 rows; zeros, blanks and '#DIV/0!' cells mean 'not computed' -> null. Other size metrics are in extra (diameterOfAverageMassNm, hatchChoateGeometricMeanDiameterNm, hatchChoateGeometricStdDev). DBP (dibutyl phthalate reference aerosol) rows have no computed sizes.",
    "Smoke tests heat samples below ignition, so there is no flame outcome: outcome 'unknown' (no extra.outcomeDerivation). Heating: extra.heaterRt_R0 (heater resistance ratio) and extra.sampleTemperatureC (from 'T ( C) - Eq. 2 of lrt'). O2/pressure are not tabulated (MSG cabin air)."
@@ -1065,8 +1077,14 @@
    "size": null
   },
   "conditions": {
-   "o2Pct": null,
-   "pressureKpa": null,
+   "o2Pct": [
+    21.0,
+    21.0
+   ],
+   "pressureKpa": [
+    101.3,
+    101.3
+   ],
    "flowCmS": [
     0.0,
     8.1
@@ -1075,7 +1093,12 @@
     0,
     0
    ],
-   "diluents": null
+   "diluents": null,
+   "assumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "assumptionNote": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "varied": [
    "material",
@@ -1142,6 +1165,7 @@
   ],
   "dataNotes": [
    "Test # 57 appears for two materials (reburn rows); testId suffixed with the material.",
+   "o2Pct and pressureKpa are an assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858). Flagged per row in extra.conditionsAssumed.",
    "No workbook match for SAME-R-57-Teflon (the PSI table lists test 57 for both Lampwick and Teflon; the results workbook has 57 only as Lampwick) -> sizes null.",
    "Rows with an 'a' suffix (e.g. 51a) are the aged-smoke measurement of the same burn; kept as separate rows as in the PSI table.",
    "Particle sizes joined from sheet 'SAME R Results' of 'PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx' (PSI-101 analyzed data) on (SAME #, material): 108 of 109 rows matched, 105 with a size. particleSizeNm = arithmetic (count) mean diameter M1/M0 ('M1/M0 (micro-m)--AMD', µm x1000) from the ionization-chamber (M1) and CPC (M0) moments; extra also has diameterOfAverageMassNm (DAM, from DustTrak mass and M0), d21Nm, hatchChoateGeometricMeanDiameterNm and hatchChoateGeometricStdDev. Zeros/Excel errors in the workbook -> null.",

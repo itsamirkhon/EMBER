@@ -33,6 +33,9 @@ export interface Investigation {
     flowCmS: Range;
     gravityG: Range;
     diluents: string[] | null;
+    /** dimensions whose values are an assumption, not stated by the source (e.g. SAME: ISS cabin air) */
+    assumed?: ('o2Pct' | 'pressureKpa' | 'flowCmS')[];
+    assumptionNote?: string;
   } | null;
   varied: string[];
   constant: string[];
@@ -114,6 +117,30 @@ export interface ExtractionEval {
   partial: number;
   wrong: number;
   items: { claimId: string; goldText: string; llmText: string; verdict: 'correct' | 'partial' | 'wrong'; note?: string | null }[];
+}
+
+/** Manual check of keyword-rule outcomes (pipeline/audit_bass_outcomes.py). */
+export interface OutcomeAudit {
+  inv: string;
+  method: string;
+  n: number;
+  ruleAnswered: number;
+  agree: number;
+  wrong: number;
+  missed: number;
+  falseAnswer: number;
+  subtypeDisagreements: number;
+  items: {
+    testId: string;
+    fuel: string | null;
+    ruleOutcome: string;
+    ruleBinary: 'burn' | 'noburn' | null;
+    manualBinary: 'burn' | 'noburn' | null;
+    verdict: 'agree' | 'wrong' | 'missed' | 'falseAnswer';
+    note: string;
+    subtypeNote: string | null;
+    observations: string | null;
+  }[];
 }
 
 export interface StoryItem {

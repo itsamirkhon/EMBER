@@ -53,6 +53,11 @@ function RankItem({ r, rank, invs, keyword }: { r: Relevance; rank: number; invs
                   outcomes parsed from notes
                 </span>
               )}
+              {inv.conditions?.assumed?.length ? (
+                <span className="tag tag-caveat" title={inv.conditions.assumptionNote}>
+                  assumed O₂ / pressure
+                </span>
+              ) : null}
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>

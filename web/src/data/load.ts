@@ -5,7 +5,7 @@
  * a visible "fixture data" banner.
  */
 import type {
-  Claim, DatasetsManifest, ExtractionEval, Investigation, Mission, StoryItem, TestRow, Validation,
+  Claim, DatasetsManifest, ExtractionEval, Investigation, Mission, OutcomeAudit, StoryItem, TestRow, Validation,
 } from '../lib/types';
 import { parseJsonLenient } from '../lib/json';
 import { normalizeInvestigation, normalizeTest } from './normalize';
@@ -16,6 +16,7 @@ export interface EmberData {
   missions: Mission[];
   claims: Claim[];
   extractionEval: ExtractionEval | null;
+  outcomeAudit: OutcomeAudit | null;
   earth: StoryItem[];
   history: StoryItem[];
   validation: Validation | null;
@@ -51,7 +52,7 @@ async function fixture(name: string): Promise<unknown | undefined> {
 
 export async function loadAll(): Promise<EmberData> {
   const names = [
-    'investigations', 'tests', 'missions', 'claims', 'extraction_eval', 'earth', 'history', 'validation', 'datasets_manifest',
+    'investigations', 'tests', 'missions', 'claims', 'extraction_eval', 'outcome_audit', 'earth', 'history', 'validation', 'datasets_manifest',
   ] as const;
   const real = Object.fromEntries(await Promise.all(names.map(async (n) => [n, await fetchJson(n)] as const))) as Record<
     (typeof names)[number],
@@ -80,6 +81,7 @@ export async function loadAll(): Promise<EmberData> {
     missions: ((resolved.missions as Mission[]) ?? []).map((m) => ({ ...m, sources: m.sources ?? [] })),
     claims: ((resolved.claims as Claim[]) ?? []).map((c) => ({ ...c, topic: c.topic ?? [] })),
     extractionEval: (resolved.extraction_eval as ExtractionEval) ?? null,
+    outcomeAudit: (resolved.outcome_audit as OutcomeAudit) ?? null,
     earth: (resolved.earth as StoryItem[]) ?? [],
     history: (resolved.history as StoryItem[]) ?? [],
     validation: (resolved.validation as Validation) ?? null,

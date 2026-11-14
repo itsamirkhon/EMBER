@@ -36,8 +36,8 @@ Every answer carries a status: **Measured**, **Interpolated** or **Extrapolated*
 
 Where each value comes from:
 - **BASS-II outcomes** (123 of 129 rows) and 19 spread rates come from the observation column and Table 5.1 of NASA/TM-20210011385, parsed by word position (`pipeline/extract_tm_bass2.py`).
-- **BASS outcomes** were parsed from free-text notes by keyword rules; every row records how its outcome was obtained in `extra.outcomeDerivation`.
-- **SAME / SAME-R particle sizes** (130 rows) come from the PSI-101 analysed-results workbook.
+- **BASS outcomes** were parsed from free-text notes by keyword rules (no results column exists; the final report is unavailable); every row records how its outcome was obtained in `extra.outcomeDerivation`. A manual reading of 30 random rows (`pipeline/audit_bass_outcomes.py`) agrees on 29; the rule gave no wrong burn / no-burn answer in the 27 rows it answered and missed one it could have answered.
+- **SAME / SAME-R particle sizes** (130 rows) come from the PSI-101 analysed-results workbook. Neither final report states the atmosphere, so O₂ and pressure are set to ISS cabin air (21 %, 101.3 kPa) and flagged as an **assumption** (`conditions.assumed`): the tests ran in the MSG work volume, and neither report mentions a purge or backfill gas. A mission match that rests on assumed conditions is never shown as Known, at best Extrapolating.
 - **SPICE smoke points** (53 rows) come from the smoke-point review sheet. SPICE was not a flammability test (every flame was ignited by design), so its rows are marked `not_applicable` for burn/no-burn and are not counted in outcome accuracy.
 
 Each investigation's `dataNotes` lists that dataset's known caveats. Examples: the FLEX "Burning rate; mm" column is really mm²/s, and in CFI-G inverse flames O₂ is the oxidizer stream.
@@ -58,6 +58,7 @@ Every accuracy is shown next to its baseline and n. 991 test rows have a burn / 
 | …BASS | 90 % (100 / 111) | 85 % |
 | **Hide a whole investigation**, strict accuracy (correct only) | 58 % (570 / 991) | 54 % majority of the hidden tests; 28 % if you guess the other investigations' majority |
 | …share of the wrong cross-experiment answers that EMBER itself labelled Extrapolated | 77 % (324 / 421) | |
+| BASS outcomes from keyword rules, 30 random rows read manually | 29 / 30 agree, 0 wrong; 1 missed (rule abstained) | with 27 answered rows the error could still be up to ~11 % (rule of three); read by Claude, not an independent human |
 | Claim extraction, 36 claims checked by hand | 29 correct · 7 partial · 0 wrong; 145 / 145 quotes verbatim | the same model family wrote and graded the claims, so treat this as optimistic |
 
 What this means:

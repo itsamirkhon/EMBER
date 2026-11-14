@@ -109,6 +109,11 @@ export default function InvestigationDetail() {
             </dd>
           </dl>
           <ConditionsLine inv={inv} tests={rows} />
+          {inv.conditions?.assumed?.length ? (
+            <div className="callout small" style={{ marginTop: 8 }}>
+              <span className="tag tag-caveat">assumed</span> {inv.conditions.assumptionNote}
+            </div>
+          ) : null}
           <div className="grid grid-2" style={{ marginTop: 12, gap: 12 }}>
             <div>
               <h4>Varied</h4>

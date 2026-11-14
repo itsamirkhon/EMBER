@@ -660,9 +660,14 @@ export function findingStatus(
     reasons.push(`${DIM_LABEL[d]} outside tested ${fmt(r[0])}–${fmt(r[1])} ${DIM_UNIT[d]}.`);
   }
   for (const d of bd.missing) reasons.push(`${DIM_LABEL[d]} not documented for this investigation.`);
+  const assumed = inv.conditions?.assumed ?? [];
+  if (assumed.length) {
+    reasons.push(`${assumed.map((d) => DIM_LABEL[d]).join(' and ')} assumed, not reported: ${inv.conditions?.assumptionNote ?? 'see data notes'}`);
+  }
   if (outside.length === 0 && bd.missing.length === 0) {
     reasons.push('Mission conditions lie inside the tested ranges.');
-    return { status: 'known', reasons };
+    // A match that rests on assumed conditions is never "known".
+    return { status: assumed.length ? 'extrapolating' : 'known', reasons };
   }
   if (bd.distance <= 2.5) return { status: 'extrapolating', reasons };
   reasons.push(`Far from tested conditions (${bd.distance.toFixed(1)} normalized units).`);
