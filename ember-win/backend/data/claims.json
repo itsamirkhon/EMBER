@@ -1,0 +1,131 @@
+[
+ {
+  "id": "c_flex2_cool",
+  "text": "After the hot flame extinguished, FLEX-2 droplets continued burning as cool flames without a visible flame.",
+  "type": "observation",
+  "evidence": [
+   "t_flex2_heptane_cool",
+   "inv_flex2_c1"
+  ],
+  "conditions": {
+   "fuel": "n-heptane",
+   "gravity": "microgravity"
+  },
+  "limitations": [
+   "Temperatures and conditions not recorded in corpus."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_flex2_interp",
+  "text": "A visually extinguished flame is not proof that burning has stopped; hot-flame extinction and final extinction must be recorded separately.",
+  "type": "derived_interpretation",
+  "evidence": [
+   "t_flex2_heptane_cool"
+  ],
+  "conditions": {
+   "scope": "droplet fuels"
+  },
+  "limitations": [
+   "Derived by EMBER curators; not transferred to solid fuels."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_bass2_protocol",
+  "text": "BASS-II used a flow-reduction-to-extinction protocol on PMMA rod and sheet samples in microgravity.",
+  "type": "observation",
+  "evidence": [
+   "t_bass2_rod_flowreduction",
+   "t_bass2_sheet_flowreduction",
+   "inv_bass2_c2"
+  ],
+  "conditions": {
+   "fuel": "PMMA"
+  },
+  "limitations": [
+   "Reduction schedule and flow values not recorded in corpus."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_bass2_hist",
+  "text": "Flow history (how flow is reduced) is a separate condition from the initial flow value and must be matched before outcomes are compared.",
+  "type": "derived_interpretation",
+  "evidence": [
+   "t_bass2_ex_hist_stepdown",
+   "t_bass2_ex_hist_ramp"
+  ],
+  "conditions": {
+   "scope": "flow-reduction protocols"
+  },
+  "limitations": [
+   "EMBER comparison rule, shown on exemplar records."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_saffire1_scale",
+  "text": "Saffire-I burned a large fabric sample in a free-flying Cygnus vehicle, a scale larger than ISS facility samples.",
+  "type": "observation",
+  "evidence": [
+   "t_saffire1_fabric",
+   "inv_saffire1_c1"
+  ],
+  "conditions": {
+   "platform": "Cygnus"
+  },
+  "limitations": [
+   "Sample dimensions and flow not recorded in corpus."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_sibal_thin",
+  "text": "SIBAL concerns the low-flow flammability boundary of thin cotton-fiberglass fuel.",
+  "type": "observation",
+  "evidence": [
+   "t_sibal_cotton_fiberglass",
+   "inv_sibal_c1"
+  ],
+  "conditions": {
+   "fuel": "cotton-fiberglass fabric"
+  },
+  "limitations": [
+   "Boundary values are not recorded in corpus."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_flex_supp",
+  "text": "FLEX varied chamber atmosphere to study extinguishment of droplet flames, relevant to suppression agent behaviour.",
+  "type": "source_interpretation",
+  "evidence": [
+   "t_flex_heptane_droplet",
+   "inv_flex_c1"
+  ],
+  "conditions": {
+   "fuel": "droplet"
+  },
+  "limitations": [
+   "Droplets are not solid fuels."
+  ],
+  "verification": "provisional"
+ },
+ {
+  "id": "c_same_detect",
+  "text": "SAME measured smoke particle size distributions from overheated materials to inform smoke detector design.",
+  "type": "observation",
+  "evidence": [
+   "t_same_smoke_samples",
+   "inv_same_c1"
+  ],
+  "conditions": {
+   "measurement": "particle size distribution"
+  },
+  "limitations": [
+   "Numeric results not recorded in corpus."
+  ],
+  "verification": "provisional"
+ }
+]

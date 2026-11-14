@@ -1,0 +1,23 @@
+{
+ "corpus_version": "0.1.0-provisional",
+ "schema": "ember-corpus/1",
+ "verification": "provisional",
+ "files": {
+  "investigations.json": {
+   "sha256": "ce2e8d6adc94748f297a0e8e9cb5e7b3e9951de6a9552e21d14876c484ca35e9",
+   "records": 8
+  },
+  "tests.json": {
+   "sha256": "6754ac8958480de037d33d1da3b7c079e3bdbe415ce0ca4b5c60c6f23dad88fe",
+   "records": 20
+  },
+  "claims.json": {
+   "sha256": "b37900e1af839848438b4db63a63aa08c32708d657794bbfe12e55892ed13eca",
+   "records": 8
+  },
+  "sources.json": {
+   "sha256": "d3f5d1fce0e0d3cc6c74dd7cc8e2d8a5b5aed4268522f07466fdf70fa615e566",
+   "records": 7
+  }
+ }
+}
