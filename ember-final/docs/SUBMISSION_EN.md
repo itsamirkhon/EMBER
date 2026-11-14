@@ -1,3 +1,5 @@
+> Historical 2.0.0 artifact. Engine/corpus 2.0.1 changed scientific semantics. Metrics and demo counts below have not been revalidated for 2.0.1; they are not current scientific validation. See IMPLEMENTATION_STATUS.md.
+
 # EMBER v2 — Challenge Submission (English)
 
 **Evidence-Grounded Microgravity & Spacecraft Fire Safety Scientific Workbench**  

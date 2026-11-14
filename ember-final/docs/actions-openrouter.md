@@ -1,0 +1,19 @@
+# OpenRouter adapter action log
+
+Date: 2026-11-14. Scope: new provider adapters, artifact builder, tests and documentation only. No existing application files modified by this agent. No commits or paid provider calls.
+
+1. Read the requested `ub-mode/SKILL.md` and inspected current package, core passage types and heuristic evaluator to keep integration narrow.
+2. Verified current primary OpenRouter Decisions API request/response format and model page, embeddings endpoint, and Google's Embedding 2 input/task-prefix guidance. Decisions requires `/api/alpha/decisions`; Embedding 2 requires text instructions rather than `task_type`.
+3. Wrote provider-boundary behavior tests before implementation; observed the initial red result because the new adapter module did not exist.
+4. Implemented injectable server-only clients with exact requested models, three bounded choice judgments, strict response and vector validation, bounded timeout, sanitized errors, explicit credential requirements and no silent fallback.
+5. Implemented a separate, import-safe document-embedding build script with schema checks before spending, stable content hashes, bounded batch workers, deterministic ordering and atomic artifact publication. Default input/output are existing chunks index/private server artifact. Existing SVD index is preserved.
+6. Corrected the server-only browser guard after TypeScript exposed the absence of the DOM `window` global in the server configuration; used `'window' in globalThis` rather than adding DOM types to the server project. Corrected default input filename after inspecting actual data files.
+7. Expanded tests for concurrency ordering, failed batches and idempotent atomic replacement. Final owned suite: 21 tests passed. Existing server TypeScript project and standalone pipeline/tests strict compilation passed.
+8. Searched available tool metadata and local dependencies for `crapper`, `dryer`, and `mutator`; none is installed/available. No tool-specific CRAP/duplication certification is claimed. Ran three isolated mutation probes as a partial substitute: accepting malformed probability sums, discarding conflict routes, and ignoring embedding response indices all caused test failures. The unchanged isolated control passed all 21 tests. Temporary mutation/control directories were removed; live source was never mutated for these probes.
+9. Documented integration contracts, script invocation, model/format compatibility, unresolved live-provider/domain-validation limits and primary source URLs in `OPENROUTER.md`.
+
+Remaining integration belongs to the parent task: server mode/config wiring, type version union, current-corpus artifact validation, query retrieval fusion and browser end-to-end checks. Build the document artifact only through an explicitly run offline job with a configured key; no full-corpus build has been performed.
+
+10. Follow-up integration review found that finite embedding components could still overflow their Euclidean norm, yielding unusable cosine vectors. Added a failing `[1.7e308,1.7e308]` response test, observed its expected failure, and rejected nonfinite norms at the provider boundary. Owned suite now has 22 passing tests. Shared with root: mode-aware retrieval callbacks, bounded decision concurrency, actual evaluator provenance, and server-side artifact norm checks; root owns those integration changes.
+
+11. Rechecked ambiguous choice-probability wording against Google's native SDK ChoiceAnswer and launch documentation. Both explicitly require normalized probabilities for each option; no extra flag is required. Retained strict categorical Choice handling, documented the generic-schema nuance, aligned mocked native confidence to p_max, and clarified that legacy concentrationConfidence is mean native Google confidence rather than Jev concentration. No distributions are fabricated.
