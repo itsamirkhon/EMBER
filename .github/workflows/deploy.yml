@@ -42,6 +42,15 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: Clean old files on Lightsail
+        if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: rm -rf /var/www/ember/*
+
       - name: Deploy build files to Lightsail via SCP
         if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
         uses: appleboy/scp-action@v1
@@ -52,4 +61,4 @@ jobs:
           source: "web/dist/*"
           target: "/var/www/ember"
           strip_components: 2
-          rm: true
+          overwrite: true
