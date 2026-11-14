@@ -94,4 +94,4 @@ See `docs/SUBMISSION.md` → "Use of AI". In short:
 
 ## License
 
-Code: MIT. NASA PSI data: CC0-1.0. EMBER is not an official NASA product.
+Code: GPL-3.0 (see LICENSE). NASA PSI data: CC0-1.0. EMBER is not an official NASA product.
