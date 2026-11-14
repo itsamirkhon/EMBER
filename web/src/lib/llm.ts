@@ -1,11 +1,12 @@
 /**
- * Optional LLM synthesis for Ask EMBER. Runs entirely in the browser with the user's own key
+ * Optional LLM synthesis for Ask EMBER. Runs entirely in the browser with the user's own OpenAI key
  * (never stored beyond memory / sessionStorage). The model only sees retrieved PSI claims and
  * must cite them; the UI then verifies every citation against the retrieved set.
  */
-import Anthropic from '@anthropic-ai/sdk';
 import { LLM_MODEL, NO_EVIDENCE } from './citations';
 import type { Hit } from './retrieval';
+
+const ENDPOINT = 'https://api.openai.com/v1/chat/completions';
 
 const SYSTEM = `You are EMBER, a fire-safety evidence assistant for spacecraft and habitat engineers.
 You answer ONLY from the numbered evidence items supplied by the user (claims extracted from NASA PSI combustion investigations and their reports).
@@ -29,30 +30,92 @@ export interface LlmResult {
   refused: boolean;
 }
 
+export class LlmError extends Error {
+  constructor(
+    readonly status: number | null,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
 export async function synthesize(apiKey: string, question: string, hits: Hit[], onText: (delta: string) => void): Promise<LlmResult> {
-  const client = new Anthropic({ apiKey, dangerouslyAllowBrowser: true });
-  const stream = client.messages.stream({
-    model: LLM_MODEL,
-    max_tokens: 16000,
-    output_config: { effort: 'medium' },
-    system: SYSTEM,
-    messages: [{ role: 'user', content: buildPrompt(question, hits) }],
-  });
-  stream.on('text', onText);
-  const msg = await stream.finalMessage();
-  if (msg.stop_reason === 'refusal') return { text: '', refused: true };
-  const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
-  return { text, refused: false };
+  let res: Response;
+  try {
+    res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        model: LLM_MODEL,
+        stream: true,
+        max_completion_tokens: 4000,
+        messages: [
+          { role: 'system', content: SYSTEM },
+          { role: 'user', content: buildPrompt(question, hits) },
+        ],
+      }),
+    });
+  } catch (e) {
+    throw new LlmError(null, String(e));
+  }
+  if (!res.ok || !res.body) {
+    let msg = res.statusText;
+    try {
+      msg = ((await res.json()) as { error?: { message?: string } }).error?.message ?? msg;
+    } catch {
+      /* non-JSON error body */
+    }
+    throw new LlmError(res.status, msg);
+  }
+
+  // Server-sent events: lines of `data: {json}` terminated by `data: [DONE]`.
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = '';
+  let text = '';
+  let refused = false;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    const lines = buf.split('\n');
+    buf = lines.pop() ?? '';
+    for (const line of lines) {
+      const data = line.trim().replace(/^data:\s*/, '');
+      if (!line.trim().startsWith('data:') || data === '[DONE]') continue;
+      let chunk;
+      try {
+        chunk = JSON.parse(data);
+      } catch {
+        continue;
+      }
+      const delta = chunk.choices?.[0]?.delta;
+      if (delta?.refusal) refused = true;
+      if (delta?.content) {
+        text += delta.content;
+        onText(delta.content);
+      }
+    }
+  }
+  return { text, refused: refused && !text };
 }
 
 export function describeError(e: unknown): string {
-  if (e instanceof Anthropic.AuthenticationError) return 'The API key was rejected (401). Check the key and try again.';
-  if (e instanceof Anthropic.PermissionDeniedError) return 'This key does not have access to the model (403).';
-  if (e instanceof Anthropic.NotFoundError) return `Model ${LLM_MODEL} was not found for this key (404).`;
-  if (e instanceof Anthropic.RateLimitError) return 'Rate limited (429). Wait a moment and retry.';
-  if (e instanceof Anthropic.BadRequestError) return `Request rejected (400): ${e.message}`;
-  if (e instanceof Anthropic.APIConnectionError) return 'Could not reach the Anthropic API (network or CORS).';
-  if (e instanceof Anthropic.APIError) return `API error ${e.status ?? ''}: ${e.message}`;
-  return String(e);
+  if (!(e instanceof LlmError)) return String(e);
+  switch (e.status) {
+    case null:
+      return 'Could not reach the OpenAI API (network or CORS).';
+    case 401:
+      return 'The API key was rejected (401). Check the key and try again.';
+    case 403:
+      return `This key does not have access to ${LLM_MODEL} (403).`;
+    case 404:
+      return `Model ${LLM_MODEL} was not found for this key (404).`;
+    case 429:
+      return `Rate limited or out of quota (429): ${e.message}`;
+    case 400:
+      return `Request rejected (400): ${e.message}`;
+    default:
+      return `API error ${e.status}: ${e.message}`;
+  }
 }
-

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EMBER content pipeline: fetch source texts and (optionally) extract atomic claims with Claude.
+"""EMBER content pipeline: fetch source texts and (optionally) extract atomic claims with an LLM (OpenAI).
 
 What it does
 ------------
@@ -10,8 +10,8 @@ What it does
      * optional NTRS keyword searches (results kept only if they mention the investigation)
    Everything is written to pipeline/content/cache/ (raw JSON + a normalized `sources.json`).
 
-2. IF the environment has ANTHROPIC_API_KEY (or another credential the Anthropic SDK resolves),
-   ask Claude (model `claude-opus-5-5`, structured JSON output) to extract atomic, citable,
+2. IF the environment has OPENAI_API_KEY, ask the OpenAI model `gpt-6-luna` (Chat Completions,
+   strict JSON-schema output) to extract atomic, citable,
    fire-safety-relevant claims, each with a verbatim supporting quote. Every quote is then checked
    to occur verbatim (whitespace-normalized) in the cached source text; claims whose quote is not
    found are DROPPED. Output: web/public/data/claims.json (only with --write; otherwise
@@ -47,7 +47,7 @@ CACHE = Path(__file__).resolve().parent / "cache"
 DATA = ROOT / "web" / "public" / "data"
 UA = "EMBER-content-pipeline/1.0 (NASA Space Apps 2026; research use)"
 
-MODEL = "claude-opus-5-5"
+MODEL = "gpt-6-luna"
 REFRESH = False  # set by --refresh: re-download sources even if cached
 
 # --------------------------------------------------------------------------------------
@@ -271,10 +271,18 @@ SYSTEM = (
 )
 
 
-def extract_with_claude(sources: list[dict]) -> list[dict]:
-    import anthropic  # imported lazily so the cache refresh works without the SDK installed
+def openai_chat(body: dict) -> dict:
+    """POST to the OpenAI Chat Completions API (stdlib only, key from OPENAI_API_KEY)."""
+    req = urllib.request.Request(
+        "https://api.openai.com/v1/chat/completions",
+        data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"},
+    )
+    with urllib.request.urlopen(req, timeout=600) as r:
+        return json.load(r)
 
-    client = anthropic.Anthropic()
+
+def extract_with_llm(sources: list[dict]) -> list[dict]:
     out: list[dict] = []
     for inv in INVESTIGATIONS:
         srcs = [s for s in sources if inv in s["inv"]]
@@ -284,30 +292,27 @@ def extract_with_claude(sources: list[dict]) -> list[dict]:
         prompt = (f"Investigation: {inv}\n\nSources:\n{docs}\n\n"
                   f"Extract 4-10 claims about {inv} across these sources (use the source id exactly).")
         try:
-            resp = client.messages.create(
-                model=MODEL,
-                max_tokens=16000,
-                system=SYSTEM,
-                messages=[{"role": "user", "content": prompt}],
-                output_config={"effort": "high",
-                               "format": {"type": "json_schema", "schema": CLAIM_SCHEMA}},
-            )
-        except anthropic.RateLimitError as e:
-            print(f"  ! rate limited on {inv}: {e}", file=sys.stderr)
+            resp = openai_chat({
+                "model": MODEL,
+                "max_completion_tokens": 16000,
+                "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}],
+                "response_format": {"type": "json_schema",
+                                    "json_schema": {"name": "claims", "strict": True, "schema": CLAIM_SCHEMA}},
+            })
+        except urllib.error.HTTPError as e:
+            print(f"  ! API error {e.code} on {inv}: {e.read()[:300]!r}", file=sys.stderr)
             continue
-        except anthropic.APIStatusError as e:
-            print(f"  ! API error {e.status_code} on {inv}: {e.message}", file=sys.stderr)
-            continue
-        except anthropic.APIConnectionError as e:
+        except (urllib.error.URLError, TimeoutError) as e:
             print(f"  ! connection error on {inv}: {e}", file=sys.stderr)
             continue
-        if resp.stop_reason == "refusal":
-            print(f"  ! refusal on {inv}: {resp.stop_details}", file=sys.stderr)
+        choice = resp["choices"][0]
+        if choice["message"].get("refusal"):
+            print(f"  ! refusal on {inv}: {choice['message']['refusal']}", file=sys.stderr)
             continue
-        if resp.stop_reason == "max_tokens":
+        if choice.get("finish_reason") == "length":
             print(f"  ! output truncated on {inv}; skipping", file=sys.stderr)
             continue
-        text = next((b.text for b in resp.content if b.type == "text"), "")
+        text = choice["message"].get("content") or ""
         try:
             claims = json.loads(text)["claims"]
         except (json.JSONDecodeError, KeyError) as e:
@@ -329,7 +334,7 @@ def extract_with_claude(sources: list[dict]) -> list[dict]:
 
 
 def have_credentials() -> bool:
-    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+    return bool(os.environ.get("OPENAI_API_KEY"))
 
 
 def main() -> int:
@@ -351,10 +356,10 @@ def main() -> int:
         return 0 if not rep["notFound"] and not rep["sourceNotCached"] else 1
 
     if not have_credentials():
-        print("No ANTHROPIC_API_KEY set: source cache refreshed, extraction skipped.", file=sys.stderr)
+        print("No OPENAI_API_KEY set: source cache refreshed, extraction skipped.", file=sys.stderr)
         return 0
 
-    claims = extract_with_claude(sources)
+    claims = extract_with_llm(sources)
     target = DATA / "claims.json" if args.write else CACHE / "claims.llm.json"
     target.write_text(json.dumps(claims, indent=1, ensure_ascii=False))
     print(f"wrote {len(claims)} verified claims -> {target}", file=sys.stderr)

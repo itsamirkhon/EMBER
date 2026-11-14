@@ -1,5 +1,5 @@
 /** Lightweight helpers for Ask EMBER (kept separate so the SDK can be lazy-loaded). */
-export const LLM_MODEL = 'claude-opus-5-5';
+export const LLM_MODEL = 'gpt-6-luna';
 export const NO_EVIDENCE = 'No evidence in PSI corpus.';
 
 /** Split text into plain segments and [id] citations; mark citations not in `allowed`. */

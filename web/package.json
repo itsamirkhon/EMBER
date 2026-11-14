@@ -13,7 +13,6 @@
     "backtest:fixtures": "tsx scripts/backtest.ts --fixtures --out fixtures/data/validation.json"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^1.8.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.5"

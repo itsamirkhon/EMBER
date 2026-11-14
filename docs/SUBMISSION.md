@@ -49,7 +49,7 @@ EMBER closes the third gap and honestly shows the first two.
 - BM25 retrieval.
 - Inverse-distance-weighted kNN.
 - Vitest.
-- Anthropic Claude API: claim extraction and optional in-app answer synthesis.
+- Anthropic Claude: claim extraction during the build. OpenAI API (`gpt-6-luna`): optional in-app answer synthesis and the re-runnable extraction script.
 
 ## NASA data used
 
@@ -73,7 +73,7 @@ EMBER closes the third gap and honestly shows the first two.
 ## Use of AI
 
 - **Claim extraction:** a large language model (Anthropic Claude) read NASA abstracts and pages and wrote atomic claims, each with a verbatim supporting quote. A script checks that every quote appears word for word in the cached source; claims that fail are dropped. 36 claims were then checked against their sources by hand (29 correct, 7 partial, 0 wrong). The same model family helped with that grading, which we disclose as a limitation.
-- **Ask EMBER:** retrieval is plain BM25, not AI. If a user supplies their own API key, Claude writes an answer from the retrieved claims only, and every citation is checked against them.
+- **Ask EMBER:** retrieval is plain BM25, not AI. If a user supplies their own OpenAI API key, `gpt-6-luna` writes an answer from the retrieved claims only, and every citation is checked against them.
 - **Ranking and prediction:** a transparent formula and nearest-neighbour search over real tests. No trained neural networks are involved.
 - **Development:** AI coding assistants (Claude Code) helped write the software and documentation. The team reviewed all of it.
 - No AI-generated images, video or voice appear in the product. [Update this if your video uses any.]
