@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "no_GPU_explicit_fallback": true,
+    "sources_work_without_GPU": true,
+    "imported_HTML_escaped": true,
+    "loader_correct_relative_path": true,
+    "loader_same_origin_credentials": true,
+    "loader_adopts_valid_TestRows": true,
+    "offline_failure_preserves_dataset": true,
+    "HTTP_failure_preserves_dataset": true,
+    "bad_schema_preserves_dataset": true
+  },
+  "note": "Fetch contract mocked. Live local HTTP navigation blocked by browser administration policy."
+}

@@ -1,0 +1,195 @@
+{
+  "checks": [
+    {
+      "name": "320px WebGL renders",
+      "passed": true
+    },
+    {
+      "name": "320px reduced motion starts paused",
+      "passed": true
+    },
+    {
+      "name": "320px zero external requests",
+      "passed": true
+    },
+    {
+      "name": "320px no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320px source and chapter targets at least 44px",
+      "passed": true
+    },
+    {
+      "name": "320px fixed navigation visible",
+      "passed": true
+    },
+    {
+      "name": "320px evidence fits narrow phone",
+      "passed": true
+    },
+    {
+      "name": "320px no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "390px WebGL renders",
+      "passed": true
+    },
+    {
+      "name": "390px reduced motion starts paused",
+      "passed": true
+    },
+    {
+      "name": "390px zero external requests",
+      "passed": true
+    },
+    {
+      "name": "390px no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "390px source and chapter targets at least 44px",
+      "passed": true
+    },
+    {
+      "name": "390px fixed navigation visible",
+      "passed": true
+    },
+    {
+      "name": "phone 3D begins in first viewport",
+      "passed": true
+    },
+    {
+      "name": "one-finger touch rotates camera",
+      "passed": true
+    },
+    {
+      "name": "two-finger pinch zooms camera",
+      "passed": true
+    },
+    {
+      "name": "released touches leave no stuck gesture",
+      "passed": true
+    },
+    {
+      "name": "tap resets camera",
+      "passed": true
+    },
+    {
+      "name": "tap starts animation",
+      "passed": true
+    },
+    {
+      "name": "slider responds to touch",
+      "passed": true
+    },
+    {
+      "name": "sticky chapter navigation responds to touch",
+      "passed": true
+    },
+    {
+      "name": "drawer locks background scroll",
+      "passed": true
+    },
+    {
+      "name": "evidence table fits phone",
+      "passed": true
+    },
+    {
+      "name": "closing drawer restores scrolling",
+      "passed": true
+    },
+    {
+      "name": "390px no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "430px WebGL renders",
+      "passed": true
+    },
+    {
+      "name": "430px reduced motion starts paused",
+      "passed": true
+    },
+    {
+      "name": "430px zero external requests",
+      "passed": true
+    },
+    {
+      "name": "430px no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "430px source and chapter targets at least 44px",
+      "passed": true
+    },
+    {
+      "name": "430px fixed navigation visible",
+      "passed": true
+    },
+    {
+      "name": "430px no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "768px WebGL renders",
+      "passed": true
+    },
+    {
+      "name": "768px reduced motion starts paused",
+      "passed": true
+    },
+    {
+      "name": "768px zero external requests",
+      "passed": true
+    },
+    {
+      "name": "768px no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "768px source and chapter targets at least 44px",
+      "passed": true
+    },
+    {
+      "name": "768px fixed navigation visible",
+      "passed": true
+    },
+    {
+      "name": "768px no JavaScript errors",
+      "passed": true
+    },
+    {
+      "name": "844px WebGL renders",
+      "passed": true
+    },
+    {
+      "name": "844px reduced motion starts paused",
+      "passed": true
+    },
+    {
+      "name": "844px zero external requests",
+      "passed": true
+    },
+    {
+      "name": "844px no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "844px source and chapter targets at least 44px",
+      "passed": true
+    },
+    {
+      "name": "844px fixed navigation visible",
+      "passed": true
+    },
+    {
+      "name": "844px no JavaScript errors",
+      "passed": true
+    }
+  ],
+  "passed": 47,
+  "total": 47,
+  "environment": "Chromium mobile emulation; ANGLE SwiftShader; actual CDP touch events; not physical devices"
+}

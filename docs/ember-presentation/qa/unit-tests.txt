@@ -1,0 +1,226 @@
+TAP version 13
+# Subtest: exact, complete, explicit, sourced fixture is an observation
+ok 1 - exact, complete, explicit, sourced fixture is an observation
+  ---
+  duration_ms: 2.307229
+  type: 'test'
+  ...
+# Subtest: no result is a calibrated safety probability
+ok 2 - no result is a calibrated safety probability
+  ---
+  duration_ms: 0.217739
+  type: 'test'
+  ...
+# Subtest: lunar query cannot inherit microgravity measurement
+ok 3 - lunar query cannot inherit microgravity measurement
+  ---
+  duration_ms: 0.233684
+  type: 'test'
+  ...
+# Subtest: Earth query cannot inherit microgravity measurement
+ok 4 - Earth query cannot inherit microgravity measurement
+  ---
+  duration_ms: 0.128985
+  type: 'test'
+  ...
+# Subtest: missing gravity is not assumed equal
+ok 5 - missing gravity is not assumed equal
+  ---
+  duration_ms: 0.219683
+  type: 'test'
+  ...
+# Subtest: small nonzero gravity difference is not silently measured
+ok 6 - small nonzero gravity difference is not silently measured
+  ---
+  duration_ms: 0.187654
+  type: 'test'
+  ...
+# Subtest: missing pressure stays unsupported
+ok 7 - missing pressure stays unsupported
+  ---
+  duration_ms: 0.174865
+  type: 'test'
+  ...
+# Subtest: missing flow stays unsupported
+ok 8 - missing flow stays unsupported
+  ---
+  duration_ms: 0.155895
+  type: 'test'
+  ...
+# Subtest: missing oxygen stays unsupported
+ok 9 - missing oxygen stays unsupported
+  ---
+  duration_ms: 0.339614
+  type: 'test'
+  ...
+# Subtest: different material is never a prediction fallback
+ok 10 - different material is never a prediction fallback
+  ---
+  duration_ms: 0.382058
+  type: 'test'
+  ...
+# Subtest: different phase is never a prediction fallback
+ok 11 - different phase is never a prediction fallback
+  ---
+  duration_ms: 0.1586
+  type: 'test'
+  ...
+# Subtest: different geometry is rejected
+ok 12 - different geometry is rejected
+  ---
+  duration_ms: 0.101854
+  type: 'test'
+  ...
+# Subtest: unknown geometry is rejected
+ok 13 - unknown geometry is rejected
+  ---
+  duration_ms: 0.084178
+  type: 'test'
+  ...
+# Subtest: different thickness is rejected
+ok 14 - different thickness is rejected
+  ---
+  duration_ms: 0.084247
+  type: 'test'
+  ...
+# Subtest: unknown thickness is rejected when requested
+ok 15 - unknown thickness is rejected when requested
+  ---
+  duration_ms: 0.080952
+  type: 'test'
+  ...
+# Subtest: droplet diameter comparison checks specimen dimensions
+ok 16 - droplet diameter comparison checks specimen dimensions
+  ---
+  duration_ms: 0.137147
+  type: 'test'
+  ...
+# Subtest: case and excess whitespace are normalized, not fuel substitutions
+ok 17 - case and excess whitespace are normalized, not fuel substitutions
+  ---
+  duration_ms: 0.125139
+  type: 'test'
+  ...
+# Subtest: nearby pressure is not a direct observation
+ok 18 - nearby pressure is not a direct observation
+  ---
+  duration_ms: 0.083767
+  type: 'test'
+  ...
+# Subtest: between points does not imply validated interpolation
+ok 19 - between points does not imply validated interpolation
+  ---
+  duration_ms: 0.152069
+  type: 'test'
+  ...
+# Subtest: ambiguous outcome completed is not collapsed to burn/no-burn
+ok 20 - ambiguous outcome completed is not collapsed to burn/no-burn
+  ---
+  duration_ms: 0.094663
+  type: 'test'
+  ...
+# Subtest: ambiguous outcome disruption is not collapsed to burn/no-burn
+ok 21 - ambiguous outcome disruption is not collapsed to burn/no-burn
+  ---
+  duration_ms: 0.051148
+  type: 'test'
+  ...
+# Subtest: ambiguous outcome unknown is not collapsed to burn/no-burn
+ok 22 - ambiguous outcome unknown is not collapsed to burn/no-burn
+  ---
+  duration_ms: 0.047182
+  type: 'test'
+  ...
+# Subtest: ambiguous outcome null is not collapsed to burn/no-burn
+ok 23 - ambiguous outcome null is not collapsed to burn/no-burn
+  ---
+  duration_ms: 0.043095
+  type: 'test'
+  ...
+# Subtest: no source locator means no measured assertion
+ok 24 - no source locator means no measured assertion
+  ---
+  duration_ms: 0.074723
+  type: 'test'
+  ...
+# Subtest: duplicate source rows do not inflate observations
+ok 25 - duplicate source rows do not inflate observations
+  ---
+  duration_ms: 0.063376
+  type: 'test'
+  ...
+# Subtest: empty dataset returns unsupported, not confident nearest prediction
+ok 26 - empty dataset returns unsupported, not confident nearest prediction
+  ---
+  duration_ms: 0.059911
+  type: 'test'
+  ...
+# Subtest: reject invalid o2Pct NaN
+ok 27 - reject invalid o2Pct NaN
+  ---
+  duration_ms: 0.081694
+  type: 'test'
+  ...
+# Subtest: reject invalid gravityG Infinity
+ok 28 - reject invalid gravityG Infinity
+  ---
+  duration_ms: 0.044588
+  type: 'test'
+  ...
+# Subtest: reject invalid pressureKpa 0
+ok 29 - reject invalid pressureKpa 0
+  ---
+  duration_ms: 0.032299
+  type: 'test'
+  ...
+# Subtest: reject invalid flowCmS -1
+ok 30 - reject invalid flowCmS -1
+  ---
+  duration_ms: 0.074122
+  type: 'test'
+  ...
+# Subtest: reject invalid o2Pct 101
+ok 31 - reject invalid o2Pct 101
+  ---
+  duration_ms: 0.043386
+  type: 'test'
+  ...
+# Subtest: reject invalid gravityG -0.1
+ok 32 - reject invalid gravityG -0.1
+  ---
+  duration_ms: 0.059299
+  type: 'test'
+  ...
+# Subtest: different diluent is not transferable
+ok 33 - different diluent is not transferable
+  ---
+  duration_ms: 0.105078
+  type: 'test'
+  ...
+# Subtest: unknown diluent percentage is not equal to query
+ok 34 - unknown diluent percentage is not equal to query
+  ---
+  duration_ms: 0.089495
+  type: 'test'
+  ...
+# Subtest: guard suppresses unsupported upstream confidence while retaining diagnostic raw value
+ok 35 - guard suppresses unsupported upstream confidence while retaining diagnostic raw value
+  ---
+  duration_ms: 0.145099
+  type: 'test'
+  ...
+# Subtest: real source excerpt does not invent pressure, flow or outcomes
+ok 36 - real source excerpt does not invent pressure, flow or outcomes
+  ---
+  duration_ms: 0.505134
+  type: 'test'
+  ...
+1..36
+# tests 36
+# suites 0
+# pass 36
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 111.147385

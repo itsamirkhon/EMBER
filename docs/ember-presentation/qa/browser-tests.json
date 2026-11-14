@@ -1,0 +1,164 @@
+{
+  "checks": [
+    {
+      "name": "native WebGL shader compiles and renders",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "standalone requests no external assets",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no initial JavaScript errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "desktop has no horizontal overflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "motion changes actual rendered pixels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause freezes simulation clock",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pause freezes actual frame pixels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "drag changes 3D camera",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "wheel changes zoom",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reset restores camera",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "resume advances clock",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chapter navigation sets microgravity and airflow",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "airflow slider updates scene state",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gravity slider updates single chamber",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "oxygen slider updates query",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "keyboard chapter navigation works",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "evidence drawer opens and traps background",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real source B1 is shown",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "missing source fields stay explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "export preserves sources and no risk probability",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "escape closes drawer and restores background",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "lunar evidence is unsupported",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "gravity gap is explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "invalid JSON leaves current data intact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "import accepts existing engine TestRow format",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "invalid mission pressure rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "valid pressure updates source query",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "sources and honest model limits visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "guided presentation starts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "guided presentation stops",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no interaction JavaScript errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "browser": "Chromium / ANGLE SwiftShader under Xvfb",
+  "date": "2026-11-14",
+  "mode": "Network-blocked HTML document loaded with set_content; renderer tested with Chromium/SwiftShader. Same-origin loader tested separately using mocked fetch.",
+  "passed": 31,
+  "total": 31
+}
