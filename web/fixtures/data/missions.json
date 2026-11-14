@@ -1,0 +1,116 @@
+[
+  {
+    "id": "iss",
+    "label": "International Space Station",
+    "o2Pct": 21,
+    "pressureKpa": 101.3,
+    "flowCmS": [
+      5,
+      20
+    ],
+    "gravityG": 0,
+    "notes": "Sea-level-like cabin air with forced ventilation.",
+    "assumption": false,
+    "sources": [
+      {
+        "label": "Fixture source",
+        "url": "https://www.nasa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "spacecraft",
+    "label": "Crew spacecraft (exploration atmosphere)",
+    "o2Pct": 34,
+    "pressureKpa": 56.5,
+    "flowCmS": [
+      5,
+      20
+    ],
+    "gravityG": 0,
+    "notes": "8.2 psi / 34% O2 exploration atmosphere.",
+    "assumption": true,
+    "sources": [
+      {
+        "label": "Fixture source",
+        "url": "https://ntrs.nasa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "lunar-base",
+    "label": "Lunar surface habitat",
+    "o2Pct": 34,
+    "pressureKpa": 56.5,
+    "flowCmS": [
+      0,
+      15
+    ],
+    "gravityG": 0.166,
+    "notes": "Exploration atmosphere assumed.",
+    "assumption": true,
+    "sources": [
+      {
+        "label": "Fixture source",
+        "url": "https://ntrs.nasa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "lunar-rover",
+    "label": "Pressurized lunar rover",
+    "o2Pct": 30,
+    "pressureKpa": 70.3,
+    "flowCmS": [
+      0,
+      20
+    ],
+    "gravityG": 0.166,
+    "notes": "30% O2 at 10.2 psi per challenge text.",
+    "assumption": false,
+    "sources": [
+      {
+        "label": "Challenge text",
+        "url": "https://www.spaceappschallenge.org/"
+      }
+    ]
+  },
+  {
+    "id": "mars-base",
+    "label": "Mars surface habitat",
+    "o2Pct": 26.5,
+    "pressureKpa": 70.3,
+    "flowCmS": [
+      0,
+      15
+    ],
+    "gravityG": 0.38,
+    "notes": "Not given by the challenge — assumption.",
+    "assumption": true,
+    "sources": [
+      {
+        "label": "Fixture source",
+        "url": "https://ntrs.nasa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "eva-suit",
+    "label": "EVA suit",
+    "o2Pct": 100,
+    "pressureKpa": 29.6,
+    "flowCmS": [
+      0,
+      30
+    ],
+    "gravityG": 0,
+    "notes": "Pure O2 at 4.3 psi.",
+    "assumption": false,
+    "sources": [
+      {
+        "label": "Fixture source",
+        "url": "https://www.nasa.gov/"
+      }
+    ]
+  }
+]

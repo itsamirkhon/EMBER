@@ -1,0 +1,161 @@
+[
+  {
+    "id": "c-0001",
+    "inv": "BASS-II",
+    "text": "Fixture: thin PMMA sheets stopped spreading flame below about 17% O2 at moderate opposed flow.",
+    "quote": "thin PMMA sheets stopped spreading flame below about 17% O2 at moderate opposed flow. (fixture quote)",
+    "sourceId": "fx-psi-25",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+    "topic": [
+      "prevention",
+      "oxygen",
+      "flow"
+    ],
+    "extractedBy": "manual"
+  },
+  {
+    "id": "c-0002",
+    "inv": "BASS-II",
+    "text": "Fixture: at flows under 2 cm/s, oxygen starvation extinguished flames that would burn in stronger flow.",
+    "quote": "at flows under 2 cm/s, oxygen starvation extinguished flames that would burn in stronger flow. (fixture quote)",
+    "sourceId": "fx-psi-25",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+    "topic": [
+      "flow",
+      "extinction"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0003",
+    "inv": "BASS-II",
+    "text": "Fixture: reduced pressure raised the oxygen concentration needed for sustained flame spread.",
+    "quote": "reduced pressure raised the oxygen concentration needed for sustained flame spread. (fixture quote)",
+    "sourceId": "fx-psi-25",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+    "topic": [
+      "pressure",
+      "oxygen"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0004",
+    "inv": "Saffire-II",
+    "text": "Fixture: large SIBAL samples burned with steady flame spread in 20 cm/s concurrent flow at 21% O2.",
+    "quote": "large SIBAL samples burned with steady flame spread in 20 cm/s concurrent flow at 21% O2. (fixture quote)",
+    "sourceId": "fx-psi-99",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+    "topic": [
+      "prevention",
+      "material"
+    ],
+    "extractedBy": "manual"
+  },
+  {
+    "id": "c-0005",
+    "inv": "Saffire-II",
+    "text": "Fixture: Nomex samples did not ignite at ambient spacecraft conditions.",
+    "quote": "Nomex samples did not ignite at ambient spacecraft conditions. (fixture quote)",
+    "sourceId": "fx-psi-99",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+    "topic": [
+      "material",
+      "ignition"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0006",
+    "inv": "FLEX",
+    "text": "Fixture: carbon dioxide dilution extinguished heptane droplet flames at lower diluent fractions than nitrogen.",
+    "quote": "carbon dioxide dilution extinguished heptane droplet flames at lower diluent fractions than nitrogen. (fixture quote)",
+    "sourceId": "fx-psi-69",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+    "topic": [
+      "suppression",
+      "droplet",
+      "co2"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0007",
+    "inv": "FLEX",
+    "text": "Fixture: some heptane droplets continued to burn with an invisible cool flame after radiative extinction.",
+    "quote": "some heptane droplets continued to burn with an invisible cool flame after radiative extinction. (fixture quote)",
+    "sourceId": "fx-psi-69",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+    "topic": [
+      "droplet",
+      "cool flame"
+    ],
+    "extractedBy": "manual"
+  },
+  {
+    "id": "c-0008",
+    "inv": "SAME",
+    "text": "Fixture: smoke particles from overheated materials in microgravity were larger than in normal gravity.",
+    "quote": "smoke particles from overheated materials in microgravity were larger than in normal gravity. (fixture quote)",
+    "sourceId": "fx-psi-102",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
+    "topic": [
+      "detection",
+      "smoke",
+      "particle"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0009",
+    "inv": "SAME",
+    "text": "Fixture: smoke detectors tuned on ground smoke can underestimate microgravity smoke concentration.",
+    "quote": "smoke detectors tuned on ground smoke can underestimate microgravity smoke concentration. (fixture quote)",
+    "sourceId": "fx-psi-102",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
+    "topic": [
+      "detection",
+      "smoke"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0010",
+    "inv": "ACME-BRE",
+    "text": "Fixture: emulated condensed fuels were more flammable at reduced pressure with elevated oxygen.",
+    "quote": "emulated condensed fuels were more flammable at reduced pressure with elevated oxygen. (fixture quote)",
+    "sourceId": "fx-psi-20",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20",
+    "topic": [
+      "pressure",
+      "oxygen"
+    ],
+    "extractedBy": "manual"
+  },
+  {
+    "id": "c-0011",
+    "inv": "ACME-E-FIELD",
+    "text": "Fixture: an electric field generated ionic wind that mimicked weak buoyant convection, an analogue for partial gravity.",
+    "quote": "an electric field generated ionic wind that mimicked weak buoyant convection, an analogue for partial gravity. (fixture quote)",
+    "sourceId": "fx-psi-22",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-22",
+    "topic": [
+      "gravity",
+      "partial gravity"
+    ],
+    "extractedBy": "llm"
+  },
+  {
+    "id": "c-0012",
+    "inv": "CFI-G",
+    "text": "Fixture: gaseous flames were studied up to 40% oxygen; results transfer only qualitatively to solid materials.",
+    "quote": "gaseous flames were studied up to 40% oxygen; results transfer only qualitatively to solid materials. (fixture quote)",
+    "sourceId": "fx-psi-159",
+    "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+    "topic": [
+      "oxygen",
+      "high oxygen"
+    ],
+    "extractedBy": "llm"
+  }
+]

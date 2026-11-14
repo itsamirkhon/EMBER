@@ -1,0 +1,312 @@
+{
+ "copyright": {
+  "thirdPartyPermissionsProduced": false,
+  "disclosedToPublic": false,
+  "containsIndication": false,
+  "publisherPermissionOrRightsToDistribute": false,
+  "belongsToUsGov": false,
+  "determinationType": "PUBLIC_USE_PERMITTED",
+  "thirdPartyContentCondition": "NOT_SET",
+  "belongsToContractor": false,
+  "disclosedInvention": false,
+  "submissionId": 20130000677,
+  "containsThirdPartyMaterial": false,
+  "belongsToPublisher": false,
+  "id": "d0917211cd0c4e75b650555b921885d3",
+  "belongsToAuthors": false
+ },
+ "subjectCategories": [
+  "Space Transportation And Safety"
+ ],
+ "exportControl": {
+  "isExportControl": "NO",
+  "submissionId": 20130000677,
+  "ear": "NO",
+  "id": "01162037871949b4bfc48701444db2af",
+  "itar": "NO"
+ },
+ "distributionDate": "2019-07-12T00:00:00.0000000+00:00",
+ "otherReportNumbers": [
+  "GRC-E-DAA-TN5981",
+  "IAC-12. A2.2.2",
+  "E-18553",
+  "Report Number: GRC-E-DAA-TN5981",
+  "Report Number: IAC-12. A2.2.2",
+  "Report Number: E-18553"
+ ],
+ "title": "Large Scale Experiments on Spacecraft Fire Safety",
+ "stiType": "PRESENTATION",
+ "distribution": "PUBLIC",
+ "submittedDate": "2013-08-27T10:36:00.0000000+00:00",
+ "authorAffiliations": [
+  {
+   "sequence": 0,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Urban, David L."
+    },
+    "organization": {
+     "name": "NASA Glenn Research Center",
+     "location": "Cleveland, OH, United States"
+    }
+   },
+   "id": "f2cc80329bdd4c20ba57895188292980"
+  },
+  {
+   "sequence": 1,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Ruff, Gary A."
+    },
+    "organization": {
+     "name": "NASA Glenn Research Center",
+     "location": "Cleveland, OH, United States"
+    }
+   },
+   "id": "9813e19f713c4d2597bd2971da7b87ba"
+  },
+  {
+   "sequence": 2,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Minster, Olivier"
+    },
+    "organization": {
+     "name": "European Space Agency. European Space Research and Technology Center, ESTEC",
+     "location": "Noordwijk, Netherlands"
+    }
+   },
+   "id": "0ffe2727d91f4165b10e3d269439c7a8"
+  },
+  {
+   "sequence": 3,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Toth, Balazs"
+    },
+    "organization": {
+     "name": "European Space Agency. European Space Research and Technology Center, ESTEC",
+     "location": "Noordwijk, Netherlands"
+    }
+   },
+   "id": "e80dc30ff1de47cfa5fd09911d898a33"
+  },
+  {
+   "sequence": 4,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Fernandez-Pello, A. Carlos"
+    },
+    "organization": {
+     "name": "California Univ.",
+     "location": "Berkeley, CA, United States"
+    }
+   },
+   "id": "a298e69208bb4243bb2e656c83327b1e"
+  },
+  {
+   "sequence": 5,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "T'ien, James S."
+    },
+    "organization": {
+     "name": "Case Western Reserve Univ.",
+     "location": "Cleveland, OH, United States"
+    }
+   },
+   "id": "f02a96477d434c2da0b4edd5c7c83d56"
+  },
+  {
+   "sequence": 6,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Torero, Jose L."
+    },
+    "organization": {
+     "name": "Edinburgh Univ.",
+     "location": "United Kingdom"
+    }
+   },
+   "id": "7e9a35b1a62e42398bec478d7035f199"
+  },
+  {
+   "sequence": 7,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Cowlard, Adam J."
+    },
+    "organization": {
+     "name": "Edinburgh Univ.",
+     "location": "United Kingdom"
+    }
+   },
+   "id": "74c448587dd94566924365faf966af5a"
+  },
+  {
+   "sequence": 8,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Legros, Guillaume"
+    },
+    "organization": {
+     "name": "Paris VI Univ.",
+     "location": "France"
+    }
+   },
+   "id": "b9e4cdcb8fc940129d322f5fbea5c680"
+  },
+  {
+   "sequence": 9,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Eigenbrod, Christian"
+    },
+    "organization": {
+     "name": "Bremen Univ.",
+     "location": "Germany"
+    }
+   },
+   "id": "698ba05f8d8e49aab30fafb389f61341"
+  },
+  {
+   "sequence": 10,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Smirnov, Nickolay"
+    },
+    "organization": {
+     "name": "Lomonosov Moscow State Univ.",
+     "location": "Moscow, Russian Federation"
+    }
+   },
+   "id": "d237ba6c5cb04f3db10e50a6fa8bab7c"
+  },
+  {
+   "sequence": 11,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Fujita, Osamu"
+    },
+    "organization": {
+     "name": "Hokkaido Univ.",
+     "location": "Sapporo, Japan"
+    }
+   },
+   "id": "58ef47a1490646d1a76d3829534b23d2"
+  },
+  {
+   "sequence": 12,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Rouvreau, Sebastien"
+    },
+    "organization": {
+     "name": "Belisama Research and Development",
+     "location": "Toulouse, France"
+    }
+   },
+   "id": "3c69dc422e804039a7bdd4818957d27b"
+  },
+  {
+   "sequence": 13,
+   "submissionId": 20130000677,
+   "meta": {
+    "author": {
+     "name": "Jomaas, Grunde"
+    },
+    "organization": {
+     "name": "Technical Univ. of Denmark",
+     "location": "Lyngby, Denmark"
+    }
+   },
+   "id": "05126a12dc464213ad5ec42d596f78bc"
+  }
+ ],
+ "stiTypeDetails": "Presentation",
+ "technicalReviewType": "TECHNICAL_REVIEW_TYPE_NONE",
+ "modified": "2025-08-31T18:39:21.7150190+00:00",
+ "id": 20130000677,
+ "legacyMeta": {
+  "__type": "LegacyMetaIndex, StrivesApi.ServiceModel",
+  "accessionNumber": ""
+ },
+ "created": "2013-08-27T10:36:00.0000000+00:00",
+ "center": {
+  "code": "GRC",
+  "name": "Glenn Research Center",
+  "id": "19eeb25fa404421d9eaa5f876e853e3c"
+ },
+ "onlyAbstract": false,
+ "sensitiveInformation": 2,
+ "abstract": "Full scale fire testing complemented by computer modelling has provided significant know how about the risk, prevention and suppression of fire in terrestrial systems (cars, ships, planes, buildings, mines, and tunnels). In comparison, no such testing has been carried out for manned spacecraft due to the complexity, cost and risk associated with operating a long duration fire safety experiment of a relevant size in microgravity. Therefore, there is currently a gap in knowledge of fire behaviour in spacecraft. The entire body of low-gravity fire research has either been conducted in short duration ground-based microgravity facilities or has been limited to very small fuel samples. Still, the work conducted to date has shown that fire behaviour in low-gravity is very different from that in normal-gravity, with differences observed for flammability limits, ignition delay, flame spread behaviour, flame colour and flame structure. As a result, the prediction of the behaviour of fires in reduced gravity is at present not validated. To address this gap in knowledge, a collaborative international project, Spacecraft Fire Safety, has been established with its cornerstone being the development of an experiment (Fire Safety 1) to be conducted on an ISS resupply vehicle, such as the Automated Transfer Vehicle (ATV) or Orbital Cygnus after it leaves the ISS and before it enters the atmosphere. A computer modelling effort will complement the experimental effort. Although the experiment will need to meet rigorous safety requirements to ensure the carrier vehicle does not sustain damage, the absence of a crew removes the need for strict containment of combustion products. This will facilitate the possibility of examining fire behaviour on a scale that is relevant to spacecraft fire safety and will provide unique data for fire model validation. This unprecedented opportunity will expand the understanding of the fundamentals of fire behaviour in spacecraft. The experiment is being developed by an international topical team that is collaboratively defining the experiment requirements and performing supporting analysis, experimentation and technology development. This paper presents the objectives, status and concept of this project.",
+ "isLessonsLearned": false,
+ "disseminated": "DOCUMENT_AND_METADATA",
+ "meetings": [
+  {
+   "country": "Italy",
+   "submissionId": 20130000677,
+   "endDate": "2012-10-05T00:00:00.0000000+00:00",
+   "name": "63rd International Astronautical Congress 2012",
+   "location": "Naples",
+   "id": "d2b0f38fed2e47d78f4653b3aa34df12",
+   "startDate": "2012-10-01T00:00:00.0000000+00:00"
+  }
+ ],
+ "publications": [
+  {
+   "submissionId": 20130000677,
+   "id": "4bc57b2421994f4db1c9b822122a4d4a",
+   "publicationDate": "2012-10-01T00:00:00.0000000+00:00"
+  }
+ ],
+ "status": "CURATED",
+ "related": [
+  {
+   "disseminated": "DOCUMENT_AND_METADATA",
+   "id": 20130001713,
+   "type": "SEE_ALSO",
+   "title": "Large Scale Experiments on Spacecraft Fire Safety",
+   "stiType": "CONFERENCE_PAPER",
+   "distribution": "PUBLIC",
+   "status": "CURATED"
+  },
+  {
+   "disseminated": "DOCUMENT_AND_METADATA",
+   "id": 20130001713,
+   "type": "SEE_ALSO",
+   "title": "Large Scale Experiments on Spacecraft Fire Safety",
+   "stiType": "CONFERENCE_PAPER",
+   "distribution": "PUBLIC",
+   "status": "CURATED"
+  }
+ ],
+ "downloads": [
+  {
+   "draft": false,
+   "mimetype": "application/pdf",
+   "name": "20130000677.pdf",
+   "type": "STI",
+   "links": {
+    "original": "/api/citations/20130000677/downloads/20130000677.pdf",
+    "pdf": "/api/citations/20130000677/downloads/20130000677.pdf",
+    "fulltext": "/api/citations/20130000677/downloads/20130000677.txt"
+   }
+  }
+ ],
+ "downloadsAvailable": true,
+ "index": "submissions-2026-11-12-06-24"
+}
