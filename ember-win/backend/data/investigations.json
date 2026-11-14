@@ -1,0 +1,426 @@
+[
+ {
+  "id": "inv_bass2",
+  "name": "BASS-II (Burning and Suppression of Solids II)",
+  "summary_goal": "Study how flames on PMMA solid fuel behave in microgravity under controlled flow, including how they respond when flow is reduced until extinction.",
+  "platform": "ISS Combustion Integrated Rack (provisional)",
+  "families": [
+   "solid_fuel_flame",
+   "flow_reduction_extinction",
+   "flame_spread"
+  ],
+  "materials": [
+   "PMMA"
+  ],
+  "measurements": [
+   "flame imaging",
+   "extinction outcome"
+  ],
+  "topics": [
+   "prevention",
+   "suppression"
+  ],
+  "status": "mixed",
+  "verification": "provisional",
+  "coverage": "deep",
+  "sources": [
+   {
+    "source_id": "src_bass2_tm",
+    "url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_bass2_rod_flowreduction",
+   "t_bass2_sheet_flowreduction",
+   "t_bass2_rod_constant_flow",
+   "t_bass2_ex_hist_stepdown",
+   "t_bass2_ex_hist_ramp",
+   "t_bass2_ex_operator_term",
+   "t_bass2_ex_sheet_thin",
+   "t_bass2_ex_sheet_thick",
+   "t_bass2_ex_sheet_backed",
+   "t_bass2_ex_o2_stream",
+   "t_bass2_ex_sim_g"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "All numeric conditions (diameter, thickness, flow velocity, O2, pressure) are unknown in this corpus.",
+   "Exemplar tests are structural placeholders, not measurements."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_bass2_c1",
+    "section": "goal",
+    "text": "BASS-II investigates how PMMA (acrylic) solid-fuel flames spread and extinguish in microgravity aboard the International Space Station, using cylindrical rod and flat sheet samples in a controlled flow."
+   },
+   {
+    "id": "inv_bass2_c2",
+    "section": "protocol",
+    "text": "Flow-reduction-to-extinction protocol: the sample is ignited, a flame is established and spreads, then the oxidizer flow is reduced until the flame extinguishes. The flow history, not only the starting flow, is part of the condition."
+   },
+   {
+    "id": "inv_bass2_c3",
+    "section": "relevance",
+    "text": "Relevant to spacecraft fire prevention: how low a ventilation flow must fall before a solid-fuel flame goes out in microgravity, for rod and sheet geometry."
+   },
+   {
+    "id": "inv_bass2_c4",
+    "section": "exemplars",
+    "text": "Exemplar records cover comparison edge cases: same initial flow with different flow history, operator termination versus extinction, different thickness and substrate, ambient oxygen versus oxidizer stream, simulated versus actual microgravity."
+   }
+  ]
+ },
+ {
+  "id": "inv_saffire1",
+  "name": "Saffire-I (Spacecraft Fire Experiment I)",
+  "summary_goal": "Large-scale flame spread over a fabric sample inside a Cygnus cargo vehicle after it left the ISS, at a scale not possible in station facilities.",
+  "platform": "Cygnus cargo vehicle (free-flying)",
+  "families": [
+   "solid_fuel_flame",
+   "large_scale_spread"
+  ],
+  "materials": [
+   "cotton-fiberglass fabric"
+  ],
+  "measurements": [
+   "flame imaging",
+   "temperature"
+  ],
+  "topics": [
+   "prevention"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "deep",
+  "sources": [
+   {
+    "source_id": "src_saffire_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_saffire1_fabric"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Sample dimensions, flow velocity, atmosphere and results are not recorded here and are unknown.",
+   "Flow direction is not recorded (unknown)."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_saffire1_c1",
+    "section": "goal",
+    "text": "Saffire-I ignited a large cotton-fiberglass fabric sample remotely in an uncrewed Cygnus vehicle after ISS departure to study flame spread over a large sample in microgravity."
+   },
+   {
+    "id": "inv_saffire1_c2",
+    "section": "relevance",
+    "text": "Large-scale spread data address whether small-sample results transfer to spacecraft-scale fires: prevention and material selection."
+   }
+  ]
+ },
+ {
+  "id": "inv_saffire2",
+  "name": "Saffire-II",
+  "summary_goal": "Second Saffire flight: flame spread over several material samples in the Cygnus experiment module.",
+  "platform": "Cygnus cargo vehicle (free-flying)",
+  "families": [
+   "solid_fuel_flame",
+   "large_scale_spread"
+  ],
+  "materials": [],
+  "measurements": [
+   "flame imaging"
+  ],
+  "topics": [
+   "prevention"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "deep",
+  "sources": [
+   {
+    "source_id": "src_saffire_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_saffire2_samples"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Which materials were burned and their conditions are not recorded here: material and geometry are unknown."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_saffire2_c1",
+    "section": "goal",
+    "text": "Saffire-II extended the Saffire approach to multiple material samples burned after the Cygnus vehicle departed the station."
+   },
+   {
+    "id": "inv_saffire2_c2",
+    "section": "relevance",
+    "text": "Material comparison for spacecraft fire prevention; usable only after the sample list is verified."
+   }
+  ]
+ },
+ {
+  "id": "inv_saffire3",
+  "name": "Saffire-III",
+  "summary_goal": "Third Saffire flight: large-scale flame spread experiment in the Cygnus experiment module; includes a planned-matrix exemplar entry.",
+  "platform": "Cygnus cargo vehicle (free-flying)",
+  "families": [
+   "solid_fuel_flame",
+   "large_scale_spread"
+  ],
+  "materials": [],
+  "measurements": [
+   "flame imaging"
+  ],
+  "topics": [
+   "prevention"
+  ],
+  "status": "mixed",
+  "verification": "provisional",
+  "coverage": "deep",
+  "sources": [
+   {
+    "source_id": "src_saffire_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_saffire3_samples",
+   "t_saffire3_ex_planned"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Sample list and conditions are not recorded here (unknown).",
+   "The planned follow-on entry is an exemplar with no outcome."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_saffire3_c1",
+    "section": "goal",
+    "text": "Saffire-III repeated the large-scale spacecraft fire experiment concept with the Cygnus vehicle after station departure."
+   },
+   {
+    "id": "inv_saffire3_c2",
+    "section": "relevance",
+    "text": "Replication across flights supports checking run-to-run variability of large-scale spread."
+   }
+  ]
+ },
+ {
+  "id": "inv_sibal",
+  "name": "SIBAL (Solid Inflammability Boundary at Low-speeds)",
+  "summary_goal": "Study flame spread and the inflammability boundary of a thin cotton-fiberglass fuel at low flow speeds in microgravity.",
+  "platform": "ISS (facility not verified)",
+  "families": [
+   "solid_fuel_flame",
+   "thin_fuel",
+   "flame_spread"
+  ],
+  "materials": [
+   "cotton-fiberglass fabric"
+  ],
+  "measurements": [
+   "flame spread"
+  ],
+  "topics": [
+   "prevention"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "deep",
+  "sources": [
+   {
+    "source_id": "src_sibal_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_sibal_cotton_fiberglass"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Flow velocities and atmosphere values are unknown in this corpus.",
+   "Whether an extinction outcome was recorded per run is not stated (events list is incomplete)."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_sibal_c1",
+    "section": "goal",
+    "text": "SIBAL examines flame spread over thin cotton-fiberglass fuel at low flow speeds to locate the boundary below which flames do not spread in microgravity."
+   },
+   {
+    "id": "inv_sibal_c2",
+    "section": "relevance",
+    "text": "Thin-fuel flammability at low ventilation flow is directly relevant to spacecraft fire prevention."
+   }
+  ]
+ },
+ {
+  "id": "inv_flex",
+  "name": "FLEX (Flame Extinguishment Experiment)",
+  "summary_goal": "Study burning and extinguishing of fuel droplets in microgravity with varied atmosphere composition.",
+  "platform": "ISS Combustion Integrated Rack (provisional)",
+  "families": [
+   "droplet_combustion",
+   "extinguishment"
+  ],
+  "materials": [
+   "n-heptane",
+   "methanol"
+  ],
+  "measurements": [
+   "droplet diameter",
+   "flame imaging"
+  ],
+  "topics": [
+   "suppression"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "catalog",
+  "sources": [
+   {
+    "source_id": "src_flex_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_flex_heptane_droplet",
+   "t_flex_methanol_droplet"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Catalog-level record: oxygen, diluent and pressure values are unknown.",
+   "Droplet fuels are an analogue; results do not transfer to solid fuels without new evidence."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_flex_c1",
+    "section": "goal",
+    "text": "FLEX burns isolated fuel droplets (for example n-heptane and methanol) in microgravity while varying the chamber atmosphere to study extinguishment, relevant to fire suppression agents."
+   },
+   {
+    "id": "inv_flex_c2",
+    "section": "relevance",
+    "text": "Gas-phase extinguishment limits of spherical droplet flames inform suppression concepts; droplet geometry is not a solid-fuel geometry."
+   }
+  ]
+ },
+ {
+  "id": "inv_flex2",
+  "name": "FLEX-2 (cool flames)",
+  "summary_goal": "Droplet combustion in microgravity that revealed cool flames: burning continuing at low temperature after the hot flame extinguished.",
+  "platform": "ISS Combustion Integrated Rack (provisional)",
+  "families": [
+   "droplet_combustion",
+   "cool_flames"
+  ],
+  "materials": [
+   "n-heptane"
+  ],
+  "measurements": [
+   "flame imaging"
+  ],
+  "topics": [
+   "prevention",
+   "suppression"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "catalog",
+  "sources": [
+   {
+    "source_id": "src_flex2_nasa",
+    "url": "https://www.nasa.gov/missions/station/iss-research/youre-hot-then-youre-cold/",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_flex2_heptane_cool"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Catalog-level record: temperatures, droplet sizes, O2 and pressure are unknown.",
+   "Whether burning later ended in a final extinction is not recorded."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_flex2_c1",
+    "section": "goal",
+    "text": "FLEX-2 studied droplet combustion and observed that after the visible hot flame went out, droplets could continue to burn as cool flames with no visible flame."
+   },
+   {
+    "id": "inv_flex2_c2",
+    "section": "relevance",
+    "text": "A flame that is visually extinguished may still be burning: hot extinction is not necessarily final extinction. Relevant to detection and suppression judgements."
+   }
+  ]
+ },
+ {
+  "id": "inv_same",
+  "name": "SAME (Smoke Aerosol Measurement Experiment)",
+  "summary_goal": "Measure smoke particle size distributions from overheated spacecraft-relevant materials in microgravity to inform smoke detector design.",
+  "platform": "ISS (glovebox facility, provisional)",
+  "families": [
+   "smoke_aerosol",
+   "detection"
+  ],
+  "materials": [],
+  "measurements": [
+   "smoke particle size distribution",
+   "smoke particle concentration"
+  ],
+  "topics": [
+   "detection"
+  ],
+  "status": "observed",
+  "verification": "provisional",
+  "coverage": "catalog",
+  "sources": [
+   {
+    "source_id": "src_same_nasa",
+    "url": "",
+    "locator": "provisional description; locator to be verified",
+    "quote": null
+   }
+  ],
+  "tests": [
+   "t_same_smoke_samples"
+  ],
+  "limitations": [
+   "Provisional team-curated record; values are verified against the cited source only after review.",
+   "Catalog-level record: the material list, heating conditions and numeric results are unknown.",
+   "Cabin atmosphere values are assumed nominal ISS values, not run-specific."
+  ],
+  "text_chunks": [
+   {
+    "id": "inv_same_c1",
+    "section": "goal",
+    "text": "SAME measured the size distribution of smoke particles produced by overheating spacecraft-relevant materials in microgravity, supporting smoke detector design."
+   },
+   {
+    "id": "inv_same_c2",
+    "section": "relevance",
+    "text": "Particle size and concentration in microgravity smoke bear on how detectors should be designed; this is detection, not flame behaviour."
+   }
+  ]
+ }
+]

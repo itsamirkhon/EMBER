@@ -1,0 +1,133 @@
+{
+ "copyright": {
+  "thirdPartyPermissionsProduced": true,
+  "disclosedToPublic": false,
+  "thirdPartyLocationComments": "Grantees on the project from U. Maryland, Washington U. in St. Louis, UC Irvine, and Yale U.  ",
+  "containsIndication": false,
+  "publisherPermissionOrRightsToDistribute": false,
+  "belongsToUsGov": false,
+  "determinationType": "MAY_INCLUDE_COPYRIGHT_MATERIAL",
+  "thirdPartyContentCondition": "NOT_SET",
+  "belongsToContractor": false,
+  "disclosedInvention": false,
+  "licenseType": "NO",
+  "submissionId": 20220007191,
+  "containsThirdPartyMaterial": true,
+  "belongsToPublisher": false,
+  "id": "6121fa774b8e486b8d119cbc922299a1",
+  "belongsToAuthors": false
+ },
+ "subjectCategories": [
+  "Fluid Mechanics And Thermodynamics"
+ ],
+ "keywords": [
+  "flames",
+  "microgravity",
+  "non-premixed",
+  "laminar",
+  "gaseous fuel",
+  "soot"
+ ],
+ "exportControl": {
+  "isExportControl": "NO",
+  "submissionId": 20220007191,
+  "ear": "NO",
+  "id": "6015c698be1a4fdabea8784c82ee9b7d",
+  "itar": "NO"
+ },
+ "distributionDate": "2022-05-18T04:00:00.0000000+00:00",
+ "fundingNumbers": [
+  {
+   "number": "619352.06.07.02.01",
+   "submissionId": 20220007191,
+   "id": "4b45dd65056d41a89cfe90c41daa00fd",
+   "type": "WBS"
+  }
+ ],
+ "title": "Laminar Non-Premixed Flames of Gaseous Fuel Aboard the International Space Station",
+ "stiType": "PRESENTATION",
+ "distribution": "PUBLIC",
+ "submittedDate": "2022-05-09T19:02:17.8966810+00:00",
+ "authorAffiliations": [
+  {
+   "organizationId": "fdea3daf3b5156699f511edf3e9b9ec4",
+   "sequence": 0,
+   "submissionId": 20220007191,
+   "meta": {
+    "author": {
+     "orcidId": "",
+     "name": "Dennis P Stocker"
+    },
+    "organization": {
+     "name": "Glenn Research Center",
+     "location": "Cleveland, Ohio, United States"
+    }
+   },
+   "id": "e927e81976824264aab505a9f70c5cf0",
+   "userType": "CIVIL",
+   "userId": "30e20cc4ba7743b790a53ab2fb0b0443"
+  }
+ ],
+ "stiTypeDetails": "Presentation",
+ "technicalReviewType": "SINGLE_EXPERT",
+ "modified": "2025-08-31T18:39:21.7150190+00:00",
+ "id": 20220007191,
+ "created": "2022-05-09T18:38:48.9115550+00:00",
+ "center": {
+  "code": "GRC",
+  "name": "Glenn Research Center",
+  "id": "19eeb25fa404421d9eaa5f876e853e3c"
+ },
+ "onlyAbstract": false,
+ "sensitiveInformation": 2,
+ "abstract": "From late 2017 to early 2022, six independent studies with flames of gaseous fuels were conducted on the International Space Station (ISS) in the U.S. combustion research facility.  An exploration of flames at the extremes of high sooting and high dilution was conducted with a coaxial coflow burner, where the fuel and oxidizer velocities were typically matched.  An investigation of electric-field effects also used the same coflow burner as well as a simple gas-jet burner, with a circular electrode mesh, downstream of the burner, at voltages of either polarity up to 10 kV.  A study focused on material flammability in a quiescent atmosphere emulated the burning of condensed-phased fuels using cylindrical burners with a flat perforated outlet instrumented to measure the heat flux to the burner, i.e., emulated fuel.  Three studies of soot processes, flame dynamics, and low-temperature combustion used porous spherical burners, yielding a nominally one-dimensional flame structure.  The objectives and selected findings of each investigation will be briefly discussed after a short review of the advantages of studying combustion in microgravity, earlier ISS research, and the experimental hardware and its operation.",
+ "isLessonsLearned": false,
+ "disseminated": "DOCUMENT_AND_METADATA",
+ "cui": {
+  "isCui": false,
+  "submissionId": 20220007191,
+  "id": "1286b0508df5493686fc3875154a2362"
+ },
+ "meetings": [
+  {
+   "country": "US",
+   "submissionId": 20220007191,
+   "endDate": "2022-05-17T04:00:00.0000000+00:00",
+   "sponsors": [
+    {
+     "organizationId": "f52059f6037657c2b9489200502d5650",
+     "meta": {
+      "organization": {
+       "name": "Combustion Institute",
+       "location": "Pittsburgh, Pennsylvania, United States"
+      }
+     },
+     "meetingId": "2878cc1d13f2413e95e68c1b71bb8a56",
+     "id": "aa8d20182c254808a0c2dae91ad581fe"
+    }
+   ],
+   "name": "2022 Spring Technical Meeting of the Central States Section of The Combustion Institute",
+   "location": "Detroit, MI",
+   "id": "2878cc1d13f2413e95e68c1b71bb8a56",
+   "url": "https://www.combustioninstitute.org/ci-event/2022-spring-technical-meeting-of-the-central-states-section-of-the-combustion-institute/",
+   "startDate": "2022-05-15T04:00:00.0000000+00:00"
+  }
+ ],
+ "status": "CURATED",
+ "related": [],
+ "downloads": [
+  {
+   "draft": false,
+   "mimetype": "application/pdf",
+   "name": "ACME CSSCI 20220509.pdf",
+   "type": "STI",
+   "links": {
+    "original": "/api/citations/20220007191/downloads/ACME%20CSSCI%2020220509.pdf",
+    "pdf": "/api/citations/20220007191/downloads/ACME%20CSSCI%2020220509.pdf",
+    "fulltext": "/api/citations/20220007191/downloads/ACME%20CSSCI%2020220509.pdf.txt"
+   }
+  }
+ ],
+ "downloadsAvailable": true,
+ "index": "submissions-2026-11-12-06-24"
+}

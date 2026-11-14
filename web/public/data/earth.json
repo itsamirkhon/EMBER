@@ -1,0 +1,101 @@
+[
+  {
+    "id": "firemans-air-tanks",
+    "title": "Lightweight firefighter air tanks (SCBA)",
+    "summary": "NASA Johnson Space Center and Scott Aviation developed a lighter firefighter breathing-air backpack: about 20 lb for a 30-minute supply (13 lb less than conventional tanks), pressurized at 4,500 psi, built from an aluminum liner wrapped in resin-impregnated glass fibers.",
+    "quote": "New backpack system weighs only 20 pounds for 30 minute air supply, 13 pounds less than conventional firefighting tanks.",
+    "linkedInvestigations": [],
+    "linkNote": "Heritage spinoff from spacecraft pressure-vessel technology; not derived from a PSI combustion investigation.",
+    "sources": [
+      { "label": "NASA Spinoff – Fireman's Air Tanks", "url": "https://spinoff.nasa.gov/node/9582" }
+    ]
+  },
+  {
+    "id": "fire-detector",
+    "title": "Incipient fire detector from the Space Shuttle",
+    "summary": "The Brunswick Incipient Fire Detector, first used in Space Shuttle orbiters, samples air for combustion particles and can tell them apart from dust, so it gives fewer false alarms and can signal a fire before flame and smoke appear. SAME and SAME-R carry this line forward: they measured how smoke particle sizes change in microgravity to set the requirements for next-generation spacecraft smoke detectors, and NASA notes the resulting detectors could also serve submarines and underwater laboratories.",
+    "quote": "Fire detector represents an advancement over commercially available smoke detectors in that it senses and signals the presence of a fire condition before appearance of flame and smoke.",
+    "linkedInvestigations": ["SAME", "SAME-R"],
+    "sources": [
+      { "label": "NASA Spinoff – Fire Detector (Brunswick Incipient Fire Detector)", "url": "https://spinoff.nasa.gov/node/9407" },
+      { "label": "PSI-102 SAME investigation page (research impacts)", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102" },
+      { "label": "PSI-101 SAME-R investigation page", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101" }
+    ]
+  },
+  {
+    "id": "fire-attire",
+    "title": "New technology for fire attire (Project FIRES, PBI fabric)",
+    "summary": "Project FIRES, sponsored by NASA and FEMA's U.S. Fire Administration and managed by Marshall Space Flight Center, applied lightweight, fire-resistant, heat-protective materials developed for spacesuits and spacecraft to firefighter turnout gear. After the Apollo 1 fire NASA pushed PBI fiber for flight suits; PBI later became the PBI Gold outer shell used in firefighter gear. This is the same material-flammability question BASS, BASS-II and Saffire study in microgravity.",
+    "quote": "A major focus of the effort involves application to the FIRES ensemble of lightweight, fire-resistant, heat-protective materials originally developed for use in astronauts' space suits or in spacecraft components which require thermal protection.",
+    "linkedInvestigations": ["BASS", "BASS-II", "Saffire-II"],
+    "linkNote": "Thematic link (material flammability), not a direct technology transfer from these experiments.",
+    "sources": [
+      { "label": "NASA Spinoff – New Technology for the Fire Attire", "url": "https://spinoff.nasa.gov/node/9918" },
+      { "label": "NASA Spinoff 2008 – Polymer Fabric Protects Firefighters, Military, and Civilians (PBI)", "url": "https://spinoff.nasa.gov/Spinoff2008/ps_3.html" }
+    ]
+  },
+  {
+    "id": "water-mist",
+    "title": "Fine-water-mist fire extinguisher",
+    "summary": "NASA Glenn and ADA Technologies (SBIR funding over about 10 years) built a fine-water-mist portable extinguisher for the ISS to replace CO2 units: 6 lb of water and 1.2 lb of nitrogen, working in any orientation. Its zero-leak valve maker (Doering) now sells the same class of valve to industry. FLEX measured how gaseous suppressants (CO2, He) and exploration atmospheres affect extinction in microgravity, the evidence base for choosing spacecraft suppressants.",
+    "quote": "A fine-water-mist portable fire extinguisher made the most sense: it wouldn’t cause damage to structures or require special cleanup procedures and would meet the other criteria.",
+    "linkedInvestigations": ["FLEX", "FLEX-2"],
+    "linkNote": "FLEX studied gaseous suppressants, not water mist; the link is the shared question of what to put out a spacecraft fire with.",
+    "sources": [
+      { "label": "NASA Spinoff 2020 – Zero-Leak Valve Holds Tight in Demanding Environments", "url": "https://spinoff.nasa.gov/Spinoff2020/ip_5.html" },
+      { "label": "PSI-69 FLEX investigation page (research impacts)", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69" },
+      { "label": "NTRS 20090014812 – MDCA Flame Extinguishment Experiment", "url": "https://ntrs.nasa.gov/citations/20090014812" }
+    ]
+  },
+  {
+    "id": "wool-respirator",
+    "title": "Wool filters for fire respirators",
+    "summary": "Work to extend the life of the respirator Orion crews would wear during a cabin fire led New Zealand company Lanaco to improve its wool filter line for firefighters on Earth. NASA notes Orion crews could have to stay longer in a fire-contaminated cabin than ISS crews.",
+    "quote": "A New Zealand-based company’s work to help astronauts fight fires in case of an anomaly on the Orion spacecraft is already informing its line of wool filters for firefighters on Earth.",
+    "linkedInvestigations": [],
+    "sources": [
+      { "label": "NASA Spinoff 2020 – Wool Mask to Fight Fires in Space Inspires Fire Equipment on Earth", "url": "https://spinoff.nasa.gov/Spinoff2020/ps_4.html" }
+    ]
+  },
+  {
+    "id": "same-confined-spaces",
+    "title": "Smoke detection for submarines and underwater labs (SAME)",
+    "summary": "NASA expects that smoke detectors developed from SAME results could also be used in extreme environments on Earth such as submarines or underwater laboratories, where accurate smoke detection can save lives.",
+    "quote": "The smoke detectors developed from the results of SAME can also be useful in other extreme environments on Earth, such as submarines or underwater laboratories.",
+    "linkedInvestigations": ["SAME", "SAME-R"],
+    "sources": [
+      { "label": "PSI-102 SAME investigation page", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102" }
+    ]
+  },
+  {
+    "id": "flex-suppressants",
+    "title": "Less harmful fire suppressants (FLEX)",
+    "summary": "According to NASA, FLEX findings on CO2, He and SF6 suppressant effectiveness can lead to more efficient, less harmful suppression systems and better fire safety in confined spaces such as submarines and high-altitude aircraft. Its cool-flame findings also inform engine design.",
+    "quote": "The mission's findings on the effectiveness of various fire suppressants, including CO2, He, and SF6, in microgravity can lead to the development of more efficient and less harmful fire suppression systems, reducing the risk of toxic byproducts during fire events.",
+    "linkedInvestigations": ["FLEX"],
+    "sources": [
+      { "label": "PSI-69 FLEX investigation page (research impacts)", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69" }
+    ]
+  },
+  {
+    "id": "bass-flammability-models",
+    "title": "Better fire models for wildfires and buildings (BASS / BASS-II)",
+    "summary": "BASS-II helps engineers choose safer materials. Because flames in microgravity are simpler, they are used to check computer models of burning, which NASA says can then be applied to wildfires, building fires and waste-to-energy combustion.",
+    "quote": "These models can then be used to more accurately study flames on Earth, such as in wildfires, building fires, energy recapture from waste recycling, and other combustion problems.",
+    "linkedInvestigations": ["BASS", "BASS-II"],
+    "sources": [
+      { "label": "PSI-25 BASS-II investigation page (research impacts)", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25" },
+      { "label": "PSI-26 BASS investigation page", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26" }
+    ]
+  },
+  {
+    "id": "saffire-sealed-spaces",
+    "title": "Fire safety in mines, airplanes and submarines (Saffire)",
+    "summary": "NASA notes that studying fire in a small, sealed vehicle like Cygnus also helps fire safety and prevention in mines, airplanes and submarines.",
+    "quote": "Studying fire in small, sealed environments such as the Cygnus cargo supply vehicle benefits fire safety and prevention efforts on Earth, including inside mines, airplanes, or submarines.",
+    "linkedInvestigations": ["Saffire-I", "Saffire-II", "Saffire-III"],
+    "sources": [
+      { "label": "PSI-98 Saffire-I investigation page", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" }
+    ]
+  }
+]

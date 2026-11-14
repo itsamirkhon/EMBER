@@ -1,0 +1,65 @@
+[
+ {
+  "id": "src_bass2_tm",
+  "url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+  "title": "NASA NTRS 20210011385 (TM-20210011385), cited as the BASS-II reference; exact title not verified by the corpus builders",
+  "retrieved": null,
+  "hash": null,
+  "type": "technical_memorandum",
+  "note": "Not retrieved or hashed by the corpus builders; URL included only where known."
+ },
+ {
+  "id": "src_flex2_nasa",
+  "url": "https://www.nasa.gov/missions/station/iss-research/youre-hot-then-youre-cold/",
+  "title": "NASA ISS Research: You're hot, then you're cold (FLEX-2 cool flames)",
+  "retrieved": null,
+  "hash": null,
+  "type": "web_page",
+  "note": "Not retrieved or hashed by the corpus builders; URL included only where known."
+ },
+ {
+  "id": "src_saffire_nasa",
+  "url": "",
+  "title": "NASA public descriptions of the Saffire experiments (specific URL/NTRS id still to be added)",
+  "retrieved": null,
+  "hash": null,
+  "type": "citation_pending",
+  "note": "No URL recorded: citation pending."
+ },
+ {
+  "id": "src_sibal_nasa",
+  "url": "",
+  "title": "NASA public descriptions of SIBAL, Solid Inflammability Boundary at Low-speeds (specific URL/NTRS id still to be added)",
+  "retrieved": null,
+  "hash": null,
+  "type": "citation_pending",
+  "note": "No URL recorded: citation pending."
+ },
+ {
+  "id": "src_flex_nasa",
+  "url": "",
+  "title": "NASA public descriptions of FLEX, Flame Extinguishment Experiment (specific URL/NTRS id still to be added)",
+  "retrieved": null,
+  "hash": null,
+  "type": "citation_pending",
+  "note": "No URL recorded: citation pending."
+ },
+ {
+  "id": "src_same_nasa",
+  "url": "",
+  "title": "NASA public descriptions of SAME, Smoke Aerosol Measurement Experiment (specific URL/NTRS id still to be added)",
+  "retrieved": null,
+  "hash": null,
+  "type": "citation_pending",
+  "note": "No URL recorded: citation pending."
+ },
+ {
+  "id": "src_curation",
+  "url": "",
+  "title": "EMBER team curation: structural exemplar (not a NASA measurement)",
+  "retrieved": null,
+  "hash": null,
+  "type": "team_curation",
+  "note": "No URL recorded: citation pending."
+ }
+]
