@@ -21,7 +21,7 @@ Every answer carries a status: **Measured**, **Interpolated** or **Extrapolated*
 | Compare (4.2) and Families (4.3) | `#/compare`, `#/families` | Investigations side by side. A warning appears when hardware family or fuel phase differ. Investigations are grouped by ACME/CIR, MDCA/CIR, MSG/SPICE duct, Saffire/Cygnus and SAME. |
 | What-if (4.5) | `#/what-if` | Sliders for O₂, pressure, flow and material. Predicts from the nearest real flight tests (inverse-distance kNN) and always shows the answer status. |
 | Gravity bracket (4.6) | `#/gravity` | For the Moon and Mars, shows the µg vs 1 g bracket as an estimate. Includes the literature O₂ margin (1 g Test 1 limits are up to 4 % O₂ higher than µg) and E-FIELD Flames as a partial-gravity analogue. |
-| Ask EMBER (5) | `#/ask` | BM25 retrieval over 145 cited claims and the 15 cards. Answers only with citations and says "No evidence in PSI corpus" when nothing matches. An optional Claude answer (bring your own API key) is limited to the retrieved claims, and its citations are checked. |
+| Ask EMBER (5) | `#/ask` | BM25 retrieval over 145 cited claims and the 15 cards. Answers only with citations and says "No evidence in PSI corpus" when nothing matches. An optional OpenAI `gpt-6-luna` answer (bring your own OpenAI API key) is limited to the retrieved claims, and its citations are checked. |
 | Export (4.8) | `#/export` | Cleaned test tables as CSV or JSON. Every row carries its PSI id, DOI, source file and row number. |
 | Back to Earth (4.9) | `#/earth` | NASA Spinoffs (SCBA air tanks, smoke detectors, firefighter gear, water mist) linked to the investigations. |
 | Trust (4.10) | `#/trust` | Backtest results and claim-extraction accuracy, shown live in the product. |
@@ -65,7 +65,7 @@ Rebuild the data from PSI (Python 3.11+, requests, pandas, openpyxl, bs4):
 ```bash
 python3 pipeline/fetch_psi.py        # downloads PSI metadata + experimental tables into data/raw/
 python3 pipeline/build_dataset.py    # normalizes into web/public/data/{investigations,tests,datasets_manifest}.json
-python3 pipeline/content/extract_claims.py   # refreshes NTRS sources; with ANTHROPIC_API_KEY also re-extracts claims
+python3 pipeline/content/extract_claims.py   # refreshes NTRS sources; with OPENAI_API_KEY also re-extracts claims (gpt-6-luna)
 ```
 
 **Deploy:** pushing to `main` runs `.github/workflows/deploy.yml`, which lints, tests, backtests, builds and publishes to GitHub Pages. Enable Pages with source "GitHub Actions" in the repository settings. The site is fully static; no server or API key is needed.
@@ -87,10 +87,10 @@ docs/                data contract, sources, submission text, demo script
 ## Use of AI
 
 See `docs/SUBMISSION.md` → "Use of AI". In short:
-- an LLM (Claude) extracted the claims and wrote code, with every quote machine-checked against the source;
+- an LLM (Claude, during the build) extracted the claims and helped write the code; every quote is machine-checked against the source, and the extraction script now runs on OpenAI `gpt-6-luna`;
 - the ranking formula is transparent and contains no AI;
 - the predictions come from nearest-neighbour search over real tests;
-- the in-app Claude answers can only cite retrieved claims.
+- the optional in-app answers (OpenAI `gpt-6-luna`, user's own key, never stored in the code) can only cite retrieved claims.
 
 ## License
 

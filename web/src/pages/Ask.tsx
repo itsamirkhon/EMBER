@@ -13,7 +13,7 @@ const EXAMPLES = [
   'What happens to flammability at reduced pressure with more oxygen?',
 ];
 
-const KEY_STORE = 'ember.anthropicKey';
+const KEY_STORE = 'ember.openaiKey';
 
 function readKey(): string {
   try {
@@ -162,11 +162,11 @@ export default function Ask() {
           <section className="card">
             <h2>Synthesized answer (optional)</h2>
             <p className="small muted">
-              Paste your own Anthropic API key to have {LLM_MODEL} write a short answer constrained to the retrieved items above. The key is
-              sent only to api.anthropic.com from your browser and kept in memory{remember ? ' and this tab’s sessionStorage' : ''}.
+              Paste your own OpenAI API key to have {LLM_MODEL} write a short answer constrained to the retrieved items above. The key is
+              sent only to api.openai.com from your browser and kept in memory{remember ? ' and this tab’s sessionStorage' : ''}.
             </p>
             <div className="row">
-              <input type="password" aria-label="Anthropic API key" placeholder="sk-ant-…" value={key} onChange={(e) => saveKey(e.target.value, remember)} style={{ flex: 1, minWidth: 200 }} autoComplete="off" />
+              <input type="password" aria-label="OpenAI API key" placeholder="sk-…" value={key} onChange={(e) => saveKey(e.target.value, remember)} style={{ flex: 1, minWidth: 200 }} autoComplete="off" />
               <button type="button" className="primary" disabled={!key || !support.length || llmState === 'running'} onClick={runLlm}>
                 {llmState === 'running' ? 'Writing…' : 'Synthesize'}
               </button>
