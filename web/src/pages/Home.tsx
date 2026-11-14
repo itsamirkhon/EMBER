@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ScenarioEditor, { flowText } from '../components/ScenarioEditor';
-import { scenarioQuery, useData, useEmber } from '../data/context';
+import { AtmosphereMap, VoteBar } from '../components/Charts';
+import { scenarioFromMission, scenarioQuery, useData, useEmber } from '../data/context';
 import { DEFAULT_WEIGHTS, estimate, groupTests, keywordRuleShare, proximityKernel, rankInvestigations, type Relevance, type RelevanceWeights } from '../lib/evidence';
 import {
   AnswerBadge, DirectionTags, FindingBadge, findSource, fmtGravity, fmtNum, fmtPct, Meter, SourceLink, Term,
@@ -108,8 +109,9 @@ function RankItem({ r, rank, invs, keyword }: { r: Relevance; rank: number; invs
 }
 
 export default function Home() {
-  const { scenario, weights, setWeights } = useEmber();
-  const { investigations, tests, history } = useData();
+  const { scenario, setScenario, weights, setWeights } = useEmber();
+  const { investigations, tests, history, claims, missions } = useData();
+  const missionLabel = missions.find((m) => m.id === scenario.missionId)?.label ?? 'Custom atmosphere';
   const q = useMemo(() => scenarioQuery(scenario), [scenario]);
   const ranked = useMemo(() => rankInvestigations(investigations, tests, q, weights), [investigations, tests, q, weights]);
   const overall = useMemo(() => estimate(q, microgravityTests(tests)), [q, tests]);
@@ -123,18 +125,45 @@ export default function Home() {
 
   return (
     <>
-      <section style={{ marginBottom: 24 }}>
-        <div className="eyebrow">Mission lens</div>
-        <h1 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', maxWidth: '24ch' }}>
-          What NASA knows about fire in space — and what nobody knows yet.
+      <section className="hero">
+        <div className="eyebrow">Evidence Map for Burn &amp; Extinction Risk</div>
+        <h1>
+          What NASA knows about fire in space. <em>And what nobody knows yet.</em>
         </h1>
-        <p style={{ color: 'var(--text-2)', maxWidth: '72ch' }}>
+        <p className="lede">
           Pick a habitat and a material. EMBER ranks NASA <Term k="psiRepo">PSI</Term> combustion investigations by relevance to
           your conditions and labels every answer as <strong>Known</strong>, <strong>Extrapolating</strong> or{' '}
           <strong>Unknown</strong>, so you can see where the data ends and guessing begins.
         </p>
+        <div className="kpis">
+          <div><div className="n">{investigations.length}</div><div className="l">NASA investigations</div></div>
+          <div><div className="n">{tests.length.toLocaleString('en-US')}</div><div className="l">flight test rows</div></div>
+          <div><div className="n">{claims.length}</div><div className="l">cited claims</div></div>
+          <div><div className="n">{missions.length}</div><div className="l">mission atmospheres</div></div>
+        </div>
+      </section>
+
+      <section className="card" aria-labelledby="map-h" style={{ marginBottom: 16 }}>
+        <div className="panel-title">
+          <h2 id="map-h" style={{ margin: 0 }}>Where the evidence is, and where it stops</h2>
+          <span className="small muted">Click a mission to select it</span>
+        </div>
+        <p className="small muted" style={{ maxWidth: '80ch' }}>
+          Every microgravity test in PSI with a recorded atmosphere, against the cabins NASA plans to fly. Exploration atmospheres trade
+          pressure for oxygen: about the same oxygen to breathe, but a much higher oxygen <em>fraction</em> for a flame.
+        </p>
+        <AtmosphereMap
+          tests={tests}
+          missions={missions}
+          phase={scenario.fuelPhase}
+          selected={{ o2Pct: scenario.o2Pct, pressureKpa: scenario.pressureKpa, label: scenario.missionId === 'custom' ? 'Custom' : missionLabel }}
+          onPick={(m) => setScenario((p) => scenarioFromMission(m, p))}
+        />
+      </section>
+
+      <section style={{ marginBottom: 16 }}>
         {history.length > 0 && (
-          <div className="grid grid-3" style={{ marginTop: 12 }}>
+          <div className="grid grid-3">
             {history.slice(0, 3).map((h) => (
               <div key={h.id} className="card tight small">
                 <strong>{h.title}</strong>
@@ -188,6 +217,7 @@ export default function Home() {
             ) : (
               <p>No tests with a recorded outcome are available.</p>
             )}
+            <VoteBar p={overall.pBurn} interval={overall.interval} unbounded={overall.status === 'extrapolated'} />
             <ul className="small" style={{ margin: '0 0 8px', paddingLeft: 18, color: 'var(--text-2)' }}>
               {overall.reasons.map((x, i) => (
                 <li key={i}>{x}</li>
@@ -208,7 +238,7 @@ export default function Home() {
           </section>
 
           <section aria-labelledby="rank-h">
-            <h2 id="rank-h">Ranked investigations</h2>
+            <h2 id="rank-h" style={{ margin: '28px 0 12px' }}>Ranked investigations</h2>
             <ol style={{ listStyle: 'none', padding: 0, margin: 0 }} className="stack">
               {ranked.map((r, i) => (
                 <RankItem key={r.inv.id} r={r} rank={i + 1} invs={investigations} keyword={keywordShares.get(r.inv.id)} />

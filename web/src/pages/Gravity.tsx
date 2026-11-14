@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BuoyancyChart } from '../components/Charts';
+import FlameCanvas from '../components/FlameCanvas';
 import { scenarioQuery, useData, useEmber } from '../data/context';
 import { flowText } from '../components/ScenarioEditor';
 import { gravityBracket, type Estimate } from '../lib/evidence';
@@ -41,6 +43,7 @@ export default function Gravity() {
       c.topic.includes('partial-gravity') ||
       ((c.topic.includes('oxygen-limit') || c.topic.includes('material-test')) && /\b1-?g\b|normal.gravity|NASA-STD-6001/i.test(c.text)),
   );
+  const simO2 = Math.max(18, Math.min(40, Math.round(scenario.o2Pct)));
   const marginO2 = 4; // c-0137: 1 g ULOI/MOC exceeded 0 g values by up to 4% O2
 
   return (
@@ -54,7 +57,30 @@ export default function Gravity() {
         </p>
       </PageHead>
 
-      <div className="row" style={{ marginBottom: 12 }}>
+      <section className="card" style={{ marginBottom: 16 }} aria-labelledby="fl-h">
+        <div className="panel-title">
+          <h2 id="fl-h" style={{ margin: 0 }}>The same flame at four gravity levels</h2>
+          <span className="status status-warning">Illustration</span>
+        </div>
+        <p className="small muted" style={{ maxWidth: '80ch' }}>
+          One gas burner, {fmtNum(simO2)}% O₂, no ventilation. Only gravity changes. Without buoyancy the flame is a dim sphere fed by
+          diffusion; any gravity makes hot gas rise and pull in fresh air. Computed live by the <Link to="/physics">flame lab</Link> model,
+          which is not calibrated and not used for any estimate on this page.
+        </p>
+        <div className="flame-row">
+          {([[0, 'Microgravity', 'µg · orbit'], [0.166, 'Moon', '0.17 g'], [0.38, 'Mars', '0.38 g'], [1, 'Earth', '1 g']] as const).map(([gv, name, sub]) => (
+            <figure key={name}>
+              <div className="flame-stage">
+                <FlameCanvas o2={simO2} flow={0} g={gv} config="burner" nx={48} ny={64} scale={6} stepsPerFrame={2} label={`Illustrative burner flame at ${sub}`} />
+              </div>
+              <figcaption><b>{name}</b>{sub}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <div className="row" style={{ marginBottom: 16 }}>
+        <div className="segmented" role="group" aria-label="Target gravity">
         {(
           [
             ['moon', 'Moon 0.17 g'],
@@ -62,10 +88,11 @@ export default function Gravity() {
             ['mission', `Mission (${mission?.label ?? 'custom'}) ${fmtNum(scenario.gravityG, 2)} g`],
           ] as const
         ).map(([k, l]) => (
-          <button key={k} type="button" className="chip-btn" aria-pressed={target === k} onClick={() => setTarget(k)}>
+          <button key={k} type="button" aria-pressed={target === k} onClick={() => setTarget(k)}>
             {l}
           </button>
         ))}
+        </div>
         <span className="small muted">
           Conditions from the <Link to="/">mission lens</Link>: {fmtNum(scenario.o2Pct)}% O₂, {fmtNum(scenario.pressureKpa)} kPa, flow {flowText(scenario)},{' '}
           {scenario.fuelPhase} fuel.
@@ -157,6 +184,15 @@ export default function Gravity() {
           </div>
         </section>
       </div>
+
+      <section className="card" style={{ marginTop: 16 }}>
+        <h2>Why partial gravity is not “almost microgravity”</h2>
+        <p className="small muted" style={{ maxWidth: '80ch' }}>
+          The draught a flame makes for itself grows with the cube root of gravity, so it rises steeply at low g. Compare it with cabin
+          ventilation of {flowText(scenario)}: on the Moon, buoyancy rather than the fans may set the oxygen supply.
+        </p>
+        <BuoyancyChart g={gTarget} />
+      </section>
 
       <section className="card" style={{ marginTop: 16 }}>
         <h2>Literature bracket: oxygen margin between 1 g and µg</h2>

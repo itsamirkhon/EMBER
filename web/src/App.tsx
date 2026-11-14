@@ -16,14 +16,15 @@ import Physics from './pages/Physics';
 import About from './pages/About';
 
 const NAV: [string, string][] = [
-  ['/', 'Mission lens'],
+  ['/', 'Mission'],
   ['/investigations', 'Investigations'],
   ['/compare', 'Compare'],
   ['/what-if', 'What-if'],
-  ['/gravity', 'Gravity bracket'],
+  ['/gravity', 'Gravity'],
+  ['/physics', 'Flame lab'],
   ['/ask', 'Ask EMBER'],
   ['/export', 'Export'],
-  ['/earth', 'Back to Earth'],
+  ['/earth', 'Earth'],
   ['/trust', 'Trust'],
 ];
 
@@ -31,7 +32,7 @@ export function Logo() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden>
       <path d="M16 3c2 6 9 9 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 4 0-4 1-7 2-10z" fill="var(--brand)" />
-      <path d="M16 15c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-5 .5 1 1 1.5 1.5 1.5 0-2 .2-3 .5-4.5z" fill="var(--bg)" />
+      <path d="M16 15c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-5 .5 1 1 1.5 1.5 1.5 0-2 .2-3 .5-4.5z" fill="#000" opacity="0.55" />
     </svg>
   );
 }
@@ -52,7 +53,7 @@ export default function App() {
         <div className="topbar-inner">
           <Link to="/" className="logo" aria-label="EMBER home">
             <Logo />
-            EMBER <small>Evidence Map for Burn &amp; Extinction Risk</small>
+            EMBER
           </Link>
           <nav className="nav" aria-label="Main">
             {NAV.map(([to, label]) => (
@@ -79,7 +80,7 @@ export default function App() {
           <div className="banner-inner">Could not load data: {error}</div>
         </div>
       )}
-      <main id="main" tabIndex={-1}>
+      <main id="main" tabIndex={-1} key={loc.pathname}>
         {!data && !error && <p className="muted">Loading evidence…</p>}
         {data && (
           <Routes>
@@ -110,7 +111,7 @@ export default function App() {
           <span className="row">
             <Link to="/about">About &amp; data sources</Link>
             <Link to="/families">Hardware families</Link>
-            <Link to="/physics">Flame illustration</Link>
+            <Link to="/physics">Flame lab</Link>
             <Link to="/trust">How far to trust us</Link>
           </span>
         </div>

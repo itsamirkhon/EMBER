@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { DropletChart, VoteBar } from '../components/Charts';
 import ScatterPlot from '../components/ScatterPlot';
 import { testToPoint } from '../components/testPoints';
 import { useData, useEmber } from '../data/context';
@@ -144,6 +145,7 @@ export default function WhatIf() {
   const [phase, setPhase] = useState<FuelPhase | 'any'>(scenario.fuelPhase);
   const [material, setMaterial] = useState(scenario.material);
   const [gpool, setGpool] = useState<GravityPool>('micro');
+  const [d0, setD0] = useState(3);
 
   const pool = useMemo(
     () =>
@@ -216,9 +218,9 @@ export default function WhatIf() {
               </select>
             </label>
           </div>
-          <fieldset style={{ border: 0, padding: 0, margin: '12px 0 0' }}>
-            <legend className="small muted">Gravity of the evidence</legend>
-            <div className="row">
+          <fieldset style={{ border: 0, padding: 0, margin: '16px 0 0' }}>
+            <legend className="small muted" style={{ marginBottom: 6 }}>Gravity of the evidence</legend>
+            <div className="segmented">
               {(
                 [
                   ['micro', 'µg tests'],
@@ -226,7 +228,7 @@ export default function WhatIf() {
                   ['all', 'All'],
                 ] as [GravityPool, string][]
               ).map(([k, l]) => (
-                <button key={k} type="button" className="chip-btn" aria-pressed={gpool === k} onClick={() => setGpool(k)}>
+                <button key={k} type="button" aria-pressed={gpool === k} onClick={() => setGpool(k)}>
                   {l}
                 </button>
               ))}
@@ -260,6 +262,7 @@ export default function WhatIf() {
                 <li key={i}>{r}</li>
               ))}
             </ul>
+            <VoteBar p={e.pBurn} interval={e.interval} unbounded={e.status === 'extrapolated'} />
             {e.outOfRange.length > 0 && (
               <p className="small muted" style={{ marginTop: 8, marginBottom: 0 }}>
                 Tested range in this pool ({e.poolSize} tests):{' '}
@@ -276,6 +279,21 @@ export default function WhatIf() {
             </p>
             {numeric.map((ne) => (
               <NumericResult key={ne.target} e={ne} />
+            ))}
+            {numeric.filter((ne) => ne.target === 'burningRateMm2S' && ne.value !== null && ne.value > 0).map((ne) => (
+              <div key="d2" style={{ marginTop: 18 }}>
+                <hr className="sep" />
+                <div className="panel-title">
+                  <h3 style={{ margin: 0 }}>How long would a droplet burn?</h3>
+                  <AnswerBadge status={ne.status} />
+                </div>
+                <Slider id="wd0" label="Initial droplet diameter" value={d0} min={1} max={6} step={0.5} unit="mm" onChange={setD0} />
+                <DropletChart k={ne.value as number} d0={d0} range={ne.status === 'extrapolated' ? null : ne.range} />
+                <p className="small muted" style={{ marginBottom: 0 }}>
+                  Uses the burning-rate constant K estimated above, so it inherits that status. The shaded wedge spans the K values of the
+                  tests used.
+                </p>
+              </div>
             ))}
           </section>
 

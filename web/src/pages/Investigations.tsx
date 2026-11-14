@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useData } from '../data/context';
-import { conditionBox, groupTests } from '../lib/evidence';
+import { PhaseLegend, RangeStrips, stripRowsFor } from '../components/Charts';
+import { conditionBox, groupTests, type Dim } from '../lib/evidence';
+import { scenarioQuery, useEmber } from '../data/context';
 import { DirectionTags, fmtRange, PageHead, Term } from '../components/ui';
 import type { Investigation, TestRow } from '../lib/types';
 
@@ -29,6 +31,12 @@ export default function Investigations() {
   const [phase, setPhase] = useState('');
   const [text, setText] = useState('');
   const [picked, setPicked] = useState<string[]>([]);
+  const [dim, setDim] = useState<Dim>('o2Pct');
+  const { scenario } = useEmber();
+  const q = scenarioQuery(scenario);
+  const boxes = useMemo(() => new Map(investigations.map((i) => [i.id, conditionBox(i, byInv.get(i.id) ?? [])])), [investigations, byInv]);
+  const DIMS: [Dim, string, string][] = [['o2Pct', 'O₂', '%'], ['pressureKpa', 'Pressure', 'kPa'], ['flowCmS', 'Flow', 'cm/s']];
+  const dimMeta = DIMS.find((d) => d[0] === dim)!;
   const nav = useNavigate();
   const families = [...new Set(investigations.map((i) => i.family))].sort();
   const list = investigations.filter(
@@ -75,6 +83,29 @@ export default function Investigations() {
           Compare {picked.length ? `(${picked.length})` : ''}
         </button>
       </div>
+      {list.length > 0 && (
+        <section className="card" style={{ marginBottom: 16 }} aria-labelledby="cov-h">
+          <div className="panel-title">
+            <h2 id="cov-h" style={{ margin: 0 }}>What each investigation actually tested</h2>
+            <div className="segmented" role="group" aria-label="Condition">
+              {DIMS.map(([k, l]) => (
+                <button key={k} type="button" aria-pressed={dim === k} onClick={() => setDim(k)}>{l}</button>
+              ))}
+            </div>
+          </div>
+          <PhaseLegend extra={<span><i style={{ background: '#fff', width: 2, height: 12, borderRadius: 1 }} /> your mission ({scenario.missionId})</span>} />
+          <RangeStrips
+            rows={stripRowsFor(list, boxes, dim)}
+            unit={dimMeta[2]}
+            title={dimMeta[1]}
+            log={dim === 'pressureKpa'}
+            width={1060}
+            mark={q[dim] ?? null}
+            markLabel="mission"
+          />
+          <p className="small muted" style={{ margin: 0 }}>Faded bars are assumed values, not stated by the source. The mission line comes from the mission lens.</p>
+        </section>
+      )}
       <p className="small muted">{list.length} of {investigations.length} investigations</p>
       <div className="grid grid-3">
         {list.map((inv) => (

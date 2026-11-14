@@ -25,7 +25,7 @@ Every answer carries a status: **Measured**, **Interpolated** or **Extrapolated*
 | Export (4.8) | `#/export` | Cleaned test tables as CSV or JSON. Every row carries its PSI id, DOI, source file and row number. |
 | Back to Earth (4.9) | `#/earth` | NASA Spinoffs (SCBA air tanks, smoke detectors, firefighter gear, water mist) linked to the investigations. |
 | Trust (4.10) | `#/trust` | Backtests (leave one test out, with replicates hidden, hide a whole investigation), each next to its baseline, per fuel phase; numeric-estimate errors; data coverage; claim-extraction accuracy. |
-| Physics illustration (4.7) | `#/physics` | A 2D thin-fuel flame-spread illustration, labelled **"illustration, not a calculation"** because it is not calibrated. |
+| Flame lab (4.7) | `#/physics` | A live 2D flame model (buoyant incompressible flow, diffusion, one-step chemistry, solid pyrolysis, T⁴ radiation) for a thin fuel sheet or a gas burner, labelled **"illustration, not a calculation"** because it is not calibrated. It shows oxygen sensitivity, blow-off and the buoyant plume; it does not reproduce low-flow quenching. Also drives the four-gravity flame comparison on `#/gravity`. |
 
 ## Data
 

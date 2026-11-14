@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import ScatterPlot from '../components/ScatterPlot';
 import { testToPoint } from '../components/testPoints';
 import { useData } from '../data/context';
-import { DIM_LABEL, DIM_UNIT, type Dim } from '../lib/evidence';
+import { DIM_LABEL, DIM_UNIT, NUMERIC_TARGETS, TARGET_LABEL, TARGET_UNIT, targetValue, type Dim, type NumericTarget } from '../lib/evidence';
 import { testsToCsv } from '../lib/csv';
 import { DirectionTags, downloadText, findSource, fmtGravity, fmtNum, SourceLink, Term } from '../components/ui';
 import { ConditionsLine } from './Investigations';
@@ -24,11 +24,25 @@ export default function InvestigationDetail() {
   const { investigations, tests, claims } = useData();
   const inv = investigations.find((i) => i.id === id);
   const rows = useMemo(() => tests.filter((t) => t.inv === id), [tests, id]);
-  const [yDim, setYDim] = useState<Dim>('flowCmS');
+  const [yDim, setYDim] = useState<Dim | NumericTarget | null>(null);
   const invClaims = claims.filter((c) => c.inv === id);
   if (!inv) return <p>Investigation “{id}” not found. <Link to="/investigations">All investigations</Link></p>;
 
-  const points = rows.map((t) => testToPoint(t, 'o2Pct', yDim)).filter((p) => p !== null);
+  const numericTargets = NUMERIC_TARGETS.filter((nt) => rows.some((t) => t.o2Pct !== null && targetValue(t, nt) !== null));
+  const isNumeric = (k: string): k is NumericTarget => (NUMERIC_TARGETS as string[]).includes(k);
+  // default to the first axis this investigation has data for
+  const has = (d: Dim) => rows.some((t) => t.o2Pct !== null && t[d] !== null);
+  const fallback: Dim | NumericTarget = has('flowCmS') ? 'flowCmS' : numericTargets[0] ?? (has('pressureKpa') ? 'pressureKpa' : 'flowCmS');
+  const yKey = yDim === null || (isNumeric(yDim) && !numericTargets.includes(yDim)) ? fallback : yDim;
+  const yLabel = isNumeric(yKey) ? `${TARGET_LABEL[yKey]} (${TARGET_UNIT[yKey]})` : `${DIM_LABEL[yKey]} (${DIM_UNIT[yKey]})`;
+  const points = rows
+    .map((t) => {
+      if (!isNumeric(yKey)) return testToPoint(t, 'o2Pct', yKey);
+      const v = targetValue(t, yKey);
+      const p = v === null ? null : testToPoint(t, 'o2Pct', 'o2Pct');
+      return p && v !== null ? { ...p, y: v, rows: [[TARGET_LABEL[yKey], `${v} ${TARGET_UNIT[yKey]}`] as [string, string], ...p.rows] } : null;
+    })
+    .filter((p) => p !== null);
   const sameFamily = investigations.filter((i) => i.family === inv.family && i.id !== inv.id);
 
   return (
@@ -135,9 +149,12 @@ export default function InvestigationDetail() {
           <div className="row">
             <label className="row small">
               y-axis
-              <select value={yDim} onChange={(e) => setYDim(e.target.value as Dim)}>
+              <select value={yKey} onChange={(e) => setYDim(e.target.value as Dim | NumericTarget)}>
                 <option value="flowCmS">Flow (cm/s)</option>
                 <option value="pressureKpa">Pressure (kPa)</option>
+                {numericTargets.map((nt) => (
+                  <option key={nt} value={nt}>{TARGET_LABEL[nt]} ({TARGET_UNIT[nt]})</option>
+                ))}
               </select>
             </label>
             <button type="button" onClick={() => downloadText(`ember_${inv.id}_tests.csv`, testsToCsv(rows, investigations))} disabled={!rows.length}>
@@ -149,12 +166,12 @@ export default function InvestigationDetail() {
           <ScatterPlot
             points={points}
             xLabel="O₂ (%)"
-            yLabel={`${DIM_LABEL[yDim]} (${DIM_UNIT[yDim]})`}
+            yLabel={yLabel}
             height={300}
-            summary={`${inv.id}: ${points.length} tests plotted by oxygen and ${DIM_LABEL[yDim].toLowerCase()}, coloured by outcome.`}
+            summary={`${inv.id}: ${points.length} tests plotted by oxygen and ${yLabel.toLowerCase()}, coloured by outcome.`}
           />
         ) : (
-          <p className="muted small">No tests with both O₂ and {DIM_LABEL[yDim].toLowerCase()} values to plot.</p>
+          <p className="muted small">No tests with both O₂ and {yLabel.toLowerCase()} values to plot.</p>
         )}
         {rows.length > 0 && (
           <div className="table-wrap" style={{ maxHeight: 360, marginTop: 12 }}>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { scenarioFromMission, useData, useEmber, type Scenario } from '../data/context';
 import { kpaToPsi } from '../lib/evidence';
 import type { FuelPhase } from '../lib/types';
+import { AtmosphereBar } from './Charts';
 import { fmtGravity, fmtNum, SourceLink, Term } from './ui';
 
 const ORDER = ['iss', 'spacecraft', 'lunar-base', 'lunar-rover', 'mars-base', 'eva-suit'];
@@ -105,7 +106,11 @@ export default function ScenarioEditor() {
         = {fmtNum(s.o2Pct)}% O₂ at {kpaToPsi(s.pressureKpa).toFixed(1)} <Term k="psi">psi</Term>, flow {flowText(s)}, {fmtGravity(s.gravityG)}
       </p>
 
-      <h2 style={{ marginTop: 18 }}>2. Material</h2>
+      <div style={{ marginTop: 14 }}>
+        <AtmosphereBar o2Pct={s.o2Pct} pressureKpa={s.pressureKpa} />
+      </div>
+
+      <h2 style={{ marginTop: 26 }}>2. Material</h2>
       <div className="inline-fields">
         <label>
           <span className="small muted">

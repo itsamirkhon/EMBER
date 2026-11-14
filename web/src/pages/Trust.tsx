@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useData } from '../data/context';
+import { BaselineBars, type BaselineRow } from '../components/Charts';
 import { AnswerBadge, fmtPct, Meter, PageHead } from '../components/ui';
 import {
   dataCoverage,
@@ -303,7 +304,21 @@ export default function Trust() {
 
       {newShape && lotoAll && loioAll && (
         <section className="card" style={{ marginBottom: 16 }}>
-          <h3>What the backtests say, plainly</h3>
+          <h3>Accuracy against “always guess the most common outcome”</h3>
+          <BaselineBars
+            rows={(
+              [
+                ['Leave one test out', lotoAll, 'all fuels'],
+                ['Leave one test out, replicates hidden', lotoGAll, 'the fairer number'],
+                ['…solid materials only', phase(lotoG, 'solid'), ''],
+                ['…BASS-II (demo dataset)', inv(lotoG, 'BASS-II'), ''],
+                ['Hide a whole investigation', loioAll, 'cross-experiment'],
+              ] as [string, ClassMetrics | undefined, string][]
+            )
+              .filter((r): r is [string, ClassMetrics, string] => !!r[1] && r[1].n > 0)
+              .map(([label, mm, note]): BaselineRow => ({ label, accuracy: mm.correct / mm.n, baseline: mm.baseline.correct / mm.n, n: mm.n, note: note || undefined }))}
+          />
+          <h3 style={{ marginTop: 24 }}>What the backtests say, plainly</h3>
           <ul style={{ paddingLeft: 18, margin: 0 }}>
             <li>
               <strong>

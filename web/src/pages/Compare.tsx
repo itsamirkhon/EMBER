@@ -1,6 +1,7 @@
 import { useMemo, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useData } from '../data/context';
+import { PhaseLegend, RangeStrips, stripRowsFor } from '../components/Charts';
 import { conditionBox, groupTests } from '../lib/evidence';
 import { DirectionTags, fmtRange, PageHead } from '../components/ui';
 import type { Investigation, Range } from '../lib/types';
@@ -123,6 +124,17 @@ export default function Compare() {
       )}
       {sel.length < 2 && <p className="muted">Select at least two investigations.</p>}
 
+      {sel.length >= 2 && (
+        <section className="card" style={{ marginBottom: 16 }}>
+          <h2>Tested ranges, side by side</h2>
+          <PhaseLegend />
+          <div className="grid grid-3">
+            {([['o2Pct', 'O₂', '%'], ['pressureKpa', 'Pressure', 'kPa'], ['flowCmS', 'Flow', 'cm/s']] as const).map(([d, l, u]) => (
+              <RangeStrips key={d} rows={stripRowsFor(sel, new Map(sel.map((i, j) => [i.id, boxes[j]])), d)} unit={u} title={l} log={d === 'pressureKpa'} width={380} />
+            ))}
+          </div>
+        </section>
+      )}
       {sel.length > 0 && (
         <div className="table-wrap">
           <table className="cmp">
