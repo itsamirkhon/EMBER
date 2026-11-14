@@ -5,6 +5,8 @@ import { emberApiPlugin } from './server/api';
 export default defineConfig({
   base: './',
   plugins: [react(), emberApiPlugin()],
+  // Keep hooks and the renderer on one React instance across sibling projects.
+  resolve: { dedupe: ['react', 'react-dom'] },
   build: {
     outDir: 'dist',
     sourcemap: false,
