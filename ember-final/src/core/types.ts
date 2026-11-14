@@ -448,6 +448,45 @@ export interface Contrast {
   causalWarning: string;
 }
 
+/** Structured scientific comparison. Legacy Contrast strings are display summaries only. */
+export interface ComparisonFactor {
+  factor: string;
+  status: 'matched' | 'different' | 'unknown' | 'not_applicable';
+  valueA: ScientificValue;
+  valueB: ScientificValue;
+  relevance: 'essential' | 'context';
+  reason: string;
+}
+export interface ComparisonObservation {
+  testId: string;
+  endpoint: TargetEndpoint | null;
+  status: 'observed' | 'negative' | 'unknown' | 'not_measured';
+  label: string;
+  value: ScientificValue | null;
+  segmentIds: string[];
+  eventIds: string[];
+  sourceRefs: SourceRef[];
+}
+export interface ComparisonResult extends Contrast {
+  comparisonVersion: string;
+  fieldDataConflicts: string[];
+  endpoint: TargetEndpoint | null;
+  observations: { a: ComparisonObservation; b: ComparisonObservation };
+  factors: ComparisonFactor[];
+  observationComparability: {
+    status: 'comparable' | 'conditional' | 'descriptive_only' | 'insufficient_information';
+    quantitativeAllowed: boolean;
+    reasons: string[];
+  };
+  applicabilityToQuery: { a: ApplicabilityDecision; b: ApplicabilityDecision };
+  causalSupport: { status: 'descriptive_only'; reasons: string[] };
+  numericDelta: { value: number; unit: string; definition: string } | null;
+  sourceRefs: SourceRef[];
+  limitations: string[];
+  prohibitedInferences: string[];
+  nextAction: string;
+}
+
 export interface DependencyEdge {
   id: string;
   fromParameter: string;

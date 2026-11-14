@@ -1,3 +1,4 @@
+import {compareTests} from './comparison';
 import {normalizeMaterialName} from './materials';
 export {normalizeMaterialName} from './materials';
 /**
@@ -11,7 +12,7 @@ import { matchProtocolSegment } from './protocol';
 import type {
   ApplicabilityDecision,
   ApplicabilityVerdict,
-  Contrast,
+  ComparisonResult,
   CorpusV2,
   EnclosureScale,
   Investigation,
@@ -564,65 +565,13 @@ export function evaluateApplicability(
   };
 }
 
-function formatNum(v: number | null, unit: string): string {
-  return v === null ? 'unknown' : `${v} ${unit}`;
-}
-
-export function buildContrasts(query: ResearchQuery, tests: Test[], maxContrasts = 6): Contrast[] {
-  const pool = tests.filter((t) => {
-    const d = evaluateApplicability(query, t);
-    return d.verdict === 'admissible' || d.verdict === 'conditional_support';
-  });
-  const candidates = pool.length >= 2 ? pool.slice(0, 18) : tests.slice(0, 12);
-  const contrasts: Contrast[] = [];
-
+/** Every surface consumes compareTests; candidate selection is not a scientific verdict. */
+export function buildContrasts(query: ResearchQuery, tests: Test[], maxContrasts = 6): ComparisonResult[] {
+  const candidates = tests.slice(0, 18);
+  const contrasts: ComparisonResult[] = [];
   for (let i = 0; i < candidates.length && contrasts.length < maxContrasts; i += 1) {
     for (let j = i + 1; j < candidates.length && contrasts.length < maxContrasts; j += 1) {
-      const a = candidates[i];
-      const b = candidates[j];
-      const matchedFactors: string[] = [];
-      const changedFactors: { factor: string; valueA: string; valueB: string }[] = [];
-      const unknownFactors: string[] = [];
-
-      if (normalizeMaterialName(a.fuel) === normalizeMaterialName(b.fuel) && a.fuel) matchedFactors.push(`material:${a.fuel}`);
-      else changedFactors.push({ factor: 'material', valueA: a.fuel ?? 'unknown', valueB: b.fuel ?? 'unknown' });
-
-      if (a.atmosphere.o2.value !== null && b.atmosphere.o2.value !== null && Math.abs(a.atmosphere.o2.value - b.atmosphere.o2.value) <= 1.0) {
-        matchedFactors.push(`O2:~${a.atmosphere.o2.value}%`);
-      } else if (a.atmosphere.o2.value === null || b.atmosphere.o2.value === null) {
-        unknownFactors.push('o2Pct');
-      } else {
-        changedFactors.push({ factor: 'o2Pct', valueA: `${a.atmosphere.o2.value}%`, valueB: `${b.atmosphere.o2.value}%` });
-      }
-
-      if (a.thicknessMm.value !== null && b.thicknessMm.value !== null) {
-        if (Math.abs(a.thicknessMm.value - b.thicknessMm.value) <= 0.05) matchedFactors.push(`thickness:${a.thicknessMm.value}mm`);
-        else changedFactors.push({ factor: 'thicknessMm', valueA: formatNum(a.thicknessMm.value, 'mm'), valueB: formatNum(b.thicknessMm.value, 'mm') });
-      } else if (a.thicknessMm.value === null || b.thicknessMm.value === null) {
-        unknownFactors.push('thicknessMm');
-      }
-
-      if (a.flow.direction === b.flow.direction && a.flow.direction !== 'unknown') matchedFactors.push(`flowDirection:${a.flow.direction}`);
-      else changedFactors.push({ factor: 'flowDirection', valueA: a.flow.direction, valueB: b.flow.direction });
-
-      if (a.flow.history === b.flow.history && a.flow.history !== 'unknown') matchedFactors.push(`flowHistory:${a.flow.history}`);
-      else changedFactors.push({ factor: 'flowHistory', valueA: a.flow.history, valueB: b.flow.history });
-
-      if (matchedFactors.length === 0 || changedFactors.length === 0) continue;
-
-      contrasts.push({
-        id: `contrast-${a.testId}-vs-${b.testId}`,
-        testAId: a.testId,
-        testBId: b.testId,
-        invA: a.inv,
-        invB: b.inv,
-        matchedFactors,
-        changedFactors,
-        unknownFactors,
-        outcomeComparison: `${a.testId}: ${a.initialOutcome} (terminal: ${a.terminalEvent ?? 'none'}) vs ${b.testId}: ${b.initialOutcome} (terminal: ${b.terminalEvent ?? 'none'})`,
-        causalWarning:
-          'Descriptive contrast across historical PSI runs only: changing a listed variable is NOT automatic proof of causation because igniter energy, protocol step timing, and unmeasured heat losses may also differ.',
-      });
+      if (candidates[i].testId !== candidates[j].testId) contrasts.push(compareTests(query, candidates[i], candidates[j]));
     }
   }
   return contrasts;

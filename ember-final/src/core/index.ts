@@ -10,3 +10,4 @@ export * from './generator';
 export * from './verifier';
 export * from './prediction';
 export * from './reviewEngine';
+export * from './comparison';

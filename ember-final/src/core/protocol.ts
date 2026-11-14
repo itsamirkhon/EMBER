@@ -190,6 +190,10 @@ function evaluateEndpointMatch(
   }
 
   if (INITIAL_ENDPOINTS.has(endpoint)) {
+    if (test.initialOutcome === 'non_flaming_pyrolysis') {
+      warnings.push('Non-flaming pyrolysis measures smoke generation below ignition; it does not measure flame establishment, sustained spread, or flame spread rate.');
+      return { matched: false, outcomeLabel: null, warnings };
+    }
     if (test.initialOutcome === 'not_applicable' || test.initialOutcome === 'unknown') {
       return { matched: false, outcomeLabel: null, warnings };
     }
