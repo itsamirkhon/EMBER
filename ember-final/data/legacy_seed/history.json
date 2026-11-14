@@ -1,0 +1,74 @@
+[
+  {
+    "id": "apollo-1",
+    "year": 1967,
+    "date": "1967-01-27",
+    "title": "Apollo 1 pad fire",
+    "summary": "During a preflight test of Apollo 204 (AS-204), a fire swept through the command module and killed Virgil Grissom, Edward White and Roger Chaffee. NASA then sharply limited the amount and location of combustible materials in the command module and flight suits, pursued fire-resistant fabrics such as PBI, and changed ground procedures from 100% O2 to a 60% O2 / 40% N2 mixture.",
+    "quote": "Astronauts Virgil Grissom, Edward White and Roger Chaffee lost their lives when a fire swept through the command module.",
+    "lesson": "Oxygen-rich cabin atmospheres plus flammable materials are the core risk EMBER's oxygen-limit evidence addresses.",
+    "linkedInvestigations": ["BASS", "BASS-II", "Saffire-I", "Saffire-II", "Saffire-III"],
+    "sources": [
+      { "label": "NASA – Apollo 1 mission page", "url": "https://www.nasa.gov/mission/apollo-1/" },
+      { "label": "NASA Spinoff 2008 – Polymer Fabric Protects Firefighters (Apollo 1 review recommendations)", "url": "https://spinoff.nasa.gov/Spinoff2008/ps_3.html" },
+      { "label": "NASA OCHMO-TB-003 Habitable Atmosphere (60% O2 / 40% N2 ground procedures after Apollo 1)", "url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf" }
+    ]
+  },
+  {
+    "id": "apollo-13",
+    "year": 1970,
+    "date": null,
+    "title": "Apollo 13 oxygen tank failure",
+    "summary": "Oxygen tank no. 2 in the service module failed from combustion inside the tank. The Apollo 13 Review Board found the most probable cause was ignition of Teflon wire insulation on the fan motor wires by electric arcs; the insulation had been damaged when heater thermostatic switches failed closed during ground detanking. It showed that materials normally thought safe can burn in pure, high-pressure oxygen.",
+    "quote": "The cause of the combustion was most probably the ignition of Teflon wire insulation on the fan motor wires, caused by electric arcs in this wiring.",
+    "lesson": "Ignition sources and materials in oxygen systems need flammability testing at the real oxygen condition.",
+    "linkedInvestigations": [],
+    "sources": [
+      { "label": "Report of Apollo 13 Review Board (NSSDCA text)", "url": "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_13_review_board.txt" },
+      { "label": "NTRS 20110015690 – A Case Study of the Failure on Apollo 13", "url": "https://ntrs.nasa.gov/citations/20110015690" }
+    ]
+  },
+  {
+    "id": "mir-fire",
+    "year": 1997,
+    "date": "1997-02-24",
+    "title": "Fire aboard space station Mir (oxygen candle)",
+    "summary": "With six crew aboard, a solid-fuel oxygen generator canister (lithium perchlorate 'candle') in Mir's Kvant-1 module ignited and shot a flame about three feet long. It blocked access to one of the two Soyuz escape vehicles and filled the modules with smoke. The crew put the fire out; life support cleared the smoke over several hours. Lessons were carried into ISS design and operations.",
+    "quote": "The searing flame, lasting several minutes, not only cut off access to one of the two Soyuz escape vehicles but also filled the station’s modules with smoke.",
+    "lesson": "Smoke spreads through the whole station and escape routes can be cut off, which is why detection (SAME) and suppression (FLEX) data matter. NASA dates the fire Feb. 24, 1997; some accounts give Feb. 23 (US time).",
+    "linkedInvestigations": ["SAME", "SAME-R", "FLEX"],
+    "sources": [
+      { "label": "NASA History – 25 Years Ago: Fire Aboard Space Station Mir", "url": "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/" }
+    ]
+  },
+  {
+    "id": "saffire",
+    "year": 2016,
+    "date": "2016",
+    "title": "Saffire: setting real fires in an empty spacecraft",
+    "summary": "Because earlier microgravity fire tests used samples of only about 10 cm, NASA ran Saffire inside uncrewed Cygnus cargo vehicles after they left the ISS. Saffire-I and -III burned a large cotton-fiberglass sheet (about 0.94 m x 0.4 m) and Saffire-II burned nine Test 1-sized samples. It was the first test of spacecraft fires at a realistic scale. Results showed that the size of the enclosure around a fire matters more than expected. Saffire IV-VI followed with fires up to 10 kW.",
+    "quote": "The Saffire Experiment represents the first test of spacecraft fires at a scale relevant to real spacecraft.",
+    "lesson": "Fire growth does not scale linearly from small samples, so large-scale data are needed to validate material limits and fire models.",
+    "linkedInvestigations": ["Saffire-I", "Saffire-II", "Saffire-III"],
+    "sources": [
+      { "label": "NTRS 20180005168 – Saffire: A Novel Approach to Study of Spacecraft Fire Safety Using Un-Manned Spacecraft", "url": "https://ntrs.nasa.gov/citations/20180005168" },
+      { "label": "NTRS 20150000894 – Large-Scale Spacecraft Fire Safety Tests", "url": "https://ntrs.nasa.gov/citations/20150000894" },
+      { "label": "NTRS 20210017780 – Fire Safety Implications of Preliminary Results from Saffire IV and V", "url": "https://ntrs.nasa.gov/citations/20210017780" },
+      { "label": "PSI-98 Saffire-I investigation page", "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-98" }
+    ]
+  },
+  {
+    "id": "luci-partial-gravity",
+    "year": 2025,
+    "date": "2025",
+    "title": "First extended burns in simulated lunar gravity (LUCI)",
+    "summary": "The Lunar Combustion Investigation spun a Blue Origin New Shepard rocket to create lunar gravity and ran the first combustion tests longer than 25 s at lunar g, burning a cotton-fiberglass fabric and a 4 mm PMMA rod in air. It leads into FM2 (Flammability of Materials on the Moon), planned to launch in late 2026. This is the partial-gravity data PSI does not yet contain.",
+    "quote": "These are the first-ever, extended-duration (greater than 25 seconds) combustion tests performed in simulated Lunar gravity.",
+    "lesson": "Partial-gravity flammability is only now being measured; EMBER marks lunar and Mars answers as 1 g / 0 g bounds, not measurements.",
+    "linkedInvestigations": [],
+    "sources": [
+      { "label": "NTRS 20250010653 – Lunar Combustion Investigation: Flammability Results from a Rotating Sounding Rocket", "url": "https://ntrs.nasa.gov/citations/20250010653" },
+      { "label": "NTRS 20210020516 – Fire on the Moon: Solid Fuel Combustion Experiments", "url": "https://ntrs.nasa.gov/citations/20210020516" }
+    ]
+  }
+]

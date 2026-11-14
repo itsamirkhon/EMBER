@@ -1,0 +1,1000 @@
+{
+  "schemaVersion": "2.0.0-ember-final",
+  "annotationProvenance": "preliminary_team_annotation_from_primary_nasa_sources",
+  "provenanceNote": "Team-authored benchmark grounded verbatim in NASA PSI tables, NTRS abstracts, and NASA/TM-20210011385 Appendix A/Tables 5.1 & 7.1. Not independent third-party validation.",
+  "counts": {
+    "total": 10,
+    "byCategory": {
+      "protocol_outcome": 3,
+      "comparability": 5,
+      "insufficient_or_invalid_premise": 1,
+      "full_review": 1
+    }
+  },
+  "cases": [
+    {
+      "caseId": "DEV-01",
+      "groupId": "grp-dev-bass2-b1-cutoff",
+      "split": "dev",
+      "category": "protocol_outcome",
+      "hardCaseTag": "operator_termination_vs_physical_extinction",
+      "question": "In BASS-II-B1 (0.1 mm PMMA film, 22.2% O2, 5 cm/s opposed flow), did the flame self-extinguish at 5 cm/s or was flow terminated by the operator?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "prevention",
+        "targetEndpoint": "extinction_under_flow_change",
+        "fuelPhase": "solid",
+        "material": "PMMA",
+        "geometry": "thin film",
+        "thicknessMm": 0.1,
+        "diameterMm": null,
+        "o2Pct": 22.2,
+        "o2Role": "ambient",
+        "pressureKpa": 101.3,
+        "flowCmS": 5.0,
+        "flowDirection": "opposed",
+        "flowHistory": "abrupt_cutoff",
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": null,
+        "comparisonTestIdB": null,
+        "targetTestId": "BASS-II-B1",
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "BASS-II-B1"
+      ],
+      "referencedInvestigations": [
+        "BASS-II"
+      ],
+      "referencedClaimIds": [],
+      "anchors": [
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 2,
+          "testId": "BASS-II-B1",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Ignited very quickly, turned flow off after spread halfway; flame extinguished very quickly; and sooty with blue leading edge"
+        },
+        {
+          "sourceId": "ntrs-20210011385",
+          "quote": "After the flame propagated across half the sample length at a steady spread rate of\n2.2 mm/s, the flow was abruptly cut off and the flame was observed to extinguish within 2 s.",
+          "page": 22,
+          "section": "2.2.5"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "BASS-II"
+        ],
+        "goldTestIds": [
+          "BASS-II-B1"
+        ],
+        "applicabilityStatus": "admissible",
+        "isAdmissiblePositive": true,
+        "expectedRuleIds": [
+          "RULE-PROT-01"
+        ],
+        "answerBoundary": "measured",
+        "protocolDecision": {
+          "initialOutcome": "flame_spread",
+          "terminalEvent": "flow_turned_off",
+          "isOperatorTermination": true,
+          "hasCoolFlameContinuation": false,
+          "matchedStageType": "termination",
+          "segmentSummary": "Established steady opposed spread at 2.2 mm/s at 5 cm/s flow, then operator abruptly turned flow off halfway."
+        },
+        "requiredEpistemicBoundary": "must_separate_operator_termination",
+        "expectedSynthesisMustMention": [
+          "flame_spread",
+          "2.2 mm/s",
+          "flow_turned_off",
+          "operator"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "self-extinguished at 5 cm/s",
+          "physical extinction limit 5 cm/s"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "protocol_history",
+        "applicability_gating"
+      ],
+      "anchoredFromGoldId": "GOLD-001"
+    },
+    {
+      "caseId": "DEV-02",
+      "groupId": "grp-dev-bass2-b1-cutoff",
+      "split": "dev",
+      "category": "comparability",
+      "hardCaseTag": "same_initial_flow_different_protocol",
+      "question": "Compare BASS-II-B1 and BASS-II-B17: both start at 5 cm/s opposed flow on thin PMMA film—are their extinction results directly comparable as equivalent physical extinction limits?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "prevention",
+        "targetEndpoint": "extinction_under_flow_change",
+        "fuelPhase": "solid",
+        "material": "PMMA",
+        "geometry": "thin film",
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 19.8,
+        "o2Role": "ambient",
+        "pressureKpa": 101.3,
+        "flowCmS": 5.0,
+        "flowDirection": "opposed",
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": "BASS-II-B1",
+        "comparisonTestIdB": "BASS-II-B17",
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "BASS-II-B1",
+        "BASS-II-B17"
+      ],
+      "referencedInvestigations": [
+        "BASS-II"
+      ],
+      "referencedClaimIds": [],
+      "anchors": [
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 2,
+          "testId": "BASS-II-B1",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Ignited very quickly, turned flow off after spread halfway; flame extinguished very quickly; and sooty with blue leading edge"
+        },
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 18,
+          "testId": "BASS-II-B17",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Burned steadily at higher flows, extinguished just as we reached a pot of 0.4; vapor jetting more on bottom, possibly because of sample tilted slightly to flow?"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "BASS-II"
+        ],
+        "goldTestIds": [
+          "BASS-II-B1",
+          "BASS-II-B17"
+        ],
+        "applicabilityStatus": "inadmissible",
+        "isAdmissiblePositive": false,
+        "expectedRuleIds": [
+          "RULE-PROT-01"
+        ],
+        "answerBoundary": "insufficient_or_refuse",
+        "protocolDecision": {
+          "initialOutcome": "flame_spread",
+          "terminalEvent": "flow_turned_off_vs_extinguished_at_reduced_flow",
+          "isOperatorTermination": true
+        },
+        "requiredEpistemicBoundary": "must_separate_operator_termination",
+        "expectedSynthesisMustMention": [
+          "B1",
+          "flow_turned_off",
+          "B17",
+          "extinguished_at_reduced_flow",
+          "22.2%",
+          "17.5%"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "identical extinction protocol",
+          "both physically extinguished at 5 cm/s"
+        ]
+      },
+      "competitorScope": [
+        "protocol_history",
+        "applicability_gating"
+      ],
+      "anchoredFromGoldId": "GOLD-002"
+    },
+    {
+      "caseId": "DEV-03",
+      "groupId": "grp-dev-bass2-positive-controls",
+      "split": "dev",
+      "category": "comparability",
+      "hardCaseTag": "positive_admissible_control",
+      "question": "Are BASS-II-B10 and BASS-II-B11 directly comparable replicate tests for 0.2 mm PMMA thin-film opposed-flow extinction at 21.0% O2 and 5 cm/s?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "prevention",
+        "targetEndpoint": "extinction_under_flow_change",
+        "fuelPhase": "solid",
+        "material": "PMMA",
+        "geometry": "thin film",
+        "thicknessMm": 0.2,
+        "diameterMm": null,
+        "o2Pct": 21.0,
+        "o2Role": "ambient",
+        "pressureKpa": 101.3,
+        "flowCmS": 5.0,
+        "flowDirection": "opposed",
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": "BASS-II-B10",
+        "comparisonTestIdB": "BASS-II-B11",
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "BASS-II-B10",
+        "BASS-II-B11"
+      ],
+      "referencedInvestigations": [
+        "BASS-II"
+      ],
+      "referencedClaimIds": [],
+      "anchors": [
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 11,
+          "testId": "BASS-II-B10",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Multiple velocities for steady spread, extinguished at pot 0.35"
+        },
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 12,
+          "testId": "BASS-II-B11",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Multiple velocities for steady spread, extinguished at pot 0.35"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "BASS-II"
+        ],
+        "goldTestIds": [
+          "BASS-II-B10",
+          "BASS-II-B11"
+        ],
+        "applicabilityStatus": "admissible",
+        "isAdmissiblePositive": true,
+        "expectedRuleIds": [],
+        "answerBoundary": "measured",
+        "requiredEpistemicBoundary": "must_admit_without_overrefusal",
+        "expectedSynthesisMustMention": [
+          "admissible",
+          "0.2 mm",
+          "21.0%",
+          "pot 0.35",
+          "extinguished_at_reduced_flow"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "inadmissible",
+          "cannot be compared"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "protocol_history",
+        "applicability_gating"
+      ],
+      "anchoredFromGoldId": "GOLD-007"
+    },
+    {
+      "caseId": "DEV-04",
+      "groupId": "grp-dev-bass-n2-suppression",
+      "split": "dev",
+      "category": "protocol_outcome",
+      "hardCaseTag": "operator_termination_vs_physical_extinction",
+      "question": "Compare the termination mechanisms of BASS-62-64 (2 cm PMMA sphere, N2 jet) and BASS-9-19 (1 cm PMMA sphere, fan shutoff).",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "suppression",
+        "targetEndpoint": "suppressant_extinction",
+        "fuelPhase": "solid",
+        "material": "PMMA",
+        "geometry": "sphere",
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 22.0,
+        "o2Role": "ambient",
+        "pressureKpa": 101.0,
+        "flowCmS": 5.5,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": null,
+        "comparisonTestIdB": null,
+        "targetTestId": "BASS-62-64",
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "BASS-62-64",
+        "BASS-9-19"
+      ],
+      "referencedInvestigations": [
+        "BASS"
+      ],
+      "referencedClaimIds": [],
+      "anchors": [
+        {
+          "sourceId": "psi-26",
+          "file": "PSI-26_Experimental table_BASS.csv",
+          "row": 64,
+          "testId": "BASS-62-64",
+          "quote": "flame did blow out with GN2 at about a pot 6.   "
+        },
+        {
+          "sourceId": "psi-26",
+          "file": "PSI-26_Experimental table_BASS.csv",
+          "row": 10,
+          "testId": "BASS-9-19",
+          "quote": "sample 18 and 19 mix up on names.  Logging actual sample barcode used here.  Grew from blue flame to sooty envelope flame.  To extinguish, turned  flow off,  and flame turned to blue sphere expanding upwind with a few soot particles."
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "BASS"
+        ],
+        "goldTestIds": [
+          "BASS-62-64",
+          "BASS-9-19"
+        ],
+        "applicabilityStatus": "admissible",
+        "isAdmissiblePositive": true,
+        "expectedRuleIds": [
+          "RULE-PROT-01"
+        ],
+        "answerBoundary": "measured",
+        "protocolDecision": {
+          "initialOutcome": "burned",
+          "terminalEvent": "extinguished_by_N2",
+          "isOperatorTermination": false,
+          "matchedStageType": "gas_intervention",
+          "segmentSummary": "BASS-62-64 extinguished by GN2 jet at pot ~6; BASS-9-19 ended by turning airflow off."
+        },
+        "requiredEpistemicBoundary": "must_separate_operator_termination",
+        "expectedSynthesisMustMention": [
+          "extinguished_by_N2",
+          "GN2",
+          "BASS-9-19",
+          "flow_turned_off"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "BASS-9-19 extinguished by N2"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "protocol_history"
+      ],
+      "anchoredFromGoldId": "GOLD-010"
+    },
+    {
+      "caseId": "DEV-05",
+      "groupId": "grp-dev-cfi-cool-flames",
+      "split": "dev",
+      "category": "protocol_outcome",
+      "hardCaseTag": "hot_extinction_cool_flame_continuation",
+      "question": "In CFI-1206 (n-dodecane droplet, 21% O2, 101.3 kPa), does hot-flame extinction at D = 3.577 mm mean combustion has ceased?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "suppression",
+        "targetEndpoint": "cool_flame_continuation",
+        "fuelPhase": "liquid",
+        "material": "n-dodecane",
+        "geometry": "droplet",
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 21.0,
+        "o2Role": "ambient",
+        "pressureKpa": 101.3,
+        "flowCmS": null,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": null,
+        "comparisonTestIdB": null,
+        "targetTestId": "CFI-1206",
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "CFI-1206"
+      ],
+      "referencedInvestigations": [
+        "CFI"
+      ],
+      "referencedClaimIds": [
+        "c-0071",
+        "c-0104"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-39",
+          "file": "PSI-39_Experimental table_CFI.csv",
+          "row": 2,
+          "testId": "CFI-1206",
+          "quote": "hot-flame extinction at D = 3.577 mm; cool-flame burning (k = 0.385 mm²/s)"
+        },
+        {
+          "sourceId": "ntrs-20140006750",
+          "claimId": "c-0071",
+          "quote": "large n-alkane droplets can continue to burn quasi-steadily following radiative extinction in a low-temperature regime, characterized by negative-temperaturecoefficient (NTC) chemistry"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "CFI"
+        ],
+        "goldTestIds": [
+          "CFI-1206"
+        ],
+        "applicabilityStatus": "admissible",
+        "isAdmissiblePositive": true,
+        "expectedRuleIds": [
+          "RULE-PROT-01",
+          "RULE-EP-01"
+        ],
+        "answerBoundary": "measured",
+        "protocolDecision": {
+          "initialOutcome": "extinguished",
+          "terminalEvent": "cool_flame_extinction",
+          "isOperatorTermination": false,
+          "hasCoolFlameContinuation": true,
+          "matchedStageType": "steady_burn",
+          "segmentSummary": "Stage 1 hot-flame radiative extinction at DextHot=3.577 mm followed by Stage 2 quasi-steady cool-flame burning (kCool=0.385 mm2/s) to DextCool=0.497 mm."
+        },
+        "requiredEpistemicBoundary": "must_preserve_cool_flame_stage",
+        "expectedSynthesisMustMention": [
+          "3.577 mm",
+          "cool flame",
+          "0.385",
+          "0.497 mm"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "burning completely stopped at 3.577 mm",
+          "no combustion after hot extinction"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "protocol_history"
+      ],
+      "anchoredFromGoldId": "GOLD-013"
+    },
+    {
+      "caseId": "DEV-06",
+      "groupId": "grp-dev-cfig-inverse-gas-role",
+      "split": "dev",
+      "category": "comparability",
+      "hardCaseTag": "ambient_vs_oxidizer_stream",
+      "question": "Can ACME-CFI-G inverse flame test CFI-G-I-21202A2-D2 (85% O2) be compared directly to an 85–100% O2 habitable cabin or EVA atmosphere?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "prevention",
+        "targetEndpoint": "flame_establishment",
+        "fuelPhase": "solid",
+        "material": null,
+        "geometry": null,
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 85.0,
+        "o2Role": "ambient",
+        "pressureKpa": 220.7,
+        "flowCmS": null,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": "CFI-G-I-21202A2-D2",
+        "comparisonTestIdB": "BASS-II-B1",
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "CFI-G-I-21202A2-D2"
+      ],
+      "referencedInvestigations": [
+        "ACME-CFI-G"
+      ],
+      "referencedClaimIds": [
+        "c-0116",
+        "c-0119"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-159",
+          "file": "PSI-159_Experimental table_CFI-G_Inverse Flames.csv",
+          "row": 19,
+          "testId": "CFI-G-I-21202A2-D2",
+          "quote": "hot ignition: Yes; end: SE"
+        },
+        {
+          "sourceId": "ntrs-20210015913",
+          "claimId": "c-0119",
+          "quote": "The research is primarily focused on improving practical terrestrial combustion through fundamental microgravity research, where a secondary objective is spacecraft fire safety."
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "ACME-CFI-G"
+        ],
+        "goldTestIds": [
+          "CFI-G-I-21202A2-D2"
+        ],
+        "applicabilityStatus": "inadmissible",
+        "isAdmissiblePositive": false,
+        "expectedRuleIds": [
+          "RULE-GAS-01",
+          "RULE-MAT-01"
+        ],
+        "answerBoundary": "insufficient_or_refuse",
+        "requiredEpistemicBoundary": "must_flag_oxidizer_stream_role",
+        "expectedSynthesisMustMention": [
+          "oxidizer_stream",
+          "inverse flame",
+          "ambient",
+          "gas",
+          "not comparable"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "ambient O2 was 85%",
+          "directly predicts solid cabin flammability at 85% O2"
+        ]
+      },
+      "competitorScope": [
+        "applicability_gating",
+        "epistemic_boundary"
+      ],
+      "anchoredFromGoldId": "GOLD-019"
+    },
+    {
+      "caseId": "DEV-07",
+      "groupId": "grp-dev-flex2-planned",
+      "split": "dev",
+      "category": "insufficient_or_invalid_premise",
+      "hardCaseTag": "planned_vs_observed",
+      "question": "What observed flight burning-rate constants and extinction diameters did FLEX-2 measure at 3.0 atm and 40% O2?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "suppression",
+        "targetEndpoint": "burning_rate_constant",
+        "fuelPhase": "liquid",
+        "material": null,
+        "geometry": null,
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 40.0,
+        "o2Role": "ambient",
+        "pressureKpa": 303.9,
+        "flowCmS": null,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": null,
+        "comparisonTestIdB": null,
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [],
+      "referencedInvestigations": [
+        "FLEX-2"
+      ],
+      "referencedClaimIds": [
+        "c-0075",
+        "c-0076",
+        "c-0079"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-68",
+          "claimId": "c-0075",
+          "quote": "The primary goal of the FLEX-2 flight experiments is to extend the results of FLEX-1 to fuels and environmental conditions that mimic real combustor conditions"
+        },
+        {
+          "sourceId": "psi-68",
+          "claimId": "c-0076",
+          "quote": "which was varied in pressure between 0.5 atm to 3.0 atm and O2 concentration between 0.1 to 0.4 mole fraction with the diluent gas making up the balance"
+        },
+        {
+          "sourceId": "psi-68",
+          "quote": "varied in pressure between 0.5 atm to 3.0 atm and O2 concentration between 0.1 to 0.4 mole fraction"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [],
+        "goldTestIds": [],
+        "applicabilityStatus": "inadmissible",
+        "isAdmissiblePositive": false,
+        "expectedRuleIds": [
+          "RULE-PROT-01"
+        ],
+        "answerBoundary": "insufficient_or_refuse",
+        "jevGold": {
+          "targetClaimId": "c-0076",
+          "q1Relevant": true,
+          "q2ObservedOutcomeNotPlanned": false,
+          "q3ConflictDetected": false,
+          "expectedRouting": "context"
+        },
+        "requiredEpistemicBoundary": "must_distinguish_planned_from_observed",
+        "expectedSynthesisMustMention": [
+          "planned_only",
+          "FLEX-2",
+          "0 test rows",
+          "no observed"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "FLEX-2 measured extinction diameter",
+          "observed at 40% O2 in FLEX-2 table"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "epistemic_boundary"
+      ],
+      "anchoredFromGoldId": "GOLD-022"
+    },
+    {
+      "caseId": "DEV-08",
+      "groupId": "grp-dev-saffire-scale-unknowns",
+      "split": "dev",
+      "category": "comparability",
+      "hardCaseTag": "unknown_not_equal_unknown",
+      "question": "Can Saffire-III-S1 and Saffire-III-S2 be treated as matching-condition tests because both report identical null O2, null pressure, null thickness, and unknown outcome?",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "prevention",
+        "targetEndpoint": "sustained_spread",
+        "fuelPhase": "solid",
+        "material": "SIBAL (cotton-fiberglass fabric)",
+        "geometry": null,
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": null,
+        "o2Role": "ambient",
+        "pressureKpa": null,
+        "flowCmS": 30.0,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": "Saffire-III-S1",
+        "comparisonTestIdB": "Saffire-III-S2",
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "Saffire-III-S1",
+        "Saffire-III-S2"
+      ],
+      "referencedInvestigations": [
+        "Saffire-III"
+      ],
+      "referencedClaimIds": [
+        "c-0056",
+        "c-0057"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-100",
+          "file": "PSI-100_Experimental table_SAFFIRE-3.csv",
+          "row": 2,
+          "testId": "Saffire-III-S1",
+          "quote": "Saffire-III-S1: fuel=SIBAL (cotton-fiberglass fabric), o2=None, P=None, outcome=unknown"
+        },
+        {
+          "sourceId": "psi-100",
+          "file": "PSI-100_Experimental table_SAFFIRE-3.csv",
+          "row": 3,
+          "testId": "Saffire-III-S2",
+          "quote": "Saffire-III-S2: fuel=SIBAL (cotton-fiberglass fabric), o2=None, P=None, outcome=unknown"
+        },
+        {
+          "sourceId": "psi-100",
+          "claimId": "c-0057",
+          "quote": "The flow was either concurrent or opposed."
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "Saffire-III"
+        ],
+        "goldTestIds": [
+          "Saffire-III-S1",
+          "Saffire-III-S2"
+        ],
+        "applicabilityStatus": "inadmissible",
+        "isAdmissiblePositive": false,
+        "expectedRuleIds": [
+          "RULE-UNK-01",
+          "RULE-PROT-01"
+        ],
+        "answerBoundary": "insufficient_or_refuse",
+        "requiredEpistemicBoundary": "must_not_equate_unknowns",
+        "expectedSynthesisMustMention": [
+          "unknown",
+          "not equal",
+          "concurrent",
+          "opposed",
+          "Saffire-III"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "identical O2 and pressure",
+          "both burned identically"
+        ]
+      },
+      "competitorScope": [
+        "applicability_gating",
+        "epistemic_boundary"
+      ],
+      "anchoredFromGoldId": "GOLD-028"
+    },
+    {
+      "caseId": "DEV-09",
+      "groupId": "grp-dev-same-assumed-aging",
+      "split": "dev",
+      "category": "comparability",
+      "hardCaseTag": "positive_admissible_control",
+      "question": "Compare SAME-R-51 and SAME-R-51a (Kapton heated at 419.9 C, 38 s vs 261 s aging) for microgravity smoke particle size growth.",
+      "structuredQuery": {
+        "missionId": null,
+        "habitableEnvironment": null,
+        "safetyTask": "detection",
+        "targetEndpoint": "smoke_particle_size",
+        "fuelPhase": "solid",
+        "material": "Kapton",
+        "geometry": null,
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 21.0,
+        "o2Role": "ambient",
+        "pressureKpa": 101.3,
+        "flowCmS": 8.1,
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": "SAME-R-51",
+        "comparisonTestIdB": "SAME-R-51a",
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": null
+      },
+      "referencedTestIds": [
+        "SAME-R-51",
+        "SAME-R-51a"
+      ],
+      "referencedInvestigations": [
+        "SAME-R"
+      ],
+      "referencedClaimIds": [
+        "c-0092",
+        "c-0095"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-101",
+          "file": "PSI-101_Experimental table_SAME-R.csv",
+          "row": 2,
+          "testId": "SAME-R-51",
+          "quote": "smoke generation by heating below ignition — no flame outcome applies"
+        },
+        {
+          "sourceId": "psi-101",
+          "file": "PSI-101_Experimental table_SAME-R.csv",
+          "row": 3,
+          "testId": "SAME-R-51a",
+          "quote": "smoke generation by heating below ignition — no flame outcome applies"
+        },
+        {
+          "sourceId": "ntrs-20130000422",
+          "claimId": "c-0095",
+          "quote": "This effective transport time was varied by holding the smoke in the aging chamber for times ranging from 11 to 1800 s."
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "SAME-R"
+        ],
+        "goldTestIds": [
+          "SAME-R-51",
+          "SAME-R-51a"
+        ],
+        "applicabilityStatus": "conditional",
+        "isAdmissiblePositive": true,
+        "expectedRuleIds": [
+          "RULE-PROV-01"
+        ],
+        "answerBoundary": "measured",
+        "requiredEpistemicBoundary": "must_admit_without_overrefusal",
+        "expectedSynthesisMustMention": [
+          "conditional",
+          "assumed",
+          "ISS cabin air",
+          "56.4",
+          "66.8",
+          "aging"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "inadmissible pair",
+          "O2 was directly measured in SAME-R table"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "applicability_gating",
+        "epistemic_boundary"
+      ],
+      "anchoredFromGoldId": "GOLD-031"
+    },
+    {
+      "caseId": "DEV-10",
+      "groupId": "grp-dev-lunar-rover-review",
+      "split": "dev",
+      "category": "full_review",
+      "hardCaseTag": "unsupported_joint_combination",
+      "question": "Evaluate solid PMMA cabin-lining fire risk for a pressurized lunar rover (30% O2, 70.3 kPa, 0–20 cm/s ventilation, 0.166 g) and design a bounded 6-run verification programme.",
+      "structuredQuery": {
+        "missionId": "lunar-rover",
+        "habitableEnvironment": "Pressurized lunar rover",
+        "safetyTask": "prevention",
+        "targetEndpoint": "sustained_spread",
+        "fuelPhase": "solid",
+        "material": "PMMA",
+        "geometry": null,
+        "thicknessMm": null,
+        "diameterMm": null,
+        "o2Pct": 30.0,
+        "o2Role": "ambient",
+        "pressureKpa": 70.3,
+        "flowCmS": [
+          0,
+          20
+        ],
+        "flowDirection": null,
+        "flowHistory": null,
+        "gravityG": 0.166,
+        "gravityMode": "actual_flight",
+        "diluent": null,
+        "comparisonTestIdA": null,
+        "comparisonTestIdB": null,
+        "targetTestId": null,
+        "variantPatch": null,
+        "budgetRuns": 6
+      },
+      "referencedTestIds": [
+        "BASS-II-B10",
+        "BASS-II-M1",
+        "Saffire-II-2-9"
+      ],
+      "referencedInvestigations": [
+        "BASS-II",
+        "BASS",
+        "Saffire-II"
+      ],
+      "referencedClaimIds": [
+        "c-0013",
+        "c-0139",
+        "c-0142"
+      ],
+      "anchors": [
+        {
+          "sourceId": "psi-25",
+          "file": "PSI-25_Experimental table_BASS-II.csv",
+          "row": 11,
+          "testId": "BASS-II-B10",
+          "table": "NASA/TM-20210011385 Table A.1",
+          "page": 111,
+          "quote": "Multiple velocities for steady spread, extinguished at pot 0.35"
+        },
+        {
+          "sourceId": "psi-99",
+          "file": "PSI-99_Experimental table_SAFFIRE-2.csv",
+          "row": 10,
+          "testId": "Saffire-II-2-9",
+          "quote": "burn time: 900 s; ug burn length: ~ 10 cm (note 4)"
+        },
+        {
+          "sourceId": "ntrs-20090012334",
+          "claimId": "c-0139",
+          "quote": "since oxygen concentration is the primary driver, all materials are certified in the 30% oxygen, 10.2 psia environment"
+        }
+      ],
+      "expected": {
+        "goldInvestigations": [
+          "BASS-II",
+          "BASS",
+          "Saffire-II"
+        ],
+        "goldTestIds": [
+          "BASS-II-B10",
+          "BASS-II-M1",
+          "Saffire-II-2-9"
+        ],
+        "applicabilityStatus": "inadmissible",
+        "isAdmissiblePositive": false,
+        "expectedRuleIds": [
+          "RULE-JOINT-01",
+          "RULE-GRAV-01"
+        ],
+        "answerBoundary": "extrapolated",
+        "jevGold": {
+          "targetClaimId": "c-0139",
+          "q1Relevant": true,
+          "q2ObservedOutcomeNotPlanned": true,
+          "q3ConflictDetected": false,
+          "expectedRouting": "context"
+        },
+        "plannerGold": {
+          "budgetRuns": 6,
+          "mustIncludeControl": true,
+          "mustPreserveReplicates": true,
+          "requiredTopics": [
+            "elevated_o2_reduced_pressure",
+            "partial_g_bracket",
+            "quiescent_vs_low_flow"
+          ]
+        },
+        "requiredEpistemicBoundary": "must_refuse_unsupported_joint_o2_p",
+        "expectedSynthesisMustMention": [
+          "extrapolated",
+          "22.7%",
+          "30%",
+          "70.3 kPa",
+          "0.166 g",
+          "no partial-gravity"
+        ],
+        "expectedSynthesisMustNotClaim": [
+          "measured in PSI for 30% O2 solid PMMA",
+          "ACME-CFI-G proves PMMA burns safely"
+        ]
+      },
+      "competitorScope": [
+        "retrieval",
+        "applicability_gating",
+        "epistemic_boundary",
+        "experiment_planning"
+      ],
+      "anchoredFromGoldId": "GOLD-040"
+    }
+  ]
+}

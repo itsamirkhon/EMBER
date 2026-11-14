@@ -1,0 +1,578 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EMBER v2 Scientific Decision-Support API",
+    "version": "2.0.0-ember-final",
+    "description": "Local and Vite-integrated HTTP API for NASA Physical Sciences Informatics (PSI) spacecraft fire-safety evidence synthesis, stage-bound protocol matching, applicability rule verification, design-variant dependency recalculation, constrained test-programme planning, and modeling-safe dataset export."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8787",
+      "description": "Standalone Node server (default PORT 8787)"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Service and corpus health check",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Healthy server and corpus counts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnvelopeHealth"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/investigations": {
+      "get": {
+        "summary": "List NASA PSI investigations with optional filters",
+        "operationId": "listInvestigations",
+        "parameters": [
+          {
+            "name": "direction",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["prevention", "detection", "suppression", "fundamental"] }
+          },
+          {
+            "name": "fuelPhase",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["solid", "liquid", "gas"] }
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "epistemicStatus",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["observed", "planned_only"] }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered investigations list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/investigations/{id}": {
+      "get": {
+        "summary": "Get investigation card, coverage summary, tests, and claims",
+        "operationId": "getInvestigationById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Investigation card, coverage summary, tests, and claims",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Investigation not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sources/{id}": {
+      "get": {
+        "summary": "Get primary source metadata and full cached text",
+        "operationId": "getSourceById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Source metadata and cached full text",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Source not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/queries/parse": {
+      "post": {
+        "summary": "Parse natural-language question and structured overrides into ResearchQuery",
+        "operationId": "parseQuery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ParseQueryRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Parsed ResearchQuery with unknownFields and validationWarnings",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed JSON or empty question without overrides",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews": {
+      "get": {
+        "summary": "List saved review snapshots and flagship Judge Demo snapshots",
+        "operationId": "listReviews",
+        "responses": {
+          "200": {
+            "description": "Saved review summaries",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create or idempotently replay a full scientific review",
+        "operationId": "createReview",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateReviewRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Idempotent replay of existing review snapshot",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "201": {
+            "description": "Newly computed and persisted review snapshot",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or malformed JSON",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runs/{id}": {
+      "get": {
+        "summary": "Inspect run execution status, stages, timings, and linked reviewId",
+        "operationId": "getRunById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run status and stage timings",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Run not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}": {
+      "get": {
+        "summary": "Reopen saved review snapshot deterministically without calling LLM",
+        "operationId": "getReviewById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Persisted review snapshot with variants and runs",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}/variants": {
+      "post": {
+        "summary": "Recalculate design variant dependencies and verdict deltas",
+        "operationId": "createReviewVariant",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VariantRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recalculated DesignVariantResult appended to review revision history",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid variant patch",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}/test-programmes": {
+      "post": {
+        "summary": "Re-optimize test programme for a review within budgetRuns while preserving mandatory controls",
+        "operationId": "optimizeReviewTestProgramme",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["budgetRuns"],
+                "properties": {
+                  "budgetRuns": { "type": "integer", "minimum": 0, "maximum": 500 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated TestProgramme and candidate blocks",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid budgetRuns",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}/export": {
+      "get": {
+        "summary": "Download review export in markdown, json, csv, or endpoint-safe modeling_csv format",
+        "operationId": "exportReview",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["markdown", "json", "csv", "modeling_csv"], "default": "json" }
+          },
+          {
+            "name": "inv",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "fuelPhase",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["solid", "liquid", "gas"] }
+          },
+          {
+            "name": "endpoint",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "family",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["admissible", "explicit"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Downloadable export stream",
+            "content": {
+              "text/markdown": { "schema": { "type": "string" } },
+              "application/json": { "schema": { "type": "string" } },
+              "text/csv": { "schema": { "type": "string" } }
+            }
+          },
+          "400": {
+            "description": "Invalid format or refused incompatible modeling_csv endpoint merge",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evaluation": {
+      "get": {
+        "summary": "Return measured evaluation report or clean not_measured status",
+        "operationId": "getEvaluationReport",
+        "responses": {
+          "200": {
+            "description": "Evaluation metrics or { status: 'not_measured' }",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiEnvelope" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiVersions": {
+        "type": "object",
+        "required": ["corpus", "rules", "engine", "jevPrompt", "code"],
+        "properties": {
+          "corpus": { "type": "string" },
+          "rules": { "type": "string" },
+          "engine": { "type": "string" },
+          "jevPrompt": { "type": "string" },
+          "code": { "type": "string" }
+        }
+      },
+      "ApiEnvelope": {
+        "type": "object",
+        "required": ["run_id", "status", "mode", "versions", "warnings"],
+        "properties": {
+          "run_id": { "type": "string" },
+          "status": { "type": "string", "enum": ["ok", "error"] },
+          "mode": { "type": "string", "enum": ["LIVE_AI", "DETERMINISTIC_ENGINE", "SAVED_DEMO_SNAPSHOT"] },
+          "versions": { "$ref": "#/components/schemas/ApiVersions" },
+          "warnings": { "type": "array", "items": { "type": "string" } },
+          "data": { "type": "object" },
+          "error": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": { "type": "string" },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      },
+      "ErrorEnvelope": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiEnvelope" },
+          {
+            "properties": {
+              "status": { "const": "error" }
+            },
+            "required": ["error"]
+          }
+        ]
+      },
+      "EnvelopeHealth": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ApiEnvelope" },
+          {
+            "properties": {
+              "data": {
+                "type": "object",
+                "required": ["healthy", "corpusVersion", "engineVersion", "counts", "liveAiConfigured"],
+                "properties": {
+                  "healthy": { "type": "boolean" },
+                  "service": { "type": "string" },
+                  "corpusVersion": { "type": "string" },
+                  "engineVersion": { "type": "string" },
+                  "liveAiConfigured": { "type": "boolean" },
+                  "counts": { "type": "object" }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ParseQueryRequest": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" },
+          "overrides": { "type": "object" },
+          "parserOptions": { "type": "object" }
+        }
+      },
+      "CreateReviewRequest": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" },
+          "overrides": { "type": "object" },
+          "parserOptions": { "type": "object" },
+          "retrievalMode": { "type": "string", "enum": ["bm25", "hybrid", "structured"], "default": "hybrid" },
+          "retrievalK": { "type": "integer", "minimum": 1, "maximum": 100 },
+          "budgetRuns": { "type": "integer", "minimum": 0, "maximum": 500, "default": 10 },
+          "useLiveAi": { "type": "boolean", "default": false },
+          "model": { "type": "string" },
+          "title": { "type": "string" },
+          "idempotencyKey": { "type": "string" },
+          "forceNew": { "type": "boolean", "default": false }
+        }
+      },
+      "VariantRequest": {
+        "type": "object",
+        "description": "Either { patch: DesignVariantPatch } or flat DesignVariantPatch fields",
+        "properties": {
+          "patch": {
+            "type": "object",
+            "properties": {
+              "thicknessMm": { "type": ["number", "null"] },
+              "flowDirection": { "type": ["string", "null"] },
+              "flowCmS": { "type": ["number", "array", "null"] },
+              "o2Pct": { "type": ["number", "null"] },
+              "pressureKpa": { "type": ["number", "null"] },
+              "gravityG": { "type": ["number", "null"] },
+              "material": { "type": ["string", "null"] },
+              "geometry": { "type": ["string", "null"] },
+              "o2Role": { "type": "string", "enum": ["ambient", "oxidizer_stream", "fuel", "diluent"] },
+              "targetEndpoint": { "type": ["string", "null"] },
+              "enclosureScale": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}
