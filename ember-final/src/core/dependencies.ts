@@ -8,6 +8,7 @@ import { normalizeGravityRegime } from './queryParser';
 import type {
   ApplicabilityDecision,
   CorpusV2,
+  ChunkRecord,
   DependencyEdge,
   DesignVariantPatch,
   DesignVariantResult,
@@ -32,6 +33,8 @@ const PARAMETER_RULE_MAP: Array<{ param: keyof ResearchQuery; ruleId: RuleId; la
   { param: 'pressureKpa', ruleId: 'RULE-JOINT-01', label: 'Pressure (kPa)' },
   { param: 'flowCmS', ruleId: 'RULE-JOINT-01', label: 'Flow velocity (cm/s)' },
   { param: 'flowDirection', ruleId: 'RULE-PROT-01', label: 'Flow direction' },
+  { param: 'flowHistory', ruleId: 'RULE-PROT-01', label: 'Flow history' },
+  { param: 'enclosureScale', ruleId: 'RULE-GEOM-01', label: 'Enclosure scale' },
   { param: 'thicknessMm', ruleId: 'RULE-GEOM-01', label: 'Thickness (mm)' },
   { param: 'geometry', ruleId: 'RULE-GEOM-01', label: 'Geometry' },
   { param: 'gravityG', ruleId: 'RULE-GRAV-01', label: 'Gravity (g)' },
@@ -40,44 +43,42 @@ const PARAMETER_RULE_MAP: Array<{ param: keyof ResearchQuery; ruleId: RuleId; la
 ];
 
 export function buildDependencies(
-  conclusions: Array<Pick<SynthesisClaimItem, 'id' | 'text'>>,
+  conclusions: Array<Pick<SynthesisClaimItem, 'id' | 'text'> & Partial<Pick<SynthesisClaimItem, 'citations'>>>,
   decisions: ApplicabilityDecision[],
   query: ResearchQuery,
+  chunks: Array<Pick<ChunkRecord, 'chunkId' | 'testId' | 'inv'>> = [],
 ): DependencyEdge[] {
-  const edges: DependencyEdge[] = [];
-  const activeTests = decisions.filter((d) => d.verdict === 'admissible' || d.verdict === 'conditional_support');
-  const seedTests = activeTests.length > 0 ? activeTests : decisions.slice(0, 12);
-  const affectedTestIds = seedTests.map((d) => d.testId);
-  const affectedInvIds = [...new Set(seedTests.map((d) => d.inv))];
-
-  const targetConclusions = conclusions.length > 0 ? conclusions : [{ id: 'synthesis-summary', text: 'Overall evidence boundary' }];
-
-  for (const mapping of PARAMETER_RULE_MAP) {
-    const val = query[mapping.param];
-    if (val === null || val === undefined) continue;
-
-    const failedOrCond = seedTests.filter((d) =>
-      d.rules.some((r) => r.ruleId === mapping.ruleId && r.status !== 'pass'),
-    );
-    const anyFailed = failedOrCond.some((d) => d.rules.some((r) => r.ruleId === mapping.ruleId && r.status === 'fail'));
-    const status: DependencyEdge['status'] = anyFailed ? 'invalidated' : failedOrCond.length > 0 ? 'weakened' : 'retained';
-
-    const c = targetConclusions[0];
-    edges.push({
-      id: `dep-${mapping.param}-${mapping.ruleId}`,
-      fromParameter: String(mapping.param),
-      ruleId: mapping.ruleId,
-      affectedTestIds: failedOrCond.length > 0 ? failedOrCond.map((d) => d.testId) : affectedTestIds,
-      affectedInvIds: failedOrCond.length > 0 ? [...new Set(failedOrCond.map((d) => d.inv))] : affectedInvIds,
-      conclusionId: c.id,
-      status,
-      reason:
-        failedOrCond.length > 0
-          ? `${mapping.label} triggers ${mapping.ruleId} caution/exclusion on ${failedOrCond.length} test(s).`
-          : `${mapping.label} verified across ${affectedTestIds.length} supporting test(s) via ${mapping.ruleId}.`,
-    });
-  }
-  return edges;
+  const decisionById = new Map(decisions.map((decision) => [decision.testId, decision]));
+  const chunkById = new Map(chunks.map((chunk) => [chunk.chunkId, chunk]));
+  return conclusions.flatMap((conclusion) => {
+    const citedTestIds = new Set<string>();
+    let unresolved = !(conclusion.citations?.length);
+    for (const citation of conclusion.citations ?? []) {
+      const testId = decisionById.has(citation) ? citation : chunkById.get(citation)?.testId;
+      if (testId && decisionById.has(testId)) citedTestIds.add(testId);
+      else unresolved = true;
+    }
+    const scoped = [...citedTestIds].map((id) => decisionById.get(id)!);
+    return PARAMETER_RULE_MAP.filter((mapping) => query[mapping.param] !== null && query[mapping.param] !== undefined)
+      .map((mapping): DependencyEdge => {
+        const rules = scoped.flatMap((decision) => decision.rules.filter((rule) => rule.ruleId === mapping.ruleId));
+        const failed = rules.some((rule) => rule.status === 'fail');
+        const incomplete = unresolved || scoped.length === 0 || rules.length !== scoped.length;
+        const status = failed ? 'invalidated' : incomplete || rules.some((rule) => rule.status === 'conditional') ? 'weakened' : 'retained';
+        return {
+          id: `dep-${conclusion.id}-${mapping.param}-${mapping.ruleId}`,
+          fromParameter: String(mapping.param),
+          ruleId: mapping.ruleId,
+          affectedTestIds: scoped.map((decision) => decision.testId),
+          affectedInvIds: [...new Set(scoped.map((decision) => decision.inv))],
+          conclusionId: conclusion.id,
+          status,
+          reason: incomplete
+            ? `${conclusion.id}: unresolved or no cited test-level support; ${mapping.label} transfer remains unverified.`
+            : `${conclusion.id}: ${mapping.label} ${status} for its ${scoped.length} cited test(s) via ${mapping.ruleId}. ${rules.map((rule) => rule.reason).join(' ')}`,
+        };
+      });
+  });
 }
 
 function applyVariantPatch(baseQuery: ResearchQuery, patch: DesignVariantPatch): {
@@ -189,7 +190,27 @@ export function recalculateDesignVariant(
     else if (nd.verdict === 'inadmissible') becameInadmissible.push(nd.testId);
   }
 
-  const updatedEdges = buildDependencies(baseReview.synthesis.observedFact, updatedDecisions, updatedQuery);
+  const updatedEdges = buildDependencies(
+    [...baseReview.synthesis.observedFact, ...baseReview.synthesis.authorInterpretation, ...baseReview.synthesis.engineeringImplication],
+    updatedDecisions,
+    updatedQuery,
+    baseReview.evidencePackage.retrievedHits.map((hit) => hit.chunk),
+  );
+  // Clearing a condition removes transfer knowledge, not the trace explaining its loss.
+  const clearedParameters = changedParams.filter((parameter) => updatedQuery[parameter as keyof ResearchQuery] === null);
+  if (clearedParameters.length > 0) {
+    const previousEdges = buildDependencies(
+      [...baseReview.synthesis.observedFact, ...baseReview.synthesis.authorInterpretation, ...baseReview.synthesis.engineeringImplication],
+      updatedDecisions,
+      baseReview.query,
+      baseReview.evidencePackage.retrievedHits.map((hit) => hit.chunk),
+    );
+    updatedEdges.push(...previousEdges.filter((edge) => clearedParameters.includes(edge.fromParameter)).map((edge): DependencyEdge => ({
+      ...edge,
+      status: 'weakened',
+      reason: `${edge.conclusionId}: ${edge.fromParameter} was cleared; transfer support for an unspecified condition is unresolved. Historical observations remain unchanged.`,
+    })));
+  }
   const retainedEdges: DependencyEdge[] = [];
   const weakenedEdges: DependencyEdge[] = [];
   const invalidatedEdges: DependencyEdge[] = [];
@@ -205,54 +226,20 @@ export function recalculateDesignVariant(
         ((p === 'o2Pct' || p === 'pressureKpa' || p === 'flowCmS') && edge.ruleId === 'RULE-JOINT-01'),
     );
 
-    if (edge.status === 'invalidated' || (isAffectedByPatch && becameInadmissible.length > 0 && edge.status !== 'retained')) {
-      const invEdge: DependencyEdge = { ...edge, status: 'invalidated' };
-      invalidatedEdges.push(invEdge);
+    const scoped = updatedDecisions.filter((decision) => edge.affectedTestIds.includes(decision.testId));
+    const shifted = scoped.filter((decision) => {
+      const old = oldByTest.get(decision.testId);
+      return old && verdictRank(old.verdict) !== verdictRank(decision.verdict);
+    });
+    if (edge.status === 'invalidated') invalidatedEdges.push(edge);
+    else if (edge.status === 'weakened') weakenedEdges.push(edge);
+    else retainedEdges.push(edge);
+    if (isAffectedByPatch) {
       impactChains.push({
-        changedParameter: changedParams.join(', ') || edge.fromParameter,
-        affectedRuleOrEvidence: `${edge.ruleId} (${edge.affectedTestIds.slice(0, 3).join(', ') || edge.affectedInvIds.join(', ')})`,
-        conclusionChange: `${becameInadmissible.length} previously usable test(s) became inadmissible: ${edge.reason}`,
-        severity: 'invalidated',
-      });
-    } else if (edge.status === 'weakened' || (isAffectedByPatch && becameConditional.length > 0)) {
-      const wEdge: DependencyEdge = { ...edge, status: 'weakened' };
-      weakenedEdges.push(wEdge);
-      impactChains.push({
-        changedParameter: changedParams.join(', ') || edge.fromParameter,
-        affectedRuleOrEvidence: `${edge.ruleId} (${edge.affectedInvIds.join(', ')})`,
-        conclusionChange: `Support weakened to conditional (${becameConditional.length} downgraded): ${edge.reason}`,
-        severity: 'weakened',
-      });
-    } else {
-      retainedEdges.push(edge);
-      if (isAffectedByPatch) {
-        const netDelta = updatedDecisions.filter((nd) => {
-          const od = oldByTest.get(nd.testId);
-          return od && verdictRank(nd.verdict) !== verdictRank(od.verdict);
-        }).length;
-        impactChains.push({
-          changedParameter: changedParams.join(', ') || edge.fromParameter,
-          affectedRuleOrEvidence: `${edge.ruleId}`,
-          conclusionChange:
-            becameAdmissible.length > 0
-              ? `${becameAdmissible.length} test(s) became admissible under updated parameter.`
-              : `Edge retained (${netDelta} verdict shifts across pool).`,
-          severity: 'retained',
-        });
-      }
-    }
-  }
-
-  // Ensure every changed parameter whose shifts weren't captured by an edge emits an explicit chain
-  for (const param of changedParams) {
-    if (!impactChains.some((c) => c.changedParameter.includes(param))) {
-      const severity: ImpactChainItem['severity'] =
-        becameInadmissible.length > 0 ? 'invalidated' : becameConditional.length > 0 ? 'weakened' : 'retained';
-      impactChains.push({
-        changedParameter: param,
-        affectedRuleOrEvidence: 'Applicability pool',
-        conclusionChange: `Admissible delta: +${becameAdmissible.length} admissible, +${becameConditional.length} conditional, +${becameInadmissible.length} inadmissible.`,
-        severity,
+        changedParameter: changedParams.filter((param) => param === edge.fromParameter || PARAMETER_RULE_MAP.some((mapping) => mapping.param === param && mapping.ruleId === edge.ruleId)).join(', '),
+        affectedRuleOrEvidence: `${edge.ruleId} (${edge.affectedTestIds.join(', ') || 'unresolved evidence'})`,
+        conclusionChange: `${edge.conclusionId}: applicability ${edge.status}; ${shifted.length} cited test verdict(s) changed. ${edge.reason} This revises transfer support, not the historical observation.`,
+        severity: edge.status,
       });
     }
   }

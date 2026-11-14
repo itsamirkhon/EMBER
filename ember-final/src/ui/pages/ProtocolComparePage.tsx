@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  evaluateApplicability,
+  compareTests,
   hasCoolFlameContinuation,
   isOperatorTerminated,
   parseResearchQuery,
@@ -70,59 +70,17 @@ export function ProtocolComparePage() {
     [activeSnapshot],
   );
 
-  // Build side-by-side comparison diagnostics
   const comparedTests = useMemo(
-    () => compareIds.map((id) => testById.get(id)).filter((t): t is Test => Boolean(t)),
+    () => compareIds.map((id) => testById.get(id)).filter((test): test is Test => Boolean(test)),
     [compareIds, testById],
   );
 
-  const comparisonAnalysis = useMemo(() => {
-    if (comparedTests.length < 2) return null;
-    const decisions = comparedTests.map((t) => evaluateApplicability(activeQuery, t));
-    const fields: Array<{ label: string; values: string[] }> = [
-      { label: 'Investigation', values: comparedTests.map((t) => t.inv) },
-      { label: 'Fuel / Phase', values: comparedTests.map((t) => `${t.fuel ?? 'unknown'} (${t.fuelPhase ?? '?'})`) },
-      { label: 'Geometry & Thickness', values: comparedTests.map((t) => `${t.geometry ?? 'unknown'} / ${t.thicknessMm.value ?? 'unknown'} mm`) },
-      { label: 'O2 % & Role', values: comparedTests.map((t) => `${t.atmosphere.o2.value ?? 'unknown'}% [${t.atmosphere.o2.role}, ${t.atmosphere.o2.provenance}]`) },
-      { label: 'Pressure (kPa)', values: comparedTests.map((t) => `${t.atmosphere.pressure.value ?? 'unknown'} (${t.atmosphere.pressure.provenance})`) },
-      { label: 'Flow & Direction', values: comparedTests.map((t) => `${t.flow.initialFlowCmS.value ?? 'unknown'} cm/s (${t.flow.direction}, ${t.flow.history})`) },
-      { label: 'Gravity Regime', values: comparedTests.map((t) => `${t.gravity.gravityG.value ?? 'unknown'}g (${t.gravity.platform})`) },
-      { label: 'Initial / Terminal', values: comparedTests.map((t) => `${t.initialOutcome} / ${t.terminalEvent ?? 'none'}`) },
-    ];
-
-    const sharedFactors: string[] = [];
-    const changedFactors: string[] = [];
-    const unknownFactors: string[] = [];
-
-    for (const f of fields.slice(1, 7)) {
-      const uniq = new Set(f.values);
-      if (f.values.some((v) => v.includes('unknown') || v.includes('assumed'))) {
-        unknownFactors.push(f.label);
-      }
-      if (uniq.size === 1) {
-        sharedFactors.push(`${f.label}: ${f.values[0]}`);
-      } else {
-        changedFactors.push(f.label);
-      }
-    }
-
-    const opTermCount = comparedTests.filter((t) => isOperatorTerminated(t)).length;
-    const hasMixedEndpointTermination = opTermCount > 0 && opTermCount < comparedTests.length;
-    const hasInadmissible = decisions.some((d) => d.verdict === 'inadmissible');
-    const confounded = changedFactors.length > 2 || hasMixedEndpointTermination || hasInadmissible;
-
-    let causalWarning = 'Single-factor or controlled protocol contrast across matching context.';
-    if (hasMixedEndpointTermination) {
-      causalWarning =
-        'Confounded termination endpoint: selection mixes operator flow shutoff (FT) with natural extinction/sustained runs.';
-    } else if (changedFactors.length > 2) {
-      causalWarning = `Multi-factor shift (${changedFactors.join(', ')}) precludes attributing outcome differences to a single variable.`;
-    } else if (hasInadmissible) {
-      causalWarning = 'One or more compared tests fail query applicability gates (material, phase, O2 role, or protocol endpoint).';
-    }
-
-    return { fields, decisions, sharedFactors, changedFactors, unknownFactors, confounded, causalWarning };
-  }, [comparedTests, activeQuery]);
+  // Every pair uses the same domain verdict as review/API/export; UI only renders it.
+  const comparisons = useMemo(
+    () => comparedTests.flatMap((test, index) =>
+      comparedTests.slice(index + 1).map((other) => compareTests(activeQuery, test, other))),
+    [comparedTests, activeQuery],
+  );
 
   // Extract BASS-II Table 5.1 spread rate series & SAME-R aging series & O2 vs Flow scatter
   const o2FlowPoints = useMemo<ScatterPoint[]>(() => {
@@ -149,7 +107,7 @@ export function ProtocolComparePage() {
       const tbl = t.extra.tmTable5_1 as { velocitiesCmS?: number[]; spreadRatesMmS?: number[] };
       const vel = tbl.velocitiesCmS ?? [];
       const spr = tbl.spreadRatesMmS ?? [];
-      const points = vel.map((v, i) => ({ x: v, y: spr[i] ?? 0 })).filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
+      const points = vel.flatMap((velocity, index) => Number.isFinite(velocity) && Number.isFinite(spr[index]) ? [{ x: velocity, y: spr[index] }] : []);
       return {
         id: t.testId,
         label: `${t.testId} (${t.atmosphere.o2.value ?? '?'}% O2, ${t.thicknessMm.value ?? '?'} mm)`,
@@ -185,7 +143,7 @@ export function ProtocolComparePage() {
         <div>
           <h1>Protocol Timeline &amp; Experimental Comparison</h1>
           <p className="page-lead">
-            Inspect stage-bound test execution steps (ignition vs flow intervention vs operator shutoff FT vs cool flames) and verify whether cross-test contrasts are causally admissible.
+            Inspect stage-bound observations, compare experiments, and keep query applicability separate from causal support.
           </p>
         </div>
       </div>
@@ -455,54 +413,69 @@ export function ProtocolComparePage() {
             </div>
           </div>
 
-          {comparisonAnalysis ? (
-            <section className="card stack-md" aria-label="Comparison admissibility diagnostics">
+          <p className="muted">Query: {activeQuery.rawQuestion} · Endpoint: {activeQuery.targetEndpoint ?? 'unspecified'}. All {comparisons.length} selected pairs are evaluated independently.</p>
+          {comparisons.map((comparison) => (
+            <section key={comparison.id} className="card stack-md" aria-label={`Scientific comparison ${comparison.testAId} and ${comparison.testBId}`}>
               <div className="card-header">
-                <h2 className="card-title">Causal Contrast Verdict</h2>
-                <StatusPill
-                  tone={comparisonAnalysis.confounded ? 'danger' : 'ok'}
-                  icon={comparisonAnalysis.confounded ? '⚠' : '✓'}
-                  label={comparisonAnalysis.confounded ? 'Confounded / Inadmissible Contrast' : 'Admissible Contrast'}
-                />
+                <h2 className="card-title">{comparison.testAId} vs {comparison.testBId}</h2>
+                <StatusPill tone="info" label={`Endpoint: ${comparison.endpoint ?? 'unspecified'}`} />
               </div>
-
-              <div className={`banner ${comparisonAnalysis.confounded ? 'banner-warn' : 'banner-ok'}`}>
-                <span>{comparisonAnalysis.causalWarning}</span>
+              <div className="grid-2">
+                <div>
+                  <h3>Observation comparability</h3>
+                  <StatusPill tone={comparison.observationComparability.status === 'comparable' ? 'ok' : 'warn'} label={comparison.observationComparability.status} />
+                  <p>{comparison.observationComparability.reasons.join(' ')}</p>
+                  <p>Quantitative comparison: {comparison.observationComparability.quantitativeAllowed ? 'allowed' : 'not established'}.</p>
+                </div>
+                <div>
+                  <h3>Causal boundary</h3>
+                  <StatusPill tone="neutral" label={comparison.causalSupport.status} />
+                  <p>{comparison.causalSupport.reasons.join(' ')}</p>
+                </div>
               </div>
-
-              <div className="pill-row">
-                <StatusPill tone="ok" label={`Shared: ${comparisonAnalysis.sharedFactors.length}`} />
-                <StatusPill tone="warn" label={`Changed: ${comparisonAnalysis.changedFactors.join(', ') || 'None'}`} />
-                <StatusPill tone="neutral" label={`Unknown/Assumed: ${comparisonAnalysis.unknownFactors.join(', ') || 'None'}`} />
+              <div>
+                <h3>Applicability to this query</h3>
+                <div className="pill-row">
+                  <span className="mono">{comparison.testAId}</span><VerdictBadge verdict={comparison.applicabilityToQuery.a.verdict} />
+                  <span className="mono">{comparison.testBId}</span><VerdictBadge verdict={comparison.applicabilityToQuery.b.verdict} />
+                </div>
+                {[comparison.applicabilityToQuery.a, comparison.applicabilityToQuery.b].map((decision) => (
+                  <p key={decision.testId}><strong>{decision.testId}:</strong> {decision.rules.filter((rule) => rule.status !== 'pass').map((rule) => rule.reason).join(' ') || 'Query applicability rules passed; this does not establish causal control.'}</p>
+                ))}
               </div>
-
-              <div className="table-wrapper" tabIndex={0} role="region" aria-label="Side by side test matrix">
+              <div className="grid-2">
+                {[comparison.observations.a, comparison.observations.b].map((observation) => (
+                  <div key={observation.testId}>
+                    <h3>{observation.testId}: {observation.status}</h3>
+                    <p>{observation.label}</p>
+                    <p className="muted">Segments: {observation.segmentIds.join(', ') || 'none resolved'} · Events: {observation.eventIds.join(', ') || 'none resolved'}</p>
+                  </div>
+                ))}
+              </div>
+              {comparison.numericDelta ? <p>Observed difference: {comparison.numericDelta.value} {comparison.numericDelta.unit} · {comparison.numericDelta.definition}</p> : null}
+              <div className="table-wrapper" tabIndex={0} role="region" aria-label="Engine factor comparison">
                 <table>
-                  <thead>
-                    <tr>
-                      <th scope="col">Parameter / Dimension</th>
-                      {comparedTests.map((t, i) => (
-                        <th key={t.testId} scope="col">
-                          <div className="mono">{t.testId}</div>
-                          <VerdictBadge verdict={comparisonAnalysis.decisions[i].verdict} />
-                        </th>
-                      ))}
+                  <thead><tr><th scope="col">Factor</th><th scope="col">{comparison.testAId}</th><th scope="col">{comparison.testBId}</th><th scope="col">Status / basis</th></tr></thead>
+                  <tbody>{comparison.factors.map((factor) => (
+                    <tr key={factor.factor}>
+                      <th scope="row">{factor.factor} ({factor.relevance})</th>
+                      <td>{String(factor.valueA.value ?? 'unknown')} {factor.valueA.unit} · {factor.valueA.provenance}</td>
+                      <td>{String(factor.valueB.value ?? 'unknown')} {factor.valueB.unit} · {factor.valueB.provenance}</td>
+                      <td><strong>{factor.status}</strong>: {factor.reason}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {comparisonAnalysis.fields.map((row) => (
-                      <tr key={row.label}>
-                        <th scope="row">{row.label}</th>
-                        {row.values.map((v, idx) => (
-                          <td key={`${row.label}-${idx}`}>{v}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
+                  ))}</tbody>
                 </table>
               </div>
+              <div><h3>Interpretation limits</h3><ul>{comparison.limitations.map((limit, index) => <li key={index}>{limit}</li>)}</ul></div>
+              <div><h3>Unsupported inferences</h3><ul>{comparison.prohibitedInferences.map((inference, index) => <li key={index}>{inference}</li>)}</ul></div>
+              <p><strong>Next action:</strong> {comparison.nextAction}</p>
+              <div className="btn-group">{comparison.sourceRefs.map((source, index) => (
+                <button key={`${source.sourceId}-${index}`} type="button" className="btn btn-sm" onClick={() => openSourceRef(source)}>
+                  Verify {source.sourceId} {formatLocator(source)}
+                </button>
+              ))}</div>
             </section>
-          ) : null}
+          ))}
 
           <div className="grid-2">
             <ScatterPlotSvg

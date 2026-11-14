@@ -5,6 +5,7 @@ import { join, resolve } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApiHandler, emberApiPlugin, type ApiEnvelope } from '../server/api';
 import { createStandaloneServer } from '../server/index';
+import { COMPARISON_VERSION, ENGINE_VERSION, type ComparisonResult, type Review } from '../src/core';
 
 const EMBER_ROOT = resolve(__dirname, '..');
 
@@ -231,7 +232,7 @@ describe('EMBER v2 HTTP API & Store', () => {
       reviewId: string;
       runId: string;
       idempotentReplay: boolean;
-      review: { synthesis: { mode: string } };
+      review: Review;
     }>(baseUrl, '/api/reviews', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -246,6 +247,31 @@ describe('EMBER v2 HTTP API & Store', () => {
     createdRunId = first.body.data?.runId ?? '';
     expect(createdReviewId).toMatch(/^rev-/);
     expect(createdRunId).toMatch(/^run-/);
+    const createdReview = first.body.data?.review;
+    if (!createdReview) throw new Error('Created review was not returned');
+    expect(first.body.versions.engine).toBe(ENGINE_VERSION);
+    expect(createdReview.envelope.engineVersion).toBe(ENGINE_VERSION);
+    expect(createdReview.evidencePackage.contrasts.length).toBeGreaterThan(0);
+    const comparisons = createdReview.evidencePackage.contrasts as ComparisonResult[];
+    for (const comparison of comparisons) {
+      expect(comparison.comparisonVersion).toBe(COMPARISON_VERSION);
+      expect(comparison.endpoint).toBe(createdReview.query.targetEndpoint);
+      expect(comparison.observationComparability).toEqual(expect.objectContaining({
+        status: expect.any(String), quantitativeAllowed: expect.any(Boolean), reasons: expect.any(Array),
+      }));
+      expect(comparison.causalSupport.status).toBe('descriptive_only');
+      expect(comparison.causalSupport.reasons.length).toBeGreaterThan(0);
+      expect(comparison.applicabilityToQuery.a.testId).toBe(comparison.testAId);
+      expect(comparison.applicabilityToQuery.b.testId).toBe(comparison.testBId);
+      expect(comparison.observations.a.testId).toBe(comparison.testAId);
+      expect(comparison.observations.b.testId).toBe(comparison.testBId);
+      expect(comparison.factors.length).toBeGreaterThan(0);
+      expect(comparison.sourceRefs.length).toBeGreaterThan(0);
+      expect(comparison.prohibitedInferences.length).toBeGreaterThan(0);
+      expect(comparison.nextAction.length).toBeGreaterThan(0);
+      expect(Array.isArray(comparison.fieldDataConflicts)).toBe(true);
+    }
+
 
     const replay = await requestJson<{
       reviewId: string;
@@ -276,13 +302,40 @@ describe('EMBER v2 HTTP API & Store', () => {
     expect(runRes.body.data?.status).toBe('completed');
     expect(runRes.body.data?.stages.length).toBe(8);
 
-    const reopen = await requestJson<{ reviewId: string; review: { query: { material: string | null } } }>(
+    const reopen = await requestJson<{ reviewId: string; review: Review }>(
       baseUrl,
       `/api/reviews/${createdReviewId}`,
     );
     expect(reopen.status).toBe(200);
     expect(reopen.body.data?.reviewId).toBe(createdReviewId);
     expect(reopen.body.data?.review.query.material).toBe('PMMA');
+    expect(reopen.body.data?.review.envelope.engineVersion).toBe(ENGINE_VERSION);
+    expect(reopen.body.data?.review.evidencePackage.contrasts).toEqual(comparisons);
+
+    // Saving/reopening and both exports must preserve the engine's scientific decisions.
+    const jsonExport = await fetch(`${baseUrl}/api/reviews/${createdReviewId}/export?format=json`);
+    expect(jsonExport.status).toBe(200);
+    const exportedReview = await jsonExport.json() as Review;
+    expect(exportedReview.envelope.engineVersion).toBe(ENGINE_VERSION);
+    expect(exportedReview.evidencePackage.contrasts).toEqual(comparisons);
+    const markdownExport = await fetch(`${baseUrl}/api/reviews/${createdReviewId}/export?format=markdown`);
+    expect(markdownExport.status).toBe(200);
+    const markdown = await markdownExport.text();
+    expect(markdown).toContain(`Engine: ${ENGINE_VERSION}`);
+    for (const comparison of comparisons) {
+      expect(markdown).toContain(`### ${comparison.testAId} / ${comparison.testBId}`);
+      expect(markdown).toContain(`Comparison version: ${comparison.comparisonVersion}`);
+      expect(markdown).toContain(`Observation comparability: ${comparison.observationComparability.status}`);
+      expect(markdown).toContain(`Applicability to query: A=${comparison.applicabilityToQuery.a.verdict}; B=${comparison.applicabilityToQuery.b.verdict}`);
+      expect(markdown).toContain(`Causal support: ${comparison.causalSupport.status}`);
+      for (const limit of comparison.limitations) expect(markdown).toContain(`Limitation: ${limit}`);
+      for (const unsupported of comparison.prohibitedInferences) expect(markdown).toContain(`Unsupported inference: ${unsupported}`);
+      for (const source of comparison.sourceRefs) {
+        expect(markdown).toContain(`Source: ${source.sourceId}; locator=${JSON.stringify(source.locator ?? {})}`);
+      }
+      expect(markdown).toContain(`Next action: ${comparison.nextAction}`);
+    }
+
 
     const list = await requestJson<{ total: number; reviews: Array<{ reviewId: string }> }>(baseUrl, '/api/reviews');
     expect(list.status).toBe(200);

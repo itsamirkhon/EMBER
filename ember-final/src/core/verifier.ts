@@ -11,6 +11,8 @@
  */
 import { tokenizeBm25 } from './retrieval';
 import type {
+  Contrast,
+  ComparisonResult,
   EvidencePackage,
   GeneratedSynthesis,
   SynthesisClaimItem,
@@ -100,7 +102,7 @@ function collectTestNumbers(t: Test, nums: Set<number>): void {
 
 function extractNumbersFromText(text: string): number[] {
   const nums: number[] = [];
-  const matches = text.matchAll(/(?<![a-zA-Z0-9-])\d+(?:\.\d+)?(?![a-zA-Z0-9-])/g);
+  const matches = text.matchAll(/(?<![a-zA-Z0-9.\-])[+-]?\d+(?:\.\d+)?(?![a-zA-Z0-9.\-])/g);
   for (const m of matches) {
     const n = Number(m[0]);
     if (Number.isFinite(n)) nums.push(n);
@@ -164,7 +166,24 @@ function sameNumber(a: number, b: number): boolean {
   return Math.abs(a - b) <= Math.max(0.000001, Math.abs(a) * 0.005);
 }
 
-function checkQuantityBindings(item: SynthesisClaimItem, pkg: EvidencePackage, allowQuery: boolean): string[] {
+function isStructuredComparison(contrast: Contrast): contrast is ComparisonResult {
+  return 'comparisonVersion' in contrast && 'numericDelta' in contrast && 'observationComparability' in contrast;
+}
+
+function derivedDeltaQuantities(item: SynthesisClaimItem, pkg: EvidencePackage, engineeringItems: Set<SynthesisClaimItem>): {value:number;unit:string}[] {
+  if (!engineeringItems.has(item) || (item.provenance !== 'derived' && item.provenance !== 'interpretation')) return [];
+  if (!/\b(?:difference|delta)\b|\bB\s*(?:minus|−|-)\s*A\b/i.test(item.text)) return [];
+  const cited = new Set(claimCitations(item));
+  return pkg.contrasts.filter(isStructuredComparison)
+    .filter((comparison) => comparison.observationComparability.quantitativeAllowed && comparison.numericDelta !== null && cited.has(comparison.testAId) && cited.has(comparison.testBId))
+    .flatMap((comparison) => comparison.numericDelta ? [{value:comparison.numericDelta.value,unit:comparison.numericDelta.unit.toLowerCase().replace(/\s+/g,'').replace('²','2')}] : []);
+}
+
+function exactDelta(a: {value:number;unit:string}, b: {value:number;unit:string}): boolean {
+  return a.unit === b.unit && Math.abs(a.value-b.value) <= 1e-10;
+}
+
+function checkQuantityBindings(item: SynthesisClaimItem, pkg: EvidencePackage, allowQuery: boolean, derived: {value:number;unit:string}[] = []): string[] {
   let source = citedEvidenceText(item, pkg);
   if (allowQuery) {
     const q = pkg.query;
@@ -175,7 +194,7 @@ function checkQuantityBindings(item: SynthesisClaimItem, pkg: EvidencePackage, a
   }
   const supported = quantities(source);
   return quantities(item.text.replace(/\[[^\]]+\]/g, ' '))
-    .filter((q) => !supported.some((s) => s.unit === q.unit && sameNumber(s.value, q.value)))
+    .filter((q) => !supported.some((s) => s.unit === q.unit && sameNumber(s.value, q.value)) && !derived.some((d) => exactDelta(d,q)))
     .map((q) => `Claim ${item.id} has no cited value-unit support for ${q.value} ${q.unit}.`);
 }
 
@@ -184,6 +203,7 @@ function runNumericUnitCheck(
   pkg: EvidencePackage,
   flagged: Set<string>,
   observedIds: Set<string>,
+  engineeringItems: Set<SynthesisClaimItem>,
 ): VerificationCheckResult {
   const allowedNums = buildAllowedNumbers(pkg);
   const issues: string[] = [];
@@ -191,14 +211,22 @@ function runNumericUnitCheck(
   for (const item of items) {
     // Strip bracket citation tokens and claim-ids like c-0021, fact-1, BASS-II-B1 before numeric check
     const stripped = item.text.replace(/\[[^\]]+\]/g, ' ').replace(/[A-Za-z]+-\d+(?:-[A-Za-z0-9]+)*/g, ' ');
-    const bindings = checkQuantityBindings(item, pkg, !observedIds.has(item.id));
+    const derived = derivedDeltaQuantities(item, pkg, engineeringItems);
+    const itemQuantities = quantities(item.text.replace(/\[[^\]]+\]/g, ' '));
+    const matchedDerived = derived.filter((delta) => itemQuantities.some((q) => exactDelta(delta,q)));
+    const arithmeticClaim = engineeringItems.has(item) && (item.provenance === 'derived' || item.provenance === 'interpretation') && /\b(?:difference|delta)\b|\bB\s*(?:minus|−|-)\s*A\b/i.test(item.text);
+    if (arithmeticClaim && itemQuantities.length > 0 && matchedDerived.length === 0) {
+      issues.push(`Claim ${item.id} has no exact structured delta with both compared test citations, value and unit.`);
+      flagged.add(item.id);
+    }
+    const bindings = checkQuantityBindings(item, pkg, !observedIds.has(item.id), matchedDerived);
     if (bindings.length) {
       issues.push(...bindings);
       flagged.add(item.id);
     }
     const foundNums = extractNumbersFromText(stripped);
     for (const n of foundNums) {
-      const ok = [...allowedNums].some((a) => Math.abs(a - n) <= Math.max(0.02, Math.abs(a) * 0.005));
+      const ok = matchedDerived.some((delta) => Math.abs(delta.value - n) <= 1e-10) || [...allowedNums].some((a) => Math.abs(a - n) <= Math.max(0.02, Math.abs(a) * 0.005));
       if (!ok) {
         issues.push(`Claim ${item.id} introduces ungrounded number ${n}.`);
         flagged.add(item.id);
@@ -361,7 +389,7 @@ export function verifySynthesis(synthesis: GeneratedSynthesis, pkg: EvidencePack
   const allClaims = [...synthesis.observedFact, ...synthesis.authorInterpretation, ...synthesis.engineeringImplication];
 
   const citationCheck = runCitationCheck(allClaims, allowedIds, flagged);
-  const numericUnitCheck = runNumericUnitCheck(allClaims, pkg, flagged, new Set(synthesis.observedFact.map((c) => c.id)));
+  const numericUnitCheck = runNumericUnitCheck(allClaims, pkg, flagged, new Set(synthesis.observedFact.map((c) => c.id)), new Set(synthesis.engineeringImplication));
   const epistemicCheck = runEpistemicCheck(synthesis, pkg, flagged);
   const constraintPreservationCheck = runConstraintPreservationCheck(synthesis, pkg, flagged);
   const lexicalEntailmentCheck = runLexicalEntailmentCheck(synthesis, pkg, flagged);

@@ -1,3 +1,4 @@
+import {comparisonReport} from './comparisonReport';
 /**
  * End-to-end EMBER v2 scientific review orchestrator & export formatters.
  * Pipeline:
@@ -33,7 +34,7 @@ import type {
 } from './types';
 import { verifySynthesis } from './verifier';
 
-export const ENGINE_VERSION = '2.0.1-scientific-fixes';
+export const ENGINE_VERSION = '2.1.0-interpret';
 
 export interface ReviewInput {
   question: string;
@@ -239,9 +240,10 @@ function finalizeReview(
   const tVerify1 = Date.now();
 
   const dependencies = buildDependencies(
-    synthesis.observedFact,
+    [...synthesis.observedFact,...synthesis.authorInterpretation,...synthesis.engineeringImplication],
     evidencePackage.applicabilityDecisions,
     evidencePackage.query,
+    evidencePackage.retrievedHits.map(h=>h.chunk),
   );
 
   const tPlan0 = Date.now();
@@ -546,6 +548,7 @@ export function exportReviewMarkdown(review: Review): string {
   const { query, synthesis, verification, testProgramme, evidencePackage } = review;
   const lines: string[] = [
     `# EMBER Review: ${query.rawQuestion}`,
+    `Engine: ${review.envelope.engineVersion}; corpus: ${review.envelope.corpusVersion}; synthesis: ${synthesis.modelName??synthesis.mode}. Programmatic verifier pass is not independent scientific validation.`,
     `- Mode: \`${synthesis.mode}\` | Answer Boundary: \`${synthesis.answerBoundary}\` | Verification: \`${verification.passed ? 'PASS' : 'FLAGGED'}\``,
     '',
     '## Observed Facts',
@@ -559,6 +562,8 @@ export function exportReviewMarkdown(review: Review): string {
     '',
     '## Applicability Conditions & Exclusions',
     ...(synthesis.applicabilityConditions.length > 0 ? synthesis.applicabilityConditions.map((c) => `- ${c}`) : ['- None.']),
+    '',
+    ...comparisonReport(evidencePackage.contrasts),
     '',
     '## Preserved Conflicts & Tensions',
     ...(synthesis.conflictsPreserved.length > 0
