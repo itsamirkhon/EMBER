@@ -1,7 +1,7 @@
 /**
- * Jev passage evaluator (promptVersion = "jev-v1.0"):
+ * Legacy-compatible passage triage interface; default implementation is heuristic:
  * Evaluates 3 bounded atomic questions (Q1_RELEVANCE, Q2_OBSERVATION, Q3_CONTRADICTION)
- * with calibrated option probabilities, concentration confidence, and explicit routing
+ * with heuristic scores (NOT domain-calibrated probabilities) and explicit routing
  * to "evidence" | "context" | "conflict". Conflicts are NEVER silently deleted.
  */
 import { materialsCompatible } from './applicability';
@@ -18,7 +18,7 @@ import type {
   ResearchQuery,
 } from './types';
 
-export const JEV_PROMPT_VERSION = 'jev-v1.0' as const;
+export const JEV_PROMPT_VERSION = 'heuristic-triage-v1' as const;
 
 export interface JevOptions {
   apiKey?: string;

@@ -217,7 +217,7 @@ export function EvaluationPage() {
     },
     {
       key: 'jev',
-      label: 'JEV Route',
+      label: 'Passage triage Route',
       numeric: true,
       sortable: true,
       sortValue: (v) => v.overall?.jevRoutingAccuracy?.value ?? -1,
@@ -367,7 +367,7 @@ export function EvaluationPage() {
             <span className="kpi-value tabular">{fmtPct(fullEmber.overall.expectedRuleRecall?.value)}</span>
           </div>
           <div className="kpi-tile">
-            <span className="kpi-label">JEV Route / Planner Exact</span>
+            <span className="kpi-label">Passage triage Route / Planner Exact</span>
             <span className="kpi-value tabular">
               {fmtPct(fullEmber.overall.jevRoutingAccuracy?.value)} /{' '}
               {fmtPct(fullEmber.overall.plannerExactness?.value)}
@@ -384,7 +384,7 @@ export function EvaluationPage() {
       />
 
       <SortableTable
-        caption="5 Engine Ablations (Protocol, Geometry, Outcomes, JEV, Retrieval)"
+        caption="5 Engine Ablations (Protocol, Geometry, Outcomes, Passage triage, Retrieval)"
         rows={ablations}
         columns={variantColumns}
         getRowKey={(v) => v.variantId}

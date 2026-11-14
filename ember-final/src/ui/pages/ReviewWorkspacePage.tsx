@@ -828,7 +828,7 @@ export function ReviewWorkspacePage() {
         </section>
       ) : activeLoading ? (
         <div className="card">
-          <p className="muted">Running retrieval, JEV passage evaluation, applicability rules, and synthesis…</p>
+          <p className="muted">Running retrieval, Passage triage passage evaluation, applicability rules, and synthesis…</p>
         </div>
       ) : null}
     </div>

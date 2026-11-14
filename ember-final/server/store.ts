@@ -1,3 +1,4 @@
+import {currentEvaluation} from '../src/core/evaluationVersion';
 import { createHash, randomUUID } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { mkdir, readFile, rename, unlink, writeFile } from 'node:fs/promises';
@@ -173,6 +174,7 @@ export function computeReviewSignature(params: {
   parserOptions?: QueryParserOptions;
   retrievalMode: RetrievalMode;
   budgetRuns: number;
+  execution?: Record<string, unknown>;
 }): string {
   const normalized = canonicalize({
     question: params.question.trim().replace(/\s+/g, ' '),
@@ -180,6 +182,7 @@ export function computeReviewSignature(params: {
     parserOptions: params.parserOptions ?? {},
     retrievalMode: params.retrievalMode,
     budgetRuns: params.budgetRuns,
+    execution: params.execution,
   });
   return createHash('sha256').update(JSON.stringify(normalized)).digest('hex');
 }
@@ -198,8 +201,8 @@ export function buildStagesFromTiming(timingMs: RunEnvelope['timingMs']): RunSta
   return ordered.map(([name, durationMs]) => ({ name, status: 'completed', durationMs }));
 }
 
-export function resolveOpenAiApiKey(rootDir: string): string | null {
-  const fromEnv = process.env.OPENAI_API_KEY?.trim();
+function resolveServerKey(rootDir: string, name: 'OPENAI_API_KEY' | 'OPENROUTER_API_KEY'): string | null {
+  const fromEnv = process.env[name]?.trim();
   if (fromEnv) return fromEnv;
 
   const envPath = join(rootDir, '.env');
@@ -209,7 +212,7 @@ export function resolveOpenAiApiKey(rootDir: string): string | null {
     for (const line of raw.split(/\r?\n/)) {
       const trimmed = line.trim();
       if (!trimmed || trimmed.startsWith('#')) continue;
-      const match = trimmed.match(/^(?:export\s+)?OPENAI_API_KEY\s*=\s*(.+)$/);
+      const match = trimmed.match(new RegExp(`^(?:export\\s+)?${name}\\s*=\\s*(.+)$`));
       if (!match) continue;
       const cleaned = match[1].trim().replace(/^['"]|['"]$/g, '');
       if (cleaned) return cleaned;
@@ -220,7 +223,12 @@ export function resolveOpenAiApiKey(rootDir: string): string | null {
   return null;
 }
 
-function dehydrateSnapshot(snap: SavedReviewSnapshot): SavedReviewSnapshot {
+export function resolveOpenAiApiKey(rootDir: string): string | null { return resolveServerKey(rootDir, 'OPENAI_API_KEY'); }
+export function resolveOpenRouterApiKey(rootDir: string): string | null { return resolveServerKey(rootDir, 'OPENROUTER_API_KEY'); }
+
+function dehydrateSnapshot(snap: SavedReviewSnapshot, corpusVersion: string): SavedReviewSnapshot {
+  // Preserve embedded historical records; current data must never replace an archive.
+  if (snap.review.envelope.engineVersion !== ENGINE_VERSION || snap.review.envelope.corpusVersion !== corpusVersion) return snap;
   const testIds =
     snap.evaluatedTestIds ??
     snap.review.evidencePackage.evaluatedTests?.map((t) => t.testId) ??
@@ -244,6 +252,7 @@ function hydrateSnapshot(
   corpus: CorpusV2,
   testsById: Map<string, Test>,
 ): SavedReviewSnapshot {
+  if (snap.review.envelope.engineVersion !== ENGINE_VERSION || snap.review.envelope.corpusVersion !== corpus.corpusVersion) return snap;
   const ids = snap.evaluatedTestIds ?? snap.review.evidencePackage.applicabilityDecisions.map((d) => d.testId);
   const existing = snap.review.evidencePackage.evaluatedTests;
   const evaluatedTests =
@@ -391,7 +400,7 @@ export class EmberStore {
 
     let modified = !loadedAny;
     for (const demo of DEMO_SPECS) {
-      if (!this.snapshots.has(demo.reviewId)) {
+      if (!this.snapshots.has(demo.reviewId) || (this.snapshots.get(demo.reviewId)?.isDemo && (this.snapshots.get(demo.reviewId)?.review.envelope.engineVersion !== ENGINE_VERSION || this.snapshots.get(demo.reviewId)?.review.envelope.corpusVersion !== corpus.corpusVersion))) {
         const seeded = this.buildDemoSnapshot(demo, corpus, index);
         this.snapshots.set(seeded.reviewId, seeded);
         for (const run of seeded.runs) {
@@ -472,7 +481,7 @@ export class EmberStore {
       await mkdir(dirname(this.storePath), { recursive: true });
       const reviewsRecord: Record<string, SavedReviewSnapshot> = {};
       for (const [id, snap] of this.snapshots.entries()) {
-        reviewsRecord[id] = dehydrateSnapshot(snap);
+        reviewsRecord[id] = dehydrateSnapshot(snap, this.corpusCache?.corpusVersion ?? 'unknown');
       }
       const payload: PersistedStoreFile = {
         schemaVersion: ENGINE_VERSION,
@@ -534,11 +543,14 @@ export class EmberStore {
     await this.ensureInitialized();
     if (explicitKey) {
       for (const snap of this.snapshots.values()) {
-        if (snap.idempotencyKey === explicitKey) return snap;
+        if (snap.idempotencyKey === explicitKey) {
+          if (snap.requestSignature !== signature) throw new Error('IDEMPOTENCY_CONFLICT');
+          return snap;
+        }
       }
     }
     for (const snap of this.snapshots.values()) {
-      if (!snap.isDemo && snap.requestSignature === signature) return snap;
+      if (!snap.isDemo && snap.requestSignature === signature && !snap.runs.at(-1)?.warnings.length) return snap;
     }
     return null;
   }
@@ -668,7 +680,9 @@ export class EmberStore {
       };
     }
     const raw = await readFile(evalPath, 'utf8');
-    return JSON.parse(raw) as Record<string, unknown>;
+    const report = JSON.parse(raw) as Record<string, unknown>;
+    const corpus = await this.getCorpus();
+    return currentEvaluation(report,corpus.corpusVersion,ENGINE_VERSION);
   }
 
   getEvaluatedTestsForReview(snap: SavedReviewSnapshot, corpus: CorpusV2): Test[] {

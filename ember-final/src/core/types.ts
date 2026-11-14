@@ -248,7 +248,7 @@ export interface Claim {
   evidenceIds: string[];
   conditionsScope: string;
   limitations: string[];
-  verificationStatus: 'verified' | 'corrected' | 'preliminary';
+  verificationStatus: 'verified' | 'quote_checked' | 'corrected' | 'preliminary';
   sourceRef: SourceRef;
   topics: string[];
 }
@@ -534,8 +534,10 @@ export interface JevPassageDecision {
   q3Contradiction: JevQuestionScore<Q3Answer>;
   route: JevRoute;
   concentrationConfidence: number;
-  promptVersion: 'jev-v1.0';
-  evaluatorMode: 'deterministic_offline' | 'live_openai';
+  promptVersion: 'jev-v1.0' | 'heuristic-triage-v1' | 'decision-v1.0';
+  evaluatorMode: 'deterministic_offline' | 'live_openai' | 'live_openrouter';
+  model?: string;
+  responseId?: string;
   latencyMs: number;
   sourceRef: SourceRef;
 }
@@ -674,7 +676,10 @@ export interface RunEnvelope {
   corpusVersion: string;
   engineVersion: string;
   mode: SynthesisMode;
-  jevPromptVersion: 'jev-v1.0';
+  jevPromptVersion: JevPassageDecision['promptVersion'];
+  decisionModel?: string;
+  embeddingModel?: string;
+  embeddingDim?: number;
   retrievalMode: RetrievalMode;
   timingMs: {
     parse: number;

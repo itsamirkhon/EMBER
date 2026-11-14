@@ -5,7 +5,9 @@
  * 2. numericUnitCheck
  * 3. epistemicCheck (planned != observed, assumed != measured)
  * 4. constraintPreservationCheck (gas role, E-FIELD, operator shutoff, cool flame, joint gaps)
- * 5. lexicalEntailmentCheck (token overlap + polarity/negation consistency)
+ * 5. lexicalEntailmentCheck (per-assertion lexical mismatch + polarity screening)
+ * These deterministic checks are rejection guards, not proof of semantic entailment.
+ * The legacy lexicalEntailmentCheck field name is retained for API compatibility.
  */
 import { tokenizeBm25 } from './retrieval';
 import type {
@@ -131,10 +133,57 @@ function buildAllowedNumbers(pkg: EvidencePackage): Set<number> {
   return nums;
 }
 
+function claimCitations(item: SynthesisClaimItem): string[] {
+  return [...new Set([...item.citations, ...extractBracketCitations(item.text)])];
+}
+
+function testEvidenceText(t: Test): string {
+  const measurements = [
+    t.atmosphere.o2, t.atmosphere.pressure, t.atmosphere.diluentPct,
+    t.flow.initialFlowCmS, t.gravity.gravityG, t.thicknessMm, t.diameterMm,
+    t.widthCm, t.spreadRateMmS, t.burningRateMm2S, t.particleSizeNm, t.smokePointLengthMm,
+  ];
+  const quantities = measurements.filter((m) => m.value !== null).map((m) => `${m.value} ${m.unit}`);
+  const flowSequence = (t.flow.sequenceCmS ?? []).map((v) => `${v} cm/s`);
+  return [t.testId, t.inv, t.fuel, t.geometry, t.initialOutcome, t.terminalEvent, t.outcomeRaw, ...quantities, ...flowSequence].join(' ');
+}
+
+function citedEvidenceText(item: SynthesisClaimItem, pkg: EvidencePackage): string {
+  const ids = new Set(claimCitations(item));
+  const chunks = pkg.retrievedHits.filter((h) => ids.has(h.chunk.chunkId) || (h.chunk.inv !== null && (ids.has(h.chunk.inv) || ids.has(`card:${h.chunk.inv}`))));
+  const tests = (pkg.evaluatedTests ?? []).filter((t) => ids.has(t.testId));
+  return [...chunks.map((h) => h.chunk.text), ...tests.map(testEvidenceText)].join(' ');
+}
+
+function quantities(text: string): { value: number; unit: string }[] {
+  const pattern = /(?<![a-zA-Z0-9])(-?\d+(?:\.\d+)?)\s*(mm[²2]\s*\/\s*s|mm\s*\/\s*s|cm\s*\/\s*s|kpa|atm|mm|cm|nm|%|g)(?![a-zA-Z])/gi;
+  return [...text.replace(/%vol\b/gi, '%').matchAll(pattern)].map((m) => ({ value: Number(m[1]), unit: m[2].toLowerCase().replace(/\s+/g, '').replace('²', '2') }));
+}
+
+function sameNumber(a: number, b: number): boolean {
+  return Math.abs(a - b) <= Math.max(0.000001, Math.abs(a) * 0.005);
+}
+
+function checkQuantityBindings(item: SynthesisClaimItem, pkg: EvidencePackage, allowQuery: boolean): string[] {
+  let source = citedEvidenceText(item, pkg);
+  if (allowQuery) {
+    const q = pkg.query;
+    // 0 g / 1 g denote reference gravity regimes, not invented test measurements.
+    source += ' 0 g 1 g';
+    source += ` ${q.o2Pct}% ${q.pressureKpa} kPa ${q.thicknessMm} mm ${q.diameterMm} mm ${q.gravityG} g`;
+    source += (Array.isArray(q.flowCmS) ? q.flowCmS : [q.flowCmS]).map((v) => ` ${v} cm/s`).join('');
+  }
+  const supported = quantities(source);
+  return quantities(item.text.replace(/\[[^\]]+\]/g, ' '))
+    .filter((q) => !supported.some((s) => s.unit === q.unit && sameNumber(s.value, q.value)))
+    .map((q) => `Claim ${item.id} has no cited value-unit support for ${q.value} ${q.unit}.`);
+}
+
 function runNumericUnitCheck(
   items: SynthesisClaimItem[],
   pkg: EvidencePackage,
   flagged: Set<string>,
+  observedIds: Set<string>,
 ): VerificationCheckResult {
   const allowedNums = buildAllowedNumbers(pkg);
   const issues: string[] = [];
@@ -142,6 +191,11 @@ function runNumericUnitCheck(
   for (const item of items) {
     // Strip bracket citation tokens and claim-ids like c-0021, fact-1, BASS-II-B1 before numeric check
     const stripped = item.text.replace(/\[[^\]]+\]/g, ' ').replace(/[A-Za-z]+-\d+(?:-[A-Za-z0-9]+)*/g, ' ');
+    const bindings = checkQuantityBindings(item, pkg, !observedIds.has(item.id));
+    if (bindings.length) {
+      issues.push(...bindings);
+      flagged.add(item.id);
+    }
     const foundNums = extractNumbersFromText(stripped);
     for (const n of foundNums) {
       const ok = [...allowedNums].some((a) => Math.abs(a - n) <= Math.max(0.02, Math.abs(a) * 0.005));
@@ -193,14 +247,45 @@ function runEpistemicCheck(
   return { passed: issues.length === 0, issues };
 }
 
+// Conservative assertion boundaries; decimals are preserved and citations end a support unit.
+// This is not a general linguistic parser or a semantic entailment model.
+function assertionUnits(text: string): string[] {
+  return text.replace(/\[[^\]]+\]/g, '; ')
+    .split(/(?<!\d)[.!?;]\s+|[.!?;](?!\d)\s*$|\s+(?:and|but|yet)\s+(?=(?:will|is|it|this|the configuration|cannot|safe)\b)/i)
+    .map((part) => part.trim()).filter(Boolean);
+}
+
+function unsupportedSafetyAssertions(text: string): string[] {
+  return assertionUnits(text).filter((part) => {
+    // Negation must precede the guarantee within the same assertion, not anywhere in the item.
+    const guarantee = /\bsafe\s+for\s+(?:crewed|human|spacecraft|cabin)|\b(?:certified|qualified|approved)\s+(?:for|as)\b[^.!?;]{0,60}\b(?:flight|spacecraft|cabin|crewed|human)\b|\balways\s+(?:self[- ]extinguish|extinguish)|\b(?:guarantees?|proves?)\s+(?:fire\s+)?safety\b/i.exec(part);
+    if (!guarantee) return false;
+    const prefix = part.slice(0, guarantee.index).replace(/\bnot\s+only\b/gi, '');
+    return !/\b(?:not|cannot|can't|never|no|without)\b|\b(?:do|does)\s+not\b|\binsufficient\b|\bnot\s+establish\b/i.test(prefix);
+  });
+}
+
 function runConstraintPreservationCheck(
   synthesis: GeneratedSynthesis,
   pkg: EvidencePackage,
   flagged: Set<string>,
 ): VerificationCheckResult {
   const issues: string[] = [];
+  const allClaims = [...synthesis.observedFact, ...synthesis.authorInterpretation, ...synthesis.engineeringImplication];
+  for (const item of allClaims) {
+    if (unsupportedSafetyAssertions(item.text).length) {
+      issues.push(`Claim ${item.id} asserts unqualified safety, certification, or universal extinction outside evidence-review scope.`);
+      flagged.add(item.id);
+    }
+  }
+  for (const [section, texts] of [['Applicability conditions', synthesis.applicabilityConditions], ['Raw summary', [synthesis.rawSummary]]] as const) {
+    if (texts.some((text) => unsupportedSafetyAssertions(text).length)) {
+      issues.push(`${section} asserts an unqualified safety guarantee outside evidence-review scope.`);
+    }
+  }
   const allText = [
     ...synthesis.observedFact.map((c) => c.text),
+    ...synthesis.authorInterpretation.map((c) => c.text),
     ...synthesis.engineeringImplication.map((c) => c.text),
     ...synthesis.applicabilityConditions,
   ].join(' ');
@@ -221,7 +306,7 @@ function runConstraintPreservationCheck(
     issues.push('Constraint omission: oxidizer_stream vs ambient O2 role warning was dropped.');
   }
 
-  for (const item of synthesis.observedFact) {
+  for (const item of allClaims) {
     if (/flow_turned_off|turned\s+flow\s+off/i.test(item.text) && /physical\s+quench\s+limit/i.test(item.text)) {
       issues.push(`Constraint breach in ${item.id}: conflates operator flow_turned_off with physical quench limit.`);
       flagged.add(item.id);
@@ -232,7 +317,7 @@ function runConstraintPreservationCheck(
 }
 
 function hasNegativePolarity(text: string): boolean {
-  return /\b(no\s+ignition|did\s+not\s+ignite|never\s+ignited|not\s+flammable|self-extinguished|failed\s+to\s+ignite)\b/i.test(text);
+  return /\b(no\s+ignition|did\s+not\s+ignite|never\s+ignited|not\s+flammable|failed\s+to\s+ignite)\b/i.test(text);
 }
 
 function hasPositiveBurnPolarity(text: string): boolean {
@@ -245,27 +330,22 @@ function runLexicalEntailmentCheck(
   flagged: Set<string>,
 ): VerificationCheckResult {
   const issues: string[] = [];
-  const chunkMap = new Map(pkg.retrievedHits.map((h) => [h.chunk.chunkId, h.chunk.text]));
-  const testMap = new Map(
-    (pkg.evaluatedTests ?? []).map((t) => [
-      t.testId,
-      `${t.testId} ${t.inv} ${t.fuel ?? ''} ${t.geometry ?? ''} ${t.initialOutcome} ${t.terminalEvent ?? ''} ${t.outcomeRaw ?? ''}`,
-    ]),
-  );
-
   for (const item of synthesis.observedFact) {
-    const cites = [...new Set([...item.citations, ...extractBracketCitations(item.text)])];
-    const sourceText = cites.map((id) => chunkMap.get(id) ?? testMap.get(id) ?? '').join(' ');
-    if (!sourceText.trim()) continue;
-
-    const claimToks = tokenizeBm25(item.text.replace(/\[[^\]]+\]/g, ' '));
-    const srcToks = new Set(tokenizeBm25(sourceText));
-    const hits = claimToks.filter((t) => srcToks.has(t)).length;
-    const ratio = claimToks.length > 0 ? hits / claimToks.length : 0;
-
-    if (ratio < 0.25) {
-      issues.push(`Claim ${item.id} has low lexical entailment (${(ratio * 100).toFixed(0)}%) against cited evidence.`);
+    const sourceText = citedEvidenceText(item, pkg);
+    if (!sourceText.trim()) {
+      issues.push(`Claim ${item.id} has no accessible cited text for support screening.`);
       flagged.add(item.id);
+      continue;
+    }
+    const srcToks = new Set(tokenizeBm25(sourceText));
+    for (const assertion of assertionUnits(item.text)) {
+      const claimToks = tokenizeBm25(assertion);
+      const hits = claimToks.filter((t) => srcToks.has(t)).length;
+      const ratio = claimToks.length > 0 ? hits / claimToks.length : 1;
+      if (ratio < 0.25) {
+        issues.push(`Claim ${item.id} contains an assertion with low lexical support (${(ratio * 100).toFixed(0)}%); semantic support is not established.`);
+        flagged.add(item.id);
+      }
     }
     if (hasNegativePolarity(sourceText) && hasPositiveBurnPolarity(item.text) && !hasNegativePolarity(item.text)) {
       issues.push(`Claim ${item.id} polarity contradicts negative ignition/extinction outcome in cited source.`);
@@ -281,7 +361,7 @@ export function verifySynthesis(synthesis: GeneratedSynthesis, pkg: EvidencePack
   const allClaims = [...synthesis.observedFact, ...synthesis.authorInterpretation, ...synthesis.engineeringImplication];
 
   const citationCheck = runCitationCheck(allClaims, allowedIds, flagged);
-  const numericUnitCheck = runNumericUnitCheck(allClaims, pkg, flagged);
+  const numericUnitCheck = runNumericUnitCheck(allClaims, pkg, flagged, new Set(synthesis.observedFact.map((c) => c.id)));
   const epistemicCheck = runEpistemicCheck(synthesis, pkg, flagged);
   const constraintPreservationCheck = runConstraintPreservationCheck(synthesis, pkg, flagged);
   const lexicalEntailmentCheck = runLexicalEntailmentCheck(synthesis, pkg, flagged);

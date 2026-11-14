@@ -38,7 +38,7 @@ export function ModeBadge({ mode }: { mode: SynthesisMode | string }) {
       tone="ok"
       icon="⚙"
       label="DETERMINISTIC_ENGINE"
-      title="Exact local deterministic applicability, JEV, and verification engine"
+      title="Exact local deterministic applicability, Passage triage, and verification engine"
     />
   );
 }

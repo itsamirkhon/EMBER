@@ -8,7 +8,7 @@
 import { buildContrasts, evaluateApplicability, rankInvestigationsV2, type ApplicabilityOptions } from './applicability';
 import { buildDependencies, registerReviewCorpus } from './dependencies';
 import { generateDeterministicSynthesis, generateSynthesis, type GeneratorOptions } from './generator';
-import { evaluatePassageWithJev, evaluatePassageWithJevOffline, JEV_PROMPT_VERSION } from './jev';
+import { evaluatePassageWithJevOffline, JEV_PROMPT_VERSION } from './jev';
 import { generateCandidateBlocks, optimizeTestProgramme } from './planner';
 import { predictAllApplicableTargets } from './prediction';
 import { summarizeTestProtocol } from './protocol';
@@ -16,6 +16,7 @@ import { parseResearchQuery, type QueryParserOptions } from './queryParser';
 import { buildSynthesizedChunksIndex, searchHybrid } from './retrieval';
 import type {
   ApplicabilityDecision,
+  ChunkRecord,
   ChunksIndex,
   CorpusV2,
   EvidencePackage,
@@ -32,7 +33,7 @@ import type {
 } from './types';
 import { verifySynthesis } from './verifier';
 
-export const ENGINE_VERSION = '2.0.0-ember-final';
+export const ENGINE_VERSION = '2.0.1-scientific-fixes';
 
 export interface ReviewInput {
   question: string;
@@ -49,6 +50,11 @@ export interface ReviewInput {
   model?: string;
   savedSnapshot?: GeneratedSynthesis;
   fetchImpl?: typeof fetch;
+  /** Async server adapters keep provider credentials out of the scientific core/browser. */
+  retrieve?: (query: ResearchQuery, index: ChunksIndex, k: number, mode: RetrievalMode) => Promise<RetrievalHit[]>;
+  embeddingModel?: string;
+  embeddingDim?: number;
+  passageEvaluator?: (query: ResearchQuery, chunk: ChunkRecord) => Promise<JevPassageDecision>;
   ablations?: ApplicabilityOptions['ablations'] & { noJev?: boolean };
 }
 
@@ -253,7 +259,8 @@ function finalizeReview(
     corpusVersion: corpus.corpusVersion,
     engineVersion: ENGINE_VERSION,
     mode: synthesis.mode,
-    jevPromptVersion: JEV_PROMPT_VERSION,
+    jevPromptVersion: evidencePackage.jevDecisions[0]?.promptVersion ?? JEV_PROMPT_VERSION,
+    decisionModel: evidencePackage.jevDecisions.find(d => d.model)?.model,
     retrievalMode,
     timingMs: {
       ...timings,
@@ -339,7 +346,7 @@ export function runReviewSync(input: ReviewInput): Review {
 }
 
 export async function runReview(input: ReviewInput): Promise<Review> {
-  if (!input.apiKey && !input.proxyUrl && input.synthesisMode !== 'LIVE_AI') {
+  if (!input.apiKey && !input.proxyUrl && !input.retrieve && !input.passageEvaluator && input.synthesisMode !== 'LIVE_AI') {
     return runReviewSync(input);
   }
 
@@ -353,10 +360,9 @@ export async function runReview(input: ReviewInput): Promise<Review> {
 
   const effectiveIndex = input.index ?? buildSynthesizedChunksIndex(input.corpus);
   const tRet0 = Date.now();
-  const retrievedHits = searchHybrid(input.corpus, effectiveIndex, query, {
-    mode: retrievalMode,
-    k: input.retrievalK ?? 12,
-  });
+  const retrievedHits = input.retrieve
+    ? await input.retrieve(query, effectiveIndex, input.retrievalK ?? 12, retrievalMode)
+    : searchHybrid(input.corpus, effectiveIndex, query, {mode: retrievalMode, k: input.retrievalK ?? 12});
   const tRet1 = Date.now();
 
   const tJev0 = Date.now();
@@ -364,13 +370,9 @@ export async function runReview(input: ReviewInput): Promise<Review> {
     ? naiveNoJevDecisions(retrievedHits)
     : await Promise.all(
         retrievedHits.map((h) =>
-          evaluatePassageWithJev(query, h.chunk, {
-            apiKey: input.apiKey,
-            proxyUrl: input.proxyUrl,
-            model: input.model,
-            corpus: input.corpus,
-            fetchImpl: input.fetchImpl,
-          }),
+          input.passageEvaluator
+            ? input.passageEvaluator(query, h.chunk)
+            : Promise.resolve(evaluatePassageWithJevOffline(query, h.chunk, {corpus: input.corpus})),
         ),
       );
   const tJev1 = Date.now();
@@ -399,7 +401,7 @@ export async function runReview(input: ReviewInput): Promise<Review> {
   const synthesis = await generateSynthesis(evidencePackage, genOpts);
   const tSyn1 = Date.now();
 
-  return finalizeReview(
+  const review = finalizeReview(
     input.corpus,
     evidencePackage,
     synthesis,
@@ -414,6 +416,11 @@ export async function runReview(input: ReviewInput): Promise<Review> {
     },
     t0,
   );
+  if (retrievalMode === 'hybrid') {
+    review.envelope.embeddingModel = input.embeddingModel ?? effectiveIndex.embeddingModel;
+    review.envelope.embeddingDim = input.embeddingDim ?? effectiveIndex.embeddingDim;
+  }
+  return review;
 }
 
 // ---------------------------------------------------------------------------

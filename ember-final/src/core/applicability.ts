@@ -1,3 +1,5 @@
+import {normalizeMaterialName} from './materials';
+export {normalizeMaterialName} from './materials';
 /**
  * Applicability engine:
  * 1. Baseline C: evaluateStaticMatcher(query, test) — naive row-level check without protocol/provenance/joint checks.
@@ -33,31 +35,6 @@ export interface ApplicabilityOptions {
   };
 }
 
-export function normalizeMaterialName(raw: string | null | undefined): string {
-  if (!raw) return '';
-  const s = raw.toLowerCase().trim();
-  if (/pmma|acrylic|polymethyl/.test(s)) return 'pmma';
-  if (/sibal|cotton[-\s]*fiberglass/.test(s)) return 'sibal';
-  if (/nomex/.test(s)) return 'nomex';
-  if (/ultem/.test(s)) return 'ultem';
-  if (/kapton/.test(s)) return 'kapton';
-  if (/teflon|ptfe/.test(s)) return 'teflon';
-  if (/silicone/.test(s)) return 'silicone';
-  if (/pyrell/.test(s)) return 'pyrell';
-  if (/wax|candle/.test(s)) return 'wax';
-  if (/cotton|lampwick|cellulose|paper/.test(s)) return 'cotton';
-  if (/n-dodecane/.test(s) && /iso-dodecane/.test(s)) return 'dodecane-blend';
-  if (/dodecane/.test(s)) return 'n-dodecane';
-  if (/heptane/.test(s)) return 'heptane';
-  if (/methanol/.test(s)) return 'methanol';
-  if (/ethylene|c2h4/.test(s)) return 'ethylene';
-  if (/methane|ch4/.test(s)) return 'methane';
-  if (/ethane|c2h6/.test(s)) return 'ethane';
-  if (/propane|c3h8/.test(s)) return 'propane';
-  if (/butane|c4h10/.test(s)) return 'butane';
-  if (/propylene|c3h6/.test(s)) return 'propylene';
-  return s;
-}
 
 export function materialsCompatible(qMat: string | null, tMat: string | null): boolean {
   if (!qMat) return true;

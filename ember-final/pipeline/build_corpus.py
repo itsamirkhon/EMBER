@@ -30,7 +30,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import normalize
 
-CORPUS_VERSION = "2.0.0-ember-final"
+CORPUS_VERSION = "2.0.1-scientific-fixes"
 EMBEDDING_MODEL = "tfidf-lsa-svd-64d-v1"
 EMBEDDING_DIM = 64
 
@@ -725,6 +725,15 @@ def _segments_bass_family(
     evts: list[dict[str, Any]] = []
     order = 1
 
+    # A family-level protocol cannot establish the outcome of an undocumented test.
+    if outcome == "unknown":
+        segs.append(_make_step(
+            tid, order, "preparation",
+            "Reconstructed BASS protocol context only; ignition and burn outcome unknown",
+            f_sv(f0), o2_sv, p_sv, "unknown", src_ref,
+        ))
+        return segs, evts, "unknown", None
+
     # Preparation if reused sample (BASS same sphere/candle/preburned)
     if any(k in low for k in ("same sphere", "same candle", "preburned", "re-igntion", "re-ignition", "reignit", "stump")):
         segs.append(_make_step(
@@ -738,7 +747,7 @@ def _segments_bass_family(
     ign_failed = outcome == "no_ignition"
     seg_ign = _make_step(
         tid, order, "ignition",
-        f"Hot-wire igniter energized at initial flow ({f0} cm/s)" if not ign_failed else f"Igniter energized at {f0} cm/s; failed to establish sustained flame",
+        f"Reconstructed hot-wire ignition stage at initial flow ({f0} cm/s); inferred from reported burn outcome" if not ign_failed else f"Igniter energized at {f0} cm/s; failed to establish sustained flame",
         f_sv(f0), o2_sv, p_sv, "igniter_energized", src_ref,
     )
     segs.append(seg_ign)
@@ -764,8 +773,8 @@ def _segments_bass_family(
     evts.append(_make_event(
         tid, len(evts) + 1, seg_burn["segmentId"],
         "flame_establishment", "ignited",
-        make_sv("ignited", "state", "reported", source_ref=src_ref),
-        "video/radiometer", src_ref,
+        make_sv("ignited", "state", "derived", source_ref=src_ref),
+        "inferred from legacy burn outcome; ignition not independently extracted", src_ref,
     ))
 
     # Spread rate event(s) (including multi-velocity TM Table 5.1)
@@ -1424,13 +1433,12 @@ def build_investigations(
     for t in tests:
         by_inv[t["inv"]].append(t)
 
-    preliminary_invs = {"Saffire-III", "FLEX-2", "ACME-BRE", "ACME-E-FIELD", "SLICE"}
     out: list[dict[str, Any]] = []
     for inv in invs_seed:
         iid = inv["id"]
         rows = by_inv.get(iid, [])
         epistemic = "planned_only" if iid == "FLEX-2" else "observed"
-        verif = "preliminary_team_reviewed" if iid in preliminary_invs else "verified"
+        verif = "preliminary_team_reviewed"
 
         with_outcome = sum(
             1 for r in rows
@@ -1591,7 +1599,7 @@ def build_claims(
             raise ValueError(f"Claim {cid} quote failed verbatim check in source {sid}")
 
         epistemic = fix["epistemicStatus"] if fix else _classify_claim_epistemic(text, quote, inv)
-        verif = "corrected" if fix else "verified"
+        verif = "corrected" if fix else "quote_checked"
         conditions_scope = fix["conditionsScope"] if fix else (
             f"{inv} investigation conditions" if inv else "Cross-investigation spacecraft fire safety literature"
         )

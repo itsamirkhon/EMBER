@@ -42,6 +42,49 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+class TestBassOutcomeReconstruction(unittest.TestCase):
+    def build(self, outcome: str):
+        from pipeline.build_corpus import _segments_bass_family, make_sv
+        row = {"testId": "BASS-test", "inv": "BASS", "outcome": outcome}
+        flow = {"initialFlowCmS": make_sv(5, "cm/s", "reported"), "direction": "opposed"}
+        atmosphere = {"o2": make_sv(21, "%", "reported"), "pressure": make_sv(101, "kPa", "reported")}
+        return _segments_bass_family(row, flow, atmosphere, {})
+
+    def test_unknown_does_not_invent_ignition_or_burning(self):
+        segments, events, initial, terminal = self.build("unknown")
+        self.assertEqual(initial, "unknown")
+        self.assertIsNone(terminal)
+        self.assertEqual(events, [])
+        self.assertFalse(any(s["stageType"] in ("steady_burn", "termination") for s in segments))
+        self.assertTrue(all("reconstruct" in s["description"].lower() for s in segments))
+
+    def test_all_unknown_legacy_bass_records_remain_unknown(self):
+        from pipeline.build_corpus import _segments_bass_family, make_sv
+        rows = json.loads((ROOT / "data/legacy_seed/tests.json").read_text())
+        unknown_rows = [r for r in rows if r["inv"] in ("BASS", "BASS-II") and r.get("outcome") == "unknown"]
+        self.assertEqual(len(unknown_rows), 16)
+        flow = {"initialFlowCmS": make_sv(None, "cm/s", "unknown"), "direction": "unknown"}
+        atmosphere = {"o2": make_sv(None, "%", "unknown"), "pressure": make_sv(None, "kPa", "unknown")}
+        for row in unknown_rows:
+            with self.subTest(test_id=row["testId"]):
+                _, events, initial, terminal = _segments_bass_family(row, flow, atmosphere, {})
+                self.assertEqual(events, [])
+                self.assertEqual(initial, "unknown")
+                self.assertIsNone(terminal)
+
+    def test_inferred_ignition_is_derived_not_reported(self):
+        _, events, initial, _ = self.build("burned")
+        ignition = next(e for e in events if e["endpoint"] == "flame_establishment")
+        self.assertEqual(ignition["observedValue"]["provenance"], "derived")
+        self.assertEqual(initial, "ignited_burned")
+
+    def test_reported_negative_ignition_remains_observed(self):
+        _, events, initial, _ = self.build("no_ignition")
+        self.assertEqual(initial, "no_ignition")
+        self.assertEqual(events[0]["observedValue"]["provenance"], "reported")
+        self.assertEqual(events[0]["observedValue"]["value"], "no_ignition")
+
+
 class TestEmberCorpusV2(unittest.TestCase):
     corpus: dict
     chunks_index: dict
@@ -77,7 +120,7 @@ class TestEmberCorpusV2(unittest.TestCase):
             "outcomeAudit",
         }
         self.assertEqual(set(self.corpus.keys()), expected_keys)
-        self.assertEqual(self.corpus["corpusVersion"], "2.0.0-ember-final")
+        self.assertEqual(self.corpus["corpusVersion"], "2.0.1-scientific-fixes")
         self.assertEqual(len(self.corpus["investigations"]), 15)
         self.assertEqual(len(self.corpus["tests"]), 1678)
         self.assertEqual(len(self.corpus["claims"]), 145)

@@ -22,29 +22,71 @@ export function isOperatorTerminated(test: Test): boolean {
 
 const OPERATOR_EVENT_TYPES = new Set(['operator_flow_shutoff', 'flow_shutoff', 'flow_turned_off', 'ft']);
 
+function precedes(earlier: ProtocolStep, later: ProtocolStep): boolean {
+  if (earlier.order >= later.order) return false;
+  // Absolute timing is optional; when present it must agree with protocol order.
+  const earlierTime = earlier.timeEndS ?? earlier.timeStartS;
+  const laterTime = later.timeStartS ?? later.timeEndS;
+  return earlierTime === null || laterTime === null || earlierTime <= laterTime;
+}
+
+function eventSegment(test: Test, event: TestEvent): ProtocolStep | undefined {
+  return test.segments.find((segment) => segment.segmentId === event.segmentId && segment.testId === event.testId);
+}
+
+function hasPrecedingBurn(test: Test, segment: ProtocolStep): boolean {
+  return test.segments.some((prior) => prior.stageType === 'steady_burn' && precedes(prior, segment));
+}
+
+function matchesFlowIntervention(test: Test, event: TestEvent, segment: ProtocolStep): boolean {
+  const intervention = event.endpoint === 'quench_limit' ? 'flow_stepped_down'
+    : event.endpoint === 'blowoff_limit' ? 'flow_stepped_up' : null;
+  return test.segments.some((step) =>
+    (intervention ? step.intervention === intervention : step.stageType === 'flow_modification') &&
+    (step.segmentId === segment.segmentId || precedes(step, segment)));
+}
+
+function isFlowEventConsistent(test: Test, event: TestEvent, segment: ProtocolStep): boolean {
+  if (segment.stageType !== 'flow_modification' && segment.stageType !== 'termination') return false;
+  if (!hasPrecedingBurn(test, segment)) return false;
+  if (OPERATOR_EVENT_TYPES.has(event.eventType.toLowerCase())) return segment.intervention === 'flow_shutoff';
+  return matchesFlowIntervention(test, event, segment);
+}
+
+function hasPrecedingHotExtinction(test: Test, segment: ProtocolStep): boolean {
+  return test.events.some((prior) => {
+    const hotSegment = eventSegment(test, prior);
+    return prior.endpoint === 'hot_flame_extinction' && hotSegment !== undefined &&
+      isEventConsistent(test, prior) && precedes(hotSegment, segment);
+  });
+}
+
+function isSegmentTimingConsistent(test: Test, segment: ProtocolStep): boolean {
+  if (segment.timeStartS !== null && segment.timeEndS !== null && segment.timeStartS > segment.timeEndS) return false;
+  return !test.segments.some((prior) => prior.order < segment.order && !precedes(prior, segment));
+}
+
+function isEventConsistent(test: Test, event: TestEvent): boolean {
+  if (test.events.filter((candidate) => candidate.id === event.id).length !== 1) return false;
+  const segment = eventSegment(test, event);
+  if (!segment || event.testId !== test.testId || !isSegmentTimingConsistent(test, segment)) return false;
+  if (FLOW_EXTINCTION_ENDPOINTS.has(event.endpoint)) return isFlowEventConsistent(test, event, segment);
+  if (event.endpoint === 'cool_flame_continuation') return hasPrecedingHotExtinction(test, segment);
+  return true;
+}
+
 export function hasPhysicalFlowExtinction(test: Test): boolean {
-  if (test.terminalEvent === 'extinguished_at_reduced_flow' || test.terminalEvent === 'blowoff' || test.terminalEvent === 'SE') {
-    return true;
-  }
-  return test.events.some(
-    (ev) =>
-      !OPERATOR_EVENT_TYPES.has(ev.eventType.toLowerCase()) &&
-      ev.observedValue.value !== 'flow_turned_off' &&
-      (ev.endpoint === 'quench_limit' ||
-        ev.endpoint === 'blowoff_limit' ||
-        ev.endpoint === 'extinction_under_flow_change'),
-  );
+  return test.events.some((event) => FLOW_EXTINCTION_ENDPOINTS.has(event.endpoint) &&
+    !OPERATOR_EVENT_TYPES.has(event.eventType.toLowerCase()) &&
+    event.observedValue.value !== 'flow_turned_off' && isEventConsistent(test, event));
 }
 
 export function hasCoolFlameContinuation(test: Test): boolean {
-  if (test.events.some((ev) => ev.endpoint === 'cool_flame_continuation')) return true;
-  if (test.segments.some((seg) => /cool[-\s]*flame/i.test(seg.description))) return true;
-  return test.extra?.kCoolMm2S != null || test.extra?.DextCoolMm != null;
+  return test.events.some((event) => event.endpoint === 'cool_flame_continuation' && isEventConsistent(test, event));
 }
 
 export function hasHotFlameExtinction(test: Test): boolean {
-  if (test.events.some((ev) => ev.endpoint === 'hot_flame_extinction')) return true;
-  return test.extra?.DextHotMm != null || /hot[-\s]*flame\s+extinct/i.test(test.outcomeRaw ?? '');
+  return test.events.some((event) => event.endpoint === 'hot_flame_extinction' && isEventConsistent(test, event));
 }
 
 function findSegmentsForEndpoint(test: Test, endpoint: TargetEndpoint | null): {
@@ -57,7 +99,7 @@ function findSegmentsForEndpoint(test: Test, endpoint: TargetEndpoint | null): {
       events: test.events.slice(0, 2),
     };
   }
-  const matchedEvents = test.events.filter((ev) => ev.endpoint === endpoint);
+  const matchedEvents = test.events.filter((ev) => ev.endpoint === endpoint && isEventConsistent(test, ev));
   if (matchedEvents.length > 0) {
     const segIds = new Set(matchedEvents.map((e) => e.segmentId));
     const matchedSegments = test.segments.filter((s) => segIds.has(s.segmentId));
@@ -75,6 +117,15 @@ function findSegmentsForEndpoint(test: Test, endpoint: TargetEndpoint | null): {
   }
 
   return { segments: [], events: [] };
+}
+
+function matchesOperatorCutoff(test: Test, matchedEvents: TestEvent[]): boolean {
+  if (matchedEvents.some((event) => OPERATOR_EVENT_TYPES.has(event.eventType.toLowerCase()))) return true;
+  // Older records can describe the intervention as a step without an event.
+  // A contradictory typed event must never be repaired by terminal text.
+  if (test.events.some((event) => FLOW_EXTINCTION_ENDPOINTS.has(event.endpoint))) return false;
+  return test.segments.some((segment) => segment.stageType === 'termination' && segment.intervention === 'flow_shutoff' &&
+    hasPrecedingBurn(test, segment));
 }
 
 function evaluateEndpointMatch(
@@ -104,10 +155,9 @@ function evaluateEndpointMatch(
 
   if (FLOW_EXTINCTION_ENDPOINTS.has(endpoint)) {
     if (operatorTerminated && !physicalFlowExt) {
-      if (queryFlowHistory === 'abrupt_cutoff') {
-        const termSegs = matchedSegments.filter((s) => s.stageType === 'termination' || s.intervention === 'flow_shutoff');
+      if (endpoint === 'extinction_under_flow_change' && queryFlowHistory === 'abrupt_cutoff') {
         return {
-          matched: termSegs.length > 0 || test.terminalEvent === 'flow_turned_off',
+          matched: matchesOperatorCutoff(test, matchedEvents),
           outcomeLabel: 'flow_turned_off',
           warnings,
         };
@@ -115,7 +165,7 @@ function evaluateEndpointMatch(
       warnings.push('Operator shutoff is NOT a physical quench or blowoff extinction limit.');
       return { matched: false, outcomeLabel: 'operator_flow_shutoff', warnings };
     }
-    const ok = physicalFlowExt || matchedEvents.length > 0;
+    const ok = matchedEvents.length > 0 && physicalFlowExt;
     return {
       matched: ok,
       outcomeLabel: ok ? matchedEvents[0]?.eventType ?? test.terminalEvent ?? 'physical_flow_extinction' : null,
@@ -192,6 +242,14 @@ export function matchProtocolSegment(query: ResearchQuery, test: Test): MatchedP
     events,
     segments,
   );
+
+  const inconsistentEvents = test.events.filter((event) => !isEventConsistent(test, event));
+  if (inconsistentEvents.length > 0) {
+    ep.warnings.push(`Inconsistent or unresolved event/segment chronology: ${inconsistentEvents.map((event) => event.id).join(', ')}. These events cannot support the endpoint.`);
+  }
+  if (segments.some((segment) => segment.timeStartS === null || segment.timeEndS === null)) {
+    ep.warnings.push('Absolute event timing is unknown; only documented segment order is used.');
+  }
 
   const flowHistoryMismatch =
     query.flowHistory !== null &&

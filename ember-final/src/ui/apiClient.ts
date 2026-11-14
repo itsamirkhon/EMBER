@@ -1,3 +1,4 @@
+import {currentEvaluation} from '../core/evaluationVersion';
 import {
   ENGINE_VERSION,
   exportFormatters,
@@ -291,8 +292,28 @@ function toSummary(snap: SavedReviewSnapshot): ReviewSummary {
   };
 }
 
-function ensureStaticDemos(): Record<string, SavedReviewSnapshot> {
-  return readLocalStore();
+function reviewMatchesCurrentVersion(review: Review, corpus: CorpusV2): boolean {
+  return review.envelope.engineVersion === ENGINE_VERSION && review.envelope.corpusVersion === corpus.corpusVersion;
+}
+
+function requireCurrentReview(review: Review, corpus: CorpusV2): void {
+  if (!reviewMatchesCurrentVersion(review, corpus)) {
+    throw new Error('Archived historical review uses another engine/corpus version. Create a new review before recomputing or exporting current-corpus measurements.');
+  }
+}
+
+async function ensureStaticDemos(): Promise<Record<string, SavedReviewSnapshot>> {
+  const store = readLocalStore();
+  const corpus = await loadStaticCorpus();
+  let changed = false;
+  for (const demo of DEMO_SPECS) {
+    if (store[demo.reviewId]?.isDemo && !reviewMatchesCurrentVersion(store[demo.reviewId].review, corpus)) {
+      delete store[demo.reviewId];
+      changed = true;
+    }
+  }
+  if (changed) writeLocalStore(store);
+  return store;
 }
 
 async function computeSnapshotFromSpec(spec: {
@@ -506,7 +527,7 @@ export async function listReviews(): Promise<{ reviews: ReviewSummary[]; meta: C
   } catch (err) {
     if (!(err instanceof ApiUnavailableError)) throw err;
     lastBackendMode = 'static_fallback';
-    const store = ensureStaticDemos();
+    const store = await ensureStaticDemos();
     for (const demo of DEMO_SPECS) {
       if (!store[demo.reviewId]) {
         const snap = await computeSnapshotFromSpec({
@@ -534,9 +555,11 @@ export async function getReviewSnapshot(reviewId: string): Promise<{ snapshot: S
   } catch (err) {
     if (!(err instanceof ApiUnavailableError)) throw err;
     lastBackendMode = 'static_fallback';
-    const store = readLocalStore();
+    const store = await ensureStaticDemos();
     if (store[reviewId]) {
-      return { snapshot: store[reviewId], meta: { backendSource: 'static_fallback', warnings: [] } };
+      const corpus = await loadStaticCorpus();
+      const warnings = reviewMatchesCurrentVersion(store[reviewId].review, corpus) ? [] : ['Archived historical review: original engine/corpus differs from the current version; conclusions are preserved without current experimental records.'];
+      return { snapshot: store[reviewId], meta: { backendSource: 'static_fallback', warnings } };
     }
     const demo = DEMO_SPECS.find((d) => d.reviewId === reviewId);
     if (!demo) throw new Error(`Review ${reviewId} not found.`);
@@ -615,6 +638,7 @@ export async function applyDesignVariant(
       const snap = (await getReviewSnapshot(reviewId)).snapshot;
       baseReview = snap.review;
     }
+    requireCurrentReview(baseReview, corpus);
     registerReviewCorpus(baseReview, corpus);
     const result = recalculateDesignVariant(baseReview, patch, corpus);
     if (store[reviewId]) {
@@ -660,6 +684,7 @@ export async function recalculateTestProgramme(
     if (!review) {
       review = (await getReviewSnapshot(reviewId)).snapshot.review;
     }
+    requireCurrentReview(review, await loadStaticCorpus());
     const candidates = generateCandidateBlocks(review.evidencePackage);
     const testProgramme = optimizeTestProgramme(candidates, budgetRuns);
     const store = readLocalStore();
@@ -750,6 +775,7 @@ export async function exportReviewText(
     ]);
     if (format === 'markdown') return { content: exportFormatters.markdown(review), filename, mimeType };
     if (format === 'json') return { content: exportFormatters.json(review), filename, mimeType };
+    requireCurrentReview(review, corpus);
 
     const evalTestIds = new Set(review.evidencePackage.applicabilityDecisions.map((d) => d.testId));
     const subsetTests = corpus.tests.filter((t) => evalTestIds.has(t.testId));
@@ -802,8 +828,9 @@ export async function getEvaluationReport(): Promise<{ report: EvalReportData; m
       if (!res.ok) {
         return { report: { status: 'not_measured' }, meta: { backendSource: 'static_fallback', warnings: [] } };
       }
-      const raw = (await res.json()) as Record<string, unknown>;
-      return { report: { status: 'measured', raw }, meta: { backendSource: 'static_fallback', warnings: [] } };
+      const corpus = await loadStaticCorpus();
+      const raw = currentEvaluation((await res.json()) as Record<string, unknown>,corpus.corpusVersion,ENGINE_VERSION);
+      return { report: { status: raw.status === 'not_measured' ? 'not_measured' : 'measured', raw }, meta: { backendSource: 'static_fallback', warnings: [] } };
     } catch {
       return { report: { status: 'not_measured' }, meta: { backendSource: 'static_fallback', warnings: [] } };
     }

@@ -1,3 +1,7 @@
+import {existsSync} from 'node:fs';
+import {join} from 'node:path';
+import {loadOpenRouterAdapters} from './openrouter-runtime';
+import {DECISION_MODEL,EMBEDDING_MODEL} from './openrouter';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Connect, Plugin } from 'vite';
 import {
@@ -24,10 +28,16 @@ import {
   EmberStore,
   computeReviewSignature,
   resolveOpenAiApiKey,
+  resolveOpenRouterApiKey,
   type SavedReviewSnapshot,
 } from './store';
 
-export const RULES_VERSION = '9-rules-v2.0';
+export const RULES_VERSION = '9-rules-v2.1';
+function assertCurrentReview(snapshot:SavedReviewSnapshot,corpus:CorpusV2):void {
+  if(snapshot.review.envelope.engineVersion!==ENGINE_VERSION || snapshot.review.envelope.corpusVersion!==corpus.corpusVersion) {
+    throw new HttpError(409,'ARCHIVED_REVIEW','This review uses an older engine or corpus. Create a new review before recalculating or exporting current-corpus data.');
+  }
+}
 const MAX_BODY_BYTES = 1024 * 1024;
 const VALID_RETRIEVAL_MODES = new Set<RetrievalMode>(['bm25', 'hybrid', 'structured']);
 const VALID_EXPORT_FORMATS = new Set(['markdown', 'json', 'csv', 'modeling_csv']);
@@ -84,7 +94,7 @@ class HttpError extends Error {
   }
 }
 
-function buildVersions(corpusVersion = '2.0.0-ember-final'): ApiVersions {
+function buildVersions(corpusVersion = 'unknown'): ApiVersions {
   return {
     corpus: corpusVersion,
     rules: RULES_VERSION,
@@ -117,13 +127,13 @@ function sendOk<T>(
   res: ServerResponse,
   statusCode: number,
   data: T,
-  opts: { runId?: string; mode?: SynthesisMode; corpusVersion?: string; warnings?: string[] } = {},
+  opts: { runId?: string; mode?: SynthesisMode; corpusVersion?: string; warnings?: string[]; decisionPromptVersion?: string; engineVersion?:string } = {},
 ): void {
   sendJson(res, statusCode, {
     run_id: opts.runId ?? makeRunId(),
     status: 'ok',
     mode: opts.mode ?? 'DETERMINISTIC_ENGINE',
-    versions: buildVersions(opts.corpusVersion),
+    versions: {...buildVersions(opts.corpusVersion), ...(opts.engineVersion ? {engine:opts.engineVersion}: {}), ...(opts.decisionPromptVersion ? {jevPrompt:opts.decisionPromptVersion}: {})},
     warnings: opts.warnings ?? [],
     data,
   });
@@ -531,7 +541,8 @@ export function createApiHandler(
           sources: Math.max(corpus.sources.length, sourcesMap.size),
           savedReviews: reviews.length,
         },
-        liveAiConfigured: Boolean(resolveOpenAiApiKey(store.rootDir)),
+        liveAiConfigured: Boolean(resolveOpenAiApiKey(store.rootDir) || resolveOpenRouterApiKey(store.rootDir)),
+        openRouter: {configured: Boolean(resolveOpenRouterApiKey(store.rootDir)), decisionModel: DECISION_MODEL, embeddingModel: EMBEDDING_MODEL, embeddingIndexPresent: existsSync(join(store.rootDir,'data/openrouter_embeddings.json'))},
       },
       { corpusVersion: corpus.corpusVersion },
     );
@@ -598,17 +609,30 @@ export function createApiHandler(
     const headerKey = typeof headerIdem === 'string' && headerIdem.trim() ? headerIdem.trim() : undefined;
     const explicitKey = params.idempotencyKey ?? headerKey;
 
+    const apiKey = params.useLiveAi ? resolveOpenAiApiKey(store.rootDir) : null;
+    const openRouterKey = params.useLiveAi ? resolveOpenRouterApiKey(store.rootDir) : null;
     const signature = computeReviewSignature({
       question,
       overrides,
       parserOptions,
       retrievalMode: params.retrievalMode,
       budgetRuns: params.budgetRuns,
+      execution: {useLiveAi:params.useLiveAi, retrievalK:params.retrievalK, model:params.model,
+        engineVersion:ENGINE_VERSION, corpusVersion:corpus.corpusVersion,
+        decisionModel:openRouterKey ? DECISION_MODEL : null, embeddingModel:openRouterKey ? EMBEDDING_MODEL : null,
+        proseConfigured:Boolean(apiKey)},
     });
 
-    if (!params.forceNew) {
-      const existing = await store.findIdempotentMatch(explicitKey, signature);
-      if (existing) {
+    if (!params.forceNew || explicitKey) {
+      let existing;
+      try { existing = await store.findIdempotentMatch(explicitKey, signature); }
+      catch (error) {
+        if (error instanceof Error && error.message === 'IDEMPOTENCY_CONFLICT') {
+          throw new HttpError(409,'IDEMPOTENCY_CONFLICT','This idempotency key belongs to a different request or engine/corpus version.');
+        }
+        throw error;
+      }
+      if (existing && !params.forceNew) {
         const lastRun = existing.runs[existing.runs.length - 1];
         sendOk(
           res,
@@ -620,7 +644,8 @@ export function createApiHandler(
           {
             runId: lastRun?.runId ?? existing.review.envelope.runId,
             mode: existing.review.synthesis.mode,
-            corpusVersion: corpus.corpusVersion,
+            corpusVersion: existing.review.envelope.corpusVersion,
+            decisionPromptVersion: existing.review.envelope.jevPromptVersion,
             warnings: lastRun?.warnings ?? [],
           },
         );
@@ -629,11 +654,10 @@ export function createApiHandler(
     }
 
     const warnings: string[] = [];
-    const apiKey = params.useLiveAi ? resolveOpenAiApiKey(store.rootDir) : null;
     let review;
 
-    if (params.useLiveAi && !apiKey) {
-      warnings.push('OPENAI_API_KEY is not configured on the server; fell back explicitly to DETERMINISTIC_ENGINE.');
+    if (params.useLiveAi && !apiKey && !openRouterKey) {
+      warnings.push('OPENROUTER_API_KEY / OPENAI_API_KEY are not configured on the server; showing deterministic retrieval, heuristic passage triage and templated synthesis.');
       review = runReviewSync({
         question,
         overrides,
@@ -644,9 +668,13 @@ export function createApiHandler(
         retrievalMode: params.retrievalMode,
         retrievalK: params.retrievalK,
       });
-    } else if (params.useLiveAi && apiKey) {
+    } else if (params.useLiveAi && (apiKey || openRouterKey)) {
       try {
+        const adapters = openRouterKey
+          ? await loadOpenRouterAdapters(store.rootDir,corpus,index,{apiKey:openRouterKey,fetchImpl:options.fetchImpl})
+          : {};
         review = await runReview({
+          ...adapters,
           question,
           overrides,
           parserOptions,
@@ -655,16 +683,16 @@ export function createApiHandler(
           budgetRuns: params.budgetRuns,
           retrievalMode: params.retrievalMode,
           retrievalK: params.retrievalK,
-          synthesisMode: 'LIVE_AI',
-          apiKey,
+          synthesisMode: apiKey ? 'LIVE_AI' : 'DETERMINISTIC_ENGINE',
+          apiKey: apiKey ?? undefined,
           model: params.model,
           fetchImpl: options.fetchImpl,
         });
-        if (review.synthesis.mode !== 'LIVE_AI') {
+        if (apiKey && review.synthesis.mode !== 'LIVE_AI') {
           warnings.push('Live AI synthesis failed or was unreachable; fell back explicitly to DETERMINISTIC_ENGINE.');
         }
       } catch {
-        warnings.push('Live AI request failed; fell back explicitly to DETERMINISTIC_ENGINE.');
+        warnings.push('Live provider pipeline unavailable (check server key and current embedding artifact); showing deterministic retrieval, heuristic passage triage and templated synthesis.');
         review = runReviewSync({
           question,
           overrides,
@@ -706,6 +734,7 @@ export function createApiHandler(
       {
         runId: run.runId,
         mode: snapshot.review.synthesis.mode,
+        decisionPromptVersion: snapshot.review.envelope.jevPromptVersion,
         corpusVersion: corpus.corpusVersion,
         warnings,
       },
@@ -718,6 +747,7 @@ export function createApiHandler(
     if (!snap) {
       throw new HttpError(404, 'NOT_FOUND', `Review "${id}" not found.`);
     }
+    assertCurrentReview(snap,corpus);
     const body = await readJsonBody(req);
     const patch = parseVariantPatch(body);
     const result = recalculateDesignVariant(snap.review, patch, corpus);
@@ -749,6 +779,7 @@ export function createApiHandler(
     if (!snap) {
       throw new HttpError(404, 'NOT_FOUND', `Review "${id}" not found.`);
     }
+    assertCurrentReview(snap,corpus);
     const body = await readJsonBody(req);
     if (
       typeof body.budgetRuns !== 'number' ||
@@ -805,6 +836,7 @@ export function createApiHandler(
       return;
     }
 
+    assertCurrentReview(snap,corpus);
     const evaluatedTests = store.getEvaluatedTestsForReview(snap, corpus);
     if (format === 'csv') {
       const content = exportFormatters.csv(evaluatedTests, corpus.investigations);
@@ -926,8 +958,12 @@ export function createApiHandler(
         {
           runId: lastRun?.runId ?? snap.review.envelope.runId,
           mode: snap.review.synthesis.mode,
-          corpusVersion: corpus.corpusVersion,
-          warnings: lastRun?.warnings ?? [],
+          corpusVersion: snap.review.envelope.corpusVersion,
+          engineVersion: snap.review.envelope.engineVersion,
+          decisionPromptVersion: snap.review.envelope.jevPromptVersion,
+          warnings: [...(lastRun?.warnings ?? []),
+            ...(snap.review.envelope.engineVersion!==ENGINE_VERSION || snap.review.envelope.corpusVersion!==corpus.corpusVersion
+              ? ['Archived review: conclusions belong to an older engine/corpus; current records are not attached. Create a new review before recalculation.'] : [])],
         },
       );
       return;

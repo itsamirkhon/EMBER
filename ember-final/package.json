@@ -1,7 +1,7 @@
 {
   "name": "ember-final",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "test": "vitest run",
     "lint": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
     "eval": "tsx eval/run_evaluation.ts",
-    "corpus": "python3 pipeline/build_corpus.py"
+    "corpus": "python3 pipeline/build_corpus.py",
+    "embeddings:openrouter": "node --env-file-if-exists=.env --import tsx pipeline/embed_openrouter.ts"
   },
   "dependencies": {
     "react": "^19.3.1",

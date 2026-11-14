@@ -59,8 +59,8 @@ describe('EMBER v2 HTTP API & Store', () => {
 
     expect(status).toBe(200);
     expect(body.status).toBe('ok');
-    expect(body.versions.corpus).toBe('2.0.0-ember-final');
-    expect(body.versions.jevPrompt).toBe('jev-v1.0');
+    expect(body.versions.corpus).toBe('2.0.1-scientific-fixes');
+    expect(body.versions.jevPrompt).toBe('heuristic-triage-v1');
     expect(body.data?.healthy).toBe(true);
     expect(body.data?.counts.investigations).toBe(15);
     expect(body.data?.counts.tests).toBe(1678);

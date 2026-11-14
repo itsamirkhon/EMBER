@@ -834,7 +834,7 @@ describe('retrieval, jev, dependencies, planner, verifier, prediction, reviewEng
       sourceRef: ref('psi-39'),
     };
     const dec = await evaluatePassageWithJev(q, conflictChunk, { corpus });
-    expect(dec.promptVersion).toBe('jev-v1.0');
+    expect(dec.promptVersion).toBe('heuristic-triage-v1');
     expect(dec.route).toBe('conflict');
     const sumQ1 = Object.values(dec.q1Relevance.probabilities).reduce((a, b) => a + b, 0);
     expect(sumQ1).toBeCloseTo(1.0, 2);
@@ -975,7 +975,7 @@ describe('retrieval, jev, dependencies, planner, verifier, prediction, reviewEng
       index: buildSynthesizedChunksIndex(corpus),
     });
     expect(review.envelope.mode).toBe('DETERMINISTIC_ENGINE');
-    expect(review.envelope.jevPromptVersion).toBe('jev-v1.0');
+    expect(review.envelope.jevPromptVersion).toBe('heuristic-triage-v1');
     expect(review.synthesis.observedFact.length).toBeGreaterThan(0);
 
     const modelingCsv = exportModelingCsv(corpus.tests, corpus.investigations);

@@ -277,6 +277,8 @@ export interface HybridSearchOptions {
   k?: number;
   mode?: RetrievalMode;
   rrfK?: number;
+  /** Provider vectors are ranked server-side; never mix them with local SVD vectors. */
+  denseHits?: RetrievalHit[];
 }
 
 export function searchHybrid(
@@ -296,7 +298,7 @@ export function searchHybrid(
   if (mode === 'structured') return filterStructured(corpus, query, index, k);
 
   const bm25Hits = searchBm25(index, queryText, Math.max(k * 2, 24));
-  const denseHits = searchDense(index, queryText, Math.max(k * 2, 24));
+  const denseHits = opts.denseHits ?? searchDense(index, queryText, Math.max(k * 2, 24));
   const structHits = filterStructured(corpus, query, index, Math.max(k * 2, 24));
 
   const merged = new Map<string, RetrievalHit>();
