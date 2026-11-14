@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ScenarioEditor, { flowText } from '../components/ScenarioEditor';
 import { scenarioQuery, useData, useEmber } from '../data/context';
-import { DEFAULT_WEIGHTS, estimate, proximityKernel, rankInvestigations, type Relevance, type RelevanceWeights } from '../lib/evidence';
+import { DEFAULT_WEIGHTS, estimate, groupTests, keywordRuleShare, proximityKernel, rankInvestigations, type Relevance, type RelevanceWeights } from '../lib/evidence';
 import {
   AnswerBadge, DirectionTags, FindingBadge, findSource, fmtGravity, fmtNum, fmtPct, Meter, SourceLink, Term,
 } from '../components/ui';
@@ -24,7 +24,9 @@ function WeightSlider({ k, label, weights, setWeights }: { k: keyof RelevanceWei
   );
 }
 
-function RankItem({ r, rank, invs }: { r: Relevance; rank: number; invs: Investigation[] }) {
+type KeywordShare = ReturnType<typeof keywordRuleShare>;
+
+function RankItem({ r, rank, invs, keyword }: { r: Relevance; rank: number; invs: Investigation[]; keyword?: KeywordShare }) {
   const inv = r.inv;
   const kf = inv.keyFindings[0];
   const p = r.proximity;
@@ -43,6 +45,14 @@ function RankItem({ r, rank, invs }: { r: Relevance; rank: number; invs: Investi
               <span>· {inv.family}</span>
               <span>· {inv.fuelPhase ?? 'phase n/a'} fuel</span>
               <DirectionTags dirs={inv.direction} />
+              {keyword && keyword.share !== null && keyword.share > 0.5 && (
+                <span
+                  className="tag tag-caveat"
+                  title={`${keyword.keyword} of ${keyword.withOutcome} burn / no-burn outcomes were parsed by keyword rules from free-text test notes, not read from a results column.`}
+                >
+                  outcomes parsed from notes
+                </span>
+              )}
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
@@ -98,6 +108,11 @@ export default function Home() {
   const q = useMemo(() => scenarioQuery(scenario), [scenario]);
   const ranked = useMemo(() => rankInvestigations(investigations, tests, q, weights), [investigations, tests, q, weights]);
   const overall = useMemo(() => estimate(q, microgravityTests(tests)), [q, tests]);
+  const keywordShares = useMemo(() => {
+    const m = new Map<string, KeywordShare>();
+    for (const [id, rows] of groupTests(tests)) m.set(id, keywordRuleShare(rows));
+    return m;
+  }, [tests]);
   const counts = { known: 0, extrapolating: 0, unknown: 0 };
   ranked.forEach((r) => (counts[r.status] += 1));
 
@@ -191,7 +206,7 @@ export default function Home() {
             <h2 id="rank-h">Ranked investigations</h2>
             <ol style={{ listStyle: 'none', padding: 0, margin: 0 }} className="stack">
               {ranked.map((r, i) => (
-                <RankItem key={r.inv.id} r={r} rank={i + 1} invs={investigations} />
+                <RankItem key={r.inv.id} r={r} rank={i + 1} invs={investigations} keyword={keywordShares.get(r.inv.id)} />
               ))}
             </ol>
           </section>

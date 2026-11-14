@@ -141,6 +141,7 @@ label { display: block; }
 .tag.dir-detection { color: #b9d7ff; }
 .tag.dir-suppression { color: #a8e6cd; }
 .tag.dir-fundamental { color: #cfc9f5; }
+.tag.tag-caveat { color: var(--text); border-color: rgba(250, 178, 25, 0.6); background: rgba(250, 178, 25, 0.1); cursor: help; }
 .status { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; font-size: 0.85rem; padding: 3px 10px 3px 6px; border-radius: 999px; background: var(--surface-3); border: 1px solid var(--border); color: var(--text); white-space: nowrap; }
 .status .ico { width: 16px; height: 16px; flex: none; }
 .status.lg { font-size: 1.05rem; padding: 6px 14px 6px 10px; }

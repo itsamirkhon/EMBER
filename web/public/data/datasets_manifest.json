@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-14T10:47:00+00:00",
+ "generatedAt": "2026-11-14T12:24:14+00:00",
  "generator": "pipeline/build_dataset.py",
  "files": [
   {
@@ -9,6 +9,15 @@
    "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=PSI-25_Experimental%20table_BASS-II.csv",
    "sha256": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
    "rows": 129,
+   "license": "CC0-1.0"
+  },
+  {
+   "inv": "BASS-II",
+   "file": "data/raw/ntrs/TM-20210011385_appendixA.json",
+   "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+   "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-25/download?file=TM-20210011385_appendixA.json",
+   "sha256": "9e70ddec131d69006a25cddfb4a0a3c090c8b0d8ecc03bb4b38d8830e9fcaee0",
+   "rows": 126,
    "license": "CC0-1.0"
   },
   {
@@ -94,11 +103,20 @@
   },
   {
    "inv": "SAME",
+   "file": "data/raw/PSI-101/PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+   "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
+   "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-102/download?file=PSI-101_Analyzed%20Data_SAME%2C%20SAME-R_Results.xlsx",
+   "sha256": "6d3a539ccf425b1fa8edc19cc75d828f57d650c7ce734d4e7aa686fea9593218",
+   "rows": 64,
+   "license": "CC0-1.0"
+  },
+  {
+   "inv": "SAME",
    "file": "data/raw/PSI-102/PSI-102_Experimental table_SAME.csv",
    "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-102",
    "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-102/download?file=PSI-102_Experimental%20table_SAME.csv",
    "sha256": "268d1e121d2f211b124407dd32b9475617bd269ede2c2d1749441da3e949a2af",
-   "rows": 8,
+   "rows": 0,
    "license": "CC0-1.0"
   },
   {
@@ -108,6 +126,15 @@
    "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-101/download?file=PSI-101_Experimental%20table_SAME-R.csv",
    "sha256": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
    "rows": 109,
+   "license": "CC0-1.0"
+  },
+  {
+   "inv": "SAME-R",
+   "file": "data/raw/PSI-101/PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+   "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+   "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-101/download?file=PSI-101_Analyzed%20Data_SAME%2C%20SAME-R_Results.xlsx",
+   "sha256": "6d3a539ccf425b1fa8edc19cc75d828f57d650c7ce734d4e7aa686fea9593218",
+   "rows": 108,
    "license": "CC0-1.0"
   },
   {
@@ -153,6 +180,24 @@
    "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-107/download?file=PSI-107_Experimental%20table_Spice.csv",
    "sha256": "fb0d7e60cf5367afb429089e9901d27288f78038efd26c8de1db4fbe04117136",
    "rows": 469,
+   "license": "CC0-1.0"
+  },
+  {
+   "inv": "SPICE",
+   "file": "data/raw/PSI-107/PSI-107_Raw Data_Spice Flight Test Data II modified.xls",
+   "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+   "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-107/download?file=PSI-107_Raw%20Data_Spice%20Flight%20Test%20Data%20II%20modified.xls",
+   "sha256": "52cdb88a3d6c1a4008abb3c1edc601f96a210985e1227e42687b5400784d108d",
+   "rows": 462,
+   "license": "CC0-1.0"
+  },
+  {
+   "inv": "SPICE",
+   "file": "data/raw/PSI-107/PSI-107_Raw Data_SmokePointReview-0g-3.xlsx",
+   "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+   "apiDownload": "https://psi.nasa.gov/geode-py/ws/studies/PSI-107/download?file=PSI-107_Raw%20Data_SmokePointReview-0g-3.xlsx",
+   "sha256": "ed43c2b6c1cb82d1060ed4739a1ea04c68410e53e9f894f8078df0bda1f09fa9",
+   "rows": 53,
    "license": "CC0-1.0"
   },
   {

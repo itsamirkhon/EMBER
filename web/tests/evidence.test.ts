@@ -2,6 +2,14 @@ import { describe, expect, it } from 'vitest';
 import {
   binaryOutcome,
   boxDistance,
+  classMetrics,
+  dataCoverage,
+  estimateNumeric,
+  keywordRuleShare,
+  leaveOneOutNumeric,
+  outcomeDerivation,
+  replicatesOf,
+  targetValue,
   estimate,
   evidenceStrength,
   findingStatus,
@@ -186,14 +194,117 @@ describe('backtests', () => {
     expect(r.n).toBe(grid.length);
     expect(r.correct / r.n).toBeGreaterThan(0.8);
   });
-  it('leave-one-investigation-out reports every investigation', () => {
+  it('leave-one-investigation-out reports every investigation, strictly', () => {
     const r = leaveOneInvestigationOut(fx);
     const ids = new Set(fx.filter((x) => binaryOutcome(x.outcome)).map((x) => x.inv));
-    expect(r.n).toBe(ids.size);
+    expect(r.investigations).toBe(ids.size);
+    let n = 0;
+    let correct = 0;
     for (const d of r.details) {
       expect(d.statusCounts.measured + d.statusCounts.interpolated + d.statusCounts.extrapolated).toBe(d.n);
-      expect(d.honest).toBeGreaterThanOrEqual(d.predictionCorrect);
+      expect(d.wrong).toBe(d.n - d.correct);
+      expect(d.wrongFlagged + d.confidentWrong).toBe(d.wrong);
+      n += d.n;
+      correct += d.correct;
     }
+    // overall accuracy counts correct predictions only — a flagged wrong answer is still wrong
+    expect(r.overall.n).toBe(n);
+    expect(r.overall.correct).toBe(correct);
+  });
+  it('classMetrics reports the majority baseline and flagging rate', () => {
+    const d = (actual: 'burn' | 'noburn', predicted: 'burn' | 'noburn', status: 'measured' | 'extrapolated') =>
+      ({ inv: 'X', testId: 'x', fuelPhase: 'solid' as const, actual, predicted, pBurn: null, status, correct: actual === predicted });
+    const m = classMetrics([d('noburn', 'noburn', 'measured'), d('noburn', 'burn', 'extrapolated'), d('noburn', 'burn', 'measured'), d('burn', 'burn', 'measured')]);
+    expect(m.accuracy).toBeCloseTo(0.5);
+    expect(m.baseline.predicts).toBe('noburn');
+    expect(m.baseline.accuracy).toBeCloseTo(0.75);
+    expect(m.wrong).toBe(2);
+    expect(m.wrongFlagged).toBe(1);
+    expect(m.flaggingRate).toBeCloseTo(0.5);
+  });
+});
+
+describe('grouped leave-one-test-out', () => {
+  // two conditions, each with replicates whose outcomes disagree with a nearby other condition
+  const reps: TestRow[] = [
+    ...[0, 1, 2].map(() => t({ inv: 'A', o2Pct: 21, flowCmS: 10, outcome: 'burned' })),
+    t({ inv: 'A', o2Pct: 21.3, flowCmS: 10.5, outcome: 'burned' }),
+    ...[0, 1].map(() => t({ inv: 'A', o2Pct: 24, flowCmS: 10, outcome: 'extinguished' })),
+    t({ inv: 'B', o2Pct: 21, flowCmS: 10, outcome: 'extinguished' }),
+  ];
+  it('replicatesOf finds same-investigation twins within the Measured tolerance only', () => {
+    const r = replicatesOf(reps[0], reps);
+    expect(r).toHaveLength(3); // the two exact copies and the 21.3% / 10.5 cm/s one; not B, not 24%
+    expect(r.every((x) => x.inv === 'A' && x !== reps[0])).toBe(true);
+  });
+  it('removes twins so the hidden test cannot be copied', () => {
+    const plain = leaveOneTestOut(reps);
+    const grouped = leaveOneTestOut(reps, {}, { grouped: true });
+    expect(plain.grouped).toBe(false);
+    expect(grouped.grouped).toBe(true);
+    const first = grouped.details[0];
+    expect(first.replicatesRemoved).toBe(3);
+    // plain: copies a twin (measured, burn); grouped: only B's test is Measured-close (different inv) -> noburn
+    expect(plain.details[0].status).toBe('measured');
+    expect(plain.details[0].correct).toBe(true);
+    expect(first.predicted).toBe('noburn');
+    expect(grouped.replicates!.removedTotal).toBeGreaterThan(0);
+    expect(grouped.byPhase.solid.n).toBe(reps.length);
+  });
+});
+
+describe('numeric kNN', () => {
+  const rows: TestRow[] = [];
+  for (const o2 of [15, 18, 21, 24]) for (const f of [0, 10, 20])
+    rows.push(t({ inv: o2 < 20 ? 'L' : 'H', o2Pct: o2, flowCmS: f, spreadRateMmS: 0.1 * o2 + 0.01 * f }));
+  it('estimates a value with the same status rules as estimate()', () => {
+    const m = estimateNumeric(q(21, 101.3, 10), rows, 'spreadRateMmS');
+    expect(m.status).toBe('measured');
+    expect(m.value).toBeCloseTo(2.2);
+    const i = estimateNumeric(q(19.5, 101.3, 5), rows, 'spreadRateMmS');
+    expect(i.status).toBe('interpolated');
+    expect(i.value!).toBeGreaterThan(1.5);
+    expect(i.value!).toBeLessThan(2.5);
+    const e = estimateNumeric(q(35, 101.3, 10), rows, 'spreadRateMmS');
+    expect(e.status).toBe('extrapolated');
+    expect(e.reasons.join(' ')).toMatch(/outside the tested range/);
+  });
+  it('never borrows a target across fuel phases', () => {
+    const e = estimateNumeric(q(21, 101.3, 10, { fuelPhase: 'liquid' }), rows, 'spreadRateMmS');
+    expect(e.value).toBeNull();
+    expect(e.poolSize).toBe(0);
+  });
+  it('reads not-yet-contracted targets from extra', () => {
+    const r = t({ extra: { smokePointLengthMm: '42.5' } });
+    expect(targetValue(r, 'smokePointLengthMm')).toBe(42.5);
+    expect(targetValue(t({}), 'particleSizeNm')).toBeNull();
+  });
+  it('leave-one-out regression reports MAE against mean baselines on the same rows', () => {
+    const r = leaveOneOutNumeric(rows, 'spreadRateMmS');
+    expect(r.overall.n).toBe(rows.length);
+    expect(r.overall.model.n).toBe(r.overall.baselineGlobalMean.n);
+    expect(r.overall.model.mae!).toBeLessThan(r.overall.baselineGlobalMean.mae!);
+    const g = leaveOneOutNumeric([...rows, ...rows.map((x) => ({ ...x }))], 'spreadRateMmS', {}, { grouped: true });
+    expect(g.grouped).toBe(true);
+    expect(g.details.every((d) => d.replicatesRemoved! >= 1)).toBe(true);
+    expect(g.details.every((d) => d.status !== 'measured')).toBe(true);
+  });
+});
+
+describe('coverage and provenance', () => {
+  it('classifies outcome derivation, including the legacy note', () => {
+    expect(outcomeDerivation(t({ extra: { outcomeDerivation: 'report' } }))).toBe('report');
+    expect(outcomeDerivation(t({ extra: { outcomeDerivedFrom: "keyword rules on 'Test Observations'" } }))).toBe('keyword-rule');
+    expect(outcomeDerivation(t({}))).toBeNull();
+    const share = keywordRuleShare([t({ extra: { outcomeDerivation: 'keyword-rule' } }), t({ outcome: 'unknown' }), t({})]);
+    expect(share).toEqual({ withOutcome: 2, keyword: 1, share: 0.5 });
+  });
+  it('counts rows that take part in no estimate', () => {
+    const c = dataCoverage([t({}), t({ outcome: 'unknown' }), t({ outcome: 'unknown', burningRateMm2S: 0.8 })]);
+    expect(c.total.rows).toBe(3);
+    expect(c.total.outcome).toBe(1);
+    expect(c.total.targets.burningRateMm2S).toBe(1);
+    expect(c.total.none).toBe(1);
   });
 });
 

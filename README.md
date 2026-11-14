@@ -24,28 +24,48 @@ Every answer carries a status: **Measured**, **Interpolated** or **Extrapolated*
 | Ask EMBER (5) | `#/ask` | BM25 retrieval over 145 cited claims and the 15 cards. Answers only with citations and says "No evidence in PSI corpus" when nothing matches. An optional OpenAI `gpt-6-luna` answer (bring your own OpenAI API key) is limited to the retrieved claims, and its citations are checked. |
 | Export (4.8) | `#/export` | Cleaned test tables as CSV or JSON. Every row carries its PSI id, DOI, source file and row number. |
 | Back to Earth (4.9) | `#/earth` | NASA Spinoffs (SCBA air tanks, smoke detectors, firefighter gear, water mist) linked to the investigations. |
-| Trust (4.10) | `#/trust` | Backtest results and claim-extraction accuracy, shown live in the product. |
+| Trust (4.10) | `#/trust` | Backtests (leave one test out, with replicates hidden, hide a whole investigation), each next to its baseline, per fuel phase; numeric-estimate errors; data coverage; claim-extraction accuracy. |
 | Physics illustration (4.7) | `#/physics` | A 2D thin-fuel flame-spread illustration, labelled **"illustration, not a calculation"** because it is not calibrated. |
 
 ## Data
 
 - **15 PSI investigations**: BASS, BASS-II, Saffire-I/II/III, FLEX, FLEX-2, SAME, SAME-R, CFI, ACME BRE, ACME CFI-G, ACME E-FIELD Flames, SPICE, SLICE. All PSI numbers and DOIs were checked against the PSI API.
-- **1,622 normalized test rows** from the PSI "Experimental table" files (CC0-1.0). Units: O₂ in %, pressure in kPa, flow in cm/s, spread rate in mm/s, burning-rate constant in mm²/s.
+- **1,678 normalized test rows** from the PSI "Experimental table" files and the investigations' own analysed-data workbooks and reports (CC0-1.0). Units: O₂ in %, pressure in kPa, flow in cm/s, spread rate in mm/s, burning-rate constant in mm²/s, smoke-particle size in nm, smoke-point flame length in mm.
 - **145 claims**, each with a verbatim quote from an NTRS abstract, a PSI page or a NASA web page. All 145 quotes were checked programmatically against the cached source text.
 - **6 mission atmospheres** with sources. Values NASA does not state directly are marked `assumption: true`.
 
-Each investigation's `dataNotes` lists that dataset's known caveats. Examples: the FLEX "Burning rate; mm" column is really mm²/s, BASS and BASS-II outcomes were parsed from free-text notes, and in CFI-G inverse flames O₂ is the oxidizer stream.
+Where each value comes from:
+- **BASS-II outcomes** (123 of 129 rows) and 19 spread rates come from the observation column and Table 5.1 of NASA/TM-20210011385, parsed by word position (`pipeline/extract_tm_bass2.py`).
+- **BASS outcomes** were parsed from free-text notes by keyword rules; every row records how its outcome was obtained in `extra.outcomeDerivation`.
+- **SAME / SAME-R particle sizes** (130 rows) come from the PSI-101 analysed-results workbook.
+- **SPICE smoke points** (53 rows) come from the smoke-point review sheet. SPICE was not a flammability test (every flame was ignited by design), so its rows are marked `not_applicable` for burn/no-burn and are not counted in outcome accuracy.
+
+Each investigation's `dataNotes` lists that dataset's known caveats. Examples: the FLEX "Burning rate; mm" column is really mm²/s, and in CFI-G inverse flames O₂ is the oxidizer stream.
 
 See `docs/DATA_CONTRACT.md` for the schema and `docs/SOURCES.md` for all sources.
 
 ## How much to trust it (Trust page)
 
-| Check | Result |
-|---|---|
-| Leave-one-test-out outcome prediction (sustained vs. extinguished) | **680 / 890 = 76 %**, against a 66 % majority-class baseline |
-| Accuracy by answer status | Measured 77 % · Interpolated 70 % · Extrapolated 50 %. Accuracy falls as the status gets less certain, which is the intended behaviour. |
-| "Hide an experiment" (leave one investigation out) | 8 of 9 investigations pass. **ACME-BRE fails**: gas-flame outcomes don't transfer from other experiments, and the Trust page says so. |
-| Claim extraction, 36 claims checked by hand | 29 correct · 7 partial · 0 wrong. Quotes match the source verbatim in 145 of 145 claims. The same model family wrote and graded the claims, so treat these numbers as optimistic. |
+Every accuracy is shown next to its baseline and n. 991 test rows have a burn / no-burn outcome; the "majority baseline" always guesses the most common outcome of the same rows.
+
+| Check | Result | Baseline |
+|---|---|---|
+| Leave one test out, all fuels | 82 % (814 / 991) | 54 % |
+| …solid materials only | 88 % (216 / 245) | 84 % ("always burns") |
+| Leave one test out **with its replicates hidden too** (no near-identical twin to copy) | 77 % (759 / 991) | 54 % |
+| …solid materials only | 86 % (212 / 245) | 84 % |
+| …BASS-II (demo dataset) | 83 % (102 / 123) | 86 % — **below baseline** |
+| …BASS | 90 % (100 / 111) | 85 % |
+| **Hide a whole investigation**, strict accuracy (correct only) | 58 % (570 / 991) | 54 % majority of the hidden tests; 28 % if you guess the other investigations' majority |
+| …share of the wrong cross-experiment answers that EMBER itself labelled Extrapolated | 77 % (324 / 421) | |
+| Claim extraction, 36 claims checked by hand | 29 correct · 7 partial · 0 wrong; 145 / 145 quotes verbatim | the same model family wrote and graded the claims, so treat this as optimistic |
+
+What this means:
+- **Results barely transfer between different experiments, and EMBER flags it.** Hiding a whole investigation leaves EMBER only slightly better than guessing the majority, but most of its wrong answers in that setting carry an Extrapolated label.
+- **For solid materials the data mostly says "it burns".** At the flown conditions 84 % of solid tests sustained a flame, and EMBER adds only a few points on top of that. That is the honest state of the evidence for the demo scenario.
+- **Replicates inflate leave-one-test-out.** 934 of 991 tests have a near-identical repeat, so without hiding replicates almost every answer is "Measured". The grouped variant is the fairer number.
+- **Numeric estimates** (grouped leave-out, kNN vs. the investigation mean): smoke-point flame length 11 mm vs 17 mm error; smoke-particle size 102 nm vs 112 nm; droplet burning rate 0.110 vs 0.113 mm²/s (no real gain); flame spread rate 0.50 vs 0.42 mm/s (**worse** than the mean, only 21 rows).
+- **Coverage:** 502 of 1,678 rows feed no estimate (no burn / no-burn outcome and no numeric result), mostly SPICE settings away from the smoke point (416), SAME tests without sizes (39), CFI (13), SLICE (12), and BASS / BASS-II rows whose outcome could not be determined (16).
 
 The key gap EMBER exposes: PSI has **no solid-material flight data near lunar atmospheres** (30–34 % O₂ at 56–70 kPa). The highest-O₂ microgravity data (up to 85 %) is from CFI-G, which used inverse gas flames, not fabrics or plastics.
 

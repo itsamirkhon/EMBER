@@ -45,6 +45,15 @@ EXTRA_FILES = {
                "PSI-26_Science Documents_Planned_Test Matrix.xlsx"],
     "PSI-39": ["PSI-39_Science Documents_CFI_DataSummary_Spreadsheet_Jan2021.xlsx"],
     "PSI-98": ["PSI-98_Science Documents_SAFFIRE-I and SAFFIRE-III Readme.docx"],
+    # per-test results that are not in the PSI experimental tables
+    "PSI-101": ["PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+                "PSI-101_Reports_SAME-R_Final Report.pdf"],
+    "PSI-102": ["PSI-102_Reports_SAME_Final Science Report.pdf"],
+    "PSI-107": ["PSI-107_Reports_SPICE_FinalReport.pdf",
+                "PSI-107_Reports_SMOKE POINTS OF MICROGRAVITY AND  NORMAL GRAVITY COFLOW DIFFUSION  FLAMES_DotsonThesis.pdf",
+                "PSI-107_Raw Data_Spice Flight Test Data II modified.xls",
+                "PSI-107_Raw Data_Spice_Flight_Flamelength.xls",
+                "PSI-107_Raw Data_SmokePointReview-0g-3.xlsx"],
 }
 
 # NTRS queries used to locate at least one NASA report per investigation.

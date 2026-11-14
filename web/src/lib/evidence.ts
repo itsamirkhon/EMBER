@@ -243,56 +243,35 @@ export function usableTests(tests: TestRow[]): TestRow[] {
   return tests.filter((t) => binaryOutcome(t.outcome) !== null);
 }
 
-export function estimate(
-  q: Query,
-  tests: TestRow[],
-  options: Partial<EstimateOptions> = {},
-): Estimate {
-  const opts = { ...DEFAULT_ESTIMATE_OPTIONS, ...options };
-  const usable = usableTests(tests);
-  let pool = q.fuelPhase ? usable.filter((t) => t.fuelPhase === q.fuelPhase) : usable;
-  let phaseFallback = false;
-  const reasons: string[] = [];
-  if (pool.length === 0 && q.fuelPhase) {
-    pool = usable;
-    phaseFallback = pool.length > 0;
-    if (phaseFallback) reasons.push(`No ${q.fuelPhase}-fuel tests with outcomes; using other fuel phases.`);
-  }
+interface Classification {
+  status: AnswerStatus;
+  scored: { test: TestRow; distance: number }[];
+  measuredTests: TestRow[];
+  nearestDistance: number;
+  bracket: Estimate['bracket'];
+  outOfRange: OutOfRange[];
+}
 
-  const empty: Estimate = {
-    status: 'extrapolated',
-    pBurn: null,
-    interval: null,
-    predicted: null,
-    neighbours: [],
-    measuredTests: [],
-    nearestDistance: null,
-    bracket: {},
-    outOfRange: [],
-    poolSize: 0,
-    phaseFallback,
-    reasons: ['No tests with a recorded outcome are available.'],
-  };
-  if (pool.length === 0) return empty;
-
+/**
+ * Shared Measured / Interpolated / Extrapolated logic for a non-empty pool.
+ * Used by both the burn / no-burn vote (estimate) and the numeric kNN (estimateNumeric).
+ */
+function classify(q: Query, pool: TestRow[], opts: EstimateOptions, phaseFallback: boolean, reasons: string[]): Classification {
   const scored = pool
     .map((t) => ({ test: t, distance: testDistance(q, t, opts).total }))
     .sort((a, b) => a.distance - b.distance);
 
-  const neighbours: Neighbour[] = scored.slice(0, Math.min(opts.k, scored.length)).map((s) => ({
-    test: s.test,
-    distance: s.distance,
-    weight: 1 / Math.pow(s.distance + opts.eps, opts.power),
-    outcome: binaryOutcome(s.test.outcome)!,
-  }));
-
   // out-of-range per dimension against the whole pool
   const outOfRange: OutOfRange[] = [];
+  const unrecorded: Dim[] = [];
   for (const dim of DIMS) {
     const qv = q[dim];
     if (qv === null || qv === undefined) continue;
     const r = rangeOf(pool.map((t) => t[dim]));
-    if (!r) continue;
+    if (!r) {
+      unrecorded.push(dim);
+      continue;
+    }
     const v = Array.isArray(qv) ? (qv[0] + qv[1]) / 2 : qv;
     // interval queries: any overlap with the tested range counts as inside
     const qMax = Array.isArray(qv) ? Math.max(qv[0], qv[1]) : v;
@@ -327,23 +306,17 @@ export function estimate(
 
   const nearestDistance = scored[0].distance;
   let status: AnswerStatus;
-  let used = neighbours;
   if (measuredTests.length > 0) {
     status = 'measured';
     reasons.push(
       `${measuredTests.length} real test${measuredTests.length > 1 ? 's' : ''} within tolerance (±${fmt(opts.tolerance.o2Pct)}% O₂, ±${fmt(opts.tolerance.pressureKpa)} kPa, ±${fmt(opts.tolerance.flowCmS)} cm/s).`,
     );
-    used = measuredTests.map((t) => ({
-      test: t,
-      distance: testDistance(q, t, opts).total,
-      weight: 1,
-      outcome: binaryOutcome(t.outcome)!,
-    }));
   } else if (!phaseFallback && bracketedAll && nearestDistance <= opts.maxInterpDistance) {
     status = 'interpolated';
     reasons.push('Real tests surround this point on every dimension; estimate is a weighted vote of nearest tests.');
   } else {
     status = 'extrapolated';
+    for (const dim of unrecorded) reasons.push(`${DIM_LABEL[dim]} is not recorded for any test in this pool.`);
     for (const o of outOfRange) {
       if (o.excess > 0) {
         reasons.push(
@@ -353,6 +326,7 @@ export function estimate(
     }
     for (const dim of DIMS) {
       const b = bracket[dim];
+      if (unrecorded.includes(dim)) continue;
       if (local.length > 0 && b && !(b.below && b.above) && !outOfRange.find((o) => o.dim === dim && o.excess > 0)) {
         reasons.push(`No nearby tests on the ${b.below ? 'high' : 'low'} side of ${DIM_LABEL[dim]}.`);
       }
@@ -361,25 +335,173 @@ export function estimate(
       reasons.push(`Nearest test is ${nearestDistance.toFixed(2)} normalized units away.`);
     }
   }
+  return { status, scored, measuredTests, nearestDistance, bracket, outOfRange };
+}
+
+export function estimate(
+  q: Query,
+  tests: TestRow[],
+  options: Partial<EstimateOptions> = {},
+): Estimate {
+  const opts = { ...DEFAULT_ESTIMATE_OPTIONS, ...options };
+  const usable = usableTests(tests);
+  let pool = q.fuelPhase ? usable.filter((t) => t.fuelPhase === q.fuelPhase) : usable;
+  let phaseFallback = false;
+  const reasons: string[] = [];
+  if (pool.length === 0 && q.fuelPhase) {
+    pool = usable;
+    phaseFallback = pool.length > 0;
+    if (phaseFallback) reasons.push(`No ${q.fuelPhase}-fuel tests with outcomes; using other fuel phases.`);
+  }
+
+  const empty: Estimate = {
+    status: 'extrapolated',
+    pBurn: null,
+    interval: null,
+    predicted: null,
+    neighbours: [],
+    measuredTests: [],
+    nearestDistance: null,
+    bracket: {},
+    outOfRange: [],
+    poolSize: 0,
+    phaseFallback,
+    reasons: ['No tests with a recorded outcome are available.'],
+  };
+  if (pool.length === 0) return empty;
+
+  const c = classify(q, pool, opts, phaseFallback, reasons);
+  const neighbours: Neighbour[] = c.scored.slice(0, Math.min(opts.k, c.scored.length)).map((s) => ({
+    test: s.test,
+    distance: s.distance,
+    weight: 1 / Math.pow(s.distance + opts.eps, opts.power),
+    outcome: binaryOutcome(s.test.outcome)!,
+  }));
+  const used: Neighbour[] =
+    c.status === 'measured'
+      ? c.measuredTests.map((t) => ({ test: t, distance: testDistance(q, t, opts).total, weight: 1, outcome: binaryOutcome(t.outcome)! }))
+      : neighbours;
 
   const sw = used.reduce((s, n) => s + n.weight, 0);
   const pBurn = used.reduce((s, n) => s + n.weight * (n.outcome === 'burn' ? 1 : 0), 0) / sw;
   const sw2 = used.reduce((s, n) => s + n.weight * n.weight, 0);
   const nEff = (sw * sw) / sw2;
   let interval = wilson(pBurn, nEff);
-  if (status === 'extrapolated') interval = [0, 1]; // honest: no bound outside the data
+  if (c.status === 'extrapolated') interval = [0, 1]; // honest: no bound outside the data
   return {
-    status,
+    status: c.status,
     pBurn,
     interval,
     predicted: pBurn >= 0.5 ? 'burn' : 'noburn',
     neighbours,
-    measuredTests,
-    nearestDistance,
-    bracket,
-    outOfRange,
+    measuredTests: c.measuredTests,
+    nearestDistance: c.nearestDistance,
+    bracket: c.bracket,
+    outOfRange: c.outOfRange,
     poolSize: pool.length,
     phaseFallback,
+    reasons,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Numeric targets (kNN regression)
+
+export type NumericTarget = 'spreadRateMmS' | 'burningRateMm2S' | 'particleSizeNm' | 'smokePointLengthMm';
+export const NUMERIC_TARGETS: NumericTarget[] = ['spreadRateMmS', 'burningRateMm2S', 'particleSizeNm', 'smokePointLengthMm'];
+export const TARGET_LABEL: Record<NumericTarget, string> = {
+  spreadRateMmS: 'Flame spread rate',
+  burningRateMm2S: 'Droplet burning-rate constant',
+  particleSizeNm: 'Smoke particle size',
+  smokePointLengthMm: 'Smoke-point flame length',
+};
+export const TARGET_UNIT: Record<NumericTarget, string> = {
+  spreadRateMmS: 'mm/s',
+  burningRateMm2S: 'mm²/s',
+  particleSizeNm: 'nm',
+  smokePointLengthMm: 'mm',
+};
+
+/** Numeric target of a row: top-level field, or (for not-yet-contracted fields) the same key in `extra`. */
+export function targetValue(t: TestRow, target: NumericTarget): number | null {
+  const top = (t as unknown as Record<string, unknown>)[target];
+  const v = top !== undefined && top !== null ? top : t.extra?.[target];
+  const n = typeof v === 'number' ? v : typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN;
+  return Number.isFinite(n) ? n : null;
+}
+
+export interface NumericNeighbour {
+  test: TestRow;
+  distance: number;
+  weight: number;
+  value: number;
+}
+
+export interface NumericEstimate {
+  target: NumericTarget;
+  status: AnswerStatus;
+  /** inverse-distance-weighted mean of the k nearest values (mean of the matching tests when Measured) */
+  value: number | null;
+  /** min–max of the values that produced the estimate */
+  range: [number, number] | null;
+  /** weighted standard deviation of those values */
+  spread: number | null;
+  neighbours: NumericNeighbour[];
+  measuredTests: TestRow[];
+  nearestDistance: number | null;
+  outOfRange: OutOfRange[];
+  poolSize: number;
+  reasons: string[];
+}
+
+/**
+ * kNN regression for a numeric outcome with the same distance and Measured / Interpolated /
+ * Extrapolated rules as estimate(). No fuel-phase fallback: a spread rate is never borrowed from
+ * droplets or gas flames.
+ */
+export function estimateNumeric(
+  q: Query,
+  tests: TestRow[],
+  target: NumericTarget,
+  options: Partial<EstimateOptions> = {},
+): NumericEstimate {
+  const opts = { ...DEFAULT_ESTIMATE_OPTIONS, ...options };
+  const withTarget = tests.filter((t) => targetValue(t, target) !== null);
+  const pool = q.fuelPhase ? withTarget.filter((t) => t.fuelPhase === q.fuelPhase) : withTarget;
+  const reasons: string[] = [];
+  if (pool.length === 0) {
+    return {
+      target, status: 'extrapolated', value: null, range: null, spread: null, neighbours: [], measuredTests: [],
+      nearestDistance: null, outOfRange: [], poolSize: 0,
+      reasons: [`No ${q.fuelPhase ? `${q.fuelPhase}-fuel ` : ''}tests report ${TARGET_LABEL[target].toLowerCase()}.`],
+    };
+  }
+  const c = classify(q, pool, opts, false, reasons);
+  const neighbours: NumericNeighbour[] = c.scored.slice(0, Math.min(opts.k, c.scored.length)).map((s) => ({
+    test: s.test,
+    distance: s.distance,
+    weight: 1 / Math.pow(s.distance + opts.eps, opts.power),
+    value: targetValue(s.test, target)!,
+  }));
+  const used: NumericNeighbour[] =
+    c.status === 'measured'
+      ? c.measuredTests.map((t) => ({ test: t, distance: testDistance(q, t, opts).total, weight: 1, value: targetValue(t, target)! }))
+      : neighbours;
+  const sw = used.reduce((s, n) => s + n.weight, 0);
+  const value = used.reduce((s, n) => s + n.weight * n.value, 0) / sw;
+  const variance = used.reduce((s, n) => s + n.weight * (n.value - value) ** 2, 0) / sw;
+  const vals = used.map((n) => n.value);
+  return {
+    target,
+    status: c.status,
+    value,
+    range: [Math.min(...vals), Math.max(...vals)],
+    spread: Math.sqrt(variance),
+    neighbours,
+    measuredTests: c.measuredTests,
+    nearestDistance: c.nearestDistance,
+    outOfRange: c.outOfRange,
+    poolSize: pool.length,
     reasons,
   };
 }
@@ -681,131 +803,420 @@ export function queryFromTest(t: TestRow, withMaterial = true): Query {
 export interface LootDetail {
   inv: string;
   testId: string;
+  fuelPhase: FuelPhase | null;
   actual: Binary;
   predicted: Binary | null;
   pBurn: number | null;
   status: AnswerStatus;
   correct: boolean;
+  /** grouped variant: same-investigation replicates removed together with this test */
+  replicatesRemoved?: number;
 }
 
-export interface LootResult {
+export type StatusCounts = Record<AnswerStatus, { n: number; correct: number }>;
+
+/**
+ * Accuracy of a set of predictions, always reported with its majority-class baseline.
+ *  - baseline: always predict `baseline.predicts` (by default the most common outcome *in this set*,
+ *    an optimistic baseline because it knows the set's class balance).
+ *  - flaggingRate: of the wrong answers, the share the system had labelled Extrapolated
+ *    (did it warn you when it was wrong?). `confidentWrong` = wrong and labelled Measured/Interpolated.
+ */
+export interface ClassMetrics {
   n: number;
   correct: number;
-  perInvestigation: Record<string, { n: number; correct: number }>;
-  byStatus: Record<AnswerStatus, { n: number; correct: number }>;
-  details: LootDetail[];
+  accuracy: number | null;
+  baseline: { predicts: Binary | null; correct: number; accuracy: number | null };
+  byStatus: StatusCounts;
+  wrong: number;
+  wrongFlagged: number;
+  confidentWrong: number;
+  flaggingRate: number | null;
 }
 
-/** Leave-one-test-out: predict each test's binary outcome from all other tests. */
-export function leaveOneTestOut(tests: TestRow[], options: Partial<EstimateOptions> = {}): LootResult {
-  const usable = usableTests(tests);
-  const details: LootDetail[] = [];
-  usable.forEach((t, i) => {
-    const rest = usable.filter((_, j) => j !== i);
-    const e = estimate(queryFromTest(t), rest, { gravityAware: true, ...options });
-    const actual = binaryOutcome(t.outcome)!;
-    details.push({
-      inv: t.inv,
-      testId: t.testId,
-      actual,
-      predicted: e.predicted,
-      pBurn: e.pBurn,
-      status: e.status,
-      correct: e.predicted === actual,
-    });
-  });
-  return summarize(details);
+export function majorityClass(labels: Binary[]): Binary | null {
+  if (labels.length === 0) return null;
+  const burn = labels.filter((l) => l === 'burn').length;
+  return burn > labels.length - burn ? 'burn' : 'noburn';
 }
 
-function summarize(details: LootDetail[]): LootResult {
-  const perInvestigation: LootResult['perInvestigation'] = {};
-  const byStatus: LootResult['byStatus'] = {
+export function classMetrics(details: LootDetail[], baselineClass?: Binary | null): ClassMetrics {
+  const byStatus: StatusCounts = {
     measured: { n: 0, correct: 0 },
     interpolated: { n: 0, correct: 0 },
     extrapolated: { n: 0, correct: 0 },
   };
   let correct = 0;
+  let wrongFlagged = 0;
   for (const d of details) {
-    const p = (perInvestigation[d.inv] ??= { n: 0, correct: 0 });
-    p.n += 1;
     byStatus[d.status].n += 1;
     if (d.correct) {
       correct += 1;
-      p.correct += 1;
       byStatus[d.status].correct += 1;
-    }
+    } else if (d.status === 'extrapolated') wrongFlagged += 1;
   }
-  return { n: details.length, correct, perInvestigation, byStatus, details };
+  const n = details.length;
+  const predicts = baselineClass === undefined ? majorityClass(details.map((d) => d.actual)) : baselineClass;
+  const bCorrect = predicts ? details.filter((d) => d.actual === predicts).length : 0;
+  const wrong = n - correct;
+  return {
+    n,
+    correct,
+    accuracy: n ? correct / n : null,
+    baseline: { predicts, correct: bCorrect, accuracy: n ? bCorrect / n : null },
+    byStatus,
+    wrong,
+    wrongFlagged,
+    confidentWrong: wrong - wrongFlagged,
+    flaggingRate: wrong ? wrongFlagged / wrong : null,
+  };
 }
 
-export interface LoioDetail {
-  inv: string;
+function groupBy<T>(xs: T[], key: (x: T) => string): Map<string, T[]> {
+  const m = new Map<string, T[]>();
+  for (const x of xs) {
+    const k = key(x);
+    const arr = m.get(k);
+    if (arr) arr.push(x);
+    else m.set(k, [x]);
+  }
+  return m;
+}
+
+function metricsBy(details: LootDetail[], key: (d: LootDetail) => string): Record<string, ClassMetrics> {
+  const out: Record<string, ClassMetrics> = {};
+  for (const [k, ds] of groupBy(details, key)) out[k] = classMetrics(ds);
+  return out;
+}
+
+export interface LootResult {
+  grouped: boolean;
   n: number;
-  predictionCorrect: number;
+  correct: number;
+  overall: ClassMetrics;
+  perInvestigation: Record<string, ClassMetrics>;
+  byPhase: Record<string, ClassMetrics>;
+  byStatus: StatusCounts;
+  /** grouped variant: total replicate rows removed across all hold-outs, and how many hold-outs removed any */
+  replicates?: { removedTotal: number; testsWithReplicates: number };
+  details: LootDetail[];
+}
+
+/**
+ * Replicates of `t` in `pool`: tests of the same investigation that would count as a Measured
+ * match for a query at t's conditions (same phase and material, within DEFAULT/opts tolerance).
+ * Does not include t itself.
+ */
+export function replicatesOf(t: TestRow, pool: TestRow[], tolerance: Record<Dim, number> = DEFAULT_TOLERANCE): TestRow[] {
+  const q = queryFromTest(t);
+  return pool.filter((o) => o !== t && o.inv === t.inv && withinTolerance(q, o, tolerance));
+}
+
+export interface LeaveOutOptions {
+  /** also remove same-investigation replicates (Measured-tolerance twins) of the held-out test */
+  grouped?: boolean;
+}
+
+/** Leave-one-test-out: predict each test's binary outcome from all other tests. */
+export function leaveOneTestOut(
+  tests: TestRow[],
+  options: Partial<EstimateOptions> = {},
+  leaveOut: LeaveOutOptions = {},
+): LootResult {
+  const opts = { ...DEFAULT_ESTIMATE_OPTIONS, gravityAware: true, ...options };
+  const usable = usableTests(tests);
+  const details: LootDetail[] = [];
+  let removedTotal = 0;
+  let testsWithReplicates = 0;
+  usable.forEach((t, i) => {
+    let rest = usable.filter((_, j) => j !== i);
+    let replicatesRemoved: number | undefined;
+    if (leaveOut.grouped) {
+      const twins = new Set(replicatesOf(t, rest, opts.tolerance));
+      rest = rest.filter((o) => !twins.has(o));
+      replicatesRemoved = twins.size;
+      removedTotal += twins.size;
+      if (twins.size) testsWithReplicates += 1;
+    }
+    const e = estimate(queryFromTest(t), rest, opts);
+    const actual = binaryOutcome(t.outcome)!;
+    const d: LootDetail = {
+      inv: t.inv,
+      testId: t.testId,
+      fuelPhase: t.fuelPhase,
+      actual,
+      predicted: e.predicted,
+      pBurn: e.pBurn,
+      status: e.status,
+      correct: e.predicted === actual,
+    };
+    if (replicatesRemoved !== undefined) d.replicatesRemoved = replicatesRemoved;
+    details.push(d);
+  });
+  const overall = classMetrics(details);
+  return {
+    grouped: !!leaveOut.grouped,
+    n: overall.n,
+    correct: overall.correct,
+    overall,
+    perInvestigation: metricsBy(details, (d) => d.inv),
+    byPhase: metricsBy(details, (d) => d.fuelPhase ?? 'unknown'),
+    byStatus: overall.byStatus,
+    ...(leaveOut.grouped ? { replicates: { removedTotal, testsWithReplicates } } : {}),
+    details,
+  };
+}
+
+export interface LoioDetail extends ClassMetrics {
+  inv: string;
+  fuelPhase: FuelPhase | null;
   statusCounts: Record<AnswerStatus, number>;
-  /** tests where the system was right, or wrong but had flagged "extrapolated" */
-  honest: number;
-  honestRate: number;
-  accuracy: number | null;
-  /** investigation passes if honestRate >= passThreshold */
-  correct: boolean;
+  /** baseline that a transfer method could actually know: majority outcome of the *other* investigations */
+  trainMajority: { predicts: Binary | null; correct: number; accuracy: number | null };
 }
 
 export interface LoioResult {
-  n: number;
-  correct: number;
-  passThreshold: number;
-  tests: LootResult;
+  /** number of hidden investigations */
+  investigations: number;
+  /** strict, test level: correct predictions only */
+  overall: ClassMetrics;
+  /** sum over investigations of the "majority of the other investigations" baseline */
+  trainMajority: { correct: number; accuracy: number | null };
+  byPhase: Record<string, ClassMetrics>;
+  tests: { n: number; correct: number; byStatus: StatusCounts; details: LootDetail[] };
   details: LoioDetail[];
 }
 
 /**
  * Leave-one-investigation-out ("hide an experiment"): remove every test of one investigation,
  * then estimate each hidden test from the remaining investigations only.
- * A hidden test is handled *honestly* when the prediction is correct, or when it is wrong
- * but the system flagged the point as extrapolated (i.e. did not claim knowledge).
+ * Reported strictly (a test counts only if the predicted outcome is right), together with the
+ * flagging rate: the share of wrong answers that the system had labelled Extrapolated.
  */
-export function leaveOneInvestigationOut(
-  tests: TestRow[],
-  options: Partial<EstimateOptions> = {},
-  passThreshold = 0.75,
-): LoioResult {
+export function leaveOneInvestigationOut(tests: TestRow[], options: Partial<EstimateOptions> = {}): LoioResult {
   const usable = usableTests(tests);
   const invIds = [...new Set(usable.map((t) => t.inv))];
   const all: LootDetail[] = [];
   const details: LoioDetail[] = [];
+  let tmCorrect = 0;
   for (const inv of invIds) {
     const hidden = usable.filter((t) => t.inv === inv);
     const rest = usable.filter((t) => t.inv !== inv);
-    const statusCounts: Record<AnswerStatus, number> = { measured: 0, interpolated: 0, extrapolated: 0 };
-    let predictionCorrect = 0;
-    let honest = 0;
-    for (const t of hidden) {
+    const ds: LootDetail[] = hidden.map((t) => {
       const e = estimate(queryFromTest(t), rest, { gravityAware: true, ...options });
       const actual = binaryOutcome(t.outcome)!;
-      const ok = e.predicted === actual;
-      statusCounts[e.status] += 1;
-      if (ok) predictionCorrect += 1;
-      if (ok || e.status === 'extrapolated') honest += 1;
-      all.push({ inv, testId: t.testId, actual, predicted: e.predicted, pBurn: e.pBurn, status: e.status, correct: ok });
-    }
-    const honestRate = hidden.length ? honest / hidden.length : 0;
+      return { inv, testId: t.testId, fuelPhase: t.fuelPhase, actual, predicted: e.predicted, pBurn: e.pBurn, status: e.status, correct: e.predicted === actual };
+    });
+    all.push(...ds);
+    const m = classMetrics(ds);
+    const tmClass = majorityClass(rest.map((t) => binaryOutcome(t.outcome)!));
+    const tm = tmClass ? ds.filter((d) => d.actual === tmClass).length : 0;
+    tmCorrect += tm;
     details.push({
       inv,
-      n: hidden.length,
-      predictionCorrect,
-      statusCounts,
-      honest,
-      honestRate,
-      accuracy: hidden.length ? predictionCorrect / hidden.length : null,
-      correct: honestRate >= passThreshold,
+      fuelPhase: hidden[0]?.fuelPhase ?? null,
+      ...m,
+      statusCounts: { measured: m.byStatus.measured.n, interpolated: m.byStatus.interpolated.n, extrapolated: m.byStatus.extrapolated.n },
+      trainMajority: { predicts: tmClass, correct: tm, accuracy: ds.length ? tm / ds.length : null },
     });
+  }
+  const overall = classMetrics(all);
+  return {
+    investigations: details.length,
+    overall,
+    trainMajority: { correct: tmCorrect, accuracy: all.length ? tmCorrect / all.length : null },
+    byPhase: metricsBy(all, (d) => d.fuelPhase ?? 'unknown'),
+    tests: { n: overall.n, correct: overall.correct, byStatus: overall.byStatus, details: all },
+    details,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Numeric backtests
+
+export interface NumericDetail {
+  inv: string;
+  testId: string;
+  fuelPhase: FuelPhase | null;
+  actual: number;
+  predicted: number | null;
+  status: AnswerStatus;
+  baselineInvMean: number | null;
+  baselineGlobalMean: number | null;
+  replicatesRemoved?: number;
+}
+
+export interface ErrorStats {
+  n: number;
+  mae: number | null;
+  /** median of |pred - actual| / |actual| (rows with actual = 0 skipped) */
+  medianAbsPctErr: number | null;
+}
+
+export interface NumericMetrics {
+  /** rows with a value for the target */
+  n: number;
+  /** rows for which a prediction could be made (same fuel phase data left after hold-out) */
+  nPredicted: number;
+  model: ErrorStats;
+  /** predict the mean of the remaining rows of the same investigation (global mean if none left) */
+  baselineInvMean: ErrorStats;
+  /** predict the mean of all remaining rows */
+  baselineGlobalMean: ErrorStats;
+  byStatus: Record<AnswerStatus, ErrorStats>;
+}
+
+export interface NumericBacktest {
+  target: NumericTarget;
+  unit: string;
+  grouped: boolean;
+  overall: NumericMetrics;
+  perInvestigation: Record<string, NumericMetrics>;
+  byPhase: Record<string, NumericMetrics>;
+  details: NumericDetail[];
+}
+
+function median(xs: number[]): number | null {
+  if (!xs.length) return null;
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+function errorStats(pairs: [number | null, number][]): ErrorStats {
+  const ok = pairs.filter((p): p is [number, number] => p[0] !== null);
+  if (!ok.length) return { n: 0, mae: null, medianAbsPctErr: null };
+  const mae = ok.reduce((s, [p, a]) => s + Math.abs(p - a), 0) / ok.length;
+  const pct = ok.filter(([, a]) => a !== 0).map(([p, a]) => Math.abs(p - a) / Math.abs(a));
+  return { n: ok.length, mae, medianAbsPctErr: median(pct) };
+}
+
+export function numericMetrics(details: NumericDetail[]): NumericMetrics {
+  const predicted = details.filter((d) => d.predicted !== null);
+  const byStatus = {} as Record<AnswerStatus, ErrorStats>;
+  for (const s of ['measured', 'interpolated', 'extrapolated'] as AnswerStatus[]) {
+    byStatus[s] = errorStats(predicted.filter((d) => d.status === s).map((d) => [d.predicted, d.actual]));
   }
   return {
     n: details.length,
-    correct: details.filter((d) => d.correct).length,
-    passThreshold,
-    tests: summarize(all),
+    nPredicted: predicted.length,
+    model: errorStats(predicted.map((d) => [d.predicted, d.actual])),
+    // baselines scored on the same rows as the model, so n matches
+    baselineInvMean: errorStats(predicted.map((d) => [d.baselineInvMean, d.actual])),
+    baselineGlobalMean: errorStats(predicted.map((d) => [d.baselineGlobalMean, d.actual])),
+    byStatus,
+  };
+}
+
+const mean = (xs: number[]) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : null);
+
+/**
+ * Leave-one-test-out for a numeric target (optionally grouped: replicates removed too).
+ * Only rows reporting the target take part. Baselines use exactly the rows the model could see.
+ */
+export function leaveOneOutNumeric(
+  tests: TestRow[],
+  target: NumericTarget,
+  options: Partial<EstimateOptions> = {},
+  leaveOut: LeaveOutOptions = {},
+): NumericBacktest {
+  const opts = { ...DEFAULT_ESTIMATE_OPTIONS, gravityAware: true, ...options };
+  const rows = tests.filter((t) => targetValue(t, target) !== null);
+  const details: NumericDetail[] = rows.map((t, i) => {
+    let rest = rows.filter((_, j) => j !== i);
+    let replicatesRemoved: number | undefined;
+    if (leaveOut.grouped) {
+      const twins = new Set(replicatesOf(t, rest, opts.tolerance));
+      rest = rest.filter((o) => !twins.has(o));
+      replicatesRemoved = twins.size;
+    }
+    const e = estimateNumeric(queryFromTest(t), rest, target, opts);
+    const restVals = rest.map((o) => targetValue(o, target)!);
+    const global = mean(restVals);
+    const own = mean(rest.filter((o) => o.inv === t.inv).map((o) => targetValue(o, target)!));
+    const d: NumericDetail = {
+      inv: t.inv,
+      testId: t.testId,
+      fuelPhase: t.fuelPhase,
+      actual: targetValue(t, target)!,
+      predicted: e.value,
+      status: e.status,
+      baselineInvMean: own ?? global,
+      baselineGlobalMean: global,
+    };
+    if (replicatesRemoved !== undefined) d.replicatesRemoved = replicatesRemoved;
+    return d;
+  });
+  const per = (key: (d: NumericDetail) => string) => {
+    const out: Record<string, NumericMetrics> = {};
+    for (const [k, ds] of groupBy(details, key)) out[k] = numericMetrics(ds);
+    return out;
+  };
+  return {
+    target,
+    unit: TARGET_UNIT[target],
+    grouped: !!leaveOut.grouped,
+    overall: numericMetrics(details),
+    perInvestigation: per((d) => d.inv),
+    byPhase: per((d) => d.fuelPhase ?? 'unknown'),
     details,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Data coverage and provenance
+
+export type OutcomeDerivation = 'source-table' | 'report' | 'keyword-rule';
+
+/**
+ * How a row's outcome was obtained. Reads `extra.outcomeDerivation` when present; otherwise
+ * infers "keyword-rule" from the older free-text `extra.outcomeDerivedFrom` note. null = not stated.
+ */
+export function outcomeDerivation(t: TestRow): OutcomeDerivation | null {
+  const d = t.extra?.outcomeDerivation;
+  if (d === 'source-table' || d === 'report' || d === 'keyword-rule') return d;
+  const legacy = t.extra?.outcomeDerivedFrom;
+  if (typeof legacy === 'string' && /keyword/i.test(legacy)) return 'keyword-rule';
+  return null;
+}
+
+/** Share of an investigation's rows *with an outcome* whose outcome came from keyword rules on free-text notes. */
+export function keywordRuleShare(invTests: TestRow[]): { withOutcome: number; keyword: number; share: number | null } {
+  const withOutcome = invTests.filter((t) => binaryOutcome(t.outcome) !== null);
+  const keyword = withOutcome.filter((t) => outcomeDerivation(t) === 'keyword-rule').length;
+  return { withOutcome: withOutcome.length, keyword, share: withOutcome.length ? keyword / withOutcome.length : null };
+}
+
+export interface CoverageRow {
+  inv: string;
+  fuelPhase: FuelPhase | null;
+  rows: number;
+  /** rows with a burn / no-burn outcome */
+  outcome: number;
+  targets: Record<NumericTarget, number>;
+  /** rows that take part in no estimate at all */
+  none: number;
+  derivation: Record<OutcomeDerivation | 'unstated', number>;
+}
+
+export function dataCoverage(tests: TestRow[]): { perInvestigation: CoverageRow[]; total: CoverageRow } {
+  const make = (inv: string, rows: TestRow[]): CoverageRow => {
+    const targets = {} as Record<NumericTarget, number>;
+    for (const k of NUMERIC_TARGETS) targets[k] = rows.filter((t) => targetValue(t, k) !== null).length;
+    const derivation: CoverageRow['derivation'] = { 'source-table': 0, report: 0, 'keyword-rule': 0, unstated: 0 };
+    let outcome = 0;
+    let none = 0;
+    for (const t of rows) {
+      const hasOutcome = binaryOutcome(t.outcome) !== null;
+      if (hasOutcome) {
+        outcome += 1;
+        derivation[outcomeDerivation(t) ?? 'unstated'] += 1;
+      }
+      if (!hasOutcome && NUMERIC_TARGETS.every((k) => targetValue(t, k) === null)) none += 1;
+    }
+    const phases = new Set(rows.map((t) => t.fuelPhase));
+    return { inv, fuelPhase: phases.size === 1 ? rows[0]?.fuelPhase ?? null : null, rows: rows.length, outcome, targets, none, derivation };
+  };
+  const perInvestigation = [...groupTests(tests)].map(([inv, rows]) => make(inv, rows));
+  return { perInvestigation, total: make('all', tests) };
 }
