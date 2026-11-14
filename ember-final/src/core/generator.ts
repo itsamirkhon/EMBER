@@ -12,6 +12,8 @@ import type {
   SynthesisMode,
 } from './types';
 
+export const DEFAULT_SYNTHESIS_MODEL = 'gpt-6-luna';
+
 export interface GeneratorOptions {
   mode?: SynthesisMode;
   apiKey?: string;
@@ -298,6 +300,7 @@ export async function generateSynthesis(
   }
 
   const det = generateDeterministicSynthesis(pkg);
+  const model = options.model ?? DEFAULT_SYNTHESIS_MODEL;
   const fetchFn = options.fetchImpl ?? globalThis.fetch;
   const endpoint = options.apiKey ? 'https://api.openai.com/v1/chat/completions' : options.proxyUrl!;
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -321,9 +324,9 @@ export async function generateSynthesis(
       method: 'POST',
       headers,
       body: JSON.stringify({
-        model: options.model ?? 'gpt-4o-mini',
+        model,
         response_format: { type: 'json_object' },
-        temperature: 0,
+        ...(model === DEFAULT_SYNTHESIS_MODEL ? {reasoning_effort:'none'} : {temperature:0}),
         messages: [
           {
             role: 'system',
@@ -350,7 +353,7 @@ export async function generateSynthesis(
       openQuestions: Array.isArray(parsed.openQuestions) ? parsed.openQuestions : det.openQuestions,
       conflictsPreserved: det.conflictsPreserved,
       rawSummary: typeof parsed.rawSummary === 'string' ? parsed.rawSummary : det.rawSummary,
-      modelName: options.model ?? 'gpt-4o-mini',
+      modelName: model,
     };
   } catch (err) {
     if (options.strictLive) throw err;

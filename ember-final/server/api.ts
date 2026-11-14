@@ -6,6 +6,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Connect, Plugin } from 'vite';
 import {
   ENGINE_VERSION,
+  DEFAULT_SYNTHESIS_MODEL,
   JEV_PROMPT_VERSION,
   exportFormatters,
   generateCandidateBlocks,
@@ -541,6 +542,7 @@ export function createApiHandler(
           sources: Math.max(corpus.sources.length, sourcesMap.size),
           savedReviews: reviews.length,
         },
+        generation: {provider:'openai', model:DEFAULT_SYNTHESIS_MODEL, configured:Boolean(resolveOpenAiApiKey(store.rootDir))},
         liveAiConfigured: Boolean(resolveOpenAiApiKey(store.rootDir) || resolveOpenRouterApiKey(store.rootDir)),
         openRouter: {configured: Boolean(resolveOpenRouterApiKey(store.rootDir)), decisionModel: DECISION_MODEL, embeddingModel: EMBEDDING_MODEL, embeddingIndexPresent: existsSync(join(store.rootDir,'data/openrouter_embeddings.json'))},
       },
@@ -617,7 +619,7 @@ export function createApiHandler(
       parserOptions,
       retrievalMode: params.retrievalMode,
       budgetRuns: params.budgetRuns,
-      execution: {useLiveAi:params.useLiveAi, retrievalK:params.retrievalK, model:params.model,
+      execution: {useLiveAi:params.useLiveAi, retrievalK:params.retrievalK, model:params.model ?? DEFAULT_SYNTHESIS_MODEL,
         engineVersion:ENGINE_VERSION, corpusVersion:corpus.corpusVersion,
         decisionModel:openRouterKey ? DECISION_MODEL : null, embeddingModel:openRouterKey ? EMBEDDING_MODEL : null,
         proseConfigured:Boolean(apiKey)},
@@ -685,7 +687,7 @@ export function createApiHandler(
           retrievalK: params.retrievalK,
           synthesisMode: apiKey ? 'LIVE_AI' : 'DETERMINISTIC_ENGINE',
           apiKey: apiKey ?? undefined,
-          model: params.model,
+          model: params.model ?? DEFAULT_SYNTHESIS_MODEL,
           fetchImpl: options.fetchImpl,
         });
         if (apiKey && review.synthesis.mode !== 'LIVE_AI') {

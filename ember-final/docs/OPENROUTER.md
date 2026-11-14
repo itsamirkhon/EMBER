@@ -5,7 +5,7 @@ These adapters use the user-selected models without model substitution:
 - `google/gemini-decision-1`: `POST https://openrouter.ai/api/alpha/decisions`.
 - `google/gemini-embedding-2`: `POST https://openrouter.ai/api/v1/embeddings`.
 
-The first endpoint is **not** chat completions. It returns typed answers, not generated scientific prose. A separate generative model is still required if the product enables free-text generation.
+The first endpoint is **not** chat completions. It returns typed answers, not generated scientific prose. Free-text generation uses the separate OpenAI `gpt-6-luna` path with server-side `OPENAI_API_KEY`; it does not use the decision endpoint.
 
 ## Server integration
 
