@@ -80,6 +80,15 @@ npm run backtest     # regenerates public/data/validation.json
 npm run build        # static site in web/dist
 ```
 
+**AI answers without pasting a key.** Put your OpenAI key in `web/.env` (git-ignored; see `web/.env.example`):
+
+```bash
+echo "OPENAI_API_KEY=sk-..." > web/.env
+cd web && npm run dev    # or: npm run build && npx vite preview
+```
+
+The dev/preview server reads the key and proxies Ask EMBER requests (`web/server/llmProxy.ts`), so the key never reaches the browser or the build. The proxy pins the model (`gpt-6-luna`) and caps the answer length. The static GitHub Pages site has no server, so there visitors paste their own key. Never put the key in a `VITE_*` variable: Vite would embed it in the public JavaScript.
+
 Rebuild the data from PSI (Python 3.11+, requests, pandas, openpyxl, bs4):
 
 ```bash
