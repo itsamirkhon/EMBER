@@ -176,6 +176,17 @@ describe('relevance', () => {
     expect(findingStatus(bass, bt, q(45, 80, 10)).status).toBe('unknown');
     expect(findingStatus(bass, bt, q(18, 80, 10, { fuelPhase: 'gas' })).status).toBe('unknown');
   });
+  it('a match that rests on assumed conditions is never "known"', () => {
+    const bass = invs.find((i) => i.id === 'BASS-II')!;
+    const bt = regimeTests(fx.filter((x) => x.inv === 'BASS-II'), 0);
+    const assumedInv: Investigation = {
+      ...bass,
+      conditions: { ...bass.conditions!, assumed: ['o2Pct', 'pressureKpa'], assumptionNote: 'cabin air assumed' },
+    };
+    const r = findingStatus(assumedInv, bt, q(18, 80, 10));
+    expect(r.status).toBe('extrapolating');
+    expect(r.reasons.join(' ')).toMatch(/assumed/);
+  });
 });
 
 describe('gravity bracket', () => {

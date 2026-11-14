@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T12:24:20.406Z",
+  "generatedAt": "2026-11-14T12:43:32.594Z",
   "dataset": "public/data",
   "method": "Outcomes collapsed to burn (burned, flame_spread, completed, disruption) vs no-burn (extinguished, self_extinguished, no_ignition); rows with other outcomes are skipped. Prediction = inverse-distance-weighted kNN (k=5, power 2) in normalized O2/pressure/flow space with fuel-phase, material and gravity penalties (src/lib/evidence.ts). Every accuracy is reported with a majority-class baseline (always predict the most common outcome of the same set of tests) and its n. Numeric targets use the same distance and status rules (kNN regression).",
   "backtests": [

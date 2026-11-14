@@ -35,7 +35,9 @@ Owners: `investigations.json`, `tests.json`, `datasets_manifest.json` → data p
       "pressureKpa": [50.0, 101.3],
       "flowCmS":     [0.0, 40.0],
       "gravityG":    [0.0, 0.0],
-      "diluents": ["N2"]
+      "diluents": ["N2"],
+      "assumed": ["o2Pct", "pressureKpa"],   // optional: dimensions not reported by the source, filled with a flagged assumption
+      "assumptionNote": "assumption: ISS cabin air …"  // why and from where; rows carry extra.conditionsAssumed + extra.o2PressureBasis
     },
     "varied":   ["O2 concentration", "flow velocity", "sample thickness"],
     "constant": ["pressure ~1 atm (most tests)"],
@@ -144,6 +146,15 @@ Atomic statements extracted from source documents (NTRS abstracts/reports, PSI d
 
 ```jsonc
 [ { "id": "…", "title": "…", "summary": "…", "linkedInvestigations": ["SAME"], "sources": [ { "label": "…", "url": "…" } ] } ]
+```
+
+## outcome_audit.json (generated)
+
+Written by `pipeline/audit_bass_outcomes.py`: a fixed random sample (seed 2026) of 30 BASS rows whose keyword-rule outcome is compared with a manual reading of the full observation text.
+
+```jsonc
+{ "inv": "BASS", "method": "…", "n": 30, "ruleAnswered": 27, "agree": 29, "wrong": 0, "missed": 1, "falseAnswer": 0, "subtypeDisagreements": 2,
+  "items": [ { "testId", "fuel", "ruleOutcome", "ruleBinary", "manualBinary", "verdict": "agree" | "wrong" | "missed" | "falseAnswer", "note", "subtypeNote", "observations" } ] }
 ```
 
 ## validation.json (generated)

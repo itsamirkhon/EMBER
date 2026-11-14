@@ -26195,8 +26195,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -26215,7 +26215,12 @@
    "massLossMg": 0.6800000000000139,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26231,8 +26236,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26250,7 +26255,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26266,8 +26276,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26285,7 +26295,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26301,8 +26316,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26320,7 +26335,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26336,8 +26356,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26362,7 +26382,12 @@
    "particleCountPerCm3": 1194104.7590429184,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26378,8 +26403,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26397,7 +26422,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26413,8 +26443,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26433,7 +26463,12 @@
    "massLossMg": 1.0299999999999754,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26449,8 +26484,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26469,7 +26504,12 @@
    "massLossMg": 0.300000000000078,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26485,8 +26525,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26504,7 +26544,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26520,8 +26565,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26539,7 +26584,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26555,8 +26605,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -26574,7 +26624,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26590,8 +26645,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -26609,7 +26664,12 @@
    "smokeDurationS": 60.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26625,8 +26685,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.1,
   "gravityG": 0,
   "diluent": null,
@@ -26644,7 +26704,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26660,8 +26725,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.1,
   "gravityG": 0,
   "diluent": null,
@@ -26680,7 +26745,12 @@
    "massLossMg": 2.1099999999998342,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26696,8 +26766,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -26716,7 +26786,12 @@
    "massLossMg": 1.2800000000000589,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26732,8 +26807,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26751,7 +26826,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26767,8 +26847,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26787,7 +26867,12 @@
    "massLossMg": 4.34,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26803,8 +26888,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -26823,7 +26908,12 @@
    "massLossMg": 0.7899999999999574,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26839,8 +26929,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26860,7 +26950,12 @@
    "netAgingTimeS": 49.7,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26876,8 +26971,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26897,7 +26992,12 @@
    "netAgingTimeS": 94.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26913,8 +27013,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26932,7 +27032,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26948,8 +27053,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -26967,7 +27072,12 @@
    "smokeDurationS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -26983,8 +27093,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27004,7 +27114,12 @@
    "netAgingTimeS": 41.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27020,8 +27135,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27046,7 +27161,12 @@
    "particleCountPerCm3": 3004614.0015063835,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27062,8 +27182,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27087,7 +27207,12 @@
    "particleCountPerCm3": 1175411.0746423218,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27103,8 +27228,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27129,7 +27254,12 @@
    "particleCountPerCm3": 1916208.9136147145,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27145,8 +27275,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27171,7 +27301,12 @@
    "particleCountPerCm3": 1737804.30833436,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27187,8 +27322,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27213,7 +27348,12 @@
    "particleCountPerCm3": 1409983.1850205562,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27229,8 +27369,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27254,7 +27394,12 @@
    "particleCountPerCm3": 646297.0473552118,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27270,8 +27415,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27296,7 +27441,12 @@
    "particleCountPerCm3": 2576905.5744457017,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27312,8 +27462,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27338,7 +27488,12 @@
    "particleCountPerCm3": 1291855.5021625953,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27354,8 +27509,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27380,7 +27535,12 @@
    "particleCountPerCm3": 2574776.205140453,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27396,8 +27556,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27422,7 +27582,12 @@
    "particleCountPerCm3": 907364.97810587,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27438,8 +27603,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27463,7 +27628,12 @@
    "particleCountPerCm3": 1994241.0380439789,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27479,8 +27649,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27501,7 +27671,12 @@
    "particleCountPerCm3": 1644842.7294187157,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27517,8 +27692,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27543,7 +27718,12 @@
    "particleCountPerCm3": 1876277.167993182,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27559,8 +27739,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27584,7 +27764,12 @@
    "particleCountPerCm3": 874837.3760347283,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27600,8 +27785,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -27626,7 +27811,12 @@
    "particleCountPerCm3": 1390760.7766112036,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27642,8 +27832,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -27668,7 +27858,12 @@
    "particleCountPerCm3": 1162148.7250497313,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27684,8 +27879,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27710,7 +27905,12 @@
    "particleCountPerCm3": 1937388.953789896,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27726,8 +27926,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27751,7 +27951,12 @@
    "particleCountPerCm3": 1071098.223410648,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27767,8 +27972,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27788,7 +27993,12 @@
    "netAgingTimeS": 50.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27804,8 +28014,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27824,7 +28034,12 @@
    "netAgingTimeS": 869.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27840,8 +28055,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27861,7 +28076,12 @@
    "netAgingTimeS": 39.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27877,8 +28097,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27898,7 +28118,12 @@
    "netAgingTimeS": 49.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27914,8 +28139,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 4.0,
   "gravityG": 0,
   "diluent": null,
@@ -27935,7 +28160,12 @@
    "netAgingTimeS": 859.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27951,8 +28181,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -27971,7 +28201,12 @@
    "netAgingTimeS": 58.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -27987,8 +28222,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28007,7 +28242,12 @@
    "netAgingTimeS": 883.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28023,8 +28263,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -28044,7 +28284,12 @@
    "netAgingTimeS": 44.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28060,8 +28305,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -28081,7 +28326,12 @@
    "netAgingTimeS": 860.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28097,8 +28347,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -28123,7 +28373,12 @@
    "particleCountPerCm3": 1010553.8850986513,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28139,8 +28394,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -28165,7 +28420,12 @@
    "particleCountPerCm3": 563835.3864589696,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28181,8 +28441,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 7.5,
   "gravityG": 0,
   "diluent": null,
@@ -28202,7 +28462,12 @@
    "netAgingTimeS": 65.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28218,8 +28483,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 7.5,
   "gravityG": 0,
   "diluent": null,
@@ -28239,7 +28504,12 @@
    "netAgingTimeS": 871.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28255,8 +28525,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28276,7 +28546,12 @@
    "netAgingTimeS": 60.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28292,8 +28567,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28313,7 +28588,12 @@
    "netAgingTimeS": 879.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28329,8 +28609,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 7.5,
   "gravityG": 0,
   "diluent": null,
@@ -28350,7 +28630,12 @@
    "netAgingTimeS": 62.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28366,8 +28651,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 7.5,
   "gravityG": 0,
   "diluent": null,
@@ -28387,7 +28672,12 @@
    "netAgingTimeS": 1958.0,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28403,8 +28693,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28424,7 +28714,12 @@
    "netAgingTimeS": 86.0,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28440,8 +28735,8 @@
   "geometry": "heated DBP reference aerosol source",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28461,7 +28756,12 @@
    "netAgingTimeS": 554.2,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28477,8 +28777,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28503,7 +28803,12 @@
    "particleCountPerCm3": 1507678.3447922845,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28519,8 +28824,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28545,7 +28850,12 @@
    "particleCountPerCm3": 577492.7203818418,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28561,8 +28871,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28587,7 +28897,12 @@
    "particleCountPerCm3": 1717019.5729101424,
    "aged": false,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28603,8 +28918,8 @@
   "geometry": "heated sample in smoke-generation tube",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -28629,7 +28944,12 @@
    "particleCountPerCm3": 867560.4093409287,
    "aged": true,
    "testType": "smoke generation by heating below ignition (not a flame test)",
-   "resultsSheet": "SAME1 Flight Tests 8-27-09"
+   "resultsSheet": "SAME1 Flight Tests 8-27-09",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28645,8 +28965,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28673,7 +28993,12 @@
    "d21Nm": 127.5,
    "hatchChoateGeometricMeanDiameterNm": 43.0,
    "hatchChoateGeometricStdDev": 2.090599137468832,
-   "particleCountPerCm3": 1825597.0139817814
+   "particleCountPerCm3": 1825597.0139817814,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28689,8 +29014,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28715,7 +29040,12 @@
    "d21Nm": 151.9,
    "hatchChoateGeometricMeanDiameterNm": 50.8,
    "hatchChoateGeometricStdDev": 2.0955623370880416,
-   "particleCountPerCm3": 1059919.9201329139
+   "particleCountPerCm3": 1059919.9201329139,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28731,8 +29061,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28760,7 +29090,12 @@
    "d21Nm": 142.4,
    "hatchChoateGeometricMeanDiameterNm": 43.6,
    "hatchChoateGeometricStdDev": 2.1588164423810263,
-   "particleCountPerCm3": 2754038.3947668634
+   "particleCountPerCm3": 2754038.3947668634,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28776,8 +29111,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28802,7 +29137,12 @@
    "d21Nm": 196.1,
    "hatchChoateGeometricMeanDiameterNm": 89.3,
    "hatchChoateGeometricStdDev": 1.872054177134579,
-   "particleCountPerCm3": 771019.0873825593
+   "particleCountPerCm3": 771019.0873825593,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28818,8 +29158,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28847,7 +29187,12 @@
    "d21Nm": 326.8,
    "hatchChoateGeometricMeanDiameterNm": 114.0,
    "hatchChoateGeometricStdDev": 2.0661708170425976,
-   "particleCountPerCm3": 5850382.356621779
+   "particleCountPerCm3": 5850382.356621779,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28863,8 +29208,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28889,7 +29234,12 @@
    "d21Nm": 480.6,
    "hatchChoateGeometricMeanDiameterNm": 193.7,
    "hatchChoateGeometricStdDev": 1.9621025940506183,
-   "particleCountPerCm3": 1797875.6062855036
+   "particleCountPerCm3": 1797875.6062855036,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28905,8 +29255,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28933,7 +29283,12 @@
    "d21Nm": 236.6,
    "hatchChoateGeometricMeanDiameterNm": 141.6,
    "hatchChoateGeometricStdDev": 1.6596009485865952,
-   "particleCountPerCm3": 1112405.3813294948
+   "particleCountPerCm3": 1112405.3813294948,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28949,8 +29304,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -28978,7 +29333,12 @@
    "d21Nm": 109.0,
    "hatchChoateGeometricMeanDiameterNm": 47.8,
    "hatchChoateGeometricStdDev": 1.8998345130936856,
-   "particleCountPerCm3": 2604648.3618304073
+   "particleCountPerCm3": 2604648.3618304073,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -28994,8 +29354,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29020,7 +29380,12 @@
    "d21Nm": 141.6,
    "hatchChoateGeometricMeanDiameterNm": 83.8,
    "hatchChoateGeometricStdDev": 1.6693044569636455,
-   "particleCountPerCm3": 1053905.9212926894
+   "particleCountPerCm3": 1053905.9212926894,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29036,8 +29401,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29061,7 +29426,12 @@
    "sampleId": "K05",
    "sampleTemperatureC": 500.3,
    "massLossMg": 0.4066666666666663,
-   "d21Nm": 123.2
+   "d21Nm": 123.2,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29077,8 +29447,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29103,7 +29473,12 @@
    "d21Nm": 173.0,
    "hatchChoateGeometricMeanDiameterNm": 103.8,
    "hatchChoateGeometricStdDev": 1.657324570926319,
-   "particleCountPerCm3": 1041691.6091550778
+   "particleCountPerCm3": 1041691.6091550778,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29119,8 +29494,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29148,7 +29523,12 @@
    "d21Nm": 117.0,
    "hatchChoateGeometricMeanDiameterNm": 80.5,
    "hatchChoateGeometricStdDev": 1.54086692028052,
-   "particleCountPerCm3": 3460328.2386265798
+   "particleCountPerCm3": 3460328.2386265798,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29164,8 +29544,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29190,7 +29570,12 @@
    "d21Nm": 180.8,
    "hatchChoateGeometricMeanDiameterNm": 126.3,
    "hatchChoateGeometricStdDev": 1.5272346903307832,
-   "particleCountPerCm3": 1237767.5991045895
+   "particleCountPerCm3": 1237767.5991045895,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29206,8 +29591,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29230,7 +29615,12 @@
    "resultsRow": 69,
    "sampleId": "K08",
    "sampleTemperatureC": 493.5,
-   "d21Nm": 158.0
+   "d21Nm": 158.0,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29246,8 +29636,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29271,7 +29661,12 @@
    "d21Nm": 215.9,
    "hatchChoateGeometricMeanDiameterNm": 90.2,
    "hatchChoateGeometricStdDev": 1.93579348413426,
-   "particleCountPerCm3": 954553.4901062201
+   "particleCountPerCm3": 954553.4901062201,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29287,8 +29682,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29313,7 +29708,12 @@
    "sampleTemperatureC": 492.3,
    "diameterOfAverageMassNm": 30.5,
    "d21Nm": 20.6,
-   "particleCountPerCm3": 1578043.1421485487
+   "particleCountPerCm3": 1578043.1421485487,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29329,8 +29729,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29352,7 +29752,12 @@
    "sampleTemperatureC": 492.3,
    "diameterOfAverageMassNm": 44.3,
    "d21Nm": 32.4,
-   "particleCountPerCm3": 734940.012960862
+   "particleCountPerCm3": 734940.012960862,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29368,8 +29773,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29397,7 +29802,12 @@
    "d21Nm": 166.4,
    "hatchChoateGeometricMeanDiameterNm": 32.6,
    "hatchChoateGeometricStdDev": 2.466511623736183,
-   "particleCountPerCm3": 1737499.3852767106
+   "particleCountPerCm3": 1737499.3852767106,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29413,8 +29823,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29442,7 +29852,12 @@
    "d21Nm": 124.0,
    "hatchChoateGeometricMeanDiameterNm": 51.7,
    "hatchChoateGeometricStdDev": 1.9372165118252334,
-   "particleCountPerCm3": 2951666.0508853504
+   "particleCountPerCm3": 2951666.0508853504,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29458,8 +29873,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29484,7 +29899,12 @@
    "d21Nm": 188.0,
    "hatchChoateGeometricMeanDiameterNm": 86.6,
    "hatchChoateGeometricStdDev": 1.8636959275172889,
-   "particleCountPerCm3": 990233.6437097746
+   "particleCountPerCm3": 990233.6437097746,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29500,8 +29920,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29529,7 +29949,12 @@
    "d21Nm": 131.1,
    "hatchChoateGeometricMeanDiameterNm": 81.7,
    "hatchChoateGeometricStdDev": 1.6262491679176359,
-   "particleCountPerCm3": 3018896.381352701
+   "particleCountPerCm3": 3018896.381352701,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29545,8 +29970,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29571,7 +29996,12 @@
    "d21Nm": 200.8,
    "hatchChoateGeometricMeanDiameterNm": 118.8,
    "hatchChoateGeometricStdDev": 1.6688963150865648,
-   "particleCountPerCm3": 1151405.4928839717
+   "particleCountPerCm3": 1151405.4928839717,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29587,8 +30017,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -29616,7 +30046,12 @@
    "d21Nm": 429.8,
    "hatchChoateGeometricMeanDiameterNm": 179.5,
    "hatchChoateGeometricStdDev": 1.9359452843564022,
-   "particleCountPerCm3": 277645.7387205668
+   "particleCountPerCm3": 277645.7387205668,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29632,8 +30067,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -29658,7 +30093,12 @@
    "d21Nm": 430.6,
    "hatchChoateGeometricMeanDiameterNm": 190.6,
    "hatchChoateGeometricStdDev": 1.8933755883208117,
-   "particleCountPerCm3": 253109.83922102317
+   "particleCountPerCm3": 253109.83922102317,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29674,8 +30114,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -29703,7 +30143,12 @@
    "d21Nm": 543.9,
    "hatchChoateGeometricMeanDiameterNm": 250.7,
    "hatchChoateGeometricStdDev": 1.8633066199621118,
-   "particleCountPerCm3": 258123.09072398374
+   "particleCountPerCm3": 258123.09072398374,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29719,8 +30164,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -29745,7 +30190,12 @@
    "d21Nm": 543.5,
    "hatchChoateGeometricMeanDiameterNm": 279.0,
    "hatchChoateGeometricStdDev": 1.7812740254848882,
-   "particleCountPerCm3": 211761.04779864493
+   "particleCountPerCm3": 211761.04779864493,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29761,8 +30211,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -29790,7 +30240,12 @@
    "d21Nm": 548.6,
    "hatchChoateGeometricMeanDiameterNm": 84.3,
    "hatchChoateGeometricStdDev": 2.631706244035774,
-   "particleCountPerCm3": 495068.20928105974
+   "particleCountPerCm3": 495068.20928105974,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29806,8 +30261,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -29832,7 +30287,12 @@
    "d21Nm": 546.3,
    "hatchChoateGeometricMeanDiameterNm": 93.2,
    "hatchChoateGeometricStdDev": 2.56091480574732,
-   "particleCountPerCm3": 451723.4654172893
+   "particleCountPerCm3": 451723.4654172893,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29848,8 +30308,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -29873,7 +30333,12 @@
    "sampleId": "K16",
    "sampleTemperatureC": 497.2,
    "massLossMg": 0.5033333333334111,
-   "d21Nm": 197.3
+   "d21Nm": 197.3,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29889,8 +30354,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -29917,7 +30382,12 @@
    "d21Nm": 611.6,
    "hatchChoateGeometricMeanDiameterNm": 179.5,
    "hatchChoateGeometricStdDev": 2.1878400054141345,
-   "particleCountPerCm3": 2523938.583087709
+   "particleCountPerCm3": 2523938.583087709,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29933,8 +30403,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -29961,7 +30431,12 @@
    "d21Nm": 809.5,
    "hatchChoateGeometricMeanDiameterNm": 169.3,
    "hatchChoateGeometricStdDev": 2.421852687022607,
-   "particleCountPerCm3": 3889058.8258409305
+   "particleCountPerCm3": 3889058.8258409305,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -29977,8 +30452,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30006,7 +30481,12 @@
    "d21Nm": 700.3,
    "hatchChoateGeometricMeanDiameterNm": 125.0,
    "hatchChoateGeometricStdDev": 2.5302410110434193,
-   "particleCountPerCm3": 3579696.8264696635
+   "particleCountPerCm3": 3579696.8264696635,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30022,8 +30502,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30048,7 +30528,12 @@
    "d21Nm": 828.9,
    "hatchChoateGeometricMeanDiameterNm": 250.7,
    "hatchChoateGeometricStdDev": 2.166748376099798,
-   "particleCountPerCm3": 1353908.7331027978
+   "particleCountPerCm3": 1353908.7331027978,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30064,8 +30549,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30093,7 +30578,12 @@
    "d21Nm": 793.5,
    "hatchChoateGeometricMeanDiameterNm": 161.7,
    "hatchChoateGeometricStdDev": 2.439743219733047,
-   "particleCountPerCm3": 4278212.966048412
+   "particleCountPerCm3": 4278212.966048412,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30109,8 +30599,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30135,7 +30625,12 @@
    "d21Nm": 946.9,
    "hatchChoateGeometricMeanDiameterNm": 369.7,
    "hatchChoateGeometricStdDev": 1.985238345650711,
-   "particleCountPerCm3": 1523655.4291103429
+   "particleCountPerCm3": 1523655.4291103429,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30151,8 +30646,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30180,7 +30675,12 @@
    "d21Nm": 710.5,
    "hatchChoateGeometricMeanDiameterNm": 126.8,
    "hatchChoateGeometricStdDev": 2.5299320831158894,
-   "particleCountPerCm3": 3657432.6076705437
+   "particleCountPerCm3": 3657432.6076705437,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30196,8 +30696,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30222,7 +30722,12 @@
    "d21Nm": 871.8,
    "hatchChoateGeometricMeanDiameterNm": 374.0,
    "hatchChoateGeometricStdDev": 1.9165718859067358,
-   "particleCountPerCm3": 850213.2977051242
+   "particleCountPerCm3": 850213.2977051242,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30238,8 +30743,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30267,7 +30772,12 @@
    "d21Nm": 835.8,
    "hatchChoateGeometricMeanDiameterNm": 160.5,
    "hatchChoateGeometricStdDev": 2.480035062107834,
-   "particleCountPerCm3": 4370648.280414964
+   "particleCountPerCm3": 4370648.280414964,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30283,8 +30793,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30309,7 +30819,12 @@
    "d21Nm": 991.4,
    "hatchChoateGeometricMeanDiameterNm": 350.7,
    "hatchChoateGeometricStdDev": 2.05618424901036,
-   "particleCountPerCm3": 1489862.4646337628
+   "particleCountPerCm3": 1489862.4646337628,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30325,8 +30840,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30353,7 +30868,12 @@
    "d21Nm": 879.7,
    "hatchChoateGeometricMeanDiameterNm": 292.3,
    "hatchChoateGeometricStdDev": 2.10047181170929,
-   "particleCountPerCm3": 1352021.2260295507
+   "particleCountPerCm3": 1352021.2260295507,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30369,8 +30889,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30397,7 +30917,12 @@
    "d21Nm": 635.7,
    "hatchChoateGeometricMeanDiameterNm": 120.2,
    "hatchChoateGeometricStdDev": 2.4907181987680542,
-   "particleCountPerCm3": 2987870.078591638
+   "particleCountPerCm3": 2987870.078591638,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30413,8 +30938,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30442,7 +30967,12 @@
    "d21Nm": 776.4,
    "hatchChoateGeometricMeanDiameterNm": 166.7,
    "hatchChoateGeometricStdDev": 2.403818538602768,
-   "particleCountPerCm3": 4159047.444199937
+   "particleCountPerCm3": 4159047.444199937,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30458,8 +30988,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30484,7 +31014,12 @@
    "d21Nm": 883.5,
    "hatchChoateGeometricMeanDiameterNm": 314.6,
    "hatchChoateGeometricStdDev": 2.0513213994146504,
-   "particleCountPerCm3": 1666662.2131405217
+   "particleCountPerCm3": 1666662.2131405217,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30500,8 +31035,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30529,7 +31064,12 @@
    "d21Nm": 749.5,
    "hatchChoateGeometricMeanDiameterNm": 116.9,
    "hatchChoateGeometricStdDev": 2.621960580186387,
-   "particleCountPerCm3": 5719472.654825528
+   "particleCountPerCm3": 5719472.654825528,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30545,8 +31085,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -30574,7 +31114,12 @@
    "d21Nm": 1056.7,
    "hatchChoateGeometricMeanDiameterNm": 310.9,
    "hatchChoateGeometricStdDev": 2.186053330493048,
-   "particleCountPerCm3": 655944.3317195851
+   "particleCountPerCm3": 655944.3317195851,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30590,8 +31135,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -30616,7 +31161,12 @@
    "d21Nm": 1047.6,
    "hatchChoateGeometricMeanDiameterNm": 425.3,
    "hatchChoateGeometricStdDev": 1.956951529924229,
-   "particleCountPerCm3": 482680.64130776486
+   "particleCountPerCm3": 482680.64130776486,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30632,8 +31182,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -30661,7 +31211,12 @@
    "d21Nm": 1345.0,
    "hatchChoateGeometricMeanDiameterNm": 257.8,
    "hatchChoateGeometricStdDev": 2.48148429808569,
-   "particleCountPerCm3": 312096.9919050613
+   "particleCountPerCm3": 312096.9919050613,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30677,8 +31232,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -30703,7 +31258,12 @@
    "d21Nm": 1232.2,
    "hatchChoateGeometricMeanDiameterNm": 315.4,
    "hatchChoateGeometricStdDev": 2.282947223112446,
-   "particleCountPerCm3": 293202.85419679346
+   "particleCountPerCm3": 293202.85419679346,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30719,8 +31279,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -30748,7 +31308,12 @@
    "d21Nm": 1384.6,
    "hatchChoateGeometricMeanDiameterNm": 826.0,
    "hatchChoateGeometricStdDev": 1.6623278381210085,
-   "particleCountPerCm3": 161835.03759638718
+   "particleCountPerCm3": 161835.03759638718,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30764,8 +31329,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -30790,7 +31355,12 @@
    "d21Nm": 1253.9,
    "hatchChoateGeometricMeanDiameterNm": 1056.4,
    "hatchChoateGeometricStdDev": 1.3400747238642703,
-   "particleCountPerCm3": 144873.3240504451
+   "particleCountPerCm3": 144873.3240504451,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30806,8 +31376,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -30835,7 +31405,12 @@
    "d21Nm": 790.5,
    "hatchChoateGeometricMeanDiameterNm": 176.7,
    "hatchChoateGeometricStdDev": 2.376276920513776,
-   "particleCountPerCm3": 1994125.8786545112
+   "particleCountPerCm3": 1994125.8786545112,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30851,8 +31426,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.0,
   "gravityG": 0,
   "diluent": null,
@@ -30879,7 +31454,12 @@
    "d21Nm": 395.9,
    "hatchChoateGeometricMeanDiameterNm": 107.9,
    "hatchChoateGeometricStdDev": 2.239121787030124,
-   "particleCountPerCm3": 2819890.710996832
+   "particleCountPerCm3": 2819890.710996832,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30895,8 +31475,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30923,7 +31503,12 @@
    "d21Nm": 383.3,
    "hatchChoateGeometricMeanDiameterNm": 72.2,
    "hatchChoateGeometricStdDev": 2.492996586982887,
-   "particleCountPerCm3": 3197761.8213616745
+   "particleCountPerCm3": 3197761.8213616745,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30939,8 +31524,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -30968,7 +31553,12 @@
    "d21Nm": 422.4,
    "hatchChoateGeometricMeanDiameterNm": 75.6,
    "hatchChoateGeometricStdDev": 2.527847124693362,
-   "particleCountPerCm3": 3373889.487593502
+   "particleCountPerCm3": 3373889.487593502,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -30984,8 +31574,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31010,7 +31600,12 @@
    "d21Nm": 470.1,
    "hatchChoateGeometricMeanDiameterNm": 101.5,
    "hatchChoateGeometricStdDev": 2.399623149808362,
-   "particleCountPerCm3": 2068777.3214579814
+   "particleCountPerCm3": 2068777.3214579814,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31026,8 +31621,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31053,7 +31648,12 @@
    "d21Nm": 321.6,
    "hatchChoateGeometricMeanDiameterNm": 54.7,
    "hatchChoateGeometricStdDev": 2.5624075603162524,
-   "particleCountPerCm3": 2869058.83318034
+   "particleCountPerCm3": 2869058.83318034,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31069,8 +31669,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31097,7 +31697,12 @@
    "d21Nm": 482.8,
    "hatchChoateGeometricMeanDiameterNm": 179.7,
    "hatchChoateGeometricStdDev": 2.019859695422917,
-   "particleCountPerCm3": 1251718.8795930552
+   "particleCountPerCm3": 1251718.8795930552,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31113,8 +31718,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31142,7 +31747,12 @@
    "d21Nm": 377.6,
    "hatchChoateGeometricMeanDiameterNm": 91.0,
    "hatchChoateGeometricStdDev": 2.324494786421839,
-   "particleCountPerCm3": 2987215.0655236603
+   "particleCountPerCm3": 2987215.0655236603,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31158,8 +31768,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31184,7 +31794,12 @@
    "d21Nm": 447.6,
    "hatchChoateGeometricMeanDiameterNm": 177.3,
    "hatchChoateGeometricStdDev": 1.9747194096960874,
-   "particleCountPerCm3": 1158631.893831761
+   "particleCountPerCm3": 1158631.893831761,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31200,8 +31815,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31229,7 +31844,12 @@
    "d21Nm": 441.7,
    "hatchChoateGeometricMeanDiameterNm": 81.5,
    "hatchChoateGeometricStdDev": 2.507810768323902,
-   "particleCountPerCm3": 4995552.57042703
+   "particleCountPerCm3": 4995552.57042703,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31245,8 +31865,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31271,7 +31891,12 @@
    "d21Nm": 528.8,
    "hatchChoateGeometricMeanDiameterNm": 198.9,
    "hatchChoateGeometricStdDev": 2.0122138995127745,
-   "particleCountPerCm3": 1482905.7467800037
+   "particleCountPerCm3": 1482905.7467800037,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31287,8 +31912,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31316,7 +31941,12 @@
    "d21Nm": 418.4,
    "hatchChoateGeometricMeanDiameterNm": 96.2,
    "hatchChoateGeometricStdDev": 2.356992697809274,
-   "particleCountPerCm3": 3463686.403480526
+   "particleCountPerCm3": 3463686.403480526,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31332,8 +31962,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31358,7 +31988,12 @@
    "d21Nm": 498.8,
    "hatchChoateGeometricMeanDiameterNm": 177.8,
    "hatchChoateGeometricStdDev": 2.0505944091004547,
-   "particleCountPerCm3": 1343413.4028339714
+   "particleCountPerCm3": 1343413.4028339714,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31374,8 +32009,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31403,7 +32038,12 @@
    "d21Nm": 355.7,
    "hatchChoateGeometricMeanDiameterNm": 88.9,
    "hatchChoateGeometricStdDev": 2.299174889501581,
-   "particleCountPerCm3": 2858217.364889431
+   "particleCountPerCm3": 2858217.364889431,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31419,8 +32059,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31448,7 +32088,12 @@
    "d21Nm": 633.4,
    "hatchChoateGeometricMeanDiameterNm": 122.5,
    "hatchChoateGeometricStdDev": 2.4751813854914384,
-   "particleCountPerCm3": 212271.61609166127
+   "particleCountPerCm3": 212271.61609166127,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31464,8 +32109,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31490,7 +32135,12 @@
    "d21Nm": 623.1,
    "hatchChoateGeometricMeanDiameterNm": 171.7,
    "hatchChoateGeometricStdDev": 2.231834447303629,
-   "particleCountPerCm3": 175271.79330633517
+   "particleCountPerCm3": 175271.79330633517,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31506,8 +32156,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31535,7 +32185,12 @@
    "d21Nm": 623.5,
    "hatchChoateGeometricMeanDiameterNm": 108.8,
    "hatchChoateGeometricStdDev": 2.5457404617536565,
-   "particleCountPerCm3": 438728.96546478604
+   "particleCountPerCm3": 438728.96546478604,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31551,8 +32206,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31577,7 +32232,12 @@
    "d21Nm": 656.5,
    "hatchChoateGeometricMeanDiameterNm": 121.9,
    "hatchChoateGeometricStdDev": 2.502796527833057,
-   "particleCountPerCm3": 329083.6225838978
+   "particleCountPerCm3": 329083.6225838978,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31593,8 +32253,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31622,7 +32282,12 @@
    "d21Nm": 697.9,
    "hatchChoateGeometricMeanDiameterNm": 380.0,
    "hatchChoateGeometricStdDev": 1.7355361204504993,
-   "particleCountPerCm3": 107516.96149531422
+   "particleCountPerCm3": 107516.96149531422,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31638,8 +32303,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -31664,7 +32329,12 @@
    "d21Nm": 726.3,
    "hatchChoateGeometricMeanDiameterNm": 330.9,
    "hatchChoateGeometricStdDev": 1.8717880227738097,
-   "particleCountPerCm3": 97001.378207353
+   "particleCountPerCm3": 97001.378207353,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31680,8 +32350,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -31709,7 +32379,12 @@
    "d21Nm": 612.1,
    "hatchChoateGeometricMeanDiameterNm": 230.9,
    "hatchChoateGeometricStdDev": 2.0102241523207525,
-   "particleCountPerCm3": 915311.8756247737
+   "particleCountPerCm3": 915311.8756247737,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31725,8 +32400,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31753,7 +32428,12 @@
    "d21Nm": 330.6,
    "hatchChoateGeometricMeanDiameterNm": 113.3,
    "hatchChoateGeometricStdDev": 2.0786515528876603,
-   "particleCountPerCm3": 3654789.4777492345
+   "particleCountPerCm3": 3654789.4777492345,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31769,8 +32449,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31798,7 +32478,12 @@
    "d21Nm": 218.3,
    "hatchChoateGeometricMeanDiameterNm": 111.4,
    "hatchChoateGeometricStdDev": 1.785741217437197,
-   "particleCountPerCm3": 3037043.917153908
+   "particleCountPerCm3": 3037043.917153908,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31814,8 +32499,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31834,7 +32519,12 @@
    "Primary aging time (sec)": "11",
    "Primary mixing time (sec)": "8",
    "Net aging time (sec)": "n/a",
-   "testType": "smoke generation by heating below ignition (not a flame test)"
+   "testType": "smoke generation by heating below ignition (not a flame test)",
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31850,8 +32540,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31879,7 +32569,12 @@
    "d21Nm": 250.4,
    "hatchChoateGeometricMeanDiameterNm": 31.7,
    "hatchChoateGeometricStdDev": 2.7638822532432576,
-   "particleCountPerCm3": 2105294.5686913007
+   "particleCountPerCm3": 2105294.5686913007,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31895,8 +32590,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31921,7 +32616,12 @@
    "d21Nm": 345.8,
    "hatchChoateGeometricMeanDiameterNm": 70.2,
    "hatchChoateGeometricStdDev": 2.4420805206174716,
-   "particleCountPerCm3": 557920.0136336879
+   "particleCountPerCm3": 557920.0136336879,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31937,8 +32637,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -31963,7 +32663,12 @@
    "sampleTemperatureC": 528.0,
    "diameterOfAverageMassNm": 445.8,
    "d21Nm": 432.7,
-   "particleCountPerCm3": 840335.7049554102
+   "particleCountPerCm3": 840335.7049554102,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -31979,8 +32684,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32008,7 +32713,12 @@
    "d21Nm": 210.3,
    "hatchChoateGeometricMeanDiameterNm": 149.5,
    "hatchChoateGeometricStdDev": 1.5111289946801014,
-   "particleCountPerCm3": 2596153.60339632
+   "particleCountPerCm3": 2596153.60339632,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32024,8 +32734,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32048,7 +32758,12 @@
    "massLossMg": 96.15333333333331,
    "diameterOfAverageMassNm": 263.2,
    "d21Nm": 261.5,
-   "particleCountPerCm3": 974484.8681455723
+   "particleCountPerCm3": 974484.8681455723,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32064,8 +32779,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32093,7 +32808,12 @@
    "d21Nm": 276.0,
    "hatchChoateGeometricMeanDiameterNm": 189.7,
    "hatchChoateGeometricStdDev": 1.541820614289457,
-   "particleCountPerCm3": 2654993.7023748658
+   "particleCountPerCm3": 2654993.7023748658,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32109,8 +32829,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32133,7 +32853,12 @@
    "massLossMg": 9.71333333333324,
    "diameterOfAverageMassNm": 348.0,
    "d21Nm": 330.9,
-   "particleCountPerCm3": 920599.7311915328
+   "particleCountPerCm3": 920599.7311915328,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32149,8 +32874,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32178,7 +32903,12 @@
    "d21Nm": 259.9,
    "hatchChoateGeometricMeanDiameterNm": 113.8,
    "hatchChoateGeometricStdDev": 1.9014741902301655,
-   "particleCountPerCm3": 3535853.9755014894
+   "particleCountPerCm3": 3535853.9755014894,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32194,8 +32924,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32218,7 +32948,12 @@
    "massLossMg": 8.070000000000022,
    "diameterOfAverageMassNm": 324.9,
    "d21Nm": 319.0,
-   "particleCountPerCm3": 909242.929961684
+   "particleCountPerCm3": 909242.929961684,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32234,8 +32969,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32263,7 +32998,12 @@
    "d21Nm": 250.8,
    "hatchChoateGeometricMeanDiameterNm": 33.2,
    "hatchChoateGeometricStdDev": 2.732534317487376,
-   "particleCountPerCm3": 2774308.12237614
+   "particleCountPerCm3": 2774308.12237614,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32279,8 +33019,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -32308,7 +33048,12 @@
    "d21Nm": 334.7,
    "hatchChoateGeometricMeanDiameterNm": 165.0,
    "hatchChoateGeometricStdDev": 1.8127147982276335,
-   "particleCountPerCm3": 547365.2924018665
+   "particleCountPerCm3": 547365.2924018665,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32324,8 +33069,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -32350,7 +33095,12 @@
    "d21Nm": 358.9,
    "hatchChoateGeometricMeanDiameterNm": 198.3,
    "hatchChoateGeometricStdDev": 1.7238191080253453,
-   "particleCountPerCm3": 392836.80301108205
+   "particleCountPerCm3": 392836.80301108205,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32366,8 +33116,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -32395,7 +33145,12 @@
    "d21Nm": 407.2,
    "hatchChoateGeometricMeanDiameterNm": 129.5,
    "hatchChoateGeometricStdDev": 2.1318850131134703,
-   "particleCountPerCm3": 195396.75079555667
+   "particleCountPerCm3": 195396.75079555667,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32411,8 +33166,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -32437,7 +33192,12 @@
    "d21Nm": 458.0,
    "hatchChoateGeometricMeanDiameterNm": 114.7,
    "hatchChoateGeometricStdDev": 2.2978156464703408,
-   "particleCountPerCm3": 146578.22949047992
+   "particleCountPerCm3": 146578.22949047992,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32453,8 +33213,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -32482,7 +33242,12 @@
    "d21Nm": 412.4,
    "hatchChoateGeometricMeanDiameterNm": 240.6,
    "hatchChoateGeometricStdDev": 1.680419088152735,
-   "particleCountPerCm3": 1333768.94443628
+   "particleCountPerCm3": 1333768.94443628,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32498,8 +33263,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32526,7 +33291,12 @@
    "d21Nm": 565.5,
    "hatchChoateGeometricMeanDiameterNm": 149.1,
    "hatchChoateGeometricStdDev": 2.262475756453556,
-   "particleCountPerCm3": 3110970.9166285717
+   "particleCountPerCm3": 3110970.9166285717,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32542,8 +33312,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32571,7 +33341,12 @@
    "d21Nm": 538.7,
    "hatchChoateGeometricMeanDiameterNm": 150.5,
    "hatchChoateGeometricStdDev": 2.2219783573112184,
-   "particleCountPerCm3": 3862679.2540942985
+   "particleCountPerCm3": 3862679.2540942985,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32587,8 +33362,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32613,7 +33388,12 @@
    "d21Nm": 660.8,
    "hatchChoateGeometricMeanDiameterNm": 293.0,
    "hatchChoateGeometricStdDev": 1.8922142617359956,
-   "particleCountPerCm3": 1414788.1544307088
+   "particleCountPerCm3": 1414788.1544307088,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32629,8 +33409,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32658,7 +33438,12 @@
    "d21Nm": 588.6,
    "hatchChoateGeometricMeanDiameterNm": 191.8,
    "hatchChoateGeometricStdDev": 2.1145436150408896,
-   "particleCountPerCm3": 3881194.302428619
+   "particleCountPerCm3": 3881194.302428619,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32674,8 +33459,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32700,7 +33485,12 @@
    "d21Nm": 720.1,
    "hatchChoateGeometricMeanDiameterNm": 384.9,
    "hatchChoateGeometricStdDev": 1.7501057221171064,
-   "particleCountPerCm3": 1417570.6344373168
+   "particleCountPerCm3": 1417570.6344373168,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32716,8 +33506,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32744,7 +33534,12 @@
    "d21Nm": 504.3,
    "hatchChoateGeometricMeanDiameterNm": 276.3,
    "hatchChoateGeometricStdDev": 1.7305341707926598,
-   "particleCountPerCm3": 1352316.8506269613
+   "particleCountPerCm3": 1352316.8506269613,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32760,8 +33555,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32789,7 +33584,12 @@
    "d21Nm": 475.3,
    "hatchChoateGeometricMeanDiameterNm": 147.5,
    "hatchChoateGeometricStdDev": 2.148722604077893,
-   "particleCountPerCm3": 4953334.072364063
+   "particleCountPerCm3": 4953334.072364063,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32805,8 +33605,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32831,7 +33631,12 @@
    "d21Nm": 595.4,
    "hatchChoateGeometricMeanDiameterNm": 326.0,
    "hatchChoateGeometricStdDev": 1.731148221373688,
-   "particleCountPerCm3": 1662805.441424458
+   "particleCountPerCm3": 1662805.441424458,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32847,8 +33652,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32876,7 +33681,12 @@
    "d21Nm": 620.4,
    "hatchChoateGeometricMeanDiameterNm": 293.6,
    "hatchChoateGeometricStdDev": 1.843342080682528,
-   "particleCountPerCm3": 3275641.6927261017
+   "particleCountPerCm3": 3275641.6927261017,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32892,8 +33702,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32918,7 +33728,12 @@
    "d21Nm": 772.7,
    "hatchChoateGeometricMeanDiameterNm": 370.0,
    "hatchChoateGeometricStdDev": 1.834502046916247,
-   "particleCountPerCm3": 1632139.978883141
+   "particleCountPerCm3": 1632139.978883141,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32934,8 +33749,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -32963,7 +33778,12 @@
    "d21Nm": 549.1,
    "hatchChoateGeometricMeanDiameterNm": 174.8,
    "hatchChoateGeometricStdDev": 2.13094001657288,
-   "particleCountPerCm3": 3721976.9141411837
+   "particleCountPerCm3": 3721976.9141411837,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -32979,8 +33799,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -33005,7 +33825,12 @@
    "d21Nm": 653.2,
    "hatchChoateGeometricMeanDiameterNm": 289.4,
    "hatchChoateGeometricStdDev": 1.8926021618490523,
-   "particleCountPerCm3": 1683214.9966951662
+   "particleCountPerCm3": 1683214.9966951662,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33021,8 +33846,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 8.1,
   "gravityG": 0,
   "diluent": null,
@@ -33050,7 +33875,12 @@
    "d21Nm": 583.1,
    "hatchChoateGeometricMeanDiameterNm": 158.6,
    "hatchChoateGeometricStdDev": 2.240797282137971,
-   "particleCountPerCm3": 2924886.374436164
+   "particleCountPerCm3": 2924886.374436164,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33066,8 +33896,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -33095,7 +33925,12 @@
    "d21Nm": 1508.0,
    "hatchChoateGeometricMeanDiameterNm": 63.4,
    "hatchChoateGeometricStdDev": 3.521400486109984,
-   "particleCountPerCm3": 71387.63734198635
+   "particleCountPerCm3": 71387.63734198635,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33111,8 +33946,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -33137,7 +33972,12 @@
    "d21Nm": 1290.7,
    "hatchChoateGeometricMeanDiameterNm": 235.1,
    "hatchChoateGeometricStdDev": 2.516274556399013,
-   "particleCountPerCm3": 35876.44810869752
+   "particleCountPerCm3": 35876.44810869752,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33153,8 +33993,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -33182,7 +34022,12 @@
    "d21Nm": 1769.7,
    "hatchChoateGeometricMeanDiameterNm": 124.1,
    "hatchChoateGeometricStdDev": 3.1669271081639283,
-   "particleCountPerCm3": 42225.75011990238
+   "particleCountPerCm3": 42225.75011990238,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33198,8 +34043,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 0.0,
   "gravityG": 0,
   "diluent": null,
@@ -33224,7 +34069,12 @@
    "d21Nm": 1546.3,
    "hatchChoateGeometricMeanDiameterNm": 212.7,
    "hatchChoateGeometricStdDev": 2.707388644393232,
-   "particleCountPerCm3": 34988.1635426842
+   "particleCountPerCm3": 34988.1635426842,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33240,8 +34090,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -33269,7 +34119,12 @@
    "d21Nm": 1739.6,
    "hatchChoateGeometricMeanDiameterNm": 137.6,
    "hatchChoateGeometricStdDev": 3.084427230286784,
-   "particleCountPerCm3": 206018.55669814753
+   "particleCountPerCm3": 206018.55669814753,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33285,8 +34140,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 1.0,
   "gravityG": 0,
   "diluent": null,
@@ -33311,7 +34166,12 @@
    "d21Nm": 1697.0,
    "hatchChoateGeometricMeanDiameterNm": 155.1,
    "hatchChoateGeometricStdDev": 2.9854989123444,
-   "particleCountPerCm3": 192866.11921982534
+   "particleCountPerCm3": 192866.11921982534,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
@@ -33327,8 +34187,8 @@
   "geometry": "heated sample (smoke source)",
   "thicknessMm": null,
   "diameterMm": null,
-  "o2Pct": null,
-  "pressureKpa": null,
+  "o2Pct": 21.0,
+  "pressureKpa": 101.3,
   "flowCmS": 2.0,
   "gravityG": 0,
   "diluent": null,
@@ -33356,7 +34216,12 @@
    "d21Nm": 838.3,
    "hatchChoateGeometricMeanDiameterNm": 303.1,
    "hatchChoateGeometricStdDev": 2.040543467392175,
-   "particleCountPerCm3": 1176224.4595932008
+   "particleCountPerCm3": 1176224.4595932008,
+   "conditionsAssumed": [
+    "o2Pct",
+    "pressureKpa"
+   ],
+   "o2PressureBasis": "assumption: ISS cabin air (21% O2, 101.3 kPa). The test ran in the MSG work volume on the ISS (SAME Final Science Report p.20-21; SAME-R Final Report p.9: smoke 'diffused out of the inlet into the MSG volume'); neither report states O2 or pressure or mentions a purge or backfill gas (N2 was added only to dilute the sampled aerosol). MSG work-volume N2 dilution was first used later, by BASS-II (NTRS 20150019858)."
   },
   "source": {
    "sourceId": "psi-101",
