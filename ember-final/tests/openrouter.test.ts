@@ -46,6 +46,10 @@ describe('OpenRouter scientific adapters', () => {
     const payload = decisionPayload(); mutate(payload);
     await expect(new OpenRouterClient({ apiKey: 'test-key', fetchImpl: mockFetch(payload) }).evaluatePassage(input)).rejects.toThrow('Invalid OpenRouter');
   });
+  it('accepts the native embedding name observed in a real OpenRouter response', async () => {
+    const client = new OpenRouterClient({apiKey:'test-key',fetchImpl:mockFetch({model:'gemini-embedding-2',data:[{index:0,embedding:[1,0]}]})});
+    await expect(client.embed(['PMMA'],2)).resolves.toEqual([[1,0]]);
+  });
   it('rejects a silent decision model substitution', async () => {
     const payload = { ...decisionPayload(), model: 'other/model' };
     await expect(new OpenRouterClient({ apiKey: 'test-key', fetchImpl: mockFetch(payload) }).evaluatePassage(input)).rejects.toThrow('model');

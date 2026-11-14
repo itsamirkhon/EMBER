@@ -127,3 +127,11 @@ The earlier stages above record historical implementation claims, not independen
 - Browser exposed a blank-page `Invalid hook call`; optimized dependencies included both ember-final and sibling web copies of React. Forced cache regeneration alone did not fix it. Added Vite `resolve.dedupe` for React/React DOM so hooks and renderer use one instance.
 - Browser reload rendered the workspace, Node API Connected indicator and PMMA demo findings/provenance. Lint and production build passed after the correction. Live AI remains unconfigured; no external provider requests were made.
 - Local startup refreshed stored demo snapshots in data/reviews_store.json; that runtime data is intentionally excluded from this fix commit.
+
+
+## Stage 12 — Live OpenRouter connection (2026-11-14)
+- Saved the user-supplied key only to ignored server `.env` (0600), without logging it or browser exposure.
+- Initial embedding build failed strict model-name validation. One minimal live probe showed HTTP200 model=gemini-embedding-2. Regression reproduced the failure, then exact native-ID acceptance fixed it; unrelated models remain rejected. No model substitution performed.
+- Explicit paid build wrote 2,463 document vectors at 768 dimensions. Native Decisions smoke returned the selected versioned model and three valid choice answers.
+- Bounded local API review (retrievalK=2) returned HTTP201, warnings=[], two live_openrouter decisions and embedding metadata. Health confirmed configured=true and embeddingIndexPresent=true. Prose remains deterministic by design.
+- 36 targeted provider/runtime/review tests and lint pass. No domain accuracy, calibration or competitor-quality claim is inferred from these smoke checks. Runtime reviews, .env and private embedding artifact are not part of the fix commit.

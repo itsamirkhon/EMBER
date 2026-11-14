@@ -10,7 +10,7 @@
 | Неизвестные исходы | Неизвестные BASS/BASS-II records не создают reported ignition/burning; выведенное ignition помечается derived | Python reconstruction tests, включая 16 legacy unknown records |
 | Протокол | Проверяются принадлежность событий тесту/сегменту, повторяющиеся ID, относительный порядок и известные времена; hot extinction отделён от cool continuation | Mutation-style TS regressions на реальных record structures |
 | Защита выводов | Усилены проверки safety/certification guarantees, чисел с единицами, загрязнения между источниками и неподдержанного добавленного текста | Adversarial verifier regressions |
-| OpenRouter | Реальные server-only adapters: `google/gemini-decision-1` и `google/gemini-embedding-2`; строгая проверка внешних ответов, явные ошибки | Mock API/runtime/integration tests; платные вызовы не выполнялись |
+| OpenRouter | Реальные server-only adapters: `google/gemini-decision-1` и `google/gemini-embedding-2`; строгая проверка внешних ответов, явные ошибки | Mock tests и последующий живой smoke check; см. дополнение ниже |
 | Embedding pipeline | Отдельная сборка artifact с chunk IDs, hashes, model/dim/format/corpus metadata и атомарной записью | Тесты валидации, порядка, concurrency, ошибок и замены файла |
 | Provenance/runtime | Компоненты подключаются через async callbacks; API сохраняет различие deterministic/live и сообщает fallback | Интеграционные проверки и versioned snapshots |
 
@@ -58,3 +58,10 @@ Flow/PhysX не входят в этот этап: они не устраняю�
 - Проверены также различение deterministic/live кеша, конфликт idempotency key (409), повтор после fallback и границы архивных review. Все вызовы провайдера в проверках — подставные; `OPENROUTER_API_KEY` в рабочем окружении отсутствует.
 
 Эти проверки подтверждают перечисленные программные контракты и регрессии. Они не измеряют реальную точность Gemini и не заменяют независимую научную разметку или браузерный приёмочный прогон полного сценария.
+
+
+## Подключение живого провайдера — 2026-11-14
+
+Ключ настроен только в локальном ignored `.env` с правами 0600. Построен `data/openrouter_embeddings.json`: 2 463 document vectors × 768 dimensions. OpenRouter фактически возвращает native embedding ID без `google/`; добавлен точный совместимый alias, regression сначала воспроизвёл отказ и затем прошёл. Проходят 36 targeted adapter/runtime/review tests и lint.
+
+Живой запрос `/api/reviews` вернул HTTP201, warnings=[], 2 decisions с evaluatorMode=live_openrouter, decisionModel=google/gemini-decision-1-20261111, embeddingModel=google/gemini-embedding-2. Prose остаётся deterministic: генеративная модель отдельно не подключалась. Это проверка интеграции, не измерение научного качества. Предыдущие записи об отсутствии ключа описывают состояние до этого подключения. Секрет и embedding artifact в Git не добавлялись.

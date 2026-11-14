@@ -77,7 +77,9 @@ function choice<T extends string>(value: unknown, labels: readonly T[]): JevQues
 }
 function returnedModel(payload: Record<string, unknown>, requested: string): string {
   const model = payload.model;
-  if (typeof model !== 'string' || !(model === requested || model.startsWith(`${requested}-`))) throw new Error('Invalid OpenRouter returned model');
+  // OpenRouter embeddings returns the native Google ID without its router namespace.
+  const nativeId = requested.startsWith('google/') ? requested.slice('google/'.length) : requested;
+  if (typeof model !== 'string' || !(model === requested || model === nativeId || model.startsWith(`${requested}-`))) throw new Error('Invalid OpenRouter returned model');
   return model;
 }
 function route(q1: JevQuestionScore<Q1Answer>, q2: JevQuestionScore<Q2Answer>, q3: JevQuestionScore<Q3Answer>): JevRoute {
