@@ -77,6 +77,9 @@ export interface TestRow {
   spreadRateMmS: number | null;
   burningRateMm2S: number | null;
   particleSizeNm: number | null;
+  /** SPICE-style smoke-point flame length; optional until the data pipeline publishes it */
+  smokePointLengthMm?: number | null;
+  /** extra.outcomeDerivation (optional): "source-table" | "report" | "keyword-rule" */
   extra: Record<string, unknown>;
   source: { sourceId: string | null; file: string | null; row: number | null };
 }
@@ -141,6 +144,13 @@ export interface Validation {
   method?: string;
   backtests: Backtest[];
   physicsModel: Record<string, unknown> | null;
+  /** numeric-target backtests (kNN regression), see evidence.leaveOneOutNumeric */
+  numeric?: Record<string, unknown>[];
+  /** rows per investigation and what they can be used for, see evidence.dataCoverage */
+  coverage?: Record<string, unknown>;
+  /** plain-language summary numbers for the Trust page headline */
+  headline?: Record<string, unknown>;
+  parameters?: Record<string, unknown>;
 }
 
 export interface DatasetsManifest {

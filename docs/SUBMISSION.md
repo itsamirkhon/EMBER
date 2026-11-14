@@ -12,7 +12,7 @@ Paste these sections into the Space Apps project page. Fill in the `[ ]` placeho
 
 ## High-level summary
 
-EMBER is a web dashboard that turns NASA's microgravity combustion data into answers for fire-safety design. An engineer picks a habitat (ISS, lunar base, pressurized lunar rover, Mars base, EVA suit), a material and conditions. EMBER ranks 15 PSI investigations with a transparent formula: safety consequence × evidence strength × proximity to the mission. It shows what each investigation found, with citations, and predicts outcomes from the nearest real flight tests. Every answer is labelled **Measured**, **Interpolated** or **Extrapolated**. A built-in Trust page reports how often EMBER is right: 76 % in a leave-one-test-out backtest, against a 66 % majority-class baseline. EMBER shows what NASA knows about fire in space, and what nobody knows yet.
+EMBER is a web dashboard that turns NASA's microgravity combustion data into answers for fire-safety design. An engineer picks a habitat (ISS, lunar base, pressurized lunar rover, Mars base, EVA suit), a material and conditions. EMBER ranks 15 PSI investigations with a transparent formula: safety consequence × evidence strength × proximity to the mission. It shows what each investigation found, with citations, and predicts outcomes from the nearest real flight tests. Every answer is labelled **Measured**, **Interpolated** or **Extrapolated**. A built-in Trust page reports how often EMBER is right, always next to a baseline. Within an experiment it predicts 77 % of held-out tests (replicates hidden) against a 54 % majority baseline. Across experiments it is barely better than guessing (58 % vs 54 %), but it labels 77 % of those wrong answers Extrapolated: the data does not transfer between experiments, and EMBER says so itself. EMBER shows what NASA knows about fire in space, and what nobody knows yet.
 
 ## Project details
 
@@ -27,13 +27,15 @@ EMBER closes the third gap and honestly shows the first two.
 1. **Mission lens:** ranks investigations for a chosen habitat. The weights are adjustable and every score shows its breakdown. Each finding is tagged Known, Extrapolating or Unknown.
 2. **Investigation cards:** one layout for 15 investigations: objective, fuel, O₂, pressure and flow ranges, what was varied, diagnostics, hardware family, prevention/detection/suppression tag, and cited findings.
 3. **Compare and hardware families:** warns when two investigations differ in hardware (ACME/CIR, MDCA/CIR, MSG/SPICE duct, Saffire/Cygnus) or in fuel phase.
-4. **What-if:** O₂, pressure, flow and material sliders. A nearest-neighbour estimate over 1,622 real tests that always states whether the point was measured, lies between tests, or lies outside the data.
+4. **What-if:** O₂, pressure, flow and material sliders. A nearest-neighbour estimate over 1,678 real tests that always states whether the point was measured, lies between tests, or lies outside the data.
 5. **Gravity bracket:** for the Moon and Mars, shows the range between 1 g and µg as an explicit estimate. Uses NASA's finding that 1 g Test 1 oxygen limits run up to 4 % O₂ higher than in µg, plus E-FIELD Flames as a partial-gravity analogue.
 6. **Ask EMBER:** question answering over 145 claims, each backed by a verbatim quote. It cites every answer or replies "No evidence in PSI corpus".
 7. **Export:** cleaned CSV with PSI id, DOI, source file and row number on every row, ready for predictive modelling.
 8. **Back to Earth:** connects the findings to SCBA air tanks, smoke detectors, firefighter gear and water-mist suppression.
 9. **Trust page:**
-   - backtests, including hiding a whole experiment: 8 of 9 investigations pass, and the failure (ACME-BRE) is shown;
+   - backtests, each next to its majority baseline and split by fuel phase: leave one test out, the same with replicates hidden (so EMBER can't copy a near-identical twin), and hiding a whole investigation (strict accuracy 58 % vs 54 %, with 77 % of the wrong answers flagged Extrapolated);
+   - for the demo's solid materials, the honest result: 86 % vs an 84 % "always burns" baseline, and BASS-II alone 83 % vs 86 %, below baseline;
+   - numeric estimates (smoke-particle size, smoke-point length, burning rate, spread rate) against the investigation mean, including where kNN is worse;
    - claim-extraction accuracy: 29 correct, 7 partial and 0 wrong out of 36, with 145/145 quotes found verbatim in their sources.
 
 **Demo scenario.** Choosing a cabin-lining material for a pressurized lunar rover at 30 % O₂ / 70.3 kPa. EMBER finds the relevant investigations: BASS-II, SAME-R, Saffire and BASS. It shows that the closest solid-material flight tests stop at about 23 % O₂ and 1 atm, so the answer is **Extrapolated**. It then gives the literature margin and the citations an engineer needs next.

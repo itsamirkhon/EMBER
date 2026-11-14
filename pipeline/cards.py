@@ -35,7 +35,7 @@ CARDS = [
                  "size": "films 0.1–0.4 mm thick, slabs 1–5 mm thick, 1–2 cm wide; rods 1/4–1/2 in (6.35–12.7 mm) diameter"},
         "varied": ["forced flow velocity (speed and direction)", "ambient O2 concentration (N2 vitiation of the MSG working volume)",
                    "sample geometry and thickness"],
-        "constant": ["MSG working volume at ISS cabin pressure (not tabulated)", "microgravity"],
+        "constant": ["pressure ~1 atm (MSG working volume; stated in NASA/TM-20210011385, not measured per test)", "microgravity"],
         "diagnostics": ["video camera with data overlay (fan, flow, radiometer)", "digital still camera (Nikon)", "radiometer (uncalibrated, relative)",
                         "CSA-CP O2 and CO sensor", "Carbon Dioxide Monitor (CDM)"],
         "resultSummary": "About 130 flame tests on PMMA films, slabs, rods, fabrics and a candle in a small wind tunnel on the ISS, with O2 reduced "
@@ -232,7 +232,7 @@ CARDS = [
                      "to evaluate and design spacecraft smoke detectors.",
         "fuel": {"types": ["Teflon", "Kapton", "silicone rubber", "cotton lampwick", "dibutyl phthalate (DBP)"],
                  "geometry": "heated samples in a smoke-generation tube", "size": None},
-        "varied": ["material", "air flow past sample (5–10 cm/s)", "smoke aging time (1–20 min)"],
+        "varied": ["material", "air flow past sample (2–8 cm/s in the flown tests)", "sample heating (Rt/R0)", "smoke aging time (~10 s to ~33 min)"],
         "constant": ["heating below ignition (smoke, not flame)"],
         "diagnostics": ["thermophoretic samplers / TEM grids", "two commercial smoke detectors", "DustTrak aerosol monitor and ionization detector (Commercial Diagnostic Enclosure)", "P-Trak particle counter", "video", "sample mass loss"],
         "resultSummary": "Spacecraft materials were overheated on the ISS to produce smoke, which was aged and measured by detectors and particle samplers. "
@@ -352,7 +352,7 @@ CARDS = [
         "fuel": {"types": ["methane", "ethylene", "propane", "propylene", "propylene/nitrogen mixtures"], "geometry": "round jet nozzles in co-flowing air",
                  "size": "nozzle diameters 0.41, 0.76 and 1.6 mm"},
         "varied": ["fuel", "nozzle diameter", "fuel flow rate", "co-flow air velocity (~5–65 cm/s)"],
-        "constant": ["cabin air co-flow", "microgravity"],
+        "constant": ["cabin air co-flow (nominal 21 % O2, 101 kPa per SPICE Final Report)", "microgravity"],
         "diagnostics": ["still and video cameras (flame length, smoke point)", "radiative heat loss", "co-flow velocity"],
         "resultSummary": "526 small gas-jet flames were studied in the glovebox to find when they begin to emit soot. Soot governs flame heat emission, so the data help "
                          "predict fire spread and support material flammability criteria.",

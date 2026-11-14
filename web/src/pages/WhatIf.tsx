@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import ScatterPlot from '../components/ScatterPlot';
 import { testToPoint } from '../components/testPoints';
 import { useData, useEmber } from '../data/context';
-import { DIM_LABEL, DIM_UNIT, estimate, kpaToPsi, type Query } from '../lib/evidence';
-import type { FuelPhase } from '../lib/types';
+import {
+  DIM_LABEL, DIM_UNIT, estimate, estimateNumeric, kpaToPsi, TARGET_LABEL, TARGET_UNIT, targetValue,
+  type NumericEstimate, type NumericTarget, type Query,
+} from '../lib/evidence';
+import type { FuelPhase, TestRow } from '../lib/types';
 import { AnswerBadge, answerHelp, fmtGravity, fmtNum, fmtPct, PageHead, Term } from '../components/ui';
 
 type GravityPool = 'micro' | 'ground' | 'all';
@@ -21,6 +24,114 @@ function Slider(props: { id: string; label: ReactNode; value: number; min: numbe
       </div>
       <input id={props.id} type="range" min={props.min} max={props.max} step={props.step} value={props.value} onChange={(e) => props.onChange(Number(e.target.value))} />
     </div>
+  );
+}
+
+/** Which numeric results are meaningful for a fuel phase. */
+const PHASE_TARGETS: Record<FuelPhase | 'any', NumericTarget[]> = {
+  solid: ['spreadRateMmS'],
+  liquid: ['burningRateMm2S'],
+  gas: ['smokePointLengthMm'],
+  any: ['spreadRateMmS', 'burningRateMm2S', 'smokePointLengthMm'],
+};
+
+function fmtValue(v: number | null, unit: string) {
+  if (v === null) return '—';
+  const a = Math.abs(v);
+  return `${a >= 100 ? Math.round(v) : a >= 1 ? v.toFixed(2) : v.toPrecision(2)} ${unit}`;
+}
+
+function NumericResult({ e }: { e: NumericEstimate }) {
+  const unit = TARGET_UNIT[e.target];
+  return (
+    <div className="panel-title" style={{ alignItems: 'flex-start', marginTop: 10 }}>
+      <div style={{ minWidth: 0 }}>
+        <div className="small muted">{TARGET_LABEL[e.target]}</div>
+        {e.value === null ? (
+          <div className="small muted">{e.reasons[0]}</div>
+        ) : (
+          <>
+            <AnswerBadge status={e.status} />
+            <ul className="small" style={{ margin: '6px 0 0', paddingLeft: 18, color: 'var(--text-2)' }}>
+              {e.reasons.slice(0, 3).map((r, i) => (
+                <li key={i}>{r}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+      {e.value !== null && (
+        <div style={{ textAlign: 'right' }}>
+          <div className="hero-figure" style={{ fontSize: '1.6rem' }}>{fmtValue(e.value, unit)}</div>
+          <div className="small muted">
+            {e.status === 'extrapolated'
+              ? 'outside the data — treat as a guess'
+              : e.range && e.range[0] !== e.range[1]
+                ? `tests used: ${fmtValue(e.range[0], unit)} – ${fmtValue(e.range[1], unit)}`
+                : 'single value in the tests used'}
+          </div>
+          <div className="small muted">{e.poolSize} tests report this value</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SmokeDetection({ tests }: { tests: TestRow[] }) {
+  const smoke = useMemo(() => tests.filter((t) => targetValue(t, 'particleSizeNm') !== null), [tests]);
+  const materials = useMemo(() => [...new Set(smoke.map((t) => t.fuel).filter((f): f is string => !!f))].sort(), [smoke]);
+  const invs = [...new Set(smoke.map((t) => t.inv))];
+  const [material, setMaterial] = useState('');
+  const [flow, setFlow] = useState(8);
+  const mat = material && materials.includes(material) ? material : materials[0] ?? '';
+  const e = useMemo(
+    () => (smoke.length ? estimateNumeric({ o2Pct: null, pressureKpa: null, flowCmS: flow, fuelPhase: null, fuel: mat || null }, smoke, 'particleSizeNm') : null),
+    [smoke, flow, mat],
+  );
+  return (
+    <section className="card" style={{ marginTop: 16 }} aria-labelledby="smoke-h">
+      <h2 id="smoke-h">Smoke detection: how big are the smoke particles?</h2>
+      <p className="small muted">
+        Smoke detectors are tuned to a particle size range. SAME and SAME-R heated spacecraft materials below ignition in microgravity
+        and measured the smoke. EMBER estimates particle size from the nearest of those tests by material and flow, with the same
+        Measured / Interpolated / Extrapolated rules. Heating temperature and aging time are not part of the distance.
+      </p>
+      {!e ? (
+        <p className="muted" style={{ marginBottom: 0 }}>No particle-size data loaded.</p>
+      ) : (
+        <div className="split">
+          <div>
+            <label>
+              <span className="small muted">Material</span>
+              <select value={mat} onChange={(ev) => setMaterial(ev.target.value)}>
+                {materials.map((m) => (
+                  <option key={m}>{m}</option>
+                ))}
+              </select>
+            </label>
+            <Slider id="smoke-flow" label="Flow past the sample" value={flow} min={0} max={20} step={0.5} unit="cm/s" onChange={setFlow} />
+            <p className="small muted">
+              {smoke.length} tests from {invs.join(', ')}. O₂ and pressure are cabin air and not recorded per test, so they are not used.
+            </p>
+          </div>
+          <div>
+            <NumericResult e={e} />
+            {e.neighbours.length > 0 && (
+              <p className="small muted">
+                Nearest tests:{' '}
+                {(e.status === 'measured' ? e.measuredTests.map((t) => ({ test: t })) : e.neighbours).slice(0, 5).map((n, i) => (
+                  <span key={`${n.test.inv}::${n.test.testId}`}>
+                    {i > 0 && ' · '}
+                    <span className="mono">{n.test.testId}</span> ({n.test.fuel}, {fmtNum(n.test.flowCmS)} cm/s,{' '}
+                    {fmtValue(targetValue(n.test, 'particleSizeNm'), 'nm')})
+                  </span>
+                ))}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -45,10 +156,12 @@ export default function WhatIf() {
     () => [...new Set(pool.filter((t) => t.fuel && (phase === 'any' || t.fuelPhase === phase)).map((t) => t.fuel as string))].sort(),
     [pool, phase],
   );
-  const e = useMemo(() => {
-    const q: Query = { o2Pct: o2, pressureKpa: p, flowCmS: flow, fuelPhase: phase === 'any' ? null : phase, fuel: material || null };
-    return estimate(q, pool);
-  }, [o2, p, flow, phase, material, pool]);
+  const query: Query = useMemo(
+    () => ({ o2Pct: o2, pressureKpa: p, flowCmS: flow, fuelPhase: phase === 'any' ? null : phase, fuel: material || null }),
+    [o2, p, flow, phase, material],
+  );
+  const e = useMemo(() => estimate(query, pool), [query, pool]);
+  const numeric = useMemo(() => PHASE_TARGETS[phase].map((t) => estimateNumeric(query, pool, t)), [query, pool, phase]);
 
   const plotted = pool.filter((t) => (phase === 'any' || t.fuelPhase === phase || e.phaseFallback) && t.o2Pct !== null && t.pressureKpa !== null);
   const nbIds = new Set(e.neighbours.map((n) => `${n.test.inv}::${n.test.testId}`));
@@ -155,6 +268,17 @@ export default function WhatIf() {
             )}
           </section>
 
+          <section className="card" aria-live="polite">
+            <h2>Numeric estimate</h2>
+            <p className="small muted" style={{ marginBottom: 0 }}>
+              Same nearest-neighbour method, predicting a measured number from tests of the same fuel phase only. Backtest errors are on
+              the <Link to="/trust">Trust</Link> page.
+            </p>
+            {numeric.map((ne) => (
+              <NumericResult key={ne.target} e={ne} />
+            ))}
+          </section>
+
           <section className="card">
             <h2>Tests in O₂ × pressure</h2>
             <p className="small muted">
@@ -221,6 +345,7 @@ export default function WhatIf() {
           </section>
         </div>
       </div>
+      <SmokeDetection tests={tests} />
     </>
   );
 }

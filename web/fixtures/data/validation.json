@@ -1,37 +1,295 @@
 {
-  "generatedAt": "2026-11-14T10:46:39.393Z",
+  "generatedAt": "2026-11-14T12:04:52.975Z",
   "dataset": "fixtures",
-  "method": "Outcomes collapsed to burn (burned, flame_spread, completed, disruption) vs no-burn (extinguished, self_extinguished, no_ignition); rows with other outcomes are skipped. Prediction = inverse-distance-weighted kNN (k=5, power 2) in normalized O2/pressure/flow space with fuel-phase, material and gravity penalties (src/lib/evidence.ts).",
+  "method": "Outcomes collapsed to burn (burned, flame_spread, completed, disruption) vs no-burn (extinguished, self_extinguished, no_ignition); rows with other outcomes are skipped. Prediction = inverse-distance-weighted kNN (k=5, power 2) in normalized O2/pressure/flow space with fuel-phase, material and gravity penalties (src/lib/evidence.ts). Every accuracy is reported with a majority-class baseline (always predict the most common outcome of the same set of tests) and its n. Numeric targets use the same distance and status rules (kNN regression).",
   "backtests": [
     {
       "name": "leave-one-test-out",
-      "description": "Each test is hidden in turn and its burn / no-burn outcome is predicted from all other tests (other tests of the same investigation included).",
+      "description": "Each test is hidden in turn and its burn / no-burn outcome is predicted from all other tests, including near-identical replicates of the same investigation (which is why most answers are \"Measured\").",
       "n": 48,
       "correct": 34,
+      "overall": {
+        "n": 48,
+        "correct": 34,
+        "accuracy": 0.7083333333333334,
+        "baseline": {
+          "predicts": "burn",
+          "correct": 31,
+          "accuracy": 0.6458333333333334
+        },
+        "byStatus": {
+          "measured": {
+            "n": 8,
+            "correct": 6
+          },
+          "interpolated": {
+            "n": 16,
+            "correct": 11
+          },
+          "extrapolated": {
+            "n": 24,
+            "correct": 17
+          }
+        },
+        "wrong": 14,
+        "wrongFlagged": 7,
+        "confidentWrong": 7,
+        "flaggingRate": 0.5
+      },
       "perInvestigation": {
         "BASS-II": {
           "n": 26,
-          "correct": 18
+          "correct": 18,
+          "accuracy": 0.6923076923076923,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 14,
+            "accuracy": 0.5384615384615384
+          },
+          "byStatus": {
+            "measured": {
+              "n": 8,
+              "correct": 6
+            },
+            "interpolated": {
+              "n": 7,
+              "correct": 5
+            },
+            "extrapolated": {
+              "n": 11,
+              "correct": 7
+            }
+          },
+          "wrong": 8,
+          "wrongFlagged": 4,
+          "confidentWrong": 4,
+          "flaggingRate": 0.5
         },
         "Saffire-II": {
           "n": 4,
-          "correct": 3
+          "correct": 3,
+          "accuracy": 0.75,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 0.75
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 4,
+              "correct": 3
+            },
+            "extrapolated": {
+              "n": 0,
+              "correct": 0
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 0,
+          "confidentWrong": 1,
+          "flaggingRate": 0
         },
         "FLEX": {
           "n": 6,
-          "correct": 2
+          "correct": 2,
+          "accuracy": 0.3333333333333333,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 2,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 2
+            }
+          },
+          "wrong": 4,
+          "wrongFlagged": 2,
+          "confidentWrong": 2,
+          "flaggingRate": 0.5
         },
         "ACME-BRE": {
           "n": 5,
-          "correct": 4
+          "correct": 4,
+          "accuracy": 0.8,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 0.8
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 3
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1
         },
         "ACME-E-FIELD": {
           "n": 3,
-          "correct": 3
+          "correct": 3,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 2,
+              "correct": 2
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null
         },
         "CFI-G": {
           "n": 4,
-          "correct": 4
+          "correct": 4,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 3,
+              "correct": 3
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null
+        }
+      },
+      "byPhase": {
+        "solid": {
+          "n": 30,
+          "correct": 21,
+          "accuracy": 0.7,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 17,
+            "accuracy": 0.5666666666666667
+          },
+          "byStatus": {
+            "measured": {
+              "n": 8,
+              "correct": 6
+            },
+            "interpolated": {
+              "n": 11,
+              "correct": 8
+            },
+            "extrapolated": {
+              "n": 11,
+              "correct": 7
+            }
+          },
+          "wrong": 9,
+          "wrongFlagged": 4,
+          "confidentWrong": 5,
+          "flaggingRate": 0.4444444444444444
+        },
+        "liquid": {
+          "n": 6,
+          "correct": 2,
+          "accuracy": 0.3333333333333333,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 2,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 2
+            }
+          },
+          "wrong": 4,
+          "wrongFlagged": 2,
+          "confidentWrong": 2,
+          "flaggingRate": 0.5
+        },
+        "gas": {
+          "n": 12,
+          "correct": 11,
+          "accuracy": 0.9166666666666666,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 11,
+            "accuracy": 0.9166666666666666
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 3,
+              "correct": 3
+            },
+            "extrapolated": {
+              "n": 9,
+              "correct": 8
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1
         }
       },
       "byStatus": {
@@ -52,6 +310,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-001",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0.3449884829627287,
@@ -61,6 +320,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-002",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0,
@@ -70,6 +330,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-003",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0.1260302312007442,
@@ -79,6 +340,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-004",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -88,6 +350,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-005",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.862796724473278,
@@ -97,6 +360,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-006",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0.10481644619965548,
@@ -106,6 +370,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-007",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -115,6 +380,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-008",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0,
@@ -124,6 +390,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-009",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.9446575858314639,
@@ -133,6 +400,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-010",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 1,
@@ -142,6 +410,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-011",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0.37514765224037466,
@@ -151,6 +420,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-012",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.7617018122831101,
@@ -160,6 +430,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-013",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0.3238225128504933,
@@ -169,6 +440,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-014",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.8564609262928348,
@@ -178,6 +450,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-015",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0.2787197188188274,
@@ -187,6 +460,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-016",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.8394219742390479,
@@ -196,6 +470,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-017",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0,
@@ -205,6 +480,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-018",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0,
@@ -214,6 +490,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G1",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.7573724910530935,
@@ -223,6 +500,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G2",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -232,6 +510,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G3",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -241,6 +520,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G4",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -250,6 +530,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G5",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.9529718807224195,
@@ -259,6 +540,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G6",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.9490965803861355,
@@ -268,6 +550,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G7",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0,
@@ -277,6 +560,7 @@
         {
           "inv": "BASS-II",
           "testId": "BASS-II-G8",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0.4775835502142761,
@@ -286,6 +570,7 @@
         {
           "inv": "Saffire-II",
           "testId": "Saffire-II-1",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.8039974555988385,
@@ -295,6 +580,7 @@
         {
           "inv": "Saffire-II",
           "testId": "Saffire-II-2",
+          "fuelPhase": "solid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.9318733794827906,
@@ -304,6 +590,7 @@
         {
           "inv": "Saffire-II",
           "testId": "Saffire-II-3",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.6975174615407508,
@@ -313,6 +600,7 @@
         {
           "inv": "Saffire-II",
           "testId": "Saffire-II-4",
+          "fuelPhase": "solid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.7410790251861248,
@@ -322,6 +610,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-1",
+          "fuelPhase": "liquid",
           "actual": "noburn",
           "predicted": "noburn",
           "pBurn": 0.2506365419478935,
@@ -331,6 +620,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-2",
+          "fuelPhase": "liquid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0.07160296468298533,
@@ -340,6 +630,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-3",
+          "fuelPhase": "liquid",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.5328247295906378,
@@ -349,6 +640,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-4",
+          "fuelPhase": "liquid",
           "actual": "burn",
           "predicted": "noburn",
           "pBurn": 0.3944001576973596,
@@ -358,6 +650,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-5",
+          "fuelPhase": "liquid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.7584822324906784,
@@ -367,6 +660,7 @@
         {
           "inv": "FLEX",
           "testId": "FLEX-6",
+          "fuelPhase": "liquid",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 0.513974801310022,
@@ -376,6 +670,7 @@
         {
           "inv": "ACME-BRE",
           "testId": "BRE-1",
+          "fuelPhase": "gas",
           "actual": "noburn",
           "predicted": "burn",
           "pBurn": 1,
@@ -385,6 +680,7 @@
         {
           "inv": "ACME-BRE",
           "testId": "BRE-2",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.6791894149251195,
@@ -394,6 +690,7 @@
         {
           "inv": "ACME-BRE",
           "testId": "BRE-3",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -403,6 +700,7 @@
         {
           "inv": "ACME-BRE",
           "testId": "BRE-4",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 0.7769300135770147,
@@ -412,6 +710,7 @@
         {
           "inv": "ACME-BRE",
           "testId": "BRE-5",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -421,6 +720,7 @@
         {
           "inv": "ACME-E-FIELD",
           "testId": "EF-1",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -430,6 +730,7 @@
         {
           "inv": "ACME-E-FIELD",
           "testId": "EF-2",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -439,6 +740,7 @@
         {
           "inv": "ACME-E-FIELD",
           "testId": "EF-3",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -448,6 +750,7 @@
         {
           "inv": "CFI-G",
           "testId": "CFI-G-1",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -457,6 +760,7 @@
         {
           "inv": "CFI-G",
           "testId": "CFI-G-2",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -466,6 +770,7 @@
         {
           "inv": "CFI-G",
           "testId": "CFI-G-3",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -475,6 +780,7 @@
         {
           "inv": "CFI-G",
           "testId": "CFI-G-4",
+          "fuelPhase": "gas",
           "actual": "burn",
           "predicted": "burn",
           "pBurn": 1,
@@ -484,11 +790,438 @@
       ]
     },
     {
+      "name": "leave-one-test-out-grouped",
+      "description": "As leave-one-test-out, but when a test is hidden, every test of the same investigation within the Measured tolerance (same phase and material, ±0.6% O2, ±3 kPa, ±2 cm/s) is hidden with it, so the model cannot copy a replicate.",
+      "n": 48,
+      "correct": 34,
+      "overall": {
+        "n": 48,
+        "correct": 34,
+        "accuracy": 0.7083333333333334,
+        "baseline": {
+          "predicts": "burn",
+          "correct": 31,
+          "accuracy": 0.6458333333333334
+        },
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "correct": 0
+          },
+          "interpolated": {
+            "n": 21,
+            "correct": 16
+          },
+          "extrapolated": {
+            "n": 27,
+            "correct": 18
+          }
+        },
+        "wrong": 14,
+        "wrongFlagged": 9,
+        "confidentWrong": 5,
+        "flaggingRate": 0.6428571428571429
+      },
+      "perInvestigation": {
+        "BASS-II": {
+          "n": 26,
+          "correct": 18,
+          "accuracy": 0.6923076923076923,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 14,
+            "accuracy": 0.5384615384615384
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 12,
+              "correct": 10
+            },
+            "extrapolated": {
+              "n": 14,
+              "correct": 8
+            }
+          },
+          "wrong": 8,
+          "wrongFlagged": 6,
+          "confidentWrong": 2,
+          "flaggingRate": 0.75
+        },
+        "Saffire-II": {
+          "n": 4,
+          "correct": 3,
+          "accuracy": 0.75,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 0.75
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 4,
+              "correct": 3
+            },
+            "extrapolated": {
+              "n": 0,
+              "correct": 0
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 0,
+          "confidentWrong": 1,
+          "flaggingRate": 0
+        },
+        "FLEX": {
+          "n": 6,
+          "correct": 2,
+          "accuracy": 0.3333333333333333,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 2,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 2
+            }
+          },
+          "wrong": 4,
+          "wrongFlagged": 2,
+          "confidentWrong": 2,
+          "flaggingRate": 0.5
+        },
+        "ACME-BRE": {
+          "n": 5,
+          "correct": 4,
+          "accuracy": 0.8,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 0.8
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 3
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1
+        },
+        "ACME-E-FIELD": {
+          "n": 3,
+          "correct": 3,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 2,
+              "correct": 2
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null
+        },
+        "CFI-G": {
+          "n": 4,
+          "correct": 4,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 3,
+              "correct": 3
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null
+        }
+      },
+      "byPhase": {
+        "solid": {
+          "n": 30,
+          "correct": 21,
+          "accuracy": 0.7,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 17,
+            "accuracy": 0.5666666666666667
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 16,
+              "correct": 13
+            },
+            "extrapolated": {
+              "n": 14,
+              "correct": 8
+            }
+          },
+          "wrong": 9,
+          "wrongFlagged": 6,
+          "confidentWrong": 3,
+          "flaggingRate": 0.6666666666666666
+        },
+        "liquid": {
+          "n": 6,
+          "correct": 2,
+          "accuracy": 0.3333333333333333,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 2,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 2
+            }
+          },
+          "wrong": 4,
+          "wrongFlagged": 2,
+          "confidentWrong": 2,
+          "flaggingRate": 0.5
+        },
+        "gas": {
+          "n": 12,
+          "correct": 11,
+          "accuracy": 0.9166666666666666,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 11,
+            "accuracy": 0.9166666666666666
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 3,
+              "correct": 3
+            },
+            "extrapolated": {
+              "n": 9,
+              "correct": 8
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1
+        }
+      },
+      "byStatus": {
+        "measured": {
+          "n": 0,
+          "correct": 0
+        },
+        "interpolated": {
+          "n": 21,
+          "correct": 16
+        },
+        "extrapolated": {
+          "n": 27,
+          "correct": 18
+        }
+      },
+      "replicates": {
+        "removedTotal": 12,
+        "testsWithReplicates": 8
+      },
+      "details": []
+    },
+    {
       "name": "leave-one-investigation-out",
-      "description": "Hide an experiment: all tests of one investigation are removed and each is estimated from the other investigations only. An investigation passes when at least 75% of its tests are handled honestly: the outcome is predicted correctly, or the system flagged the point as Extrapolated instead of claiming knowledge.",
-      "n": 6,
-      "correct": 6,
-      "passThreshold": 0.75,
+      "description": "Hide an experiment: all tests of one investigation are removed and each is estimated from the other investigations only. Strict accuracy counts correct predictions only. Flagging rate = share of the wrong answers that the system had labelled Extrapolated (it warned you). Baselines: majority outcome of the hidden tests (pooled) and majority outcome of the other investigations.",
+      "n": 48,
+      "correct": 32,
+      "investigations": 6,
+      "overall": {
+        "n": 48,
+        "correct": 32,
+        "accuracy": 0.6666666666666666,
+        "baseline": {
+          "predicts": "burn",
+          "correct": 31,
+          "accuracy": 0.6458333333333334
+        },
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "correct": 0
+          },
+          "interpolated": {
+            "n": 2,
+            "correct": 2
+          },
+          "extrapolated": {
+            "n": 46,
+            "correct": 30
+          }
+        },
+        "wrong": 16,
+        "wrongFlagged": 16,
+        "confidentWrong": 0,
+        "flaggingRate": 1
+      },
+      "trainMajority": {
+        "correct": 31,
+        "accuracy": 0.6458333333333334
+      },
+      "byPhase": {
+        "solid": {
+          "n": 30,
+          "correct": 17,
+          "accuracy": 0.5666666666666667,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 17,
+            "accuracy": 0.5666666666666667
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 30,
+              "correct": 17
+            }
+          },
+          "wrong": 13,
+          "wrongFlagged": 13,
+          "confidentWrong": 0,
+          "flaggingRate": 1
+        },
+        "liquid": {
+          "n": 6,
+          "correct": 4,
+          "accuracy": 0.6666666666666666,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 6,
+              "correct": 4
+            }
+          },
+          "wrong": 2,
+          "wrongFlagged": 2,
+          "confidentWrong": 0,
+          "flaggingRate": 1
+        },
+        "gas": {
+          "n": 12,
+          "correct": 11,
+          "accuracy": 0.9166666666666666,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 11,
+            "accuracy": 0.9166666666666666
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 2,
+              "correct": 2
+            },
+            "extrapolated": {
+              "n": 10,
+              "correct": 9
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1
+        }
+      },
       "testLevel": {
         "n": 48,
         "correct": 32,
@@ -510,91 +1243,986 @@
       "details": [
         {
           "inv": "BASS-II",
+          "fuelPhase": "solid",
           "n": 26,
-          "predictionCorrect": 14,
+          "correct": 14,
+          "accuracy": 0.5384615384615384,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 14,
+            "accuracy": 0.5384615384615384
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 26,
+              "correct": 14
+            }
+          },
+          "wrong": 12,
+          "wrongFlagged": 12,
+          "confidentWrong": 0,
+          "flaggingRate": 1,
           "statusCounts": {
             "measured": 0,
             "interpolated": 0,
             "extrapolated": 26
           },
-          "honest": 26,
-          "honestRate": 1,
-          "accuracy": 0.5384615384615384,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 14,
+            "accuracy": 0.5384615384615384
+          }
         },
         {
           "inv": "Saffire-II",
+          "fuelPhase": "solid",
           "n": 4,
-          "predictionCorrect": 3,
+          "correct": 3,
+          "accuracy": 0.75,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 0.75
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 3
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1,
           "statusCounts": {
             "measured": 0,
             "interpolated": 0,
             "extrapolated": 4
           },
-          "honest": 4,
-          "honestRate": 1,
-          "accuracy": 0.75,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 0.75
+          }
         },
         {
           "inv": "FLEX",
+          "fuelPhase": "liquid",
           "n": 6,
-          "predictionCorrect": 4,
+          "correct": 4,
+          "accuracy": 0.6666666666666666,
+          "baseline": {
+            "predicts": "noburn",
+            "correct": 3,
+            "accuracy": 0.5
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 6,
+              "correct": 4
+            }
+          },
+          "wrong": 2,
+          "wrongFlagged": 2,
+          "confidentWrong": 0,
+          "flaggingRate": 1,
           "statusCounts": {
             "measured": 0,
             "interpolated": 0,
             "extrapolated": 6
           },
-          "honest": 6,
-          "honestRate": 1,
-          "accuracy": 0.6666666666666666,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 0.5
+          }
         },
         {
           "inv": "ACME-BRE",
+          "fuelPhase": "gas",
           "n": 5,
-          "predictionCorrect": 4,
+          "correct": 4,
+          "accuracy": 0.8,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 0.8
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 4,
+              "correct": 3
+            }
+          },
+          "wrong": 1,
+          "wrongFlagged": 1,
+          "confidentWrong": 0,
+          "flaggingRate": 1,
           "statusCounts": {
             "measured": 0,
             "interpolated": 1,
             "extrapolated": 4
           },
-          "honest": 5,
-          "honestRate": 1,
-          "accuracy": 0.8,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 0.8
+          }
         },
         {
           "inv": "ACME-E-FIELD",
+          "fuelPhase": "gas",
           "n": 3,
-          "predictionCorrect": 3,
+          "correct": 3,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 0,
+              "correct": 0
+            },
+            "extrapolated": {
+              "n": 3,
+              "correct": 3
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null,
           "statusCounts": {
             "measured": 0,
             "interpolated": 0,
             "extrapolated": 3
           },
-          "honest": 3,
-          "honestRate": 1,
-          "accuracy": 1,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 3,
+            "accuracy": 1
+          }
         },
         {
           "inv": "CFI-G",
+          "fuelPhase": "gas",
           "n": 4,
-          "predictionCorrect": 4,
+          "correct": 4,
+          "accuracy": 1,
+          "baseline": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 1
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "correct": 0
+            },
+            "interpolated": {
+              "n": 1,
+              "correct": 1
+            },
+            "extrapolated": {
+              "n": 3,
+              "correct": 3
+            }
+          },
+          "wrong": 0,
+          "wrongFlagged": 0,
+          "confidentWrong": 0,
+          "flaggingRate": null,
           "statusCounts": {
             "measured": 0,
             "interpolated": 1,
             "extrapolated": 3
           },
-          "honest": 4,
-          "honestRate": 1,
-          "accuracy": 1,
-          "correct": true
+          "trainMajority": {
+            "predicts": "burn",
+            "correct": 4,
+            "accuracy": 1
+          }
         }
       ]
     }
   ],
+  "numeric": [
+    {
+      "target": "spreadRateMmS",
+      "unit": "mm/s",
+      "grouped": false,
+      "overall": {
+        "n": 17,
+        "nPredicted": 17,
+        "model": {
+          "n": 17,
+          "mae": 0.2781223989554755,
+          "medianAbsPctErr": 0.13377447550411703
+        },
+        "baselineInvMean": {
+          "n": 17,
+          "mae": 0.6271493212669684,
+          "medianAbsPctErr": 0.6470085470085472
+        },
+        "baselineGlobalMean": {
+          "n": 17,
+          "mae": 0.7670588235294117,
+          "medianAbsPctErr": 0.6315217391304347
+        },
+        "byStatus": {
+          "measured": {
+            "n": 2,
+            "mae": 0.020000000000000018,
+            "medianAbsPctErr": 0.11145510835913322
+          },
+          "interpolated": {
+            "n": 5,
+            "mae": 0.13844142835061488,
+            "medianAbsPctErr": 0.11143149245477908
+          },
+          "extrapolated": {
+            "n": 10,
+            "mae": 0.3995873640490008,
+            "medianAbsPctErr": 0.21363471326349343
+          }
+        }
+      },
+      "perInvestigation": {
+        "BASS-II": {
+          "n": 14,
+          "nPredicted": 14,
+          "model": {
+            "n": 14,
+            "mae": 0.25864732356701203,
+            "medianAbsPctErr": 0.1257107671638233
+          },
+          "baselineInvMean": {
+            "n": 14,
+            "mae": 0.6472527472527473,
+            "medianAbsPctErr": 1.8682098222143988
+          },
+          "baselineGlobalMean": {
+            "n": 14,
+            "mae": 0.7036607142857143,
+            "medianAbsPctErr": 2.3930635011441646
+          },
+          "byStatus": {
+            "measured": {
+              "n": 2,
+              "mae": 0.020000000000000018,
+              "medianAbsPctErr": 0.11145510835913322
+            },
+            "interpolated": {
+              "n": 3,
+              "mae": 0.07663178041688294,
+              "medianAbsPctErr": 0.11143149245477908
+            },
+            "extrapolated": {
+              "n": 9,
+              "mae": 0.3723519098541688,
+              "medianAbsPctErr": 0.14696227356938305
+            }
+          }
+        },
+        "Saffire-II": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.3690060841016381,
+            "medianAbsPctErr": 0.1816475810484334
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.5333333333333334,
+            "medianAbsPctErr": 0.23913043478260865
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 1.0629166666666665,
+            "medianAbsPctErr": 0.5904761904761905
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 2,
+              "mae": 0.2311559002512128,
+              "medianAbsPctErr": 0.1196994620601865
+            },
+            "extrapolated": {
+              "n": 1,
+              "mae": 0.6447064518024888,
+              "medianAbsPctErr": 0.28030715295760383
+            }
+          }
+        }
+      },
+      "byPhase": {
+        "solid": {
+          "n": 17,
+          "nPredicted": 17,
+          "model": {
+            "n": 17,
+            "mae": 0.2781223989554755,
+            "medianAbsPctErr": 0.13377447550411703
+          },
+          "baselineInvMean": {
+            "n": 17,
+            "mae": 0.6271493212669684,
+            "medianAbsPctErr": 0.6470085470085472
+          },
+          "baselineGlobalMean": {
+            "n": 17,
+            "mae": 0.7670588235294117,
+            "medianAbsPctErr": 0.6315217391304347
+          },
+          "byStatus": {
+            "measured": {
+              "n": 2,
+              "mae": 0.020000000000000018,
+              "medianAbsPctErr": 0.11145510835913322
+            },
+            "interpolated": {
+              "n": 5,
+              "mae": 0.13844142835061488,
+              "medianAbsPctErr": 0.11143149245477908
+            },
+            "extrapolated": {
+              "n": 10,
+              "mae": 0.3995873640490008,
+              "medianAbsPctErr": 0.21363471326349343
+            }
+          }
+        }
+      }
+    },
+    {
+      "target": "spreadRateMmS",
+      "unit": "mm/s",
+      "grouped": true,
+      "overall": {
+        "n": 17,
+        "nPredicted": 17,
+        "model": {
+          "n": 17,
+          "mae": 0.27635360917674684,
+          "medianAbsPctErr": 0.13377447550411703
+        },
+        "baselineInvMean": {
+          "n": 17,
+          "mae": 0.6328355957767724,
+          "medianAbsPctErr": 0.6470085470085472
+        },
+        "baselineGlobalMean": {
+          "n": 17,
+          "mae": 0.7733333333333334,
+          "medianAbsPctErr": 0.6315217391304347
+        },
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "mae": null,
+            "medianAbsPctErr": null
+          },
+          "interpolated": {
+            "n": 6,
+            "mae": 0.1165784279910595,
+            "medianAbsPctErr": 0.08459141776335935
+          },
+          "extrapolated": {
+            "n": 11,
+            "mae": 0.3635037080053035,
+            "medianAbsPctErr": 0.14696227356938305
+          }
+        }
+      },
+      "perInvestigation": {
+        "BASS-II": {
+          "n": 14,
+          "nPredicted": 14,
+          "model": {
+            "n": 14,
+            "mae": 0.2564995074071273,
+            "medianAbsPctErr": 0.12317457484831133
+          },
+          "baselineInvMean": {
+            "n": 14,
+            "mae": 0.6541575091575093,
+            "medianAbsPctErr": 1.9974270961685145
+          },
+          "baselineGlobalMean": {
+            "n": 14,
+            "mae": 0.7112797619047619,
+            "medianAbsPctErr": 2.5350591151792528
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 4,
+              "mae": 0.05928969186098285,
+              "medianAbsPctErr": 0.0770787644429266
+            },
+            "extrapolated": {
+              "n": 10,
+              "mae": 0.33538343362558504,
+              "medianAbsPctErr": 0.14036837453675005
+            }
+          }
+        },
+        "Saffire-II": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.3690060841016381,
+            "medianAbsPctErr": 0.1816475810484334
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.5333333333333334,
+            "medianAbsPctErr": 0.23913043478260865
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 1.0629166666666665,
+            "medianAbsPctErr": 0.5904761904761905
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 2,
+              "mae": 0.2311559002512128,
+              "medianAbsPctErr": 0.1196994620601865
+            },
+            "extrapolated": {
+              "n": 1,
+              "mae": 0.6447064518024888,
+              "medianAbsPctErr": 0.28030715295760383
+            }
+          }
+        }
+      },
+      "byPhase": {
+        "solid": {
+          "n": 17,
+          "nPredicted": 17,
+          "model": {
+            "n": 17,
+            "mae": 0.27635360917674684,
+            "medianAbsPctErr": 0.13377447550411703
+          },
+          "baselineInvMean": {
+            "n": 17,
+            "mae": 0.6328355957767724,
+            "medianAbsPctErr": 0.6470085470085472
+          },
+          "baselineGlobalMean": {
+            "n": 17,
+            "mae": 0.7733333333333334,
+            "medianAbsPctErr": 0.6315217391304347
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 6,
+              "mae": 0.1165784279910595,
+              "medianAbsPctErr": 0.08459141776335935
+            },
+            "extrapolated": {
+              "n": 11,
+              "mae": 0.3635037080053035,
+              "medianAbsPctErr": 0.14696227356938305
+            }
+          }
+        }
+      }
+    },
+    {
+      "target": "burningRateMm2S",
+      "unit": "mm²/s",
+      "grouped": false,
+      "overall": {
+        "n": 3,
+        "nPredicted": 3,
+        "model": {
+          "n": 3,
+          "mae": 0.07054715911240528,
+          "medianAbsPctErr": 0.07007124858806146
+        },
+        "baselineInvMean": {
+          "n": 3,
+          "mae": 0.0666666666666667,
+          "medianAbsPctErr": 0.050000000000000044
+        },
+        "baselineGlobalMean": {
+          "n": 3,
+          "mae": 0.0666666666666667,
+          "medianAbsPctErr": 0.050000000000000044
+        },
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "mae": null,
+            "medianAbsPctErr": null
+          },
+          "interpolated": {
+            "n": 0,
+            "mae": null,
+            "medianAbsPctErr": null
+          },
+          "extrapolated": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          }
+        }
+      },
+      "perInvestigation": {
+        "FLEX": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "extrapolated": {
+              "n": 3,
+              "mae": 0.07054715911240528,
+              "medianAbsPctErr": 0.07007124858806146
+            }
+          }
+        }
+      },
+      "byPhase": {
+        "liquid": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "extrapolated": {
+              "n": 3,
+              "mae": 0.07054715911240528,
+              "medianAbsPctErr": 0.07007124858806146
+            }
+          }
+        }
+      }
+    },
+    {
+      "target": "burningRateMm2S",
+      "unit": "mm²/s",
+      "grouped": true,
+      "overall": {
+        "n": 3,
+        "nPredicted": 3,
+        "model": {
+          "n": 3,
+          "mae": 0.07054715911240528,
+          "medianAbsPctErr": 0.07007124858806146
+        },
+        "baselineInvMean": {
+          "n": 3,
+          "mae": 0.0666666666666667,
+          "medianAbsPctErr": 0.050000000000000044
+        },
+        "baselineGlobalMean": {
+          "n": 3,
+          "mae": 0.0666666666666667,
+          "medianAbsPctErr": 0.050000000000000044
+        },
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "mae": null,
+            "medianAbsPctErr": null
+          },
+          "interpolated": {
+            "n": 0,
+            "mae": null,
+            "medianAbsPctErr": null
+          },
+          "extrapolated": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          }
+        }
+      },
+      "perInvestigation": {
+        "FLEX": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "extrapolated": {
+              "n": 3,
+              "mae": 0.07054715911240528,
+              "medianAbsPctErr": 0.07007124858806146
+            }
+          }
+        }
+      },
+      "byPhase": {
+        "liquid": {
+          "n": 3,
+          "nPredicted": 3,
+          "model": {
+            "n": 3,
+            "mae": 0.07054715911240528,
+            "medianAbsPctErr": 0.07007124858806146
+          },
+          "baselineInvMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "baselineGlobalMean": {
+            "n": 3,
+            "mae": 0.0666666666666667,
+            "medianAbsPctErr": 0.050000000000000044
+          },
+          "byStatus": {
+            "measured": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "interpolated": {
+              "n": 0,
+              "mae": null,
+              "medianAbsPctErr": null
+            },
+            "extrapolated": {
+              "n": 3,
+              "mae": 0.07054715911240528,
+              "medianAbsPctErr": 0.07007124858806146
+            }
+          }
+        }
+      }
+    }
+  ],
+  "coverage": {
+    "perInvestigation": [
+      {
+        "inv": "BASS-II",
+        "fuelPhase": "solid",
+        "rows": 26,
+        "outcome": 26,
+        "targets": {
+          "spreadRateMmS": 14,
+          "burningRateMm2S": 0,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 26
+        }
+      },
+      {
+        "inv": "Saffire-II",
+        "fuelPhase": "solid",
+        "rows": 4,
+        "outcome": 4,
+        "targets": {
+          "spreadRateMmS": 3,
+          "burningRateMm2S": 0,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 4
+        }
+      },
+      {
+        "inv": "FLEX",
+        "fuelPhase": "liquid",
+        "rows": 6,
+        "outcome": 6,
+        "targets": {
+          "spreadRateMmS": 0,
+          "burningRateMm2S": 3,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 6
+        }
+      },
+      {
+        "inv": "ACME-BRE",
+        "fuelPhase": "gas",
+        "rows": 5,
+        "outcome": 5,
+        "targets": {
+          "spreadRateMmS": 0,
+          "burningRateMm2S": 0,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 5
+        }
+      },
+      {
+        "inv": "ACME-E-FIELD",
+        "fuelPhase": "gas",
+        "rows": 3,
+        "outcome": 3,
+        "targets": {
+          "spreadRateMmS": 0,
+          "burningRateMm2S": 0,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 3
+        }
+      },
+      {
+        "inv": "CFI-G",
+        "fuelPhase": "gas",
+        "rows": 4,
+        "outcome": 4,
+        "targets": {
+          "spreadRateMmS": 0,
+          "burningRateMm2S": 0,
+          "particleSizeNm": 0,
+          "smokePointLengthMm": 0
+        },
+        "none": 0,
+        "derivation": {
+          "source-table": 0,
+          "report": 0,
+          "keyword-rule": 0,
+          "unstated": 4
+        }
+      }
+    ],
+    "total": {
+      "inv": "all",
+      "fuelPhase": null,
+      "rows": 48,
+      "outcome": 48,
+      "targets": {
+        "spreadRateMmS": 17,
+        "burningRateMm2S": 3,
+        "particleSizeNm": 0,
+        "smokePointLengthMm": 0
+      },
+      "none": 0,
+      "derivation": {
+        "source-table": 0,
+        "report": 0,
+        "keyword-rule": 0,
+        "unstated": 48
+      }
+    }
+  },
+  "headline": {
+    "withinExperiment": {
+      "n": 48,
+      "correct": 34,
+      "accuracy": 0.7083333333333334,
+      "baseline": 0.6458333333333334,
+      "flaggingRate": 0.5
+    },
+    "withinExperimentGrouped": {
+      "n": 48,
+      "correct": 34,
+      "accuracy": 0.7083333333333334,
+      "baseline": 0.6458333333333334,
+      "flaggingRate": 0.6428571428571429
+    },
+    "acrossExperiments": {
+      "n": 48,
+      "correct": 32,
+      "accuracy": 0.6666666666666666,
+      "baseline": 0.6458333333333334,
+      "flaggingRate": 1,
+      "trainMajorityBaseline": 0.6458333333333334
+    },
+    "solids": {
+      "loto": {
+        "n": 30,
+        "correct": 21,
+        "accuracy": 0.7,
+        "baseline": 0.5666666666666667,
+        "flaggingRate": 0.4444444444444444
+      },
+      "grouped": {
+        "n": 30,
+        "correct": 21,
+        "accuracy": 0.7,
+        "baseline": 0.5666666666666667,
+        "flaggingRate": 0.6666666666666666
+      },
+      "bass2": {
+        "loto": {
+          "n": 26,
+          "correct": 18,
+          "accuracy": 0.6923076923076923,
+          "baseline": 0.5384615384615384,
+          "flaggingRate": 0.5
+        },
+        "grouped": {
+          "n": 26,
+          "correct": 18,
+          "accuracy": 0.6923076923076923,
+          "baseline": 0.5384615384615384,
+          "flaggingRate": 0.75
+        }
+      },
+      "bass": {
+        "loto": null,
+        "grouped": null
+      }
+    }
+  },
   "physicsModel": null,
   "parameters": {
     "k": 5,
@@ -612,6 +2240,7 @@
     "localRadius": 2,
     "maxInterpDistance": 1.25,
     "rowsTotal": 48,
-    "rowsUsable": 48
+    "rowsUsable": 48,
+    "rowsInNoEstimate": 0
   }
 }

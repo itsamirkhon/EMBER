@@ -73,16 +73,41 @@ One row per individual test / run. Rows exist only where the PSI table (or a cit
     "gravityG": 0,
     "diluent": "N2",                  // "N2" | "He" | "CO2" | "Xe" | null
     "diluentPct": null,               // for FLEX-style suppression tests
-    "outcome": "burned",              // "burned" | "extinguished" | "no_ignition" | "flame_spread" | "self_extinguished" | "completed" | "disruption" | "unknown" — keep source wording in outcomeRaw
+    "outcome": "burned",              // "burned" | "extinguished" | "no_ignition" | "flame_spread" | "self_extinguished" | "completed" | "disruption" | "not_applicable" | "unknown" — keep source wording in outcomeRaw; "not_applicable" = the test was not a flammability test (e.g. SPICE: every flame ignited by design), excluded from burn/no-burn estimates
     "outcomeRaw": "flame spread to end",
     "spreadRateMmS": 0.42,            // null if not measured
     "burningRateMm2S": null,
-    "particleSizeNm": null,           // SAME-style
-    "extra": { },                     // any other source columns, untouched names
+    "particleSizeNm": null,           // SAME / SAME-R: arithmetic (count) mean smoke-particle diameter M1/M0 in nm (see below)
+    "smokePointLengthMm": null,       // SPICE: luminous flame length at the laminar smoke point, mm; null for rows not at their smoke point
+    "extra": {                        // any other source columns, untouched names, plus the documented keys below
+      "outcomeDerivation": "report",  // how `outcome` was obtained (present on every row whose outcome != "unknown"):
+                                      //   "source-table"  explicit result column of the PSI / science-data table (FLEX, CFI, ACME, Saffire, SPICE)
+                                      //   "report"        per-test text of a NASA report table (BASS-II: TM-20210011385 Appendix A)
+                                      //   "keyword-rule"  keyword rules on free-text observations (BASS As-Run matrix, BASS-II O20–O22)
+      "outcomeNote": null,            // why a cell was read manually / why outcome is unknown (optional)
+      "terminalEvent": null           // BASS, BASS-II: how the test ended — "blowoff" | "extinguished_at_reduced_flow" | "flow_turned_off" |
+                                      //   "burned_out" | "extinguished_by_N2" | "self_extinguished" | "no_ignition" | null
+    },
     "source": { "sourceId": "psi-25", "file": "BASS-II_test_matrix.xlsx", "row": 18 }
   }
 ]
 ```
+
+### Outcome semantics for the solid-duct tests (BASS, BASS-II)
+
+A BASS / BASS-II test ignited the sample at the row's initial O2 and flow and then usually stepped the flow down to quenching
+or up to blow-off. `outcome` describes the **row's stated conditions**: `flame_spread` (sustained flame, spread reported),
+`burned` (sustained flame), `self_extinguished` (brief flame only), `no_ignition` (material did not ignite; igniter failures are `unknown`).
+The end of the test is in `extra.terminalEvent` and must not be read as the outcome at the initial conditions.
+
+### Size / smoke-point fields
+
+- `particleSizeNm` (SAME, SAME-R) = arithmetic (count) mean diameter M1/M0 from the ionization-chamber (M1) and CPC (M0) moments,
+  from *PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx* (µm × 1000). Other metrics in `extra` with unit-suffixed names:
+  `diameterOfAverageMassNm`, `d21Nm` (SAME-R), `hatchChoateGeometricMeanDiameterNm`, `hatchChoateGeometricStdDev` (dimensionless),
+  `particleCountPerCm3`, plus `sampleTemperatureC`, `heaterRt_R0`, `netAgingTimeS`, `massLossMg`.
+- `smokePointLengthMm` (SPICE) = smoke-point luminous length L_SP from *PSI-107_Raw Data_SmokePointReview-0g-3.xlsx*
+  (sheet "Smoke Point Datasheet"), attached to the PSI row of the same flame. Non-smoke-point flame lengths are in `extra.flameLengthMm`.
 
 ## datasets_manifest.json
 
@@ -123,6 +148,20 @@ Atomic statements extracted from source documents (NTRS abstracts/reports, PSI d
 
 ## validation.json (generated)
 
+Written by `web/scripts/backtest.ts` (`npm run backtest`). Every accuracy is reported with its n and a majority-class baseline.
+
 ```jsonc
-{ "generatedAt": "…", "backtests": [ { "name": "leave-one-investigation-out", "n": 9, "correct": 7, "details": [ … ] } ], "physicsModel": { … } | null }
+{
+  "generatedAt": "…",
+  "parameters": { "rowsInNoEstimate": 502, … },
+  "headline": { … },                       // numbers quoted in the "plainly" summary on the Trust page
+  "backtests": [
+    { "name": "leave-one-test-out",         "overall": { "n", "correct", "accuracy", "baseline", "byStatus", "flaggingRate" }, "byPhase": { "solid": {…}, "liquid": {…}, "gas": {…} }, "perInvestigation": […] },
+    { "name": "leave-one-test-out-grouped", …, "replicatesRemoved": 5989 },   // replicates of the held-out test (same investigation, within Measured tolerance) hidden too
+    { "name": "leave-one-investigation-out", "n": 991, "correct": 570, …, "otherInvestigationsMajorityBaseline": … }  // strict: correct predictions only
+  ],
+  "numeric": [ { "target": "smokePointLengthMm", "variant": "grouped", "model": { "mae", "medAPE" }, "invMean": {…}, "globalMean": {…} } ],
+  "coverage": [ { "inv", "phase", "rows", "outcome", "spreadRateMmS", "burningRateMm2S", "particleSizeNm", "smokePointLengthMm", "noEstimate" } ]
+}
 ```
+`flaggingRate` = share of wrong answers that were labelled Extrapolated.

@@ -15,7 +15,7 @@ export function normalizeInvestigation(i: Investigation): Investigation {
   };
 }
 
-const NUMERIC = ['thicknessMm', 'diameterMm', 'o2Pct', 'pressureKpa', 'flowCmS', 'gravityG', 'diluentPct', 'spreadRateMmS', 'burningRateMm2S', 'particleSizeNm'] as const;
+const NUMERIC = ['thicknessMm', 'diameterMm', 'o2Pct', 'pressureKpa', 'flowCmS', 'gravityG', 'diluentPct', 'spreadRateMmS', 'burningRateMm2S', 'particleSizeNm', 'smokePointLengthMm'] as const;
 
 export function normalizeTest(t: TestRow): TestRow {
   const out = { ...t, extra: t.extra ?? {}, source: t.source ?? { sourceId: null, file: null, row: null } } as TestRow;
