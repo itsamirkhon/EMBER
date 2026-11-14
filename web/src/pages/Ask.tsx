@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../data/context';
 import { buildDocs, buildIndex, search, supportingHits, type Hit } from '../lib/retrieval';
@@ -61,6 +61,16 @@ export default function Ask() {
   const [llmText, setLlmText] = useState('');
   const [llmState, setLlmState] = useState<'idle' | 'running' | 'done' | 'error' | 'refused'>('idle');
   const [llmError, setLlmError] = useState('');
+  // Dev/preview server with OPENAI_API_KEY in web/.env: no key field needed.
+  const [serverKey, setServerKey] = useState(false);
+  useEffect(() => {
+    let live = true;
+    import('../lib/llm').then(({ serverKeyAvailable }) => serverKeyAvailable()).then((ok) => live && setServerKey(ok));
+    return () => {
+      live = false;
+    };
+  }, []);
+  const canSynthesize = serverKey || !!key;
 
   const hits = useMemo(() => (asked ? search(index, asked, 10) : []), [index, asked]);
   const support = useMemo(() => supportingHits(hits, asked), [hits, asked]);
@@ -84,13 +94,13 @@ export default function Ask() {
   }
 
   async function runLlm() {
-    if (!key || !support.length) return;
+    if (!canSynthesize || !support.length) return;
     setLlmText('');
     setLlmError('');
     setLlmState('running');
     const { synthesize, describeError } = await import('../lib/llm');
     try {
-      const r = await synthesize(key, asked, support.slice(0, 8), (d) => setLlmText((t) => t + d));
+      const r = await synthesize(serverKey ? null : key, asked, support.slice(0, 8), (d) => setLlmText((t) => t + d));
       if (r.refused) setLlmState('refused');
       else {
         setLlmText(r.text);
@@ -161,20 +171,34 @@ export default function Ask() {
 
           <section className="card">
             <h2>Synthesized answer (optional)</h2>
-            <p className="small muted">
-              Paste your own OpenAI API key to have {LLM_MODEL} write a short answer constrained to the retrieved items above. The key is
-              sent only to api.openai.com from your browser and kept in memory{remember ? ' and this tab’s sessionStorage' : ''}.
-            </p>
-            <div className="row">
-              <input type="password" aria-label="OpenAI API key" placeholder="sk-…" value={key} onChange={(e) => saveKey(e.target.value, remember)} style={{ flex: 1, minWidth: 200 }} autoComplete="off" />
-              <button type="button" className="primary" disabled={!key || !support.length || llmState === 'running'} onClick={runLlm}>
-                {llmState === 'running' ? 'Writing…' : 'Synthesize'}
-              </button>
-            </div>
-            <label className="row small" style={{ marginTop: 6 }}>
-              <input type="checkbox" checked={remember} onChange={(e) => { setRemember(e.target.checked); saveKey(key, e.target.checked); }} />
-              Remember for this tab (sessionStorage)
-            </label>
+            {serverKey ? (
+              <>
+                <p className="small muted">
+                  {LLM_MODEL} writes a short answer constrained to the retrieved items above. The API key is configured on the server
+                  (<code>web/.env</code>) and never sent to this page.
+                </p>
+                <button type="button" className="primary" disabled={!support.length || llmState === 'running'} onClick={runLlm}>
+                  {llmState === 'running' ? 'Writing…' : 'Synthesize'}
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="small muted">
+                  Paste your own OpenAI API key to have {LLM_MODEL} write a short answer constrained to the retrieved items above. The key is
+                  sent only to api.openai.com from your browser and kept in memory{remember ? ' and this tab’s sessionStorage' : ''}.
+                </p>
+                <div className="row">
+                  <input type="password" aria-label="OpenAI API key" placeholder="sk-…" value={key} onChange={(e) => saveKey(e.target.value, remember)} style={{ flex: 1, minWidth: 200 }} autoComplete="off" />
+                  <button type="button" className="primary" disabled={!canSynthesize || !support.length || llmState === 'running'} onClick={runLlm}>
+                    {llmState === 'running' ? 'Writing…' : 'Synthesize'}
+                  </button>
+                </div>
+                <label className="row small" style={{ marginTop: 6 }}>
+                  <input type="checkbox" checked={remember} onChange={(e) => { setRemember(e.target.checked); saveKey(key, e.target.checked); }} />
+                  Remember for this tab (sessionStorage)
+                </label>
+              </>
+            )}
             {!support.length && <p className="small muted" style={{ marginTop: 8 }}>Synthesis is disabled when there is no supporting evidence.</p>}
             {llmState === 'error' && <div className="callout danger small" style={{ marginTop: 10 }}>{llmError}</div>}
             {llmState === 'refused' && <div className="callout small" style={{ marginTop: 10 }}>The model declined to answer this request.</div>}

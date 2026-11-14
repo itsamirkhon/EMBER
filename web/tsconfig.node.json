@@ -13,5 +13,5 @@
     "allowImportingTsExtensions": true,
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "scripts", "src/lib", "src/data/normalize.ts"]
+  "include": ["vite.config.ts", "server", "scripts", "src/lib", "src/data/normalize.ts"]
 }

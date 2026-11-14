@@ -7,3 +7,5 @@ data/raw/**/*.mp4
 data/raw/**/*.avi
 data/raw/**/*.mov
 .env
+.env.*
+!.env.example

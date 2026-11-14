@@ -1,12 +1,25 @@
 /**
- * Optional LLM synthesis for Ask EMBER. Runs entirely in the browser with the user's own OpenAI key
- * (never stored beyond memory / sessionStorage). The model only sees retrieved PSI claims and
+ * Optional LLM synthesis for Ask EMBER. Uses either the key from web/.env through the dev/preview server
+ * proxy (server/llmProxy.ts; the key never reaches the browser) or the user's own OpenAI key pasted in the
+ * browser (never stored beyond memory / sessionStorage). The model only sees retrieved PSI claims and
  * must cite them; the UI then verifies every citation against the retrieved set.
  */
 import { LLM_MODEL, NO_EVIDENCE } from './citations';
 import type { Hit } from './retrieval';
 
 const ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+const PROXY = 'api/llm/chat';
+
+/** True when the dev/preview server holds an OPENAI_API_KEY from web/.env. False on static hosting. */
+export async function serverKeyAvailable(): Promise<boolean> {
+  try {
+    const res = await fetch('api/llm/status');
+    if (!res.ok || !res.headers.get('content-type')?.includes('json')) return false;
+    return ((await res.json()) as { enabled?: boolean }).enabled === true;
+  } catch {
+    return false;
+  }
+}
 
 const SYSTEM = `You are EMBER, a fire-safety evidence assistant for spacecraft and habitat engineers.
 You answer ONLY from the numbered evidence items supplied by the user (claims extracted from NASA PSI combustion investigations and their reports).
@@ -39,22 +52,25 @@ export class LlmError extends Error {
   }
 }
 
-export async function synthesize(apiKey: string, question: string, hits: Hit[], onText: (delta: string) => void): Promise<LlmResult> {
+/** `apiKey` null -> go through the server proxy, which adds the key from web/.env. */
+export async function synthesize(apiKey: string | null, question: string, hits: Hit[], onText: (delta: string) => void): Promise<LlmResult> {
   let res: Response;
   try {
-    res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        model: LLM_MODEL,
-        stream: true,
-        max_completion_tokens: 4000,
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: buildPrompt(question, hits) },
-        ],
-      }),
-    });
+    const messages = [
+      { role: 'system', content: SYSTEM },
+      { role: 'user', content: buildPrompt(question, hits) },
+    ];
+    res = apiKey
+      ? await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify({ model: LLM_MODEL, stream: true, max_completion_tokens: 4000, messages }),
+        })
+      : await fetch(PROXY, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages }),
+        });
   } catch (e) {
     throw new LlmError(null, String(e));
   }
