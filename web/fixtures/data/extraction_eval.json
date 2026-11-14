@@ -1,0 +1,51 @@
+{
+  "method": "Fixture: 6 claims hand-labelled against source text; verdict per claim.",
+  "n": 6,
+  "correct": 4,
+  "partial": 1,
+  "wrong": 1,
+  "items": [
+    {
+      "claimId": "c-0001",
+      "goldText": "Fixture: thin PMMA sheets stopped spreading flame below about 17% O2 at moderate opposed flow.",
+      "llmText": "Fixture: thin PMMA sheets stopped spreading flame below about 17% O2 at moderate opposed flow.",
+      "verdict": "correct",
+      "note": null
+    },
+    {
+      "claimId": "c-0002",
+      "goldText": "Fixture: at flows under 2 cm/s, oxygen starvation extinguished flames that would burn in stronger flow.",
+      "llmText": "Fixture: at flows under 2 cm/s, oxygen starvation extinguished flames that would burn in stronger flow.",
+      "verdict": "correct",
+      "note": null
+    },
+    {
+      "claimId": "c-0003",
+      "goldText": "Fixture: reduced pressure raised the oxygen concentration needed for sustained flame spread.",
+      "llmText": "Fixture: reduced pressure raised the oxygen concentration needed for sustained flame spread.",
+      "verdict": "correct",
+      "note": null
+    },
+    {
+      "claimId": "c-0004",
+      "goldText": "Fixture: large SIBAL samples burned with steady flame spread in 20 cm/s concurrent flow at 21% O2.",
+      "llmText": "Fixture: large SIBAL samples burned with steady flame spread in 20 cm/s concurrent flow at 21% O2.",
+      "verdict": "correct",
+      "note": null
+    },
+    {
+      "claimId": "c-0005",
+      "goldText": "Fixture: Nomex samples did not ignite at ambient spacecraft conditions.",
+      "llmText": "Fixture: Nomex samples did not ignite at ambient spacecraft conditions.",
+      "verdict": "partial",
+      "note": "missed a qualifier"
+    },
+    {
+      "claimId": "c-0006",
+      "goldText": "Fixture: carbon dioxide dilution extinguished heptane droplet flames at lower diluent fractions than nitrogen.",
+      "llmText": "Fixture: wrong paraphrase.",
+      "verdict": "wrong",
+      "note": null
+    }
+  ]
+}
