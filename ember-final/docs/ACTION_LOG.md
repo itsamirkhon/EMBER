@@ -135,3 +135,12 @@ The earlier stages above record historical implementation claims, not independen
 - Explicit paid build wrote 2,463 document vectors at 768 dimensions. Native Decisions smoke returned the selected versioned model and three valid choice answers.
 - Bounded local API review (retrievalK=2) returned HTTP201, warnings=[], two live_openrouter decisions and embedding metadata. Health confirmed configured=true and embeddingIndexPresent=true. Prose remains deterministic by design.
 - 36 targeted provider/runtime/review tests and lint pass. No domain accuracy, calibration or competitor-quality claim is inferred from these smoke checks. Runtime reviews, .env and private embedding artifact are not part of the fix commit.
+
+
+## Stage 13 — Requested OpenAI generation model (2026-11-14)
+- Read official GPT-6 Luna model documentation; retained the existing Chat Completions/JSON path and selected reasoning_effort=none. No unrelated legacy classifier model was changed.
+- Model-selection regression first failed on the old gpt-4o-mini default; now passes on gpt-6-luna with provenance. Single default constant also drives API request/cache identity and health.
+- Automatic review first rejected credential transfer from web/.env; user explicitly approved the exact source/destination and live OpenAI use. A second rejection concerned sending retrieved evidence; user explicitly approved questions/NASA evidence sent to OpenAI for EMBER generation. Only then performed the full live review. Secret values were never logged or committed.
+- Exact model access returned HTTP200. Full review returned HTTP201 with no warnings, LIVE_AI prose from gpt-6-luna, live Gemini decision/embedding metadata, eight claim items and all five current verifier checks passing. This verifies operation, not independent domain accuracy.
+- Validation: 118 tests across 12 files, lint and production build pass. `.env`, private embeddings and runtime review storage are excluded from this change commit. Code commit: a7473e0.
+- Corrected a documentation command's working-directory path before this separate log commit; the source/model configuration and its prior successful verification were unaffected.

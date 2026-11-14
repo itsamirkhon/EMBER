@@ -65,3 +65,12 @@ Flow/PhysX не входят в этот этап: они не устраняю�
 Ключ настроен только в локальном ignored `.env` с правами 0600. Построен `data/openrouter_embeddings.json`: 2 463 document vectors × 768 dimensions. OpenRouter фактически возвращает native embedding ID без `google/`; добавлен точный совместимый alias, regression сначала воспроизвёл отказ и затем прошёл. Проходят 36 targeted adapter/runtime/review tests и lint.
 
 Живой запрос `/api/reviews` вернул HTTP201, warnings=[], 2 decisions с evaluatorMode=live_openrouter, decisionModel=google/gemini-decision-1-20261111, embeddingModel=google/gemini-embedding-2. Prose остаётся deterministic: генеративная модель отдельно не подключалась. Это проверка интеграции, не измерение научного качества. Предыдущие записи об отсутствии ключа описывают состояние до этого подключения. Секрет и embedding artifact в Git не добавлялись.
+
+
+## Генерация OpenAI GPT-6 Luna — 2026-11-14
+
+По запросу пользователя задана `gpt-6-luna` как default synthesis model. Существующий проектный ключ после явного разрешения перенесён из `web/.env` в ignored серверный `.env` (0600). Отдельно получено разрешение отправлять вопросы и найденные NASA evidence в OpenAI для обзоров EMBER.
+
+Используется существующий Chat Completions endpoint с JSON output и reasoning_effort=none. Model ID вынесен в одну константу, входит в cache identity и health metadata. Официальная совместимость: https://developers.openai.com/api/docs/models/gpt-6-luna .
+
+Живой обзор `rev-mwgz3fy9-203abfd0`: HTTP201, warnings=[], synthesis.mode=LIVE_AI, modelName=gpt-6-luna, 8 claim items. Gemini Decisions и Embedding 2 сохранили свои роли. Все пять текущих программных verifier checks прошли; это не независимая научная проверка. Общие regressions: 118/118 tests, lint и production build проходят.
