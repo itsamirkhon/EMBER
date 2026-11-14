@@ -1,0 +1,617 @@
+{
+  "generatedAt": "2026-11-14T10:46:39.393Z",
+  "dataset": "fixtures",
+  "method": "Outcomes collapsed to burn (burned, flame_spread, completed, disruption) vs no-burn (extinguished, self_extinguished, no_ignition); rows with other outcomes are skipped. Prediction = inverse-distance-weighted kNN (k=5, power 2) in normalized O2/pressure/flow space with fuel-phase, material and gravity penalties (src/lib/evidence.ts).",
+  "backtests": [
+    {
+      "name": "leave-one-test-out",
+      "description": "Each test is hidden in turn and its burn / no-burn outcome is predicted from all other tests (other tests of the same investigation included).",
+      "n": 48,
+      "correct": 34,
+      "perInvestigation": {
+        "BASS-II": {
+          "n": 26,
+          "correct": 18
+        },
+        "Saffire-II": {
+          "n": 4,
+          "correct": 3
+        },
+        "FLEX": {
+          "n": 6,
+          "correct": 2
+        },
+        "ACME-BRE": {
+          "n": 5,
+          "correct": 4
+        },
+        "ACME-E-FIELD": {
+          "n": 3,
+          "correct": 3
+        },
+        "CFI-G": {
+          "n": 4,
+          "correct": 4
+        }
+      },
+      "byStatus": {
+        "measured": {
+          "n": 8,
+          "correct": 6
+        },
+        "interpolated": {
+          "n": 16,
+          "correct": 11
+        },
+        "extrapolated": {
+          "n": 24,
+          "correct": 17
+        }
+      },
+      "details": [
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-001",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0.3449884829627287,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-002",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-003",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0.1260302312007442,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-004",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-005",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.862796724473278,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-006",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0.10481644619965548,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-007",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-008",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-009",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.9446575858314639,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-010",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "measured",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-011",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0.37514765224037466,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-012",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.7617018122831101,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-013",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0.3238225128504933,
+          "status": "interpolated",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-014",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.8564609262928348,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-015",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0.2787197188188274,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-016",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.8394219742390479,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-017",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0,
+          "status": "measured",
+          "correct": false
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-018",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G1",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.7573724910530935,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G2",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G4",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G5",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.9529718807224195,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G6",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.9490965803861355,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G7",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0,
+          "status": "measured",
+          "correct": true
+        },
+        {
+          "inv": "BASS-II",
+          "testId": "BASS-II-G8",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0.4775835502142761,
+          "status": "interpolated",
+          "correct": false
+        },
+        {
+          "inv": "Saffire-II",
+          "testId": "Saffire-II-1",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.8039974555988385,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "Saffire-II",
+          "testId": "Saffire-II-2",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.9318733794827906,
+          "status": "interpolated",
+          "correct": false
+        },
+        {
+          "inv": "Saffire-II",
+          "testId": "Saffire-II-3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.6975174615407508,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "Saffire-II",
+          "testId": "Saffire-II-4",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.7410790251861248,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-1",
+          "actual": "noburn",
+          "predicted": "noburn",
+          "pBurn": 0.2506365419478935,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-2",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0.07160296468298533,
+          "status": "interpolated",
+          "correct": false
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.5328247295906378,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-4",
+          "actual": "burn",
+          "predicted": "noburn",
+          "pBurn": 0.3944001576973596,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-5",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.7584822324906784,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "FLEX",
+          "testId": "FLEX-6",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 0.513974801310022,
+          "status": "interpolated",
+          "correct": false
+        },
+        {
+          "inv": "ACME-BRE",
+          "testId": "BRE-1",
+          "actual": "noburn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": false
+        },
+        {
+          "inv": "ACME-BRE",
+          "testId": "BRE-2",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.6791894149251195,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-BRE",
+          "testId": "BRE-3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-BRE",
+          "testId": "BRE-4",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 0.7769300135770147,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-BRE",
+          "testId": "BRE-5",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-E-FIELD",
+          "testId": "EF-1",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-E-FIELD",
+          "testId": "EF-2",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "ACME-E-FIELD",
+          "testId": "EF-3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "CFI-G",
+          "testId": "CFI-G-1",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "interpolated",
+          "correct": true
+        },
+        {
+          "inv": "CFI-G",
+          "testId": "CFI-G-2",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "CFI-G",
+          "testId": "CFI-G-3",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        },
+        {
+          "inv": "CFI-G",
+          "testId": "CFI-G-4",
+          "actual": "burn",
+          "predicted": "burn",
+          "pBurn": 1,
+          "status": "extrapolated",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "name": "leave-one-investigation-out",
+      "description": "Hide an experiment: all tests of one investigation are removed and each is estimated from the other investigations only. An investigation passes when at least 75% of its tests are handled honestly: the outcome is predicted correctly, or the system flagged the point as Extrapolated instead of claiming knowledge.",
+      "n": 6,
+      "correct": 6,
+      "passThreshold": 0.75,
+      "testLevel": {
+        "n": 48,
+        "correct": 32,
+        "byStatus": {
+          "measured": {
+            "n": 0,
+            "correct": 0
+          },
+          "interpolated": {
+            "n": 2,
+            "correct": 2
+          },
+          "extrapolated": {
+            "n": 46,
+            "correct": 30
+          }
+        }
+      },
+      "details": [
+        {
+          "inv": "BASS-II",
+          "n": 26,
+          "predictionCorrect": 14,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 0,
+            "extrapolated": 26
+          },
+          "honest": 26,
+          "honestRate": 1,
+          "accuracy": 0.5384615384615384,
+          "correct": true
+        },
+        {
+          "inv": "Saffire-II",
+          "n": 4,
+          "predictionCorrect": 3,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 0,
+            "extrapolated": 4
+          },
+          "honest": 4,
+          "honestRate": 1,
+          "accuracy": 0.75,
+          "correct": true
+        },
+        {
+          "inv": "FLEX",
+          "n": 6,
+          "predictionCorrect": 4,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 0,
+            "extrapolated": 6
+          },
+          "honest": 6,
+          "honestRate": 1,
+          "accuracy": 0.6666666666666666,
+          "correct": true
+        },
+        {
+          "inv": "ACME-BRE",
+          "n": 5,
+          "predictionCorrect": 4,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 1,
+            "extrapolated": 4
+          },
+          "honest": 5,
+          "honestRate": 1,
+          "accuracy": 0.8,
+          "correct": true
+        },
+        {
+          "inv": "ACME-E-FIELD",
+          "n": 3,
+          "predictionCorrect": 3,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 0,
+            "extrapolated": 3
+          },
+          "honest": 3,
+          "honestRate": 1,
+          "accuracy": 1,
+          "correct": true
+        },
+        {
+          "inv": "CFI-G",
+          "n": 4,
+          "predictionCorrect": 4,
+          "statusCounts": {
+            "measured": 0,
+            "interpolated": 1,
+            "extrapolated": 3
+          },
+          "honest": 4,
+          "honestRate": 1,
+          "accuracy": 1,
+          "correct": true
+        }
+      ]
+    }
+  ],
+  "physicsModel": null,
+  "parameters": {
+    "k": 5,
+    "power": 2,
+    "scales": {
+      "o2Pct": 3,
+      "pressureKpa": 15,
+      "flowCmS": 8
+    },
+    "tolerance": {
+      "o2Pct": 0.6,
+      "pressureKpa": 3,
+      "flowCmS": 2
+    },
+    "localRadius": 2,
+    "maxInterpDistance": 1.25,
+    "rowsTotal": 48,
+    "rowsUsable": 48
+  }
+}

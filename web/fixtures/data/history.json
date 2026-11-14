@@ -1,0 +1,30 @@
+[
+  {
+    "id": "apollo-1",
+    "title": "Apollo 1 (1967)",
+    "year": 1967,
+    "summary": "Fixture: a cabin fire in a pure-oxygen atmosphere during a ground test killed three astronauts.",
+    "linkedInvestigations": [],
+    "sources": [
+      {
+        "label": "NASA history (fixture link)",
+        "url": "https://www.nasa.gov/"
+      }
+    ]
+  },
+  {
+    "id": "mir-1997",
+    "title": "Mir fire (1997)",
+    "year": 1997,
+    "summary": "Fixture: an oxygen-generator canister fire filled the station with smoke.",
+    "linkedInvestigations": [
+      "SAME"
+    ],
+    "sources": [
+      {
+        "label": "NASA history (fixture link)",
+        "url": "https://www.nasa.gov/"
+      }
+    ]
+  }
+]
