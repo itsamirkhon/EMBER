@@ -1,0 +1,36 @@
+name: Verify EMBER
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ember-final
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Node dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Test core and API with mocked providers
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Install pipeline test dependencies
+        run: python -m pip install pytest numpy scikit-learn
+      - name: Test scientific pipeline
+        run: python -m pytest pipeline -q

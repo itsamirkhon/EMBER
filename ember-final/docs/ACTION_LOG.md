@@ -144,3 +144,12 @@ The earlier stages above record historical implementation claims, not independen
 - Exact model access returned HTTP200. Full review returned HTTP201 with no warnings, LIVE_AI prose from gpt-6-luna, live Gemini decision/embedding metadata, eight claim items and all five current verifier checks passing. This verifies operation, not independent domain accuracy.
 - Validation: 118 tests across 12 files, lint and production build pass. `.env`, private embeddings and runtime review storage are excluded from this change commit. Code commit: a7473e0.
 - Corrected a documentation command's working-directory path before this separate log commit; the source/model configuration and its prior successful verification were unaffected.
+
+## Stage 14 — Keep one active project (2026-11-14)
+- Confirmed ember-final owns its corpus, raw/legacy seed data, pipeline, frontend and API; no runtime dependency on old sibling projects was found.
+- Moved ember-win, old web and legacy root pipeline/data/docs/concept/node_modules into a private local reversible archive outside the repository. Preserved original README and deployment workflow there. Archived redundant implementation/audit project copies from the chat scratch directory; retained research outputs.
+- Stopped only the obsolete web development server. Kept the running ember-final server, both configured server keys, generated embedding index and saved review storage in place.
+- Root README now points unambiguously to ember-final. Replaced old web deployment with read-only CI for the canonical Node/API project; no production deployment migration or remote file deletion performed.
+- Git history retains removed tracked versions. No secret files or local runtime review data are included in the cleanup commit.
+- Post-cleanup validation passed: 118 TypeScript tests, 16 Python tests plus 16 subtests, lint and production build. Browser reload still renders the canonical workbench and API-backed saved review.
+- Stopped tracking generated local review history and ignored its temporary files; the actual file and saved reviews remain in place. Fresh stores/demos are created by the server, covered by API tests.

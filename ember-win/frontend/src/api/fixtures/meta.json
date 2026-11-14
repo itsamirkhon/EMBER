@@ -1,1 +1,0 @@
-{"version":"0.1.0","corpus_version":"0.1.0-provisional","rules_version":"2026.11-r1","mode":"deterministic","flags":{"jev":false,"dense":false,"live_ai":false},"saved_example_id":"rev_example_bass2","coverage":{"deep":["inv_bass2","inv_saffire1","inv_saffire2","inv_saffire3","inv_sibal"],"catalog":["inv_flex","inv_flex2","inv_same"]},"recovered_runs":0}
