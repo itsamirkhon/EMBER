@@ -1,0 +1,1030 @@
+{
+  "schemaVersion": "interpret-cases-v1",
+  "frozenAt": "2026-11-14",
+  "frozenBeforeComparisonRun": true,
+  "evaluationKind": "source-audited development regression; not independent heldout scientific validation",
+  "reviewers": [
+    "Codex source-review agent (AI-assisted team review)"
+  ],
+  "splitPolicy": "No train/test split claimed. All cases from an investigation stay in a single conservative source-history group. A/B reversal and mutations inherit the same group.",
+  "criticalErrors": [
+    "unsupported_causal_support",
+    "comparison_of_absent_endpoint",
+    "aggregate_invented_individual_observation",
+    "source_conflict_silently_resolved"
+  ],
+  "cases": [
+    {
+      "id": "bassii-ft-is-not-quench",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B1",
+      "testBId": "BASS-II-B9",
+      "endpoint": "quench_limit",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "B1 ends at an imposed abrupt flow cutoff. Report §2.1.2.1 contrasts imposed cutoff with gradual-flow extinction.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 2,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "Ignited very quickly, turned flow off after spread halfway; flame extinguished very quickly; and sooty with blue leading edge",
+          "context": "BASS-II test BASS-II-B1"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 10,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 112)"
+          },
+          "quote": "Steady burning at 2 cm/s, extinguished at 0.35",
+          "context": "BASS-II test BASS-II-B9"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bassii-ft-positive-ignition",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B1",
+      "testBId": "BASS-II-B6",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both have reported burning/spread; different thickness/atmosphere/flow history prohibit a controlled causal contrast.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 2,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "Ignited very quickly, turned flow off after spread halfway; flame extinguished very quickly; and sooty with blue leading edge",
+          "context": "BASS-II test BASS-II-B1"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 7,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 112)"
+          },
+          "quote": "Steady burning at 3 and 5 cm/s, did not reach 10 cm/s before end of sample, complete burnout, HCl –>0.3",
+          "context": "BASS-II test BASS-II-B6"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bassii-unknown-is-not-negative",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B1",
+      "testBId": "BASS-II-B2",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "B2 comment describes camera problems, not failure to ignite. Unknown outcome cannot become no ignition.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 2,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "Ignited very quickly, turned flow off after spread halfway; flame extinguished very quickly; and sooty with blue leading edge",
+          "context": "BASS-II test BASS-II-B1"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 3,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 112)"
+          },
+          "quote": "No stills taken, cable came loose; not quite a straight on edge view",
+          "context": "BASS-II test BASS-II-B2"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bassii-known-ignitions",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B3",
+      "testBId": "BASS-II-B4",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both established burning; thickness and initial flow differ. Useful descriptive observation, no causal isolation.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 4,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 112)"
+          },
+          "quote": "Probably 20.6 O2 to start; lower flow flames much more blue overall; still some soot though",
+          "context": "BASS-II test BASS-II-B3"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 5,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 112)"
+          },
+          "quote": "Bubble layer thickness increases with sample thickness",
+          "context": "BASS-II test BASS-II-B4"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bassii-thickness-width",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B10",
+      "testBId": "BASS-II-B11",
+      "endpoint": "quench_limit",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Reported PMMA quench endpoints have different widths; same thickness is not sufficient for controlled contrast.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 11,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "Multiple velocities for steady spread, extinguished at pot 0.35",
+          "context": "BASS-II test BASS-II-B10"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 12,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "Multiple velocities for steady spread, extinguished at pot 0.35",
+          "context": "BASS-II test BASS-II-B11"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bassii-low-o2-self-ext",
+      "kind": "primary_table",
+      "testAId": "BASS-II-B14",
+      "testBId": "BASS-II-T23",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Brief ignition then extinction differs from did-not-ignite. Negative observation must remain distinct.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 15,
+            "section": "NASA/TM-20210011385 Table A.1 (PDF p. 111)"
+          },
+          "quote": "HCl O, only brief ignition, flame extinguished",
+          "context": "BASS-II test BASS-II-B14"
+        },
+        {
+          "sourceId": "psi-25",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+          "doi": "10.60555/4qc4-de67",
+          "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-25_Experimental table_BASS-II.csv",
+            "row": 123,
+            "section": "NASA/TM-20210011385 Table A.6 (PDF p. 120)"
+          },
+          "quote": "Did not ignite with moved igniter, HCl 0.8",
+          "context": "BASS-II test BASS-II-T23"
+        }
+      ],
+      "historyGroup": "source:BASS-II:BASS-II"
+    },
+    {
+      "id": "bass-negative-vs-brief-ignition",
+      "kind": "primary_table",
+      "testAId": "BASS-24-12-R",
+      "testBId": "BASS-14-12",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Raw comments explicitly distinguish did not ignite but smoked from ignited and burned for 2 seconds.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 25
+          },
+          "quote": "preheated by briefly heating igniter wire then hitting it full,   did not ignite but smoked .  He said it popped up about 1 mm due to residueal spring tension.  Will readjust it again.",
+          "context": "BASS test BASS-24-12-R"
+        },
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 15
+          },
+          "quote": "Ignited and burned for only 2 s.  Died when igniter turned off.  Repeated re-ignition attempts failed.  Don didn't want it to burn since their flight suits are made of this stuff.  He felt like he should have left the igniter on longer.  Fa",
+          "context": "BASS test BASS-14-12"
+        }
+      ],
+      "historyGroup": "source:BASS:BASS"
+    },
+    {
+      "id": "bass-unknown-pair",
+      "kind": "primary_table",
+      "testAId": "BASS-6-43",
+      "testBId": "BASS-7-44",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Neither row has an established endpoint. Two unknowns do not match.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 7
+          },
+          "quote": "same sphere as previous.   Did not remove soot.   Don again has 2nd still camera set up.  Picked -4 ev for next test based on a quick scroll of these images.",
+          "context": "BASS test BASS-6-43"
+        },
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 8
+          },
+          "quote": "Filter on test.  Don didn't reset the camera trigger, so only got 100 frames.",
+          "context": "BASS test BASS-7-44"
+        }
+      ],
+      "historyGroup": "source:BASS:BASS"
+    },
+    {
+      "id": "bass-sibal-flow",
+      "kind": "primary_table",
+      "testAId": "BASS-4-7",
+      "testBId": "BASS-5-8",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "SIBAL burned at different initial flows. This is useful context, not identified ventilation effect.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 5
+          },
+          "quote": "~ 40 s burn, Don asked if images were too saturated, Paul said OK. Don set up 2nd still camera for additional images.",
+          "context": "BASS test BASS-4-7"
+        },
+        {
+          "sourceId": "psi-26",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+          "doi": "10.60555/58h4-dy80",
+          "fileHash": "ccfc3c54d948b64a1c5d2596a63c7c8019e51df0c91a1d62f039f48fa28c300f",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-26_Experimental table_BASS.csv",
+            "row": 6
+          },
+          "quote": "~ 60 s burn,   Don  said he like to watch solid samples burn in space and it makes him appreciate that he wouldn't want to be be there in a real fire - it wouldn't be pretty.",
+          "context": "BASS test BASS-5-8"
+        }
+      ],
+      "historyGroup": "source:BASS:BASS"
+    },
+    {
+      "id": "cfi-hot-to-cool",
+      "kind": "primary_table",
+      "testAId": "CFI-1206",
+      "testBId": "CFI-1207",
+      "endpoint": "cool_flame_continuation",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both reported cool burning following hot extinction; fiber support and starting size differ. Cool continuation is not all-combustion extinction.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 2
+          },
+          "quote": "hot-flame extinction at D = 3.577 mm; cool-flame burning (k = 0.385 mm²/s)",
+          "context": "CFI test CFI-1206"
+        },
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 3
+          },
+          "quote": "hot-flame extinction at D = 4.018 mm; cool-flame burning (k = 0.378 mm²/s)",
+          "context": "CFI test CFI-1207"
+        }
+      ],
+      "historyGroup": "source:CFI:CFI"
+    },
+    {
+      "id": "cfi-burning-constant",
+      "kind": "primary_table",
+      "testAId": "CFI-1207",
+      "testBId": "CFI-1208",
+      "endpoint": "burning_rate_constant",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Reported burning-rate constant values can be displayed; distinct initial diameters prevent a controlled comparison.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 3
+          },
+          "quote": "hot-flame extinction at D = 4.018 mm; cool-flame burning (k = 0.378 mm²/s)",
+          "context": "CFI test CFI-1207"
+        },
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 4
+          },
+          "quote": "hot-flame extinction at D = 3.759 mm; cool-flame burning (k = 0.396 mm²/s)",
+          "context": "CFI test CFI-1208"
+        }
+      ],
+      "historyGroup": "source:CFI:CFI"
+    },
+    {
+      "id": "cfi-unknown-cool",
+      "kind": "primary_table",
+      "testAId": "CFI-1206",
+      "testBId": "CFI-1216",
+      "endpoint": "cool_flame_continuation",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "CFI1216 hot extinction does not establish a subsequent cool endpoint.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 2
+          },
+          "quote": "hot-flame extinction at D = 3.577 mm; cool-flame burning (k = 0.385 mm²/s)",
+          "context": "CFI test CFI-1206"
+        },
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 10
+          },
+          "quote": "hot-flame extinction at D = 4.065 mm",
+          "context": "CFI test CFI-1216"
+        }
+      ],
+      "historyGroup": "source:CFI:CFI"
+    },
+    {
+      "id": "cfi-unknown-whole-outcome",
+      "kind": "primary_table",
+      "testAId": "CFI-1206",
+      "testBId": "CFI-1220",
+      "endpoint": "hot_flame_extinction",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Empty analyzed outcome cannot be invented from the experiment objective.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 2
+          },
+          "quote": "hot-flame extinction at D = 3.577 mm; cool-flame burning (k = 0.385 mm²/s)",
+          "context": "CFI test CFI-1206"
+        },
+        {
+          "sourceId": "psi-39",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-39",
+          "doi": "10.60555/m6pj-a914",
+          "fileHash": "fb898e28762353aa132c16b886dbd207a024b1dd3c9bed5928d70d8036d2ec7e",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-39_Experimental table_CFI.csv",
+            "row": 14
+          },
+          "quote": null,
+          "context": "CFI test CFI-1220"
+        }
+      ],
+      "historyGroup": "source:CFI:CFI"
+    },
+    {
+      "id": "flex-rate-context",
+      "kind": "primary_table",
+      "testAId": "FLEX-001",
+      "testBId": "FLEX-002",
+      "endpoint": "burning_rate_constant",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Methanol rate observations can be described, with different initial sizes and terminal disruption/extinction histories.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-69",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+          "doi": "10.60555/mbq8-0451",
+          "fileHash": "37c88ce8ae9391b7544ff630a45ce87543d04d317cdbfbed104fe7d5c27e1b96",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-69_Experimental table_FLEX.csv",
+            "row": 2
+          },
+          "quote": "Disruption",
+          "context": "FLEX test FLEX-001"
+        },
+        {
+          "sourceId": "psi-69",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+          "doi": "10.60555/mbq8-0451",
+          "fileHash": "37c88ce8ae9391b7544ff630a45ce87543d04d317cdbfbed104fe7d5c27e1b96",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-69_Experimental table_FLEX.csv",
+            "row": 3
+          },
+          "quote": "Extinction",
+          "context": "FLEX test FLEX-002"
+        }
+      ],
+      "historyGroup": "source:FLEX:FLEX"
+    },
+    {
+      "id": "flex-no-cool-evidence",
+      "kind": "primary_table",
+      "testAId": "FLEX-001",
+      "testBId": "FLEX-002",
+      "endpoint": "cool_flame_continuation",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Hot-flame measurements do not establish cool continuation.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-69",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+          "doi": "10.60555/mbq8-0451",
+          "fileHash": "37c88ce8ae9391b7544ff630a45ce87543d04d317cdbfbed104fe7d5c27e1b96",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-69_Experimental table_FLEX.csv",
+            "row": 2
+          },
+          "quote": "Disruption",
+          "context": "FLEX test FLEX-001"
+        },
+        {
+          "sourceId": "psi-69",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-69",
+          "doi": "10.60555/mbq8-0451",
+          "fileHash": "37c88ce8ae9391b7544ff630a45ce87543d04d317cdbfbed104fe7d5c27e1b96",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-69_Experimental table_FLEX.csv",
+            "row": 3
+          },
+          "quote": "Extinction",
+          "context": "FLEX test FLEX-002"
+        }
+      ],
+      "historyGroup": "source:FLEX:FLEX"
+    },
+    {
+      "id": "smoke-size-positive",
+      "kind": "primary_table",
+      "testAId": "SAME-R-51",
+      "testBId": "SAME-R-51a",
+      "endpoint": "smoke_particle_size",
+      "expectedComparability": "conditional",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both particle-size values are reported. Heater/sample-history fields remain incomplete and repeated suffix rows are dependent.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Experimental table_SAME-R.csv",
+            "row": 2
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME-R test SAME-R-51"
+        },
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Experimental table_SAME-R.csv",
+            "row": 3
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME-R test SAME-R-51a"
+        }
+      ],
+      "historyGroup": "source:SAME-R:SAME-R"
+    },
+    {
+      "id": "smoke-not-flame",
+      "kind": "primary_table",
+      "testAId": "SAME-R-51",
+      "testBId": "SAME-R-51a",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Non-flaming pyrolysis aerosol generation is not an ignition result.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Experimental table_SAME-R.csv",
+            "row": 2
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME-R test SAME-R-51"
+        },
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Experimental table_SAME-R.csv",
+            "row": 3
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME-R test SAME-R-51a"
+        }
+      ],
+      "historyGroup": "source:SAME-R:SAME-R"
+    },
+    {
+      "id": "smoke-missing-number",
+      "kind": "primary_table",
+      "testAId": "SAME-1",
+      "testBId": "SAME-2",
+      "endpoint": "smoke_particle_size",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Analyzed rows contain no numeric particle target for these examples; no fabricated numeric contrast.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "6d3a539ccf425b1fa8edc19cc75d828f57d650c7ce734d4e7aa686fea9593218",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+            "row": 3
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME test SAME-1"
+        },
+        {
+          "sourceId": "psi-101",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+          "doi": "10.60555/2np7-jv14",
+          "fileHash": "6d3a539ccf425b1fa8edc19cc75d828f57d650c7ce734d4e7aa686fea9593218",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+            "row": 4
+          },
+          "quote": "smoke generation by heating below ignition — no flame outcome applies",
+          "context": "SAME test SAME-2"
+        }
+      ],
+      "historyGroup": "source:SAME:SAME"
+    },
+    {
+      "id": "spice-same-setting-missing-target",
+      "kind": "primary_table",
+      "testAId": "SPICE-45-143708-1",
+      "testBId": "SPICE-45-143708-2",
+      "endpoint": "smoke_point_length",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Luminous flame-length runs are not necessarily measured smoke-point boundaries. Missing target stays missing.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-107",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+          "doi": "10.60555/9kbh-e962",
+          "fileHash": "fb0d7e60cf5367afb429089e9901d27288f78038efd26c8de1db4fbe04117136",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-107_Experimental table_Spice.csv",
+            "row": 2
+          },
+          "quote": "ignited coflow jet flame at this fuel/air setting (Ethylene 1.6 mm)",
+          "context": "SPICE test SPICE-45-143708-1"
+        },
+        {
+          "sourceId": "psi-107",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-107",
+          "doi": "10.60555/9kbh-e962",
+          "fileHash": "fb0d7e60cf5367afb429089e9901d27288f78038efd26c8de1db4fbe04117136",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-107_Experimental table_Spice.csv",
+            "row": 3
+          },
+          "quote": "ignited coflow jet flame at this fuel/air setting",
+          "context": "SPICE test SPICE-45-143708-2"
+        }
+      ],
+      "historyGroup": "source:SPICE:SPICE"
+    },
+    {
+      "id": "gas-ft-is-not-hot-extinction",
+      "kind": "primary_table",
+      "testAId": "CFI-G-N-21088A1-D1",
+      "testBId": "CFI-G-N-21088D1-D1",
+      "endpoint": "hot_flame_extinction",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Source distinguishes SE (self-extinction) from FT (flow termination); FT is no spontaneous hot-extinction measurement.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 2
+          },
+          "quote": "hot ignition: Yes; end: SE",
+          "context": "ACME-CFI-G test CFI-G-N-21088A1-D1"
+        },
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 5
+          },
+          "quote": "hot ignition: Yes; end: FT",
+          "context": "ACME-CFI-G test CFI-G-N-21088D1-D1"
+        }
+      ],
+      "historyGroup": "source:ACME-CFI-G:ACME-CFI-G"
+    },
+    {
+      "id": "gas-ignition-positive",
+      "kind": "primary_table",
+      "testAId": "CFI-G-N-21088A1-D1",
+      "testBId": "CFI-G-N-21088B1-D1",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both hot ignitions are Yes, with different oxygen values; no false causal isolation.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 2
+          },
+          "quote": "hot ignition: Yes; end: SE",
+          "context": "ACME-CFI-G test CFI-G-N-21088A1-D1"
+        },
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 3
+          },
+          "quote": "hot ignition: Yes; end: SE",
+          "context": "ACME-CFI-G test CFI-G-N-21088B1-D1"
+        }
+      ],
+      "historyGroup": "source:ACME-CFI-G:ACME-CFI-G"
+    },
+    {
+      "id": "saffire-numeric-positive",
+      "kind": "primary_table",
+      "testAId": "Saffire-II-2-5",
+      "testBId": "Saffire-II-2-6",
+      "endpoint": "spread_rate",
+      "expectedComparability": "descriptive_only",
+      "usefulSupportedComparison": true,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Both SIBAL spread-rate observations are usable descriptively; geometry/sample dimensions differ.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-99",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "doi": "10.60555/2chp-m469",
+          "fileHash": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-99_Experimental table_SAFFIRE-2.csv",
+            "row": 6
+          },
+          "quote": "burn time: 145 s; ug burn length: 29 cm",
+          "context": "Saffire-II test Saffire-II-2-5"
+        },
+        {
+          "sourceId": "psi-99",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-99",
+          "doi": "10.60555/2chp-m469",
+          "fileHash": "3c24390b9ef86f3d1ebaab911a1a3cc95a8759aebf42062371370e6d4b31b8ac",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-99_Experimental table_SAFFIRE-2.csv",
+            "row": 7
+          },
+          "quote": "burn time: 115 s; ug burn length: 29 cm",
+          "context": "Saffire-II test Saffire-II-2-6"
+        }
+      ],
+      "historyGroup": "source:Saffire-II:Saffire-II"
+    },
+    {
+      "id": "slice-absent-endpoint",
+      "kind": "primary_table",
+      "testAId": "SLICE-2012-FEB-09",
+      "testBId": "SLICE-2012-FEB-13",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Catalog/log entries have unknown outcomes and no endpoint events.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-106",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-106",
+          "doi": "10.60555/pm12-rg61",
+          "fileHash": "89ef980810ca6d9aa8be817b42e36cd2adff23f5e9058361b5a33d18b4363f4d",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-106_Experimental table_Slice.csv",
+            "row": 2
+          },
+          "quote": null,
+          "context": "SLICE test SLICE-2012-FEB-09"
+        },
+        {
+          "sourceId": "psi-106",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-106",
+          "doi": "10.60555/pm12-rg61",
+          "fileHash": "89ef980810ca6d9aa8be817b42e36cd2adff23f5e9058361b5a33d18b4363f4d",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-106_Experimental table_Slice.csv",
+            "row": 3
+          },
+          "quote": null,
+          "context": "SLICE test SLICE-2012-FEB-13"
+        }
+      ],
+      "historyGroup": "source:SLICE:SLICE"
+    },
+    {
+      "id": "aggregate-bre",
+      "kind": "aggregate_audit",
+      "testAId": "BRE-2019-Feb-8-21",
+      "testBId": "BRE-2019-Feb-8-26.5",
+      "endpoint": "flame_establishment",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Daily flames-ignited total does not establish per-parameter independent ignition outcomes.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-20",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20",
+          "doi": "10.60555/vb93-3y72",
+          "fileHash": "4aa5d3f98708ceacced5c620d46858b9965f8d4d941b203229f46467d53e5ab7",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-20_Experimental table_ACME BRE.csv",
+            "row": 2
+          },
+          "quote": "10 flames ignited that day",
+          "context": "ACME-BRE test BRE-2019-Feb-8-21"
+        },
+        {
+          "sourceId": "psi-20",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-20",
+          "doi": "10.60555/vb93-3y72",
+          "fileHash": "4aa5d3f98708ceacced5c620d46858b9965f8d4d941b203229f46467d53e5ab7",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-20_Experimental table_ACME BRE.csv",
+            "row": 2
+          },
+          "quote": "10 flames ignited that day",
+          "context": "ACME-BRE test BRE-2019-Feb-8-26.5"
+        }
+      ],
+      "historyGroup": "source:ACME-BRE:ACME-BRE"
+    },
+    {
+      "id": "gas-se-comment-conflict",
+      "kind": "source_conflict",
+      "testAId": "CFI-G-N-21102A1-D2",
+      "testBId": "CFI-G-N-21088A1-D1",
+      "endpoint": "hot_flame_extinction",
+      "expectedComparability": "insufficient_information",
+      "usefulSupportedComparison": false,
+      "expectedCausalSupport": "descriptive_only",
+      "rationale": "Row16 code SE contradicts comment Manually stopped the flow. Neither source field may silently win.",
+      "sourceRefs": [
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 16
+          },
+          "quote": "hot ignition: Yes; end: SE",
+          "context": "ACME-CFI-G test CFI-G-N-21102A1-D2"
+        },
+        {
+          "sourceId": "psi-159",
+          "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-159",
+          "doi": "10.60555/cyt1-kh64",
+          "fileHash": "d95a621c3fbd27d204dd32ed29fa17d68f2b779d6a523cde8479ed7ebaa5251a",
+          "corpusVersion": "2.0.1-scientific-fixes",
+          "locator": {
+            "table": "PSI-159_Experimental table_CFI-G_Normal Flames.csv",
+            "row": 2
+          },
+          "quote": "hot ignition: Yes; end: SE",
+          "context": "ACME-CFI-G test CFI-G-N-21088A1-D1"
+        }
+      ],
+      "historyGroup": "source:ACME-CFI-G:ACME-CFI-G"
+    }
+  ]
+}

@@ -1,0 +1,3739 @@
+{
+  "schemaVersion": "interpret-numeric-development-v1",
+  "fixtureSha256": "8763d0d21b42269b1adac16caad00d42ca188183d9f776fd4448d9315da35ec2",
+  "independentValidation": false,
+  "heldout": false,
+  "corpusVersion": "2.0.1-scientific-fixes",
+  "cases": 2,
+  "passed": 0,
+  "results": [
+    {
+      "caseId": "same-amd-51-51a",
+      "passed": false,
+      "expectedDelta": 10.4,
+      "expectedUnit": "nm",
+      "actualDelta": null,
+      "comparison": {
+        "id": "contrast-SAME-R-51-vs-SAME-R-51a",
+        "testAId": "SAME-R-51",
+        "testBId": "SAME-R-51a",
+        "invA": "SAME-R",
+        "invB": "SAME-R",
+        "matchedFactors": [
+          "material:kapton (series_level)",
+          "fuelPhase:solid (series_level)",
+          "geometry:heated sample (smoke source) (series_level)",
+          "substrateConfinement:heated_wire_coil_substrate (series_level)",
+          "orientation:msg_smoke_tube (series_level)",
+          "o2Role:ambient (series_level)",
+          "flowCmS:8.1 cm/s (reported)",
+          "flowDirection:coflow (series_level)",
+          "flowHistory:{\"history\":\"steady\",\"sequence\":null,\"interventions\":[{\"stage\":\"aging\",\"intervention\":\"none\",\"flow\":8.1,\"flowUnit\":\"cm/s\"}]} (series_level)",
+          "gravityG:0 g (series_level)",
+          "gravityRegime:microgravity (series_level)",
+          "gravityMode:actual_flight (series_level)",
+          "gravityPlatform:ISS (series_level)",
+          "heaterRatio:1.38 (reported)",
+          "sampleTemperature:419.9 C (reported)",
+          "heatingDuration:60 s (reported)"
+        ],
+        "changedFactors": [
+          {
+            "factor": "aerosolAgingTime",
+            "valueA": "38 s (reported)",
+            "valueB": "261 s (reported)"
+          }
+        ],
+        "unknownFactors": [
+          "thicknessMm",
+          "widthCm",
+          "o2Pct",
+          "pressureKpa",
+          "diluent",
+          "ignitionPower",
+          "ignitionDuration",
+          "particleMetricDefinition",
+          "sampleHistory"
+        ],
+        "outcomeComparison": "SAME-R-51: smoke_particle_size [observed] vs SAME-R-51a: smoke_aerosol_sizing [observed]",
+        "causalWarning": "Descriptive historical contrast is NOT automatic proof of causation: record similarity does not establish control of unrecorded factors, randomization, or a causal effect.",
+        "comparisonVersion": "interpret-1.0",
+        "endpoint": "smoke_particle_size",
+        "observations": {
+          "a": {
+            "testId": "SAME-R-51",
+            "endpoint": "smoke_particle_size",
+            "status": "observed",
+            "label": "smoke_particle_size",
+            "value": {
+              "value": 56.4,
+              "unit": "nm",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "segmentIds": [],
+            "eventIds": [],
+            "sourceRefs": [
+              {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              },
+              {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            ]
+          },
+          "b": {
+            "testId": "SAME-R-51a",
+            "endpoint": "smoke_particle_size",
+            "status": "observed",
+            "label": "smoke_aerosol_sizing",
+            "value": {
+              "value": 66.8,
+              "unit": "nm",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "segmentIds": [
+              "SAME-R-51a-seg-2"
+            ],
+            "eventIds": [
+              "SAME-R-51a-evt-1"
+            ],
+            "sourceRefs": [
+              {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              },
+              {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              },
+              {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            ]
+          }
+        },
+        "factors": [
+          {
+            "factor": "material",
+            "status": "matched",
+            "valueA": {
+              "value": "kapton",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "kapton",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "fuelPhase",
+            "status": "matched",
+            "valueA": {
+              "value": "solid",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "solid",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "geometry",
+            "status": "matched",
+            "valueA": {
+              "value": "heated sample (smoke source)",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "heated sample (smoke source)",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "thicknessMm",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "diameterMm",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "widthCm",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "cm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "cm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "substrateConfinement",
+            "status": "matched",
+            "valueA": {
+              "value": "heated_wire_coil_substrate",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "heated_wire_coil_substrate",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "orientation",
+            "status": "matched",
+            "valueA": {
+              "value": "msg_smoke_tube",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "msg_smoke_tube",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "o2Role",
+            "status": "matched",
+            "valueA": {
+              "value": "ambient",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "ambient",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "o2Pct",
+            "status": "unknown",
+            "valueA": {
+              "value": 21,
+              "unit": "%vol",
+              "provenance": "assumed",
+              "role": "ambient",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "%vol",
+              "provenance": "unknown",
+              "role": "ambient",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "pressureKpa",
+            "status": "unknown",
+            "valueA": {
+              "value": 101.3,
+              "unit": "kPa",
+              "provenance": "assumed",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "kPa",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "diluent",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "flowCmS",
+            "status": "matched",
+            "valueA": {
+              "value": 8.1,
+              "unit": "cm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": 8.1,
+              "unit": "cm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "flowDirection",
+            "status": "matched",
+            "valueA": {
+              "value": "coflow",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "coflow",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "flowHistory",
+            "status": "matched",
+            "valueA": {
+              "value": "{\"history\":\"steady\",\"sequence\":null,\"interventions\":[{\"stage\":\"aging\",\"intervention\":\"none\",\"flow\":8.1,\"flowUnit\":\"cm/s\"}]}",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "{\"history\":\"steady\",\"sequence\":null,\"interventions\":[{\"stage\":\"aging\",\"intervention\":\"none\",\"flow\":8.1,\"flowUnit\":\"cm/s\"}]}",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityG",
+            "status": "matched",
+            "valueA": {
+              "value": 0,
+              "unit": "g",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": 0,
+              "unit": "g",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityRegime",
+            "status": "matched",
+            "valueA": {
+              "value": "microgravity",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "microgravity",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityMode",
+            "status": "matched",
+            "valueA": {
+              "value": "actual_flight",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "actual_flight",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityPlatform",
+            "status": "matched",
+            "valueA": {
+              "value": "ISS",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "ISS",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "ignitionProtocol",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "ignitionPower",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "ignitionDuration",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "fuelMassFlow",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "mg/s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "mg/s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "fuelComposition",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "burnerThermalHistory",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "heaterRatio",
+            "status": "matched",
+            "valueA": {
+              "value": "1.38",
+              "unit": "",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "1.38",
+              "unit": "",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "sampleTemperature",
+            "status": "matched",
+            "valueA": {
+              "value": 419.9,
+              "unit": "C",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": 419.9,
+              "unit": "C",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "heatingDuration",
+            "status": "matched",
+            "valueA": {
+              "value": "60",
+              "unit": "s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "60",
+              "unit": "s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "aerosolAgingTime",
+            "status": "different",
+            "valueA": {
+              "value": "38",
+              "unit": "s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": "261",
+              "unit": "s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Recorded values or definitions differ; descriptive comparison only."
+          },
+          {
+            "factor": "particleMetricDefinition",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "sampleHistory",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 2
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-101",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+                "doi": "10.60555/2np7-jv14",
+                "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-101_Experimental table_SAME-R.csv",
+                  "row": 3
+                },
+                "quote": "smoke generation by heating below ignition — no flame outcome applies",
+                "context": "SAME-R test SAME-R-51a"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          }
+        ],
+        "observationComparability": {
+          "status": "descriptive_only",
+          "quantitativeAllowed": false,
+          "reasons": [
+            "Recorded conditions differ; endpoint observations remain useful descriptively but differences cannot isolate a factor."
+          ]
+        },
+        "applicabilityToQuery": {
+          "a": {
+            "testId": "SAME-R-51",
+            "inv": "SAME-R",
+            "groupId": "grp:SAME-R:e90eef1d31",
+            "verdict": "conditional_support",
+            "admissible": false,
+            "conditional": true,
+            "reasonCodes": [
+              "unknown_field_mismatch",
+              "assumed_provenance_cap"
+            ],
+            "rules": [
+              {
+                "ruleId": "RULE-EP-01",
+                "status": "pass",
+                "reason": "Reports smoke particle size."
+              },
+              {
+                "ruleId": "RULE-MAT-01",
+                "status": "pass",
+                "reason": "Fuel phase and material compatible."
+              },
+              {
+                "ruleId": "RULE-GEOM-01",
+                "status": "pass",
+                "reason": "Geometry and thickness regime compatible."
+              },
+              {
+                "ruleId": "RULE-UNK-01",
+                "status": "conditional",
+                "reason": "RULE-UNK-01 (unknown !== unknown): thickness unknown in both query and solid test (unknown !== unknown)."
+              },
+              {
+                "ruleId": "RULE-GAS-01",
+                "status": "pass",
+                "reason": "Gas role matches (ambient)."
+              },
+              {
+                "ruleId": "RULE-PROV-01",
+                "status": "conditional",
+                "reason": "Assumed provenance on O2, pressure caps support at conditional_support."
+              },
+              {
+                "ruleId": "RULE-GRAV-01",
+                "status": "pass",
+                "reason": "Gravity regime matches (microgravity, actual_flight)."
+              },
+              {
+                "ruleId": "RULE-PROT-01",
+                "status": "pass",
+                "reason": "Protocol segment and flow regime compatible."
+              },
+              {
+                "ruleId": "RULE-JOINT-01",
+                "status": "pass",
+                "reason": "Joint multi-dimensional conditions supported."
+              }
+            ],
+            "protocolMatch": {
+              "matchedSegmentIds": [],
+              "matchedEventIds": [],
+              "endpointMatched": true,
+              "operatorTerminated": false,
+              "coolFlamePresent": false,
+              "hotFlameExtinguished": false,
+              "flowHistoryMismatch": false,
+              "segmentSummary": "initial:non_flaming_pyrolysis, terminal:smoke_sampled",
+              "matchedOutcomeLabel": "smoke_particle_size",
+              "warnings": [
+                "Inconsistent or unresolved event/segment chronology: SAME-R-51-evt-1. These events cannot support the endpoint."
+              ]
+            },
+            "jointDistance": 0,
+            "marginalOverlapButJointMissing": false,
+            "matchedFactors": [
+              "RULE-EP-01",
+              "RULE-MAT-01",
+              "RULE-GEOM-01",
+              "RULE-GAS-01",
+              "RULE-GRAV-01",
+              "RULE-PROT-01",
+              "RULE-JOINT-01"
+            ],
+            "changedFactors": [
+              "RULE-UNK-01: RULE-UNK-01 (unknown !== unknown): thickness unknown in both query and solid test (unknown !== unknown).",
+              "RULE-PROV-01: Assumed provenance on O2, pressure caps support at conditional_support."
+            ],
+            "unknownFactors": [
+              "test.thicknessMm"
+            ],
+            "sourceRef": {
+              "sourceId": "psi-101",
+              "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+              "doi": "10.60555/2np7-jv14",
+              "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+              "corpusVersion": "2.0.1-scientific-fixes",
+              "locator": {
+                "table": "PSI-101_Experimental table_SAME-R.csv",
+                "row": 2
+              },
+              "quote": "smoke generation by heating below ignition — no flame outcome applies",
+              "context": "SAME-R test SAME-R-51"
+            }
+          },
+          "b": {
+            "testId": "SAME-R-51a",
+            "inv": "SAME-R",
+            "groupId": "grp:SAME-R:e90eef1d31",
+            "verdict": "conditional_support",
+            "admissible": false,
+            "conditional": true,
+            "reasonCodes": [
+              "unknown_field_mismatch",
+              "assumed_provenance_cap"
+            ],
+            "rules": [
+              {
+                "ruleId": "RULE-EP-01",
+                "status": "pass",
+                "reason": "Reports smoke particle size."
+              },
+              {
+                "ruleId": "RULE-MAT-01",
+                "status": "pass",
+                "reason": "Fuel phase and material compatible."
+              },
+              {
+                "ruleId": "RULE-GEOM-01",
+                "status": "pass",
+                "reason": "Geometry and thickness regime compatible."
+              },
+              {
+                "ruleId": "RULE-UNK-01",
+                "status": "conditional",
+                "reason": "RULE-UNK-01 (unknown !== unknown): thickness unknown in both query and solid test (unknown !== unknown)."
+              },
+              {
+                "ruleId": "RULE-GAS-01",
+                "status": "pass",
+                "reason": "Gas role matches (ambient)."
+              },
+              {
+                "ruleId": "RULE-PROV-01",
+                "status": "conditional",
+                "reason": "Assumed provenance on O2, pressure caps support at conditional_support."
+              },
+              {
+                "ruleId": "RULE-GRAV-01",
+                "status": "pass",
+                "reason": "Gravity regime matches (microgravity, actual_flight)."
+              },
+              {
+                "ruleId": "RULE-PROT-01",
+                "status": "pass",
+                "reason": "Protocol segment and flow regime compatible."
+              },
+              {
+                "ruleId": "RULE-JOINT-01",
+                "status": "pass",
+                "reason": "Joint multi-dimensional conditions supported."
+              }
+            ],
+            "protocolMatch": {
+              "matchedSegmentIds": [
+                "SAME-R-51a-seg-2"
+              ],
+              "matchedEventIds": [
+                "SAME-R-51a-evt-1"
+              ],
+              "endpointMatched": true,
+              "operatorTerminated": false,
+              "coolFlamePresent": false,
+              "hotFlameExtinguished": false,
+              "flowHistoryMismatch": false,
+              "segmentSummary": "SAME-R-51a-seg-2(aging:none)",
+              "matchedOutcomeLabel": "smoke_aerosol_sizing",
+              "warnings": [
+                "Absolute event timing is unknown; only documented segment order is used."
+              ]
+            },
+            "jointDistance": 0,
+            "marginalOverlapButJointMissing": false,
+            "matchedFactors": [
+              "RULE-EP-01",
+              "RULE-MAT-01",
+              "RULE-GEOM-01",
+              "RULE-GAS-01",
+              "RULE-GRAV-01",
+              "RULE-PROT-01",
+              "RULE-JOINT-01"
+            ],
+            "changedFactors": [
+              "RULE-UNK-01: RULE-UNK-01 (unknown !== unknown): thickness unknown in both query and solid test (unknown !== unknown).",
+              "RULE-PROV-01: Assumed provenance on O2, pressure caps support at conditional_support."
+            ],
+            "unknownFactors": [
+              "test.thicknessMm"
+            ],
+            "sourceRef": {
+              "sourceId": "psi-101",
+              "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+              "doi": "10.60555/2np7-jv14",
+              "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+              "corpusVersion": "2.0.1-scientific-fixes",
+              "locator": {
+                "table": "PSI-101_Experimental table_SAME-R.csv",
+                "row": 3
+              },
+              "quote": "smoke generation by heating below ignition — no flame outcome applies",
+              "context": "SAME-R test SAME-R-51a"
+            }
+          }
+        },
+        "causalSupport": {
+          "status": "descriptive_only",
+          "reasons": [
+            "Descriptive historical contrast is NOT automatic proof of causation: record similarity does not establish control of unrecorded factors, randomization, or a causal effect."
+          ]
+        },
+        "numericDelta": null,
+        "fieldDataConflicts": [],
+        "sourceRefs": [
+          {
+            "sourceId": "psi-101",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+            "doi": "10.60555/2np7-jv14",
+            "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-101_Experimental table_SAME-R.csv",
+              "row": 2
+            },
+            "quote": "smoke generation by heating below ignition — no flame outcome applies",
+            "context": "SAME-R test SAME-R-51"
+          },
+          {
+            "sourceId": "psi-101",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+            "doi": "10.60555/2np7-jv14",
+            "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-101_Experimental table_SAME-R.csv",
+              "row": 2
+            },
+            "quote": "smoke generation by heating below ignition — no flame outcome applies",
+            "context": "SAME-R test SAME-R-51"
+          },
+          {
+            "sourceId": "psi-101",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+            "doi": "10.60555/2np7-jv14",
+            "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-101_Experimental table_SAME-R.csv",
+              "row": 3
+            },
+            "quote": "smoke generation by heating below ignition — no flame outcome applies",
+            "context": "SAME-R test SAME-R-51a"
+          },
+          {
+            "sourceId": "psi-101",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+            "doi": "10.60555/2np7-jv14",
+            "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-101_Experimental table_SAME-R.csv",
+              "row": 3
+            },
+            "quote": "smoke generation by heating below ignition — no flame outcome applies",
+            "context": "SAME-R test SAME-R-51a"
+          },
+          {
+            "sourceId": "psi-101",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-101",
+            "doi": "10.60555/2np7-jv14",
+            "fileHash": "87164b7dc9168a4273c159f7a9f23699afbd06ad97b77974377e79b9bf8a3bef",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-101_Experimental table_SAME-R.csv",
+              "row": 3
+            },
+            "quote": "smoke generation by heating below ignition — no flame outcome applies",
+            "context": "SAME-R test SAME-R-51a"
+          }
+        ],
+        "limitations": [
+          "Unknown or assumed thicknessMm.",
+          "Unknown or assumed widthCm.",
+          "Unknown or assumed o2Pct.",
+          "Unknown or assumed pressureKpa.",
+          "Unknown or assumed diluent.",
+          "Unknown or assumed ignitionPower.",
+          "Unknown or assumed ignitionDuration.",
+          "Unknown or assumed particleMetricDefinition.",
+          "Unknown or assumed sampleHistory.",
+          "Different aerosolAgingTime.",
+          "Inconsistent or unresolved event/segment chronology: SAME-R-51-evt-1. These events cannot support the endpoint.",
+          "Absolute event timing is unknown; only documented segment order is used.",
+          "Same sample, record, or dependent series/group: rows are not established independent repetitions.",
+          "Matching metric definition and measurement method are not documented; no numerical delta is calculated."
+        ],
+        "prohibitedInferences": [
+          "Do not infer a causal effect or safety/certification guarantee.",
+          "Do not transfer observations directly across geometry, gas roles, gravity regimes, or unobserved joint conditions.",
+          "Operator flow cutoff is not a natural quench or blowoff limit.",
+          "Hot-flame extinction does not establish absence of subsequent cool-flame combustion.",
+          "Missing measurement or unknown outcome is not a negative observation."
+        ],
+        "nextAction": "Verify missing conditions in the primary source before quantitative or configuration-specific transfer."
+      },
+      "reverseDelta": null
+    },
+    {
+      "caseId": "bassii-spread-m1-m20",
+      "passed": false,
+      "expectedDelta": -0.059,
+      "expectedUnit": "mm/s",
+      "actualDelta": null,
+      "comparison": {
+        "id": "contrast-BASS-II-M1-vs-BASS-II-M20",
+        "testAId": "BASS-II-M1",
+        "testBId": "BASS-II-M20",
+        "invA": "BASS-II",
+        "invB": "BASS-II",
+        "matchedFactors": [
+          "material:pmma (series_level)",
+          "fuelPhase:solid (series_level)",
+          "geometry:slab (series_level)",
+          "widthCm:2 cm (reported)",
+          "orientation:horizontal_msg_duct (series_level)",
+          "o2Role:ambient (series_level)",
+          "pressureKpa:101.3 kPa (series_level)",
+          "diluent:N2 (series_level)",
+          "flowCmS:10 cm/s (reported)",
+          "flowDirection:opposed (series_level)",
+          "gravityG:0 g (series_level)",
+          "gravityRegime:microgravity (series_level)",
+          "gravityMode:actual_flight (series_level)",
+          "gravityPlatform:ISS (series_level)",
+          "ignitionProtocol:Reconstructed hot-wire ignition stage at initial flow (10.0 cm/s); inferred from reported burn outcome (series_level)"
+        ],
+        "changedFactors": [
+          {
+            "factor": "thicknessMm",
+            "valueA": "1 mm (reported)",
+            "valueB": "5 mm (reported)"
+          },
+          {
+            "factor": "substrateConfinement",
+            "valueA": "1_sided_insulated (series_level)",
+            "valueB": "2_sided_free (series_level)"
+          },
+          {
+            "factor": "o2Pct",
+            "valueA": "22.2 %vol (reported)",
+            "valueB": "18 %vol (reported)"
+          },
+          {
+            "factor": "flowHistory",
+            "valueA": "{\"history\":\"stepped_down\",\"sequence\":[10,8],\"interventions\":[{\"stage\":\"ignition\",\"intervention\":\"igniter_energized\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"steady_burn\",\"intervention\":\"none\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"flow_modification\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"},{\"stage\":\"termination\",\"intervention\":\"flow_shutoff\",\"flow\":0,\"flowUnit\":\"cm/s\"}]} (series_level)",
+            "valueB": "{\"history\":\"stepped_down\",\"sequence\":[10,8],\"interventions\":[{\"stage\":\"ignition\",\"intervention\":\"igniter_energized\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"steady_burn\",\"intervention\":\"none\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"flow_modification\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"},{\"stage\":\"termination\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"}]} (series_level)"
+          }
+        ],
+        "unknownFactors": [
+          "ignitionPower",
+          "ignitionDuration",
+          "sampleHistory"
+        ],
+        "outcomeComparison": "BASS-II-M1: 0.071 mm/s [observed] vs BASS-II-M20: 0.012 mm/s [observed]",
+        "causalWarning": "Descriptive historical contrast is NOT automatic proof of causation: record similarity does not establish control of unrecorded factors, randomization, or a causal effect.",
+        "comparisonVersion": "interpret-1.0",
+        "endpoint": "spread_rate",
+        "observations": {
+          "a": {
+            "testId": "BASS-II-M1",
+            "endpoint": "spread_rate",
+            "status": "observed",
+            "label": "0.071 mm/s",
+            "value": {
+              "value": 0.071,
+              "unit": "mm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "segmentIds": [
+              "BASS-II-M1-seg-2"
+            ],
+            "eventIds": [
+              "BASS-II-M1-evt-2"
+            ],
+            "sourceRefs": [
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              },
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              },
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            ]
+          },
+          "b": {
+            "testId": "BASS-II-M20",
+            "endpoint": "spread_rate",
+            "status": "observed",
+            "label": "0.012 mm/s",
+            "value": {
+              "value": 0.012,
+              "unit": "mm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "segmentIds": [
+              "BASS-II-M20-seg-2"
+            ],
+            "eventIds": [
+              "BASS-II-M20-evt-2"
+            ],
+            "sourceRefs": [
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              },
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              },
+              {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            ]
+          }
+        },
+        "factors": [
+          {
+            "factor": "material",
+            "status": "matched",
+            "valueA": {
+              "value": "pmma",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "pmma",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "fuelPhase",
+            "status": "matched",
+            "valueA": {
+              "value": "solid",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "solid",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "geometry",
+            "status": "matched",
+            "valueA": {
+              "value": "slab",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "slab",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "thicknessMm",
+            "status": "different",
+            "valueA": {
+              "value": 1,
+              "unit": "mm",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 5,
+              "unit": "mm",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Recorded values or definitions differ; descriptive comparison only."
+          },
+          {
+            "factor": "diameterMm",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "mm",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "widthCm",
+            "status": "matched",
+            "valueA": {
+              "value": 2,
+              "unit": "cm",
+              "provenance": "reported",
+              "originalValue": "1 mm thick PMMA   1 sided   2 cm",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 2,
+              "unit": "cm",
+              "provenance": "reported",
+              "originalValue": "5 mm thick PMMA   2 cm wide",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "substrateConfinement",
+            "status": "different",
+            "valueA": {
+              "value": "1_sided_insulated",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "2_sided_free",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Recorded values or definitions differ; descriptive comparison only."
+          },
+          {
+            "factor": "orientation",
+            "status": "matched",
+            "valueA": {
+              "value": "horizontal_msg_duct",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "horizontal_msg_duct",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "o2Role",
+            "status": "matched",
+            "valueA": {
+              "value": "ambient",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "ambient",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "o2Pct",
+            "status": "different",
+            "valueA": {
+              "value": 22.2,
+              "unit": "%vol",
+              "provenance": "reported",
+              "role": "ambient",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 18,
+              "unit": "%vol",
+              "provenance": "reported",
+              "role": "ambient",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Recorded values or definitions differ; descriptive comparison only."
+          },
+          {
+            "factor": "pressureKpa",
+            "status": "matched",
+            "valueA": {
+              "value": 101.3,
+              "unit": "kPa",
+              "provenance": "series_level",
+              "originalValue": 1,
+              "originalUnit": "atm",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 101.3,
+              "unit": "kPa",
+              "provenance": "series_level",
+              "originalValue": 1,
+              "originalUnit": "atm",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "diluent",
+            "status": "matched",
+            "valueA": {
+              "value": "N2",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "N2",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "flowCmS",
+            "status": "matched",
+            "valueA": {
+              "value": 10,
+              "unit": "cm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 10,
+              "unit": "cm/s",
+              "provenance": "reported",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "flowDirection",
+            "status": "matched",
+            "valueA": {
+              "value": "opposed",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "opposed",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "flowHistory",
+            "status": "different",
+            "valueA": {
+              "value": "{\"history\":\"stepped_down\",\"sequence\":[10,8],\"interventions\":[{\"stage\":\"ignition\",\"intervention\":\"igniter_energized\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"steady_burn\",\"intervention\":\"none\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"flow_modification\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"},{\"stage\":\"termination\",\"intervention\":\"flow_shutoff\",\"flow\":0,\"flowUnit\":\"cm/s\"}]}",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "{\"history\":\"stepped_down\",\"sequence\":[10,8],\"interventions\":[{\"stage\":\"ignition\",\"intervention\":\"igniter_energized\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"steady_burn\",\"intervention\":\"none\",\"flow\":10,\"flowUnit\":\"cm/s\"},{\"stage\":\"flow_modification\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"},{\"stage\":\"termination\",\"intervention\":\"flow_stepped_down\",\"flow\":8,\"flowUnit\":\"cm/s\"}]}",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Recorded values or definitions differ; descriptive comparison only."
+          },
+          {
+            "factor": "gravityG",
+            "status": "matched",
+            "valueA": {
+              "value": 0,
+              "unit": "g",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": 0,
+              "unit": "g",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityRegime",
+            "status": "matched",
+            "valueA": {
+              "value": "microgravity",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "microgravity",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityMode",
+            "status": "matched",
+            "valueA": {
+              "value": "actual_flight",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "actual_flight",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "gravityPlatform",
+            "status": "matched",
+            "valueA": {
+              "value": "ISS",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "ISS",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "ignitionProtocol",
+            "status": "matched",
+            "valueA": {
+              "value": "Reconstructed hot-wire ignition stage at initial flow (10.0 cm/s); inferred from reported burn outcome",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": "Reconstructed hot-wire ignition stage at initial flow (10.0 cm/s); inferred from reported burn outcome",
+              "unit": "",
+              "provenance": "series_level",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Same recorded value after exact unit conversion; no empirical tolerance or control of unrecorded factors is asserted."
+          },
+          {
+            "factor": "ignitionPower",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "ignitionDuration",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          },
+          {
+            "factor": "fuelMassFlow",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "mg/s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "mg/s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "fuelComposition",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "burnerThermalHistory",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "heaterRatio",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "sampleTemperature",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "C",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "C",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "heatingDuration",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "aerosolAgingTime",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "s",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "particleMetricDefinition",
+            "status": "not_applicable",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "context",
+            "reason": "Not essential for this endpoint and specimen phase."
+          },
+          {
+            "factor": "sampleHistory",
+            "status": "unknown",
+            "valueA": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 28,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+                },
+                "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+                "context": "BASS-II test BASS-II-M1"
+              }
+            },
+            "valueB": {
+              "value": null,
+              "unit": "",
+              "provenance": "unknown",
+              "sourceRef": {
+                "sourceId": "psi-25",
+                "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+                "doi": "10.60555/4qc4-de67",
+                "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+                "corpusVersion": "2.0.1-scientific-fixes",
+                "locator": {
+                  "table": "PSI-25_Experimental table_BASS-II.csv",
+                  "row": 47,
+                  "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+                },
+                "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+                "context": "BASS-II test BASS-II-M20"
+              }
+            },
+            "relevance": "essential",
+            "reason": "Missing or assumed values cannot establish a match."
+          }
+        ],
+        "observationComparability": {
+          "status": "descriptive_only",
+          "quantitativeAllowed": false,
+          "reasons": [
+            "Recorded conditions differ; endpoint observations remain useful descriptively but differences cannot isolate a factor."
+          ]
+        },
+        "applicabilityToQuery": {
+          "a": {
+            "testId": "BASS-II-M1",
+            "inv": "BASS-II",
+            "groupId": "grp:BASS-II:653e576fb6",
+            "verdict": "admissible",
+            "admissible": true,
+            "conditional": false,
+            "reasonCodes": [],
+            "rules": [
+              {
+                "ruleId": "RULE-EP-01",
+                "status": "pass",
+                "reason": "Endpoint compatible with test observations."
+              },
+              {
+                "ruleId": "RULE-MAT-01",
+                "status": "pass",
+                "reason": "Fuel phase and material compatible."
+              },
+              {
+                "ruleId": "RULE-GEOM-01",
+                "status": "pass",
+                "reason": "Geometry and thickness regime compatible."
+              },
+              {
+                "ruleId": "RULE-UNK-01",
+                "status": "pass",
+                "reason": "Required parameters documented."
+              },
+              {
+                "ruleId": "RULE-GAS-01",
+                "status": "pass",
+                "reason": "Gas role matches (ambient)."
+              },
+              {
+                "ruleId": "RULE-PROV-01",
+                "status": "pass",
+                "reason": "Condition provenance is reported or series-level."
+              },
+              {
+                "ruleId": "RULE-GRAV-01",
+                "status": "pass",
+                "reason": "Gravity regime matches (microgravity, actual_flight)."
+              },
+              {
+                "ruleId": "RULE-PROT-01",
+                "status": "pass",
+                "reason": "Protocol segment and flow regime compatible."
+              },
+              {
+                "ruleId": "RULE-JOINT-01",
+                "status": "pass",
+                "reason": "Joint multi-dimensional conditions supported."
+              }
+            ],
+            "protocolMatch": {
+              "matchedSegmentIds": [
+                "BASS-II-M1-seg-2"
+              ],
+              "matchedEventIds": [
+                "BASS-II-M1-evt-2"
+              ],
+              "endpointMatched": true,
+              "operatorTerminated": true,
+              "coolFlamePresent": false,
+              "hotFlameExtinguished": false,
+              "flowHistoryMismatch": false,
+              "segmentSummary": "BASS-II-M1-seg-2(steady_burn:none)",
+              "matchedOutcomeLabel": "0.071 mm/s",
+              "warnings": [
+                "Test ended by operator flow shutoff (FT / flow_turned_off).",
+                "Absolute event timing is unknown; only documented segment order is used."
+              ]
+            },
+            "jointDistance": 0,
+            "marginalOverlapButJointMissing": false,
+            "matchedFactors": [
+              "RULE-EP-01",
+              "RULE-MAT-01",
+              "RULE-GEOM-01",
+              "RULE-UNK-01",
+              "RULE-GAS-01",
+              "RULE-PROV-01",
+              "RULE-GRAV-01",
+              "RULE-PROT-01",
+              "RULE-JOINT-01"
+            ],
+            "changedFactors": [],
+            "unknownFactors": [],
+            "sourceRef": {
+              "sourceId": "psi-25",
+              "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+              "doi": "10.60555/4qc4-de67",
+              "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+              "corpusVersion": "2.0.1-scientific-fixes",
+              "locator": {
+                "table": "PSI-25_Experimental table_BASS-II.csv",
+                "row": 28,
+                "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+              },
+              "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+              "context": "BASS-II test BASS-II-M1"
+            }
+          },
+          "b": {
+            "testId": "BASS-II-M20",
+            "inv": "BASS-II",
+            "groupId": "grp:BASS-II:b649591fef",
+            "verdict": "admissible",
+            "admissible": true,
+            "conditional": false,
+            "reasonCodes": [],
+            "rules": [
+              {
+                "ruleId": "RULE-EP-01",
+                "status": "pass",
+                "reason": "Endpoint compatible with test observations."
+              },
+              {
+                "ruleId": "RULE-MAT-01",
+                "status": "pass",
+                "reason": "Fuel phase and material compatible."
+              },
+              {
+                "ruleId": "RULE-GEOM-01",
+                "status": "pass",
+                "reason": "Geometry and thickness regime compatible."
+              },
+              {
+                "ruleId": "RULE-UNK-01",
+                "status": "pass",
+                "reason": "Required parameters documented."
+              },
+              {
+                "ruleId": "RULE-GAS-01",
+                "status": "pass",
+                "reason": "Gas role matches (ambient)."
+              },
+              {
+                "ruleId": "RULE-PROV-01",
+                "status": "pass",
+                "reason": "Condition provenance is reported or series-level."
+              },
+              {
+                "ruleId": "RULE-GRAV-01",
+                "status": "pass",
+                "reason": "Gravity regime matches (microgravity, actual_flight)."
+              },
+              {
+                "ruleId": "RULE-PROT-01",
+                "status": "pass",
+                "reason": "Protocol segment and flow regime compatible."
+              },
+              {
+                "ruleId": "RULE-JOINT-01",
+                "status": "pass",
+                "reason": "Joint multi-dimensional conditions supported."
+              }
+            ],
+            "protocolMatch": {
+              "matchedSegmentIds": [
+                "BASS-II-M20-seg-2"
+              ],
+              "matchedEventIds": [
+                "BASS-II-M20-evt-2"
+              ],
+              "endpointMatched": true,
+              "operatorTerminated": false,
+              "coolFlamePresent": false,
+              "hotFlameExtinguished": false,
+              "flowHistoryMismatch": false,
+              "segmentSummary": "BASS-II-M20-seg-2(steady_burn:none)",
+              "matchedOutcomeLabel": "0.012 mm/s",
+              "warnings": [
+                "Absolute event timing is unknown; only documented segment order is used."
+              ]
+            },
+            "jointDistance": 0,
+            "marginalOverlapButJointMissing": false,
+            "matchedFactors": [
+              "RULE-EP-01",
+              "RULE-MAT-01",
+              "RULE-GEOM-01",
+              "RULE-UNK-01",
+              "RULE-GAS-01",
+              "RULE-PROV-01",
+              "RULE-GRAV-01",
+              "RULE-PROT-01",
+              "RULE-JOINT-01"
+            ],
+            "changedFactors": [],
+            "unknownFactors": [],
+            "sourceRef": {
+              "sourceId": "psi-25",
+              "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+              "doi": "10.60555/4qc4-de67",
+              "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+              "corpusVersion": "2.0.1-scientific-fixes",
+              "locator": {
+                "table": "PSI-25_Experimental table_BASS-II.csv",
+                "row": 47,
+                "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+              },
+              "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+              "context": "BASS-II test BASS-II-M20"
+            }
+          }
+        },
+        "causalSupport": {
+          "status": "descriptive_only",
+          "reasons": [
+            "Descriptive historical contrast is NOT automatic proof of causation: record similarity does not establish control of unrecorded factors, randomization, or a causal effect."
+          ]
+        },
+        "numericDelta": null,
+        "fieldDataConflicts": [],
+        "sourceRefs": [
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 28,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+            },
+            "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+            "context": "BASS-II test BASS-II-M1"
+          },
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 28,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+            },
+            "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+            "context": "BASS-II test BASS-II-M1"
+          },
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 28,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 116)"
+            },
+            "quote": "Prolonged ignition, flame initially on both sides, after igniter off and flame moved away from end, bottom flame died and top flame became all blue and small; very slow propagation; changed flow from 10 to 8 cm/s and flame shrank to a circl",
+            "context": "BASS-II test BASS-II-M1"
+          },
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 47,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+            },
+            "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+            "context": "BASS-II test BASS-II-M20"
+          },
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 47,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+            },
+            "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+            "context": "BASS-II test BASS-II-M20"
+          },
+          {
+            "sourceId": "psi-25",
+            "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+            "doi": "10.60555/4qc4-de67",
+            "fileHash": "71e792bf6b5fb5ea620c5dd70fbbac05515992e12aefcf5dff47312caa48c042",
+            "corpusVersion": "2.0.1-scientific-fixes",
+            "locator": {
+              "table": "PSI-25_Experimental table_BASS-II.csv",
+              "row": 47,
+              "section": "NASA/TM-20210011385 Table A.4 (PDF p. 117)"
+            },
+            "quote": "Flame took some time to establish, initially only on bottom of fuel; ignition at 10 cm/s (left 8 min) then flow down to 8 cm/s (flame out after 3 more minutes)",
+            "context": "BASS-II test BASS-II-M20"
+          }
+        ],
+        "limitations": [
+          "Unknown or assumed ignitionPower.",
+          "Unknown or assumed ignitionDuration.",
+          "Unknown or assumed sampleHistory.",
+          "Different thicknessMm.",
+          "Different substrateConfinement.",
+          "Different o2Pct.",
+          "Different flowHistory.",
+          "Test ended by operator flow shutoff (FT / flow_turned_off).",
+          "Absolute event timing is unknown; only documented segment order is used.",
+          "Same sample, record, or dependent series/group: rows are not established independent repetitions.",
+          "Matching metric definition and measurement method are not documented; no numerical delta is calculated."
+        ],
+        "prohibitedInferences": [
+          "Do not infer a causal effect or safety/certification guarantee.",
+          "Do not transfer observations directly across geometry, gas roles, gravity regimes, or unobserved joint conditions.",
+          "Operator flow cutoff is not a natural quench or blowoff limit.",
+          "Hot-flame extinction does not establish absence of subsequent cool-flame combustion.",
+          "Missing measurement or unknown outcome is not a negative observation."
+        ],
+        "nextAction": "Verify missing conditions in the primary source before quantitative or configuration-specific transfer."
+      },
+      "reverseDelta": null
+    }
+  ]
+}

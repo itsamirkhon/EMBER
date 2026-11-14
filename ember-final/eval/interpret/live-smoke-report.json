@@ -1,0 +1,93 @@
+{
+  "kind": "bounded live integration smoke; not domain accuracy evaluation",
+  "reviewId": "rev-mwh0uga5-cd112246",
+  "envelope": {
+    "runId": "run-mwh0uga5-cd112246",
+    "timestamp": "2026-11-14T23:13:10.109Z",
+    "corpusVersion": "2.0.1-scientific-fixes",
+    "engineVersion": "2.1.0-interpret",
+    "mode": "LIVE_AI",
+    "jevPromptVersion": "decision-v1.0",
+    "decisionModel": "google/gemini-decision-1-20261111",
+    "retrievalMode": "hybrid",
+    "timingMs": {
+      "parse": 14,
+      "retrieve": 1999,
+      "jev": 300,
+      "applicability": 347,
+      "synthesis": 5631,
+      "verify": 6,
+      "plan": 3,
+      "predict": 262,
+      "total": 8569
+    },
+    "embeddingModel": "google/gemini-embedding-2",
+    "embeddingDim": 768
+  },
+  "synthesis": {
+    "mode": "LIVE_AI",
+    "answerBoundary": "sufficient_observed",
+    "observedFact": [
+      {
+        "id": "obs-1",
+        "text": "In BASS-II-B1, the reported observation says the PMMA film ignited quickly and spread halfway before the operator turned off the flow; the flame then extinguished quickly, and was described as sooty with a blue leading edge. The reported spread rate was 2.2 mm/s. [chk-test-BASS-II-B1]",
+        "citations": [
+          "chk-test-BASS-II-B1"
+        ],
+        "provenance": "reported"
+      }
+    ],
+    "authorInterpretation": [],
+    "engineeringImplication": [
+      {
+        "id": "imp-1",
+        "text": "The operator-initiated flow cutoff and subsequent flame extinction do not establish a natural quench or blowoff limit; this test does not report such a limit. [chk-test-BASS-II-B1]",
+        "citations": [
+          "chk-test-BASS-II-B1"
+        ],
+        "provenance": "interpretation"
+      }
+    ],
+    "applicabilityConditions": [
+      "RULE-UNK-01: Enforced unknown !== unknown; unrecorded fields never count as matched."
+    ],
+    "openQuestions": [
+      "Sample thickness (thicknessMm) is unspecified in query; thin-film vs thick-slab regime remains open.",
+      "Unspecified query parameter: material",
+      "Unspecified query parameter: fuelPhase",
+      "Unspecified query parameter: thicknessMm",
+      "Unspecified query parameter: o2Pct",
+      "Unspecified query parameter: pressureKpa",
+      "Unspecified query parameter: flowCmS",
+      "Unspecified query parameter: gravityG"
+    ],
+    "conflictsPreserved": [],
+    "rawSummary": "In BASS-II-B1, the reported observation says the PMMA film ignited quickly and spread halfway before the operator turned off the flow; the flame then extinguished quickly, and was described as sooty with a blue leading edge. The reported spread rate was 2.2 mm/s. [chk-test-BASS-II-B1] The operator-initiated flow cutoff and subsequent flame extinction do not establish a natural quench or blowoff limit; this test does not report such a limit. [chk-test-BASS-II-B1]",
+    "modelName": "gpt-6-luna"
+  },
+  "verification": {
+    "passed": true,
+    "citationCheck": {
+      "passed": true,
+      "issues": []
+    },
+    "numericUnitCheck": {
+      "passed": true,
+      "issues": []
+    },
+    "epistemicCheck": {
+      "passed": true,
+      "issues": []
+    },
+    "constraintPreservationCheck": {
+      "passed": true,
+      "issues": []
+    },
+    "lexicalEntailmentCheck": {
+      "passed": true,
+      "issues": []
+    },
+    "flaggedClaimIds": []
+  },
+  "independentScientificValidation": false
+}

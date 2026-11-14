@@ -1,10 +1,10 @@
-# EMBER 2.0.1
+# EMBER 2.1.0
 
 **Spacecraft Fire Evidence Lab** — a scientific workbench for finding, comparing and interpreting NASA combustion evidence for a specified configuration, and identifying what requires additional research.
 
 The current corpus contains **15 investigations, 1,678 records, 145 source-linked claims, 68 source records and 2,463 retrieval chunks**. The 1,678 records include series aggregates and reconstructed protocol representations; they are **not 1,678 independent experimental runs**. Claim quotations were checked against cached source text. That check does not independently validate their scientific meaning, attribution or applicability.
 
-`Engine / corpus: 2.0.1-scientific-fixes`. The product separates question relevance, observation applicability and evidence quality, preserves unknown data and protocol-dependent outcomes, and supports configuration comparison, review snapshots and export. It is a research-support tool, not hardware qualification or a spacecraft safety certification.
+`Engine: 2.1.0-interpret / corpus: 2.0.1-scientific-fixes`. The product separates question relevance, observation applicability and evidence quality, preserves unknown data and protocol-dependent outcomes, and supports configuration comparison, review snapshots and export. It is a research-support tool, not hardware qualification or a spacecraft safety certification.
 
 ## Quickstart
 
@@ -72,6 +72,14 @@ The verifier applies deterministic scope, citation, number/unit and lexical mism
 | `npx tsx eval/competitor_benchmark.ts` | Existing benchmark harness; external competitors need actual configured adapters |
 
 The existing offline dense index is TF-IDF/SVD and is labelled separately from Gemini embeddings. Rebuilding the corpus does not generate Gemini vectors.
+
+## Interpret acceptance
+
+One shared comparison engine separates observation comparability, query applicability and causal support. UI, review generation and Markdown/JSON export consume the same structured verdicts. Missing measurements, nonflaming smoke, aggregates and operator shutdown cannot become invented flame outcomes. Supported arithmetic differences retain exact source-method references and explicit descriptive limits. Design changes invalidate each conclusion through its own cited observations.
+
+The source-audited development set passes 25/25 descriptive cases and 2/2 quantitative cases. Original failing reports and corrected annotations are retained. This is not independent scientific acceptance: the real-case set lacks the `comparable` class, external domain review and a closed test split. See [Interpret status](./docs/INTERPRET_STATUS.md) and [source review](./docs/INTERPRET_SOURCE_REVIEW.md).
+
+Run `npm run eval:interpret` and `npm run eval:interpret:numeric` without credentials. The opt-in same-generator diagnostic uses paid requests only with an explicit `--live`; its small post-development results do not establish superiority.
 
 ## Evaluation status
 

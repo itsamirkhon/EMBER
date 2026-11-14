@@ -1,0 +1,898 @@
+{
+  "schemaVersion": "interpret-generator-diagnostic-v1",
+  "evaluationKind": "Post-development same-generator diagnostic, not independent heldout benchmark or expert prose assessment",
+  "fixtureSha256": "2bd6246c7f07170375e3e7908c9b0d43c1b181b13ae852e5e0417f8d8cd9902c",
+  "corpusVersion": "2.0.1-scientific-fixes",
+  "promptVersion": "interpret-same-generator-diagnostic-v1",
+  "model": "gpt-6-luna",
+  "comparisonVersion": "interpret-1.0",
+  "concurrency": 2,
+  "maxCompletionTokens": 800,
+  "deadlineMs": 30000,
+  "retries": 0,
+  "caseIds": [
+    "bassii-ft-is-not-quench",
+    "bassii-known-ignitions",
+    "bassii-unknown-is-not-negative",
+    "cfi-hot-to-cool",
+    "smoke-size-positive",
+    "smoke-not-flame",
+    "gas-se-comment-conflict",
+    "saffire-numeric-positive"
+  ],
+  "summary": [
+    {
+      "track": "raw_evidence",
+      "attempts": 8,
+      "errors": 0,
+      "exactVerdicts": 2,
+      "correctCausalStatuses": 6
+    },
+    {
+      "track": "same_evidence_plus_comparison",
+      "attempts": 8,
+      "errors": 0,
+      "exactVerdicts": 8,
+      "correctCausalStatuses": 7
+    }
+  ],
+  "results": [
+    {
+      "caseId": "bassii-ft-is-not-quench",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 5852,
+      "responseId": "chatcmpl-EkH6aeBKCbxH6xhwcd41GnmzYWVgM",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 15979,
+        "completion_tokens": 273,
+        "total_tokens": 16252,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 15976,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"descriptive_only\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"BASS-II-B1\", \"BASS-II-B9\"],\n  \"reasons\": [\n    \"BASS-II-B9 reports extinction after flow was stepped down from 2 to about 0.5 cm/s; the recorded quench_limit is 0.5 cm/s.\",\n    \"BASS-II-B1 reports that airflow was turned off and the flame then extinguished; this is not a measured natural extinction threshold.\",\n    \"The tests differed in ambient oxygen (21% for B9; 22.2% for B1) and flow history, so their endpoints cannot be treated as a controlled comparison isolating a cause.\"\n  ],\n  \"usefulObservation\": \"B9 extinguished at a reported reduced-flow value of 0.5 cm/s. B1 extinguished after operator flow shutoff, so it has no comparable quench-limit value in the supplied evidence.\",\n  \"limitations\": [\n    \"B1's operator-triggered cutoff does not establish a natural quench threshold.\",\n    \"The observations do not establish whether a cooler flame continuation occurred after hot extinction.\",\n    \"The differing oxygen concentrations and flow protocols limit direct endpoint comparison.\"\n  ]\n}",
+      "answer": {
+        "comparability": "descriptive_only",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "BASS-II-B1",
+          "BASS-II-B9"
+        ],
+        "reasons": [
+          "BASS-II-B9 reports extinction after flow was stepped down from 2 to about 0.5 cm/s; the recorded quench_limit is 0.5 cm/s.",
+          "BASS-II-B1 reports that airflow was turned off and the flame then extinguished; this is not a measured natural extinction threshold.",
+          "The tests differed in ambient oxygen (21% for B9; 22.2% for B1) and flow history, so their endpoints cannot be treated as a controlled comparison isolating a cause."
+        ],
+        "usefulObservation": "B9 extinguished at a reported reduced-flow value of 0.5 cm/s. B1 extinguished after operator flow shutoff, so it has no comparable quench-limit value in the supplied evidence.",
+        "limitations": [
+          "B1's operator-triggered cutoff does not establish a natural quench threshold.",
+          "The observations do not establish whether a cooler flame continuation occurred after hot extinction.",
+          "The differing oxygen concentrations and flow protocols limit direct endpoint comparison."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "bassii-ft-is-not-quench",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 6749,
+      "responseId": "chatcmpl-EkH6aIStksvuQVYmzX9dyIuIi2lSB",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 33371,
+        "completion_tokens": 324,
+        "total_tokens": 33695,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 33368,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"BASS-II-B1\", \"BASS-II-B9\", \"psi-25\"],\n  \"reasons\": [\n    \"BASS-II-B9 reports extinction at reduced flow, 0.5 cm/s; BASS-II-B1 has no supported quench_limit observation.\",\n    \"BASS-II-B1 ended when the operator shut off airflow, which is not a physical quench limit.\",\n    \"The tests differ in ambient oxygen (22.2% vs 21%), flow protocol, and ignition flow; the contrast therefore does not isolate a cause.\"\n  ],\n  \"usefulObservation\": \"BASS-II-B9: a PMMA flame burning at 2 cm/s was reported extinguished after flow was reduced to 0.5 cm/s. BASS-II-B1: airflow was shut off after the flame had spread halfway, and it extinguished quickly; no quench_limit was measured.\",\n  \"limitations\": [\n    \"BASS-II-B1 provides no measured quench_limit, so there is no endpoint-to-endpoint numerical comparison.\",\n    \"The BASS-II-B1 cutoff was operator-initiated, not a natural extinction threshold.\",\n    \"Ignition power, ignition duration, and sample history are unknown; absolute event timing is also unknown.\",\n    \"The records are not established as independent repetitions.\",\n    \"The observations support descriptive reporting only, not a causal conclusion or safety certification.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "BASS-II-B1",
+          "BASS-II-B9",
+          "psi-25"
+        ],
+        "reasons": [
+          "BASS-II-B9 reports extinction at reduced flow, 0.5 cm/s; BASS-II-B1 has no supported quench_limit observation.",
+          "BASS-II-B1 ended when the operator shut off airflow, which is not a physical quench limit.",
+          "The tests differ in ambient oxygen (22.2% vs 21%), flow protocol, and ignition flow; the contrast therefore does not isolate a cause."
+        ],
+        "usefulObservation": "BASS-II-B9: a PMMA flame burning at 2 cm/s was reported extinguished after flow was reduced to 0.5 cm/s. BASS-II-B1: airflow was shut off after the flame had spread halfway, and it extinguished quickly; no quench_limit was measured.",
+        "limitations": [
+          "BASS-II-B1 provides no measured quench_limit, so there is no endpoint-to-endpoint numerical comparison.",
+          "The BASS-II-B1 cutoff was operator-initiated, not a natural extinction threshold.",
+          "Ignition power, ignition duration, and sample history are unknown; absolute event timing is also unknown.",
+          "The records are not established as independent repetitions.",
+          "The observations support descriptive reporting only, not a causal conclusion or safety certification."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "bassii-known-ignitions",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3345,
+      "responseId": "chatcmpl-EkH6ea2lloQ086aI3zZd0zafoMh7T",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 13080,
+        "completion_tokens": 254,
+        "total_tokens": 13334,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 13077,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"conditional\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"BASS-II-B3\", \"BASS-II-B4\"],\n  \"reasons\": [\n    \"Both records indicate flame establishment, but each event is inferred from a legacy burn outcome rather than independently extracted ignition observations.\",\n    \"The tests differ in PMMA film thickness (0.1 vs 0.3 mm), initial opposed-flow speed (2 vs 5 cm/s), and flow history (steady vs stepped up), so the comparison is not a matched-condition test.\",\n    \"The B3 note describes flame colour at lower flows; the B4 note describes a bubble layer left by burning, rather than either note directly documenting ignition.\"\n  ],\n  \"usefulObservation\": \"Both BASS-II-B3 and BASS-II-B4 are recorded as ignited and burned; this supports a descriptive comparison of inferred flame establishment, not a controlled comparison of ignition conditions.\",\n  \"limitations\": [\n    \"Ignition was not independently extracted for either test.\",\n    \"The records do not isolate the effect of any one differing condition.\",\n    \"These observations do not establish safety certification.\"\n  ]\n}",
+      "answer": {
+        "comparability": "conditional",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "BASS-II-B3",
+          "BASS-II-B4"
+        ],
+        "reasons": [
+          "Both records indicate flame establishment, but each event is inferred from a legacy burn outcome rather than independently extracted ignition observations.",
+          "The tests differ in PMMA film thickness (0.1 vs 0.3 mm), initial opposed-flow speed (2 vs 5 cm/s), and flow history (steady vs stepped up), so the comparison is not a matched-condition test.",
+          "The B3 note describes flame colour at lower flows; the B4 note describes a bubble layer left by burning, rather than either note directly documenting ignition."
+        ],
+        "usefulObservation": "Both BASS-II-B3 and BASS-II-B4 are recorded as ignited and burned; this supports a descriptive comparison of inferred flame establishment, not a controlled comparison of ignition conditions.",
+        "limitations": [
+          "Ignition was not independently extracted for either test.",
+          "The records do not isolate the effect of any one differing condition.",
+          "These observations do not establish safety certification."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "bassii-known-ignitions",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3195,
+      "responseId": "chatcmpl-EkH6f4bg6w2vLEnNWAbzSzeyGT49y",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 30429,
+        "completion_tokens": 242,
+        "total_tokens": 30671,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 30426,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"descriptive_only\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"BASS-II-B3\", \"BASS-II-B4\", \"psi-25\"],\n  \"reasons\": [\n    \"Both records report an ignited-and-burned outcome; flame establishment is inferred from burn outcomes, not independently extracted.\",\n    \"The structured comparison marks both observations as observed, but the records differ in thickness (0.1 vs 0.3 mm), flow (2 vs 5 cm/s), flow history, and reconstructed ignition protocol.\",\n    \"The structured comparison therefore permits descriptive comparison, not attribution of the shared ignition outcome to any isolated factor.\"\n  ],\n  \"usefulObservation\": \"Both BASS-II-B3 and BASS-II-B4 are recorded as ignited_burned under their respective reported conditions.\",\n  \"limitations\": [\n    \"Ignition power and duration, and sample history, are unknown.\",\n    \"Absolute event timing is unknown.\",\n    \"The records are not established independent repetitions.\",\n    \"The comparison does not establish a causal effect or safety certification.\"\n  ]\n}",
+      "answer": {
+        "comparability": "descriptive_only",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "BASS-II-B3",
+          "BASS-II-B4",
+          "psi-25"
+        ],
+        "reasons": [
+          "Both records report an ignited-and-burned outcome; flame establishment is inferred from burn outcomes, not independently extracted.",
+          "The structured comparison marks both observations as observed, but the records differ in thickness (0.1 vs 0.3 mm), flow (2 vs 5 cm/s), flow history, and reconstructed ignition protocol.",
+          "The structured comparison therefore permits descriptive comparison, not attribution of the shared ignition outcome to any isolated factor."
+        ],
+        "usefulObservation": "Both BASS-II-B3 and BASS-II-B4 are recorded as ignited_burned under their respective reported conditions.",
+        "limitations": [
+          "Ignition power and duration, and sample history, are unknown.",
+          "Absolute event timing is unknown.",
+          "The records are not established independent repetitions.",
+          "The comparison does not establish a causal effect or safety certification."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "bassii-unknown-is-not-negative",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3225,
+      "responseId": "chatcmpl-EkH6h8Udb5URSMitdmmhlPuLeJ1o8",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 12510,
+        "completion_tokens": 214,
+        "total_tokens": 12724,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 12507,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"insufficient_information\",\n  \"supportingIds\": [\"BASS-II-B1\", \"BASS-II-B2\", \"psi-25\"],\n  \"reasons\": [\n    \"BASS-II-B1 is reported as igniting quickly and sustaining spread before airflow was shut off.\",\n    \"BASS-II-B2 has no recorded ignition or burn outcome; the record notes no stills because a cable came loose.\",\n    \"The tests also differed in PMMA film thickness: 0.1 mm for B1 and 0.2 mm for B2.\"\n  ],\n  \"usefulObservation\": \"BASS-II-B1 established a flame; BASS-II-B2's flame-establishment outcome is unknown, so their outcomes cannot be compared.\",\n  \"limitations\": [\n    \"B2's unknown outcome is not evidence that ignition failed.\",\n    \"The difference in thickness means these records do not isolate a causal effect.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "insufficient_information",
+        "supportingIds": [
+          "BASS-II-B1",
+          "BASS-II-B2",
+          "psi-25"
+        ],
+        "reasons": [
+          "BASS-II-B1 is reported as igniting quickly and sustaining spread before airflow was shut off.",
+          "BASS-II-B2 has no recorded ignition or burn outcome; the record notes no stills because a cable came loose.",
+          "The tests also differed in PMMA film thickness: 0.1 mm for B1 and 0.2 mm for B2."
+        ],
+        "usefulObservation": "BASS-II-B1 established a flame; BASS-II-B2's flame-establishment outcome is unknown, so their outcomes cannot be compared.",
+        "limitations": [
+          "B2's unknown outcome is not evidence that ignition failed.",
+          "The difference in thickness means these records do not isolate a causal effect."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": false
+    },
+    {
+      "caseId": "bassii-unknown-is-not-negative",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3006,
+      "responseId": "chatcmpl-EkH6ixgxRWs0cvNSKCAAdIGgvrNlX",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 29581,
+        "completion_tokens": 258,
+        "total_tokens": 29839,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 29578,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"BASS-II-B1\", \"BASS-II-B2\", \"psi-25\"],\n  \"reasons\": [\n    \"BASS-II-B1 is reported to ignite and spread; its ignition observation is inferred from the legacy burn outcome.\",\n    \"BASS-II-B2 has no recorded flame-establishment outcome; the note says no stills were taken because a cable came loose. Unknown is not evidence of non-ignition.\",\n    \"The tests differ in film thickness (0.1 vs 0.2 mm) and flow history (abrupt cutoff vs steady flow), and ignition details are unknown.\"\n  ],\n  \"usefulObservation\": \"BASS-II-B1 ignited and spread under the reported conditions. The evidence does not establish whether BASS-II-B2 did.\",\n  \"limitations\": [\n    \"The requested endpoint is missing for BASS-II-B2.\",\n    \"Differences in thickness and flow history prevent attributing any outcome contrast to a single factor.\",\n    \"The record does not establish control of unrecorded factors, randomization, or independent repetitions.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "BASS-II-B1",
+          "BASS-II-B2",
+          "psi-25"
+        ],
+        "reasons": [
+          "BASS-II-B1 is reported to ignite and spread; its ignition observation is inferred from the legacy burn outcome.",
+          "BASS-II-B2 has no recorded flame-establishment outcome; the note says no stills were taken because a cable came loose. Unknown is not evidence of non-ignition.",
+          "The tests differ in film thickness (0.1 vs 0.2 mm) and flow history (abrupt cutoff vs steady flow), and ignition details are unknown."
+        ],
+        "usefulObservation": "BASS-II-B1 ignited and spread under the reported conditions. The evidence does not establish whether BASS-II-B2 did.",
+        "limitations": [
+          "The requested endpoint is missing for BASS-II-B2.",
+          "Differences in thickness and flow history prevent attributing any outcome contrast to a single factor.",
+          "The record does not establish control of unrecorded factors, randomization, or independent repetitions."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "cfi-hot-to-cool",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3987,
+      "responseId": "chatcmpl-EkH6kLPv09eTUdbdDrg7A8ApwQ5mN",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 14131,
+        "completion_tokens": 375,
+        "total_tokens": 14506,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 14128,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"conditional\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"CFI-1206\", \"CFI-1207\"],\n  \"reasons\": [\n    \"Both tests report cool-flame continuation after hot-flame extinction: CFI-1206 has a cool-flame burning-rate constant of 0.385 mm²/s and cool-flame extinction at 0.497 mm; CFI-1207 reports 0.378 mm²/s.\",\n    \"The cool-flame burning-rate constants are close, but the supplied evidence gives no cool-flame extinction diameter for CFI-1207, so that endpoint cannot be compared directly.\",\n    \"Conditions match on fuel, ambient oxygen (21%), pressure (101.3 kPa), quiescent flow, and microgravity; the support differs: CFI-1206 is a free droplet and CFI-1207 is SiC-fiber tethered.\",\n    \"These are individual observations under different support conditions; they do not isolate a cause for any difference.\"\n  ],\n  \"usefulObservation\": \"Both tests show cool-flame continuation. Reported cool-flame burning-rate constants are 0.385 mm²/s for CFI-1206 and 0.378 mm²/s for CFI-1207. CFI-1206's cool flame extinguished at 0.497 mm; a corresponding extinction diameter is not reported for CFI-1207.\",\n  \"limitations\": [\n    \"The differing free-droplet versus SiC-fiber-tethered configurations limit direct comparability.\",\n    \"No cool-flame extinction diameter is provided for CFI-1207.\",\n    \"The records do not establish causation or independent repeatability.\"\n  ]\n}",
+      "answer": {
+        "comparability": "conditional",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "CFI-1206",
+          "CFI-1207"
+        ],
+        "reasons": [
+          "Both tests report cool-flame continuation after hot-flame extinction: CFI-1206 has a cool-flame burning-rate constant of 0.385 mm²/s and cool-flame extinction at 0.497 mm; CFI-1207 reports 0.378 mm²/s.",
+          "The cool-flame burning-rate constants are close, but the supplied evidence gives no cool-flame extinction diameter for CFI-1207, so that endpoint cannot be compared directly.",
+          "Conditions match on fuel, ambient oxygen (21%), pressure (101.3 kPa), quiescent flow, and microgravity; the support differs: CFI-1206 is a free droplet and CFI-1207 is SiC-fiber tethered.",
+          "These are individual observations under different support conditions; they do not isolate a cause for any difference."
+        ],
+        "usefulObservation": "Both tests show cool-flame continuation. Reported cool-flame burning-rate constants are 0.385 mm²/s for CFI-1206 and 0.378 mm²/s for CFI-1207. CFI-1206's cool flame extinguished at 0.497 mm; a corresponding extinction diameter is not reported for CFI-1207.",
+        "limitations": [
+          "The differing free-droplet versus SiC-fiber-tethered configurations limit direct comparability.",
+          "No cool-flame extinction diameter is provided for CFI-1207.",
+          "The records do not establish causation or independent repeatability."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "cfi-hot-to-cool",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 4058,
+      "responseId": "chatcmpl-EkH6lO9u1LdITbWwRe4rUs7l5Bwuc",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 30661,
+        "completion_tokens": 358,
+        "total_tokens": 31019,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 30658,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"descriptive_only\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"CFI-1206\", \"CFI-1207\", \"psi-39\"],\n  \"reasons\": [\n    \"Cool-flame continuation was observed in both tests: CFI-1206 reported a cool-flame burning-rate constant of 0.385 mm²/s; CFI-1207 reported 0.378 mm²/s.\",\n    \"Both records describe n-dodecane droplets in 21% ambient oxygen, at 101.3 kPa and quiescent microgravity conditions.\",\n    \"The tests differed in initial diameter (4.039 vs 4.35 mm) and confinement (free droplet vs SiC-fiber tethered), so the endpoint values are descriptive and do not isolate a cause.\",\n    \"Ignition protocol and sample history are unknown; the records do not establish independent repeats or a causal effect.\"\n  ],\n  \"usefulObservation\": \"Both tests showed cool-flame continuation after hot-flame extinction. CFI-1206 reported 0.385 mm²/s and a cool-flame extinction diameter of 0.497 mm; CFI-1207 reported 0.378 mm²/s. These are observed values, not evidence that either condition caused a difference.\",\n  \"limitations\": [\n    \"Test conditions differ in droplet diameter and substrate confinement.\",\n    \"Ignition protocol and sample history are unknown.\",\n    \"Absolute event timing is unknown; only segment order is documented.\",\n    \"The records do not establish independent repetitions.\",\n    \"Hot-flame extinction does not mean cool-flame combustion stopped immediately.\"\n  ]\n}",
+      "answer": {
+        "comparability": "descriptive_only",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "CFI-1206",
+          "CFI-1207",
+          "psi-39"
+        ],
+        "reasons": [
+          "Cool-flame continuation was observed in both tests: CFI-1206 reported a cool-flame burning-rate constant of 0.385 mm²/s; CFI-1207 reported 0.378 mm²/s.",
+          "Both records describe n-dodecane droplets in 21% ambient oxygen, at 101.3 kPa and quiescent microgravity conditions.",
+          "The tests differed in initial diameter (4.039 vs 4.35 mm) and confinement (free droplet vs SiC-fiber tethered), so the endpoint values are descriptive and do not isolate a cause.",
+          "Ignition protocol and sample history are unknown; the records do not establish independent repeats or a causal effect."
+        ],
+        "usefulObservation": "Both tests showed cool-flame continuation after hot-flame extinction. CFI-1206 reported 0.385 mm²/s and a cool-flame extinction diameter of 0.497 mm; CFI-1207 reported 0.378 mm²/s. These are observed values, not evidence that either condition caused a difference.",
+        "limitations": [
+          "Test conditions differ in droplet diameter and substrate confinement.",
+          "Ignition protocol and sample history are unknown.",
+          "Absolute event timing is unknown; only segment order is documented.",
+          "The records do not establish independent repetitions.",
+          "Hot-flame extinction does not mean cool-flame combustion stopped immediately."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "smoke-size-positive",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3095,
+      "responseId": "chatcmpl-EkH6oTxr6uHkbco5vrpEw94TOvayw",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 10663,
+        "completion_tokens": 280,
+        "total_tokens": 10943,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 10660,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"conditional\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"SAME-R-51\", \"SAME-R-51a\", \"psi-101\"],\n  \"reasons\": [\n    \"Reported smoke particle sizes are 56.4 nm for SAME-R-51 and 66.8 nm for SAME-R-51a, a descriptive difference of 10.4 nm.\",\n    \"Both are Kapton smoke-generation tests with reported matching heating temperature (419.9 °C) and flow (8.1 cm/s), but net aerosol aging differed: 38 s versus 261 s.\",\n    \"The measurements are dependent source observations; no uncertainty or independent-repeat basis is provided, so the difference does not establish a causal effect.\",\n    \"Ambient oxygen and pressure are assumed rather than reported.\"\n  ],\n  \"usefulObservation\": \"SAME-R-51 measured 56.4 nm and SAME-R-51a measured 66.8 nm using SAME moments / Hatch-Choate diagnostics.\",\n  \"limitations\": [\n    \"Different aerosol aging times limit direct comparability.\",\n    \"The observation concerns smoke from below-ignition heating, not flame behavior.\",\n    \"No uncertainty or independent repeats are reported.\",\n    \"Oxygen and pressure values are assumptions.\"\n  ]\n}",
+      "answer": {
+        "comparability": "conditional",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "SAME-R-51",
+          "SAME-R-51a",
+          "psi-101"
+        ],
+        "reasons": [
+          "Reported smoke particle sizes are 56.4 nm for SAME-R-51 and 66.8 nm for SAME-R-51a, a descriptive difference of 10.4 nm.",
+          "Both are Kapton smoke-generation tests with reported matching heating temperature (419.9 °C) and flow (8.1 cm/s), but net aerosol aging differed: 38 s versus 261 s.",
+          "The measurements are dependent source observations; no uncertainty or independent-repeat basis is provided, so the difference does not establish a causal effect.",
+          "Ambient oxygen and pressure are assumed rather than reported."
+        ],
+        "usefulObservation": "SAME-R-51 measured 56.4 nm and SAME-R-51a measured 66.8 nm using SAME moments / Hatch-Choate diagnostics.",
+        "limitations": [
+          "Different aerosol aging times limit direct comparability.",
+          "The observation concerns smoke from below-ignition heating, not flame behavior.",
+          "No uncertainty or independent repeats are reported.",
+          "Oxygen and pressure values are assumptions."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "smoke-size-positive",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "descriptive_only",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3198,
+      "responseId": "chatcmpl-EkH6pTnBQ98lnlDxzyz0mbQcZgCqB",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 26806,
+        "completion_tokens": 299,
+        "total_tokens": 27105,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 26803,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"descriptive_only\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"SAME-R-51\", \"SAME-R-51a\", \"psi-101\"],\n  \"reasons\": [\n    \"Reported smoke particle sizes were 56.4 nm for SAME-R-51 and 66.8 nm for SAME-R-51a; the supplied structured comparison gives B minus A as +10.4 nm.\",\n    \"The runs matched on several recorded conditions, including Kapton, sample temperature, heating duration, and flow, but aerosol aging differed: 38 s versus 261 s.\",\n    \"Other relevant conditions are unknown or assumed, and the records do not establish independent repeats or a causal effect.\"\n  ],\n  \"usefulObservation\": \"SAME-R-51a had a reported smoke particle size 10.4 nm greater than SAME-R-51 (66.8 nm versus 56.4 nm); this is a descriptive difference between the reported observations.\",\n  \"limitations\": [\n    \"Aerosol aging times differed substantially between runs.\",\n    \"Thickness, width, atmosphere details, diluent, particle-metric definition, and sample history are unknown or not established as matched.\",\n    \"Oxygen and pressure values are assumed rather than directly reported.\",\n    \"The records are not established as independent repetitions; no uncertainty or population estimate is supplied.\"\n  ]\n}",
+      "answer": {
+        "comparability": "descriptive_only",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "SAME-R-51",
+          "SAME-R-51a",
+          "psi-101"
+        ],
+        "reasons": [
+          "Reported smoke particle sizes were 56.4 nm for SAME-R-51 and 66.8 nm for SAME-R-51a; the supplied structured comparison gives B minus A as +10.4 nm.",
+          "The runs matched on several recorded conditions, including Kapton, sample temperature, heating duration, and flow, but aerosol aging differed: 38 s versus 261 s.",
+          "Other relevant conditions are unknown or assumed, and the records do not establish independent repeats or a causal effect."
+        ],
+        "usefulObservation": "SAME-R-51a had a reported smoke particle size 10.4 nm greater than SAME-R-51 (66.8 nm versus 56.4 nm); this is a descriptive difference between the reported observations.",
+        "limitations": [
+          "Aerosol aging times differed substantially between runs.",
+          "Thickness, width, atmosphere details, diluent, particle-metric definition, and sample history are unknown or not established as matched.",
+          "Oxygen and pressure values are assumed rather than directly reported.",
+          "The records are not established as independent repetitions; no uncertainty or population estimate is supplied."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "smoke-not-flame",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 2221,
+      "responseId": "chatcmpl-EkH6reG9sgF4kKkT6Nde8JE7rqstb",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 9806,
+        "completion_tokens": 146,
+        "total_tokens": 9952,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 9803,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"insufficient_information\",\n  \"supportingIds\": [\"SAME-R-51\", \"SAME-R-51a\"],\n  \"reasons\": [\n    \"Both records describe smoke generation by heating below ignition and explicitly state that no flame outcome applies.\",\n    \"Neither test supplies an observed flame_establishment result, so the requested endpoint cannot be compared.\"\n  ],\n  \"usefulObservation\": null,\n  \"limitations\": [\n    \"These are non-flaming smoke-generation tests, not flame-establishment observations.\",\n    \"No conclusion about whether flame establishment differed between the tests can be drawn.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "insufficient_information",
+        "supportingIds": [
+          "SAME-R-51",
+          "SAME-R-51a"
+        ],
+        "reasons": [
+          "Both records describe smoke generation by heating below ignition and explicitly state that no flame outcome applies.",
+          "Neither test supplies an observed flame_establishment result, so the requested endpoint cannot be compared."
+        ],
+        "usefulObservation": null,
+        "limitations": [
+          "These are non-flaming smoke-generation tests, not flame-establishment observations.",
+          "No conclusion about whether flame establishment differed between the tests can be drawn."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": false
+    },
+    {
+      "caseId": "smoke-not-flame",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 2616,
+      "responseId": "chatcmpl-EkH6snUS35JsO6rPJjrPfQjD69Oj5",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 24227,
+        "completion_tokens": 198,
+        "total_tokens": 24425,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 24224,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"insufficient_information\",\n  \"supportingIds\": [\"SAME-R-51\", \"SAME-R-51a\"],\n  \"reasons\": [\n    \"Both records lack a supported flame_establishment observation; each is described as smoke generation by heating below ignition, not a flame test.\",\n    \"The structured comparison reports the endpoint as not measured for both tests, so no flame-establishment outcomes can be compared.\",\n    \"The records match on several reported or series-level conditions, but that does not provide flame observations or establish causation.\"\n  ],\n  \"usefulObservation\": null,\n  \"limitations\": [\n    \"Not measured does not mean flame establishment was absent.\",\n    \"Oxygen concentration, pressure, thickness, diluent, ignition protocol and sample history are unknown or assumed.\",\n    \"The two rows are not established as independent repetitions.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "insufficient_information",
+        "supportingIds": [
+          "SAME-R-51",
+          "SAME-R-51a"
+        ],
+        "reasons": [
+          "Both records lack a supported flame_establishment observation; each is described as smoke generation by heating below ignition, not a flame test.",
+          "The structured comparison reports the endpoint as not measured for both tests, so no flame-establishment outcomes can be compared.",
+          "The records match on several reported or series-level conditions, but that does not provide flame observations or establish causation."
+        ],
+        "usefulObservation": null,
+        "limitations": [
+          "Not measured does not mean flame establishment was absent.",
+          "Oxygen concentration, pressure, thickness, diluent, ignition protocol and sample history are unknown or assumed.",
+          "The two rows are not established as independent repetitions."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": false
+    },
+    {
+      "caseId": "gas-se-comment-conflict",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3428,
+      "responseId": "chatcmpl-EkH6tYxIjrPexfv2retmCuNFJSJMv",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 12531,
+        "completion_tokens": 301,
+        "total_tokens": 12832,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 12528,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"descriptive_only\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\n    \"CFI-G-N-21102A1-D2\",\n    \"CFI-G-N-21088A1-D1\"\n  ],\n  \"reasons\": [\n    \"Both tests report hot-flame self-extinction (SE).\",\n    \"The 50% butane test ran for 40 s at 39.57% O2 and 101.3 kPa; the ethane test ran for 50 s at 39.39% O2 and 94.4 kPa.\",\n    \"Fuel composition and pressure differ, so the endpoint observations are descriptive and do not isolate a cause.\",\n    \"The butane test notes that flow was manually stopped and no cool flame was detected; operator cutoff is not a natural extinction threshold.\"\n  ],\n  \"usefulObservation\": \"Both reported endpoints are SE; the records list burn times of 40 s for 50% butane and 50 s for ethane.\",\n  \"limitations\": [\n    \"These are individual test records; independent repeats are not established.\",\n    \"Burn durations are not stated to be natural extinction times, and the butane record specifically reports manual flow cutoff.\",\n    \"No cool flame was detected in the butane test; this does not establish whether cool continuation occurred in the ethane test.\"\n  ]\n}",
+      "answer": {
+        "comparability": "descriptive_only",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "CFI-G-N-21102A1-D2",
+          "CFI-G-N-21088A1-D1"
+        ],
+        "reasons": [
+          "Both tests report hot-flame self-extinction (SE).",
+          "The 50% butane test ran for 40 s at 39.57% O2 and 101.3 kPa; the ethane test ran for 50 s at 39.39% O2 and 94.4 kPa.",
+          "Fuel composition and pressure differ, so the endpoint observations are descriptive and do not isolate a cause.",
+          "The butane test notes that flow was manually stopped and no cool flame was detected; operator cutoff is not a natural extinction threshold."
+        ],
+        "usefulObservation": "Both reported endpoints are SE; the records list burn times of 40 s for 50% butane and 50 s for ethane.",
+        "limitations": [
+          "These are individual test records; independent repeats are not established.",
+          "Burn durations are not stated to be natural extinction times, and the butane record specifically reports manual flow cutoff.",
+          "No cool flame was detected in the butane test; this does not establish whether cool continuation occurred in the ethane test."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "gas-se-comment-conflict",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "insufficient_information",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 3790,
+      "responseId": "chatcmpl-EkH6vZZkefPhlCgW01tsMCJaSJt3l",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 28523,
+        "completion_tokens": 386,
+        "total_tokens": 28909,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 28520,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"insufficient_information\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\n    \"CFI-G-N-21102A1-D2\",\n    \"CFI-G-N-21088A1-D1\",\n    \"psi-159\"\n  ],\n  \"reasons\": [\n    \"The structured comparison marks the requested endpoint unknown for CFI-G-N-21102A1-D2 and observed for CFI-G-N-21088A1-D1; the missing endpoint prevents an endpoint comparison.\",\n    \"The source records for both tests say “end: SE,” but CFI-G-N-21102A1-D2 also has a comment that flow was manually stopped, conflicting with the coded self-extinction. The cutoff does not establish natural extinction.\",\n    \"The tests differ in fuel (butane versus ethane), oxygen fraction (39.57% versus 39.39%), pressure (101.3 versus 94.4 kPa), fuel mass flow (1.6 versus 2 mg/s), and fuel composition.\",\n    \"The structured comparison warns that this historical contrast does not establish causation; unrecorded factors are not controlled.\"\n  ],\n  \"usefulObservation\": \"CFI-G-N-21088A1-D1 is recorded as self-extinguished (SE). CFI-G-N-21102A1-D2 has a coded SE outcome, but its source comment says the flow was manually stopped, so natural hot-flame extinction cannot be concluded from that record.\",\n  \"limitations\": [\n    \"Unknown burner diameter, burner thermal history, and sample history.\",\n    \"Absolute event timing is unknown.\",\n    \"The structured record does not establish these rows as independent repetitions.\",\n    \"Hot-flame extinction does not establish absence of subsequent cool-flame combustion.\"\n  ]\n}",
+      "answer": {
+        "comparability": "insufficient_information",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "CFI-G-N-21102A1-D2",
+          "CFI-G-N-21088A1-D1",
+          "psi-159"
+        ],
+        "reasons": [
+          "The structured comparison marks the requested endpoint unknown for CFI-G-N-21102A1-D2 and observed for CFI-G-N-21088A1-D1; the missing endpoint prevents an endpoint comparison.",
+          "The source records for both tests say “end: SE,” but CFI-G-N-21102A1-D2 also has a comment that flow was manually stopped, conflicting with the coded self-extinction. The cutoff does not establish natural extinction.",
+          "The tests differ in fuel (butane versus ethane), oxygen fraction (39.57% versus 39.39%), pressure (101.3 versus 94.4 kPa), fuel mass flow (1.6 versus 2 mg/s), and fuel composition.",
+          "The structured comparison warns that this historical contrast does not establish causation; unrecorded factors are not controlled."
+        ],
+        "usefulObservation": "CFI-G-N-21088A1-D1 is recorded as self-extinguished (SE). CFI-G-N-21102A1-D2 has a coded SE outcome, but its source comment says the flow was manually stopped, so natural hot-flame extinction cannot be concluded from that record.",
+        "limitations": [
+          "Unknown burner diameter, burner thermal history, and sample history.",
+          "Absolute event timing is unknown.",
+          "The structured record does not establish these rows as independent repetitions.",
+          "Hot-flame extinction does not establish absence of subsequent cool-flame combustion."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "saffire-numeric-positive",
+      "track": "raw_evidence",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "conditional",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 2821,
+      "responseId": "chatcmpl-EkH6xCuUMQHwc6Ahhxg7Xk1Mz6Ude",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 12519,
+        "completion_tokens": 247,
+        "total_tokens": 12766,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 12516,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"comparable\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\n    \"Saffire-II-2-5\",\n    \"Saffire-II-2-6\"\n  ],\n  \"reasons\": [\n    \"The reported spread rates are 2.1 mm/s for Saffire-II-2-5 and 2.6 mm/s for Saffire-II-2-6.\",\n    \"Both tests used the same reported SIBAL fabric sample dimensions and thickness, concurrent 20 cm/s flow, approximately 22.1% ambient oxygen, and series-level 100 kPa and microgravity conditions.\",\n    \"These are observed endpoint values from two tests; the evidence does not establish why the rates differ or provide independent-repeat uncertainty.\"\n  ],\n  \"usefulObservation\": \"Saffire-II-2-6 had a reported spread rate 0.5 mm/s higher than Saffire-II-2-5.\",\n  \"limitations\": [\n    \"The comparison is descriptive and does not establish a causal difference.\",\n    \"No uncertainty estimates or independent-repeat information are supplied.\"\n  ]\n}",
+      "answer": {
+        "comparability": "comparable",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "Saffire-II-2-5",
+          "Saffire-II-2-6"
+        ],
+        "reasons": [
+          "The reported spread rates are 2.1 mm/s for Saffire-II-2-5 and 2.6 mm/s for Saffire-II-2-6.",
+          "Both tests used the same reported SIBAL fabric sample dimensions and thickness, concurrent 20 cm/s flow, approximately 22.1% ambient oxygen, and series-level 100 kPa and microgravity conditions.",
+          "These are observed endpoint values from two tests; the evidence does not establish why the rates differ or provide independent-repeat uncertainty."
+        ],
+        "usefulObservation": "Saffire-II-2-6 had a reported spread rate 0.5 mm/s higher than Saffire-II-2-5.",
+        "limitations": [
+          "The comparison is descriptive and does not establish a causal difference.",
+          "No uncertainty estimates or independent-repeat information are supplied."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": false,
+      "causalStatusCorrect": true
+    },
+    {
+      "caseId": "saffire-numeric-positive",
+      "track": "same_evidence_plus_comparison",
+      "promptVersion": "interpret-same-generator-diagnostic-v1",
+      "requestedModel": "gpt-6-luna",
+      "comparisonVersion": "interpret-1.0",
+      "expectedComparability": "conditional",
+      "expectedCausalSupport": "descriptive_only",
+      "latencyMs": 2805,
+      "responseId": "chatcmpl-EkH6zKBa4aCkxeefWvsGOhK18wP5F",
+      "returnedModel": "gpt-6-luna",
+      "finishReason": "stop",
+      "usage": {
+        "prompt_tokens": 29479,
+        "completion_tokens": 242,
+        "total_tokens": 29721,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 29476,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "rawResponse": "{\n  \"comparability\": \"conditional\",\n  \"causalSupport\": \"descriptive_only\",\n  \"supportingIds\": [\"Saffire-II-2-5\", \"Saffire-II-2-6\", \"psi-99\"],\n  \"reasons\": [\n    \"Reported spread rates are 2.1 mm/s for Saffire-II-2-5 and 2.6 mm/s for Saffire-II-2-6.\",\n    \"The structured comparison records the main conditions as matched, but sample history is unknown and the measurement metric definition is not documented.\",\n    \"The observations are a descriptive historical contrast; they do not establish that any factor caused the difference.\"\n  ],\n  \"usefulObservation\": \"Saffire-II-2-6 had the higher reported spread rate (2.6 mm/s versus 2.1 mm/s).\",\n  \"limitations\": [\n    \"No numerical delta is provided in the structured comparison.\",\n    \"Sample history is unknown; absolute event timing is unknown.\",\n    \"The records are not established as independent repetitions.\",\n    \"The metric definition and measurement method are not documented.\"\n  ]\n}",
+      "answer": {
+        "comparability": "conditional",
+        "causalSupport": "descriptive_only",
+        "supportingIds": [
+          "Saffire-II-2-5",
+          "Saffire-II-2-6",
+          "psi-99"
+        ],
+        "reasons": [
+          "Reported spread rates are 2.1 mm/s for Saffire-II-2-5 and 2.6 mm/s for Saffire-II-2-6.",
+          "The structured comparison records the main conditions as matched, but sample history is unknown and the measurement metric definition is not documented.",
+          "The observations are a descriptive historical contrast; they do not establish that any factor caused the difference."
+        ],
+        "usefulObservation": "Saffire-II-2-6 had the higher reported spread rate (2.6 mm/s versus 2.1 mm/s).",
+        "limitations": [
+          "No numerical delta is provided in the structured comparison.",
+          "Sample history is unknown; absolute event timing is unknown.",
+          "The records are not established as independent repetitions.",
+          "The metric definition and measurement method are not documented."
+        ]
+      },
+      "error": null,
+      "verdictCorrect": true,
+      "causalStatusCorrect": true
+    }
+  ],
+  "limits": [
+    "Tiny development sample; no population confidence or superiority claim",
+    "Structured-track gold agreement is not independent scientific validation",
+    "No semantic grading of free explanations or citation support by domain experts",
+    "Evidence identical; comparison adds precomputed decisions, not new raw sources"
+  ]
+}

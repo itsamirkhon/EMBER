@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "interpret-numeric-cases-v1",
+  "evaluationKind": "Expanded source-audited DEVELOPMENT after feedback, not independent heldout",
+  "frozenBeforeNumericalEngineChange": true,
+  "cases": [
+    {
+      "id": "same-amd-51-51a",
+      "testAId": "SAME-R-51",
+      "testBId": "SAME-R-51a",
+      "endpoint": "smoke_particle_size",
+      "expectedDelta": 10.4,
+      "unit": "nm",
+      "expectedComparability": "descriptive_only",
+      "definition": "Arithmetic mean diameter (M1/M0), not geometric mean or diameter of average mass",
+      "method": "Analyzed particle moment ratio M1/M0 in same workbook column",
+      "sourcePath": "data/raw/PSI-101/PSI-101_Analyzed Data_SAME, SAME-R_Results.xlsx",
+      "sheet": "SAME R Results",
+      "sourceCells": [
+        "BI2",
+        "BI6",
+        "BI7",
+        "F6",
+        "F7"
+      ],
+      "sourceValues": [
+        0.0563731190105457,
+        0.0668156766313406
+      ],
+      "sourceUnit": "micrometre",
+      "corpusValues": [
+        56.4,
+        66.8
+      ],
+      "limitations": [
+        "Difference uses rounded corpus values. No measurement uncertainty is supplied.",
+        "Net aging38vs261s; otherconditionspartlyassumed. No causaleffect of aging.",
+        "Not independent-repeat evidence or cabin ignition/detector result."
+      ]
+    },
+    {
+      "id": "bassii-spread-m1-m20",
+      "testAId": "BASS-II-M1",
+      "testBId": "BASS-II-M20",
+      "endpoint": "spread_rate",
+      "expectedDelta": -0.059,
+      "unit": "mm/s",
+      "expectedComparability": "descriptive_only",
+      "definition": "Absolute flame spread rate Vf from tracked position-versus-time",
+      "method": "Spotlight-16 image/video tracking then Excel position-versus-time, NASA/TM20210011385 §5.3",
+      "sourcePath": "data/raw/ntrs/TM-20210011385.txt",
+      "table": "Table5.1 reportp57",
+      "section": "§5.3 reportp56",
+      "sourceValues": [
+        0.071,
+        0.012
+      ],
+      "sourceUnit": "mm/s",
+      "corpusValues": [
+        0.071,
+        0.012
+      ],
+      "limitations": [
+        "Thickness1vs5mm, sidesburning1vs2, flow9vs10cm/s, initialO222.2vs18vol%.",
+        "Differentconditions andoxygenhistories prohibit thickness/flow/O2 causal attribution.",
+        "Singlevelocitytargetrows selected to avoid arbitraryfirstvalue from multivelocitytable.",
+        "No uncertainty isinvented."
+      ]
+    }
+  ]
+}

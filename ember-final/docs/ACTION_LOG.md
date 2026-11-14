@@ -153,3 +153,10 @@ The earlier stages above record historical implementation claims, not independen
 - Git history retains removed tracked versions. No secret files or local runtime review data are included in the cleanup commit.
 - Post-cleanup validation passed: 118 TypeScript tests, 16 Python tests plus 16 subtests, lint and production build. Browser reload still renders the canonical workbench and API-backed saved review.
 - Stopped tracking generated local review history and ignored its temporary files; the actual file and saved reviews remain in place. Fresh stores/demos are created by the server, covered by API tests.
+
+
+## Stage 15 — Interpret implementation and source-audited development acceptance
+- Shared compareTests separates comparability, query applicability and causal support; protocol, factor/provenance and source-conflict checks serve UI, synthesis and exports. Added two source-method-bound arithmetic contrasts and scoped derived-number verification.
+- Corrected conclusion-specific dependency mapping and deterministic epistemic partition; model JSON/provenance/source boundaries reject unsafe outputs with explicit fallback. Full details and red/green evidence: actions-interpret-comparison.md, actions-interpret-ui.md, actions-interpret-evaluation.md, actions-interpret-generation.md.
+- Final checks: 184 TypeScript tests with two workers, 14 Python tests, lint, production build; 25/25 corrected source development cases and 2/2 arithmetic cases. Live integrated Luna/Gemini smoke succeeded. Same-generator eight-case diagnostic is retained with raw answers and limitations.
+- Scientific acceptance remains partial: no external domain review, independent closed split or complete equal-budget baseline/ablation/prose assessment. See INTERPRET_STATUS.md and INTERPRET_SOURCE_REVIEW.md; development scores do not establish universal correctness or safety.

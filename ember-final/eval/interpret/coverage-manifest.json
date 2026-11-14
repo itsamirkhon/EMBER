@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "interpret-scope-v1",
+  "corpusVersion": "2.0.1-scientific-fixes",
+  "investigations": [
+    {
+      "investigation": "BASS-II",
+      "name": "Burning and Suppression of Solids – II",
+      "epistemicStatus": "observed",
+      "rows": 129,
+      "availableEventEndpoints": [
+        "blowoff_limit",
+        "extinction_under_flow_change",
+        "flame_establishment",
+        "quench_limit",
+        "spread_rate",
+        "sustained_spread"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "bassii-ft-is-not-quench",
+        "bassii-ft-positive-ignition",
+        "bassii-unknown-is-not-negative",
+        "bassii-known-ignitions",
+        "bassii-thickness-width",
+        "bassii-low-o2-self-ext"
+      ],
+      "limitations": [
+        "Pressure (1 atm / 101.3 kPa) is series-level from TM-20210011385 §1 rather than per-test sensor readings; many tests ended by operator flow_shutoff rather than natural extinction."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": [
+        "bassii-spread-m1-m20"
+      ]
+    },
+    {
+      "investigation": "BASS",
+      "name": "Burning and Suppression of Solids",
+      "epistemicStatus": "observed",
+      "rows": 121,
+      "availableEventEndpoints": [
+        "extinction_under_flow_change",
+        "flame_establishment",
+        "quench_limit",
+        "suppressant_extinction",
+        "sustained_spread"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "bass-negative-vs-brief-ignition",
+        "bass-unknown-pair",
+        "bass-sibal-flow"
+      ],
+      "limitations": [
+        "Observations record operator terminations, reused charred samples, and non-monotonic air steps; 20 sphere rows lacked explicit CSV geometry until derived from materialRaw/observations."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "Saffire-I",
+      "name": "Spacecraft Fire Safety Experiment – I",
+      "epistemicStatus": "observed",
+      "rows": 2,
+      "availableEventEndpoints": [],
+      "scope": "catalog_context_only",
+      "reviewedCaseIds": [],
+      "limitations": [
+        "Only 2 large-scale test conditions flown; PSI-98 table headers transposed Length (40.6) and Width (94 cm) relative to narrative/Saffire-III.",
+        "No endpoint-bound event in current corpus; do not infer from terminal label alone."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "Saffire-II",
+      "name": "Spacecraft Fire Experiment – II",
+      "epistemicStatus": "observed",
+      "rows": 9,
+      "availableEventEndpoints": [
+        "spread_rate"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "saffire-numeric-positive"
+      ],
+      "limitations": [
+        "9 short-sample tests; 100 kPa cabin pressure comes from NTRS 20200000557 series report rather than per-row telemetry."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "Saffire-III",
+      "name": "Spacecraft Fire Experiment – III",
+      "epistemicStatus": "observed",
+      "rows": 2,
+      "availableEventEndpoints": [],
+      "scope": "catalog_context_only",
+      "reviewedCaseIds": [],
+      "limitations": [
+        "PSI-100 CSV lacks per-test O2, pressure, and quantitative burn-rate outcome columns.",
+        "No endpoint-bound event in current corpus; do not infer from terminal label alone."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "FLEX",
+      "name": "Flame Extinguishment Experiment",
+      "epistemicStatus": "observed",
+      "rows": 274,
+      "availableEventEndpoints": [
+        "burning_rate_constant",
+        "hot_flame_extinction"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "flex-rate-context",
+        "flex-no-cool-evidence"
+      ],
+      "limitations": [
+        "Quiescent chamber droplet conditions cannot substitute for forced-convection solid-fuel tests."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "FLEX-2",
+      "name": "Flame Extinguishment Experiment – 2",
+      "epistemicStatus": "planned_only",
+      "rows": 0,
+      "availableEventEndpoints": [],
+      "scope": "catalog_context_only",
+      "reviewedCaseIds": [],
+      "limitations": [
+        "PLANNED_ONLY: PSI-68 contains a planned experimental matrix (ranges for fuels, diameters, pressures, O2) with zero flown individual test outcomes.",
+        "No observed test rows; objectives cannot establish observations.",
+        "No endpoint-bound event in current corpus; do not infer from terminal label alone."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "CFI",
+      "name": "Cool Flames Investigation",
+      "epistemicStatus": "observed",
+      "rows": 79,
+      "availableEventEndpoints": [
+        "burning_rate_constant",
+        "cool_flame_continuation",
+        "hot_flame_extinction"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "cfi-hot-to-cool",
+        "cfi-burning-constant",
+        "cfi-unknown-cool",
+        "cfi-unknown-whole-outcome"
+      ],
+      "limitations": [
+        "PSI-39 narrative is internally inconsistent on pressure range (Objective states 0.25-5 atm; Approach states 0.25-0.5 atm), whereas PSI-39 CSV includes 1-2 atm tests."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "SAME",
+      "name": "Smoke and Aerosol Measurement Experiment",
+      "epistemicStatus": "observed",
+      "rows": 64,
+      "availableEventEndpoints": [
+        "smoke_particle_size"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "smoke-missing-number"
+      ],
+      "limitations": [
+        "Non-flaming pyrolysis smoke aerosol measurements only; O2 (21%) and pressure (101.3 kPa) are assumed ISS cabin conditions (not logged in PSI-101/102). Original TEM grids suffered contamination."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "SAME-R",
+      "name": "Smoke Aerosol Measurement Experiment – Reflight",
+      "epistemicStatus": "observed",
+      "rows": 109,
+      "availableEventEndpoints": [
+        "smoke_particle_size"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "smoke-size-positive",
+        "smoke-not-flame"
+      ],
+      "limitations": [
+        "Non-flaming pyrolysis smoke aerosol measurements only; O2 (21%) and pressure (101.3 kPa) are assumed ISS cabin conditions."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": [
+        "same-amd-51-51a"
+      ]
+    },
+    {
+      "investigation": "ACME-BRE",
+      "name": "ACME – Burning Rate Emulator",
+      "epistemicStatus": "observed",
+      "rows": 43,
+      "availableEventEndpoints": [
+        "flame_establishment"
+      ],
+      "scope": "aggregate_context_only",
+      "reviewedCaseIds": [
+        "aggregate-bre"
+      ],
+      "limitations": [
+        "PSI-20 CSV aggregates test days x listed O2 without per-flame pressures, flow rates, or extinction diameters.",
+        "Daily flame-count totals were expanded into parameter rows; cannot support per-flame events or independent-repeat counts without raw run binding."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "ACME-CFI-G",
+      "name": "ACME – Cool Flames Investigation with Gases",
+      "epistemicStatus": "observed",
+      "rows": 333,
+      "availableEventEndpoints": [
+        "cool_flame_continuation",
+        "flame_establishment",
+        "hot_flame_extinction"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "gas-ft-is-not-hot-extinction",
+        "gas-ignition-positive",
+        "gas-se-comment-conflict"
+      ],
+      "limitations": [
+        "Inverse flames (CFI-G-I-*) report burner oxidizer-stream O2 mole fraction rather than ambient O2; must not be conflated with ambient oxygen limits."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "ACME-E-FIELD",
+      "name": "ACME – Electric-Field Effects on Laminar Diffusion Flames",
+      "epistemicStatus": "observed",
+      "rows": 32,
+      "availableEventEndpoints": [
+        "flame_establishment"
+      ],
+      "scope": "aggregate_context_only",
+      "reviewedCaseIds": [],
+      "limitations": [
+        "Actual ISS 0g microgravity (NOT partial-g analogue); PSI-22 CSV reports test-day counts without per-flame O2, pressure, or voltage values.",
+        "Daily flame-count totals were expanded into parameter rows; cannot support per-flame events or independent-repeat counts without raw run binding."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "SPICE",
+      "name": "Smoke Point In Co-flow Experiment",
+      "epistemicStatus": "observed",
+      "rows": 469,
+      "availableEventEndpoints": [
+        "smoke_point_length"
+      ],
+      "scope": "descriptive_only_team_reviewed",
+      "reviewedCaseIds": [
+        "spice-same-setting-missing-target"
+      ],
+      "limitations": [
+        "Steady co-flow jet flames only (no flammability pass/fail); O2 (21±1%) and pressure (101 kPa) are assumed nominal ISS MSG cabin air per SPICE Final Report Table 1."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    },
+    {
+      "investigation": "SLICE",
+      "name": "Structure and Liftoff In Combustion Experiment",
+      "epistemicStatus": "observed",
+      "rows": 12,
+      "availableEventEndpoints": [],
+      "scope": "catalog_context_only",
+      "reviewedCaseIds": [
+        "slice-absent-endpoint"
+      ],
+      "limitations": [
+        "PSI-106 CSV contains 12 test-day schedule entries without per-flame O2, pressure, or quantitative soot/liftoff metrics.",
+        "No endpoint-bound event in current corpus; do not infer from terminal label alone."
+      ],
+      "independentScientificValidation": false,
+      "sourceReviewedNumericalCaseIds": []
+    }
+  ]
+}
