@@ -17,7 +17,7 @@ import { TrustPage } from './v3/pages/TrustPage';
 const ROUTE_TITLES: Array<[RegExp, string]> = [
   [/^\/$/, 'EMBER · Where NASA’s fire evidence ends'],
   [/^\/map/, 'Evidence map · EMBER'],
-  [/^\/lens/, 'Mission lens · EMBER'],
+  [/^\/lens/, 'Check a cabin · EMBER'],
   [/^\/ask/, 'Ask EMBER'],
   [/^\/investigations\/./, 'Investigation · EMBER'],
   [/^\/investigations/, 'Investigations · EMBER'],

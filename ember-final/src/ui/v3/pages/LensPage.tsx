@@ -7,7 +7,7 @@ import {
   MISSION_SHORT, PLAIN, TASKS, cliffStats, fmt, fmtG, kpaToPsi, lensFromMission, lensOverrides, nearestTests, outcomeText, useCompact,
   type LensInput, type Plain,
 } from '../data';
-import { AtmosphereBar, Ext, GapChips, Loading, PageHead, PlainBadge, ScaleBar } from '../ui';
+import { AtmosphereBar, Ext, GapChips, Loading, PageHead, PlainBadge, ScaleBar, Term } from '../ui';
 
 const DEFAULT: LensInput = { missionId: 'lunar-rover', o2: 30, kPa: 70.3, flow: [0, 20], g: 0.166, phase: 'solid', material: 'PMMA', task: 'material_screening' };
 
@@ -127,7 +127,7 @@ export function LensPage() {
 
       <div className="v3-split">
         <section className="v3-card v3-controls" aria-label="Your scenario">
-          <h2 className="v3-h3">1 · Environment</h2>
+          <h2 className="v3-h3"><span className="v3-step-n">1</span> Pick a cabin</h2>
           <div className="v3-missions" role="group" aria-label="Environment">
             {data.missions.map((m) => (
               <button key={m.id} type="button" className="v3-mission" aria-pressed={l.missionId === m.id} onClick={() => setL((p) => lensFromMission(m, p))}>
@@ -161,7 +161,7 @@ export function LensPage() {
             </div>
           )}
 
-          <h2 className="v3-h3">2 · Task</h2>
+          <h2 className="v3-h3"><span className="v3-step-n">2</span> What are you checking?</h2>
           <div className="v3-seg v3-seg-wrap" role="group" aria-label="Task">
             {TASKS.map((t) => (
               <button key={t.id} type="button" aria-pressed={l.task === t.id} onClick={() => set({ task: t.id })} title={t.hint}>
@@ -171,7 +171,7 @@ export function LensPage() {
           </div>
           <p className="v3-small v3-muted">{TASKS.find((t) => t.id === l.task)?.hint}</p>
 
-          <h2 className="v3-h3">3 · Material</h2>
+          <h2 className="v3-h3"><span className="v3-step-n">3</span> Material</h2>
           <div className="v3-fields">
             <label>
               <span>Fuel type</span>
@@ -201,7 +201,7 @@ export function LensPage() {
           </p>
           <div className="v3-slider">
             <div className="v3-slider-head">
-              <label htmlFor="lens-o2">Oxygen</label>
+              <label htmlFor="lens-o2"><Term k="o2">Oxygen</Term></label>
               <output htmlFor="lens-o2">{fmt(l.o2)}%</output>
             </div>
             <input id="lens-o2" type="range" min={10} max={100} step={0.5} value={l.o2} onChange={(e) => setCustom({ o2: Number(e.target.value) })} />
@@ -213,7 +213,7 @@ export function LensPage() {
           </div>
           <div className="v3-slider">
             <div className="v3-slider-head">
-              <label htmlFor="lens-p">Pressure</label>
+              <label htmlFor="lens-p"><Term k="kpa">Pressure</Term></label>
               <output htmlFor="lens-p">
                 {fmt(l.kPa)} kPa <span className="v3-muted">· {kpaToPsi(l.kPa).toFixed(1)} psi</span>
               </output>
@@ -236,7 +236,7 @@ export function LensPage() {
               }} />
             </label>
             <label>
-              <span>Gravity, g</span>
+              <span><Term k="g">Gravity, g</Term></span>
               <input type="number" min={0} max={1} step={0.001} value={l.g} onChange={(e) => setCustom({ g: Math.max(0, Math.min(1, Number(e.target.value) || 0)) })} />
             </label>
           </div>

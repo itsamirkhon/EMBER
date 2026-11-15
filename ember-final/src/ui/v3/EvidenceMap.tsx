@@ -2,25 +2,26 @@ import { useMemo, useRef, useState, type PointerEvent } from 'react';
 import type { FuelPhase, Mission } from '../../core';
 import { MISSION_SHORT, fmt, type Cliff, type InvBrief, type Row } from './data';
 
-/** Colour per investigation, grouped by fuel phase: warm = solid, blue = liquid, green/violet = gas. */
+/** Colour per investigation, one hue family per fuel phase: blue = solid, teal = liquid, violet = gas.
+ *  Orange is kept for the evidence cliff alone. */
 export const INV_COLOR: Record<string, string> = {
-  BASS: '#ff8a3d',
-  'BASS-II': '#ff5f45',
-  'Saffire-I': '#ffd166',
-  'Saffire-II': '#ffb703',
-  'Saffire-III': '#f4a259',
-  SAME: '#e9c46a',
-  'SAME-R': '#d4a373',
-  FLEX: '#4a9dff',
-  'FLEX-2': '#7cc4ff',
-  CFI: '#2f6fd6',
-  'ACME-BRE': '#30c48d',
-  'ACME-CFI-G': '#5fd3b3',
-  'ACME-E-FIELD': '#9b8cff',
-  SPICE: '#4fb06d',
-  SLICE: '#b28dff',
+  BASS: '#8fb2ff',
+  'BASS-II': '#5f8fff',
+  'Saffire-I': '#b8ceff',
+  'Saffire-II': '#7aa0f5',
+  'Saffire-III': '#a7bfff',
+  SAME: '#6f86c8',
+  'SAME-R': '#8a9cd0',
+  FLEX: '#4fd1c5',
+  'FLEX-2': '#8ae6dc',
+  CFI: '#2fa89e',
+  'ACME-BRE': '#b9a6ff',
+  'ACME-CFI-G': '#9a82ff',
+  'ACME-E-FIELD': '#d2c6ff',
+  SPICE: '#a58df0',
+  SLICE: '#c7b4ff',
 };
-export const invColor = (id: string) => INV_COLOR[id] ?? '#8e8e93';
+export const invColor = (id: string) => INV_COLOR[id] ?? '#74829b';
 
 const PHASE_LABEL: Record<FuelPhase, string> = { solid: 'Solid materials', liquid: 'Liquid droplets', gas: 'Gas flames' };
 
@@ -130,7 +131,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
       setHover({
         x: sx(m.o2Pct as number), y: sy(m.pressureKpa as number),
         title: g.map((x) => x.label).join(' · '),
-        lines: [`${fmt(m.o2Pct)}% O₂ at ${fmt(m.pressureKpa)} kPa · ${fmt(m.gravityG, 3)} g`, `O₂ partial pressure ${fmt(po2)} kPa (${(po2 / PO2_SEA).toFixed(2)}× sea level)`, onPickMission ? 'Click to open it in the mission lens' : ''],
+        lines: [`${fmt(m.o2Pct)}% O₂ at ${fmt(m.pressureKpa)} kPa · ${fmt(m.gravityG, 3)} g`, `O₂ partial pressure ${fmt(po2)} kPa (${(po2 / PO2_SEA).toFixed(2)}× sea level)`, onPickMission ? 'Click to check this cabin' : ''],
       });
       return;
     }
@@ -179,18 +180,10 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
           if (g && onPickMission) onPickMission(g[g.length > 1 && isSelected(g[0]) ? 1 : 0]);
         }}
       >
-        <defs>
-          <linearGradient id="cliffFade" x1="0" x2="1">
-            <stop offset="0" stopColor="#ff6a3d" stopOpacity="0.16" />
-            <stop offset="0.35" stopColor="#ff6a3d" stopOpacity="0.05" />
-            <stop offset="1" stopColor="#ff6a3d" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
         {/* region beyond the solid-material flight evidence */}
-        <rect x={cliffX} y={M.top} width={W - M.right - cliffX} height={H - M.top - M.bottom} fill="url(#cliffFade)" />
-        <line x1={cliffX} x2={cliffX} y1={M.top} y2={H - M.bottom} stroke="#ff6a3d" strokeWidth={1.6} strokeDasharray="6 4" />
-        <text x={cliffX + 10} y={M.top + 16} fontSize="12.5" fontWeight={650} fill="#ff9a70">Evidence cliff · {fmt(cliff.o2Max)}% O₂</text>
+        <rect x={cliffX} y={M.top} width={W - M.right - cliffX} height={H - M.top - M.bottom} fill="var(--v3-cliff)" fillOpacity={0.05} />
+        <line x1={cliffX} x2={cliffX} y1={M.top} y2={H - M.bottom} stroke="var(--v3-cliff)" strokeWidth={1.5} />
+        <text x={cliffX + 10} y={M.top + 16} fontSize="12.5" fontWeight={500} fill="var(--v3-cliff-text)">Evidence cliff · {fmt(cliff.o2Max)}% O₂</text>
         <text x={cliffX + 10} y={M.top + 33} fontSize="11.5" fill="var(--v3-text-2)">No solid-material flight test in PSI to the right of this line</text>
 
         {[0, 20, 40, 60, 80, 100].map((t) => (
@@ -236,11 +229,11 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
           const right = (m.o2Pct as number) > 80;
           return (
             <g key={m.id} style={{ cursor: onPickMission ? 'pointer' : 'default' }}>
-              <circle cx={x} cy={y} r={sel ? 10 : 8} fill="rgba(0,0,0,.55)" stroke="#fff" strokeWidth={sel ? 2.6 : 1.6} />
-              {sel && <circle cx={x} cy={y} r={3.2} fill="#fff" />}
+              <circle cx={x} cy={y} r={sel ? 10 : 8} fill="var(--v3-bg)" stroke="var(--v3-text)" strokeWidth={sel ? 2.4 : 1.5} />
+              {sel && <circle cx={x} cy={y} r={3.2} fill="var(--v3-text)" />}
               <text
-                x={x + (right ? -15 : 15)} y={y} dy="0.32em" textAnchor={right ? 'end' : 'start'} fontSize="13" fontWeight={sel ? 700 : 560}
-                fill="#fff" stroke="var(--v3-surface)" strokeWidth={4.5} paintOrder="stroke" strokeLinejoin="round"
+                x={x + (right ? -15 : 15)} y={y} dy="0.32em" textAnchor={right ? 'end' : 'start'} fontSize="13" fontWeight={sel ? 600 : 500}
+                fill="var(--v3-text)" stroke="var(--v3-surface)" strokeWidth={4.5} paintOrder="stroke" strokeLinejoin="round"
               >
                 {g.map((x2) => MISSION_SHORT[x2.id] ?? x2.label).join(' · ')}
               </text>
@@ -249,9 +242,9 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
         })}
         {selected && !selectedIsMission && selected.kPa <= YD[1] && (
           <g>
-            <circle cx={sx(selected.o2)} cy={sy(selected.kPa)} r={10} fill="rgba(0,0,0,.55)" stroke="var(--v3-brand)" strokeWidth={2.6} />
-            <circle cx={sx(selected.o2)} cy={sy(selected.kPa)} r={3.2} fill="var(--v3-brand)" />
-            <text x={sx(selected.o2) + 15} y={sy(selected.kPa)} dy="0.32em" fontSize="13" fontWeight={700} fill="#fff" stroke="var(--v3-surface)" strokeWidth={4.5} paintOrder="stroke">
+            <circle cx={sx(selected.o2)} cy={sy(selected.kPa)} r={10} fill="var(--v3-bg)" stroke="var(--v3-accent)" strokeWidth={2.4} />
+            <circle cx={sx(selected.o2)} cy={sy(selected.kPa)} r={3.2} fill="var(--v3-accent)" />
+            <text x={sx(selected.o2) + 15} y={sy(selected.kPa)} dy="0.32em" fontSize="13" fontWeight={600} fill="var(--v3-text)" stroke="var(--v3-surface)" strokeWidth={4.5} paintOrder="stroke">
               {selected.label}
             </text>
           </g>
@@ -284,39 +277,63 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
   );
 }
 
+const PHASE_SWATCH: Record<FuelPhase, string> = { solid: 'var(--v3-solid)', liquid: 'var(--v3-liquid)', gas: 'var(--v3-gas)' };
+
 export function MapLegend({ investigations, phase, highlight, onHighlight }: { investigations: InvBrief[]; phase: FuelPhase | 'all'; highlight: string | null; onHighlight: (id: string | null) => void }) {
   const byPhase: FuelPhase[] = ['solid', 'liquid', 'gas'];
   return (
-    <div className="v3-legend">
-      {byPhase.map((p) => {
-        const list = investigations.filter((i) => i.fuelPhase === p);
-        if (!list.length) return null;
-        return (
-          <div key={p} className="v3-legend-group" style={{ opacity: phase === 'all' || phase === p ? 1 : 0.35 }}>
-            <div className="v3-legend-head">
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
-                <PhaseMark phase={p} x={7} y={7.5} r={4.6} fill="var(--v3-text-2)" />
-              </svg>
-              {PHASE_LABEL[p]}
-            </div>
-            <div className="v3-legend-items">
-              {list.map((i) => (
-                <button
-                  key={i.id}
-                  type="button"
-                  className="v3-legend-item"
-                  aria-pressed={highlight === i.id}
-                  onClick={() => onHighlight(highlight === i.id ? null : i.id)}
-                  title={i.name}
-                >
-                  <i style={{ background: i.assumed.length ? 'transparent' : invColor(i.id), borderColor: invColor(i.id) }} />
-                  {i.id}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+    <div className="v3-stack">
+      <div className="v3-legend">
+        {byPhase.map((p) => (
+          <span key={p} style={{ opacity: phase === 'all' || phase === p ? 1 : 0.4 }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+              <PhaseMark phase={p} x={7} y={7.5} r={4.6} fill={PHASE_SWATCH[p]} />
+            </svg>
+            {PHASE_LABEL[p]}
+          </span>
+        ))}
+        <span>
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+            <circle cx="7" cy="7" r="5" fill="var(--v3-bg)" stroke="var(--v3-text)" strokeWidth="1.5" />
+          </svg>
+          Planned cabin
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+            <path d="M7 1v12" stroke="var(--v3-cliff)" strokeWidth="1.5" />
+          </svg>
+          Evidence cliff
+        </span>
+      </div>
+      <details className="v3-legend-more" open={!!highlight}>
+        <summary>Highlight one experiment{highlight ? `: ${highlight}` : ''}</summary>
+        <div className="v3-legend">
+          {byPhase.map((p) => {
+            const list = investigations.filter((i) => i.fuelPhase === p);
+            if (!list.length) return null;
+            return (
+              <div key={p} className="v3-legend-group" style={{ opacity: phase === 'all' || phase === p ? 1 : 0.4 }}>
+                <div className="v3-legend-head">{PHASE_LABEL[p]}</div>
+                <div className="v3-legend-items">
+                  {list.map((i) => (
+                    <button
+                      key={i.id}
+                      type="button"
+                      className="v3-legend-item"
+                      aria-pressed={highlight === i.id}
+                      onClick={() => onHighlight(highlight === i.id ? null : i.id)}
+                      title={i.name}
+                    >
+                      <i style={{ background: i.assumed.length ? 'transparent' : invColor(i.id), borderColor: invColor(i.id) }} />
+                      {i.id}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </details>
     </div>
   );
 }
