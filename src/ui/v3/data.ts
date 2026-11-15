@@ -173,6 +173,24 @@ export const REFERENCE_POINTS: ReferencePoint[] = [
   },
 ];
 
+/**
+ * NASA's 8.2 psia / 34% O₂ exploration atmosphere is a set point. NASA's plan for the 20-foot chamber test of that atmosphere
+ * required every material in the chamber to be rated for exposure to 36% O₂, so the band shows oxygen above the set point
+ * that cabin materials were required to tolerate. A 37% control band is cited by others but EMBER did not find it in a NASA source.
+ */
+export const LUNAR_MATERIAL_BAND = {
+  missionId: 'lunar-base',
+  o2From: 34,
+  o2To: 36,
+  kPa: 56.5,
+  label: 'Materials rated to 36% O₂',
+  note: 'NASA’s plan for the 20-foot chamber test of the 8.2 psia / 34% O₂ habitat atmosphere required every material in the chamber to be rated for 36% O₂ at 8.2 psia. This is a materials rating for one test, not a cabin control band.',
+  source: {
+    label: 'Orndoff and Marmolejo, NASA JSC, Exploration Atmosphere & EVA Prebreathe Protocol Validation: soft goods in 34% O₂ 8.2 psia (NTRS 20200002311)',
+    url: 'https://ntrs.nasa.gov/citations/20200002311',
+  },
+};
+
 // ------------------------------------------------------------------ ground screening vs microgravity
 
 /**
