@@ -663,8 +663,8 @@ body { background-image: var(--v3-pad); background-attachment: fixed; font-size:
 .v3 .btn { border-radius: 2px; }
 
 /* ---------------- home */
-.v3-hero3d { height: calc(100vh - var(--v3-top-h)); min-height: 800px; max-height: 1000px; background: transparent; border-bottom: 1px solid var(--v3-text); display: flex; flex-direction: column; }
-.v3-hero3d-canvas, .v3-hero3d-fallback { position: relative; inset: auto; flex: 1; min-height: 0; overflow: hidden; }
+.v3-hero3d { height: auto; min-height: calc(100vh - var(--v3-top-h)); max-height: none; background: transparent; border-bottom: 1px solid var(--v3-text); display: flex; flex-direction: column; }
+.v3-hero3d-canvas, .v3-hero3d-fallback { position: relative; inset: auto; flex: none; height: clamp(720px, calc(100vh - var(--v3-top-h) - 40px), 880px); min-height: 0; overflow: hidden; }
 .v3-hero3d-copy { top: 36px; max-width: 560px; }
 .v3-hero3d h1 { font-size: clamp(2.2rem, 3.7vw, 3.5rem); line-height: 1.04; margin: 0 0 18px; }
 .v3-hero-lede { color: var(--v3-text-2); font-size: 1.02rem; max-width: 48ch; }
@@ -727,13 +727,14 @@ body { background-image: var(--v3-pad); background-attachment: fixed; font-size:
   .v3-kpis > div { border-right: 0; border-bottom: 1px solid var(--v3-border-2); }
   .v3-atmos li { border-right: 0; border-bottom: 1px solid var(--v3-border-2); }
 }
-.v3-readout { top: auto; bottom: 164px; }
+.v3-readout { top: auto; bottom: 196px; }
 .v3-hero3d-legend { position: static; display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 22px; padding: 0; background: transparent; border: 0; font-size: 0.76rem; max-width: 520px; }
 .v3-hero3d-legend .v3-hero3d-hint { flex-basis: 100%; margin-top: 2px; }
 @media (max-width: 900px) {
   .v3-hero3d { height: auto; min-height: 0; max-height: none; }
   .v3-hero3d-canvas, .v3-hero3d-fallback { flex: none; }
   .v3-hero3d-canvas { height: 440px; }
+  .v3-hero3d-fallback { height: auto; }
   .v3-hero3d-copy { top: auto; }
   .v3-hero3d-steps { padding: 0 16px 24px; border-top: 0; }
   .v3-hero3d-legend { margin-top: 18px; }
