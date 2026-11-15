@@ -577,3 +577,18 @@ body { background-image: var(--v3-pad); background-attachment: fixed; font-size:
   .v3-hero3d-canvas { height: 440px; }
   .v3-hero3d-legend { margin-top: 18px; }
 }
+
+/* numbers: B612 Mono gives the decimal point a full cell ("0. 65"), so figures use B612 with tabular digits;
+   the mono face is kept for uppercase labels, where its rhythm reads as instrument lettering */
+:root { --v3-num: 'B612', system-ui, sans-serif; }
+.v3-big, .v3-kpis b, .v3-atmos .fig, .v3-readout dd, .v3-near-cond, .v3-mission span, .v3-scale-v, .v3-slider-head output,
+.v3-verdict-count b, .v3-bar-head > span:last-child, .v3 input[type='number'], .v3-label3d.mission small, .v3-label3d.cliff,
+.v3-label3d.outside, .v3-label3d.axis, .v3-chart svg text.mono, .v3 .mono, .v3 .score-bar-value, .v3 code {
+  font-family: var(--v3-num); font-variant-numeric: tabular-nums; letter-spacing: 0;
+}
+.v3-label3d.cliff, .v3-label3d.outside { font-size: 0.74rem; }
+.v3 .page-header h1 { font-weight: 700; letter-spacing: -0.03em; }
+.v3 .pill { font-weight: 700; }
+.v3 table th { color: var(--v3-text); }
+
+.v3 { --font-mono: var(--v3-num); }

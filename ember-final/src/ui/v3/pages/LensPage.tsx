@@ -298,8 +298,8 @@ export function LensPage() {
           <section className="v3-card" aria-labelledby="near-h">
             <h2 id="near-h" className="v3-h2">Nearest real flight tests</h2>
             <p className="v3-small v3-muted">
-              Closest {l.phase}-fuel flight records with reported (not assumed) oxygen and pressure. These are analogues, not necessarily applicable tests. A grey chip is the same; amber is a
-              small gap; orange is a large gap or unknown.
+              Closest {l.phase}-fuel flight records with reported (not assumed) oxygen and pressure. These are analogues, not necessarily applicable tests. A plain chip is the same; an outlined chip is a
+              small gap; a highlighted chip is a large gap or unknown.
             </p>
             <div className="v3-nearest">
               {nearest.length === 0 && <div className="v3-callout">No flight records with reported oxygen and pressure were found for this fuel phase. Unknown conditions cannot be ranked as close.</div>}

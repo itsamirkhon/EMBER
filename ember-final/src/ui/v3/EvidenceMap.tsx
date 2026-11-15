@@ -2,26 +2,26 @@ import { useMemo, useRef, useState, type PointerEvent } from 'react';
 import type { FuelPhase, Mission } from '../../core';
 import { MISSION_SHORT, fmt, type Cliff, type InvBrief, type Row } from './data';
 
-/** Colour per investigation, one hue family per fuel phase: blue = solid, teal = liquid, violet = gas.
- *  Orange is kept for the evidence cliff alone. */
+/** Colour per investigation, one family per fuel phase: pine = solid, teal-green = liquid, olive = gas.
+ *  Highlighter chartreuse is kept for the evidence cliff alone. */
 export const INV_COLOR: Record<string, string> = {
-  BASS: '#8fb2ff',
-  'BASS-II': '#5f8fff',
-  'Saffire-I': '#b8ceff',
-  'Saffire-II': '#7aa0f5',
-  'Saffire-III': '#a7bfff',
-  SAME: '#6f86c8',
-  'SAME-R': '#8a9cd0',
-  FLEX: '#4fd1c5',
-  'FLEX-2': '#8ae6dc',
-  CFI: '#2fa89e',
-  'ACME-BRE': '#b9a6ff',
-  'ACME-CFI-G': '#9a82ff',
-  'ACME-E-FIELD': '#d2c6ff',
-  SPICE: '#a58df0',
-  SLICE: '#c7b4ff',
+  BASS: '#10302a',
+  'BASS-II': '#2c5546',
+  'Saffire-I': '#4f7a68',
+  'Saffire-II': '#1b4637',
+  'Saffire-III': '#6b9483',
+  SAME: '#80958a',
+  'SAME-R': '#a3b3a8',
+  FLEX: '#2e8a7c',
+  'FLEX-2': '#62b3a6',
+  CFI: '#1f6b60',
+  'ACME-BRE': '#8a9a2a',
+  'ACME-CFI-G': '#6a7a14',
+  'ACME-E-FIELD': '#aab84e',
+  SPICE: '#7d7a12',
+  SLICE: '#b5b062',
 };
-export const invColor = (id: string) => INV_COLOR[id] ?? '#74829b';
+export const invColor = (id: string) => INV_COLOR[id] ?? '#6c8076';
 
 const PHASE_LABEL: Record<FuelPhase, string> = { solid: 'Solid materials', liquid: 'Liquid droplets', gas: 'Gas flames' };
 

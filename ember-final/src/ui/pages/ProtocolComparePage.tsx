@@ -131,15 +131,15 @@ export function ProtocolComparePage() {
       y: t.atmosphere.o2.value!,
       label: `${t.testId} (${t.inv}): ${t.atmosphere.o2.value}% O2 @ ${t.flow.initialFlowCmS.value} cm/s`,
       color: compareIds.includes(t.testId)
-        ? '#ff9f0a'
+        ? 'var(--v3-accent)'
         : t.atmosphere.o2.role === 'oxidizer_stream'
-          ? '#ff453a'
-          : '#64d2ff',
+          ? 'var(--v3-cliff-ink)'
+          : 'var(--v3-liquid)',
     }));
   }, [scopedTests, compareIds]);
 
   const bassTableSeries = useMemo(() => {
-    const palette = ['#ff9f0a', '#64d2ff', '#30d158', '#bf5af2', '#ffd60a'];
+    const palette = ['var(--v3-accent)', 'var(--v3-liquid)', 'var(--v3-good)', 'var(--v3-gas)', 'var(--v3-warn)'];
     const matching = scopedTests.filter((t) => t.inv === 'BASS-II' && t.extra && typeof t.extra.tmTable5_1 === 'object' && t.extra.tmTable5_1 !== null);
     return matching.slice(0, 5).map((t, idx) => {
       const tbl = t.extra.tmTable5_1 as { velocitiesCmS?: number[]; spreadRatesMmS?: number[] };
@@ -163,7 +163,7 @@ export function ProtocolComparePage() {
         x: Number(t.extra['Net aging time (sec)']),
         y: t.particleSizeNm.value!,
         label: `${t.testId} (${t.fuel ?? 'fuel'}): ${t.particleSizeNm.value} nm at ${t.extra['Net aging time (sec)']} s aging`,
-        color: '#30d158',
+        color: 'var(--v3-good)',
       }))
       .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
   }, [scopedTests]);

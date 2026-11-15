@@ -32,6 +32,7 @@ const GRID = '#cbd9b6';
 const INK = '#10302a';
 const O2GREEN = '#1e7a46';
 const HIGHLIGHT = '#c8e62e';
+const FADED = new THREE.Color('#c4d3b1');
 const PHASE_COLOR: Record<string, string> = { solid: INK, liquid: '#2e8a7c', gas: '#8a9a2a' };
 
 /** Camera stops for the three story steps: [position, target]. */
@@ -245,7 +246,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       const c = new THREE.Color();
       pts.forEach((r, i) => {
         c.copy(baseColor[i]);
-        if (r.phase !== 'solid') c.lerp(new THREE.Color(PAD), solidOnly);
+        if (r.phase !== 'solid') c.lerp(FADED, solidOnly);
         inst.setColorAt(i, c);
       });
       if (inst.instanceColor) inst.instanceColor.needsUpdate = true;

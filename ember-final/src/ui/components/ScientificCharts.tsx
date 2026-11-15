@@ -71,8 +71,8 @@ export function ScatterPlotSvg({
           const py = scaleValue(t, yMin, yMax, PAD.top + plotH, PAD.top);
           return (
             <g key={`y-${idx}`}>
-              <line x1={PAD.left} y1={py} x2={PAD.left + plotW} y2={py} stroke="#232834" strokeWidth="1" />
-              <text x={PAD.left - 8} y={py + 4} textAnchor="end" fill="#a1aab8" fontSize="11">
+              <line x1={PAD.left} y1={py} x2={PAD.left + plotW} y2={py} stroke="var(--v3-grid)" strokeWidth="1" />
+              <text x={PAD.left - 8} y={py + 4} textAnchor="end" fill="var(--v3-text-2)" fontSize="11">
                 {t.toFixed(1)}
               </text>
             </g>
@@ -82,22 +82,22 @@ export function ScatterPlotSvg({
           const px = scaleValue(t, xMin, xMax, PAD.left, PAD.left + plotW);
           return (
             <g key={`x-${idx}`}>
-              <line x1={px} y1={PAD.top} x2={px} y2={PAD.top + plotH} stroke="#232834" strokeWidth="1" />
-              <text x={px} y={PAD.top + plotH + 18} textAnchor="middle" fill="#a1aab8" fontSize="11">
+              <line x1={px} y1={PAD.top} x2={px} y2={PAD.top + plotH} stroke="var(--v3-grid)" strokeWidth="1" />
+              <text x={px} y={PAD.top + plotH + 18} textAnchor="middle" fill="var(--v3-text-2)" fontSize="11">
                 {t.toFixed(1)}
               </text>
             </g>
           );
         })}
 
-        <line x1={PAD.left} y1={PAD.top + plotH} x2={PAD.left + plotW} y2={PAD.top + plotH} stroke="#4b5565" strokeWidth="1.2" />
-        <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={PAD.top + plotH} stroke="#4b5565" strokeWidth="1.2" />
+        <line x1={PAD.left} y1={PAD.top + plotH} x2={PAD.left + plotW} y2={PAD.top + plotH} stroke="var(--v3-muted)" strokeWidth="1.2" />
+        <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={PAD.top + plotH} stroke="var(--v3-muted)" strokeWidth="1.2" />
 
         {points.slice(0, 240).map((p) => {
           const px = scaleValue(p.x, xMin, xMax, PAD.left, PAD.left + plotW);
           const py = scaleValue(p.y, yMin, yMax, PAD.top + plotH, PAD.top);
           return (
-            <circle key={p.id} cx={px} cy={py} r="4.5" fill={p.color ?? '#64d2ff'} fillOpacity="0.82" stroke="#0b0c10" strokeWidth="1">
+            <circle key={p.id} cx={px} cy={py} r="4.5" fill={p.color ?? 'var(--v3-liquid)'} fillOpacity="0.82" stroke="var(--v3-surface-2)" strokeWidth="1">
               <title>{p.label}</title>
             </circle>
           );
@@ -110,28 +110,28 @@ export function ScatterPlotSvg({
               cy={scaleValue(highlightPoint.y, yMin, yMax, PAD.top + plotH, PAD.top)}
               r="7.5"
               fill="none"
-              stroke="#ff9f0a"
+              stroke="var(--v3-accent)"
               strokeWidth="2.5"
             />
             <circle
               cx={scaleValue(highlightPoint.x, xMin, xMax, PAD.left, PAD.left + plotW)}
               cy={scaleValue(highlightPoint.y, yMin, yMax, PAD.top + plotH, PAD.top)}
               r="3.5"
-              fill="#ff9f0a"
+              fill="var(--v3-accent)"
             >
               <title>{highlightPoint.label}</title>
             </circle>
           </g>
         ) : null}
 
-        <text x={PAD.left + plotW / 2} y={CHART_HEIGHT - 6} textAnchor="middle" fill="#edf1f7" fontSize="12">
+        <text x={PAD.left + plotW / 2} y={CHART_HEIGHT - 6} textAnchor="middle" fill="var(--v3-text)" fontSize="12">
           {xLabel}
         </text>
         <text
           x={14}
           y={PAD.top + plotH / 2}
           textAnchor="middle"
-          fill="#edf1f7"
+          fill="var(--v3-text)"
           fontSize="12"
           transform={`rotate(-90 14 ${PAD.top + plotH / 2})`}
         >
@@ -178,8 +178,8 @@ export function MultiLineSeriesSvg({
           const py = scaleValue(t, yMin, yMax, PAD.top + plotH, PAD.top);
           return (
             <g key={`yl-${idx}`}>
-              <line x1={PAD.left} y1={py} x2={PAD.left + plotW} y2={py} stroke="#232834" strokeWidth="1" />
-              <text x={PAD.left - 8} y={py + 4} textAnchor="end" fill="#a1aab8" fontSize="11">
+              <line x1={PAD.left} y1={py} x2={PAD.left + plotW} y2={py} stroke="var(--v3-grid)" strokeWidth="1" />
+              <text x={PAD.left - 8} y={py + 4} textAnchor="end" fill="var(--v3-text-2)" fontSize="11">
                 {t.toFixed(2)}
               </text>
             </g>
@@ -189,16 +189,16 @@ export function MultiLineSeriesSvg({
           const px = scaleValue(t, xMin, xMax, PAD.left, PAD.left + plotW);
           return (
             <g key={`xl-${idx}`}>
-              <line x1={px} y1={PAD.top} x2={px} y2={PAD.top + plotH} stroke="#232834" strokeWidth="1" />
-              <text x={px} y={PAD.top + plotH + 18} textAnchor="middle" fill="#a1aab8" fontSize="11">
+              <line x1={px} y1={PAD.top} x2={px} y2={PAD.top + plotH} stroke="var(--v3-grid)" strokeWidth="1" />
+              <text x={px} y={PAD.top + plotH + 18} textAnchor="middle" fill="var(--v3-text-2)" fontSize="11">
                 {t.toFixed(1)}
               </text>
             </g>
           );
         })}
 
-        <line x1={PAD.left} y1={PAD.top + plotH} x2={PAD.left + plotW} y2={PAD.top + plotH} stroke="#4b5565" strokeWidth="1.2" />
-        <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={PAD.top + plotH} stroke="#4b5565" strokeWidth="1.2" />
+        <line x1={PAD.left} y1={PAD.top + plotH} x2={PAD.left + plotW} y2={PAD.top + plotH} stroke="var(--v3-muted)" strokeWidth="1.2" />
+        <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={PAD.top + plotH} stroke="var(--v3-muted)" strokeWidth="1.2" />
 
         {series.map((s) => {
           const sorted = [...s.points].sort((a, b) => a.x - b.x);
@@ -229,14 +229,14 @@ export function MultiLineSeriesSvg({
           );
         })}
 
-        <text x={PAD.left + plotW / 2} y={CHART_HEIGHT - 6} textAnchor="middle" fill="#edf1f7" fontSize="12">
+        <text x={PAD.left + plotW / 2} y={CHART_HEIGHT - 6} textAnchor="middle" fill="var(--v3-text)" fontSize="12">
           {xLabel}
         </text>
         <text
           x={14}
           y={PAD.top + plotH / 2}
           textAnchor="middle"
-          fill="#edf1f7"
+          fill="var(--v3-text)"
           fontSize="12"
           transform={`rotate(-90 14 ${PAD.top + plotH / 2})`}
         >
