@@ -85,7 +85,7 @@ body.panel-open{overflow:hidden}.close{min-width:44px;min-height:44px}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
 /* Embedded in EMBER's dark v3 site: show the chamber, not a second site. */
-html.embed-mode, html.embed-mode body { height:100%; margin:0; overflow:hidden; background:#141519; }
+html.embed-mode, html.embed-mode body { height:100%; margin:0; overflow:hidden; background:#0b1e19; }
 html.embed-mode .header,
 html.embed-mode .story,
 html.embed-mode .controls,
@@ -109,6 +109,11 @@ html.embed-mode .stage-bar { left:16px; right:16px; bottom:12px; }
   html.embed-mode .labels { top:64px; }
   html.embed-mode .stage-bar { left:10px; right:10px; }
 }
+
+/* Oxygen Green: the chamber is a dark camera viewport (flames only read against dark), tinted pine to sit on the pad */
+.embed-mode .stage{background:#0b1e19;border:0}
+.embed-mode .stage-button{background:#eef2e2;color:#10302a;border:1px solid #eef2e2;border-radius:2px;backdrop-filter:none;font-weight:700}
+.embed-mode .stage-button:hover,.embed-mode .stage-button.active{background:#c8e62e;border-color:#c8e62e;color:#10302a}
 </style>
 <script>
   // Preserves the standalone presentation while embedding only the dark chamber
@@ -864,7 +869,7 @@ void main(){
   t+=h.x*.85;
   if(t>18.)break;
  }
- vec3 bg=vec3(.003,.0032,.004)+vec3(.008,.0085,.010)*exp(-dot(uv*vec2(.7,1.),uv*vec2(.7,1.))*.9);
+ vec3 bg=vec3(.0025,.0075,.0062)+vec3(.006,.017,.014)*exp(-dot(uv*vec2(.7,1.),uv*vec2(.7,1.))*.9);
  vec3 c=hit?shade(ro+rd*t,rd,material,g):bg;
  if(hit && material<1.5)c=mix(bg,c,exp(-pow(t/7.,2.)));
  c=volumeIntegrate(ro,rd,hit?t:18.,g,c);
