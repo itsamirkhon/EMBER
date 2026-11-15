@@ -6,34 +6,36 @@ export function HomePage() {
   const { data, error } = useCompact();
   const cliff = data ? cliffStats(data.rows) : null;
   const lunar = data?.missions.filter((m) => m.id === 'lunar-base' || m.id === 'lunar-rover') ?? [];
-  const lunarO2 = lunar.map((m) => m.o2Pct ?? 0);
-  const lunarP = lunar.map((m) => m.pressureKpa ?? 0);
+  const lunarO2 = lunar.flatMap((m) => m.o2Pct === null ? [] : [m.o2Pct]);
+  const lunarP = lunar.flatMap((m) => m.pressureKpa === null ? [] : [m.pressureKpa]);
 
   return (
     <div className="v3-page">
       <section className="v3-hero">
         <div className="v3-eyebrow">NASA Space Apps 2026 · Flame in Freefall</div>
         <h1>
-          Every NASA fire experiment in one place. <em>And the line where the evidence ends.</em>
+          NASA’s spaceflight fire evidence, together. <em>And the line where it ends.</em>
         </h1>
         {cliff ? (
           <p className="v3-hero-lede">
-            No solid-material flight test in NASA’s PSI repository ran above <strong>{fmt(cliff.o2Max)}% oxygen</strong>; all{' '}
-            {cliff.solidFlight} of them ran near {Math.round(cliff.kPaMin)}–{Math.round(cliff.kPaMax)} kPa. Lunar cabins plan{' '}
-            <strong>
-              {Math.min(...lunarO2)}–{Math.max(...lunarO2)}% O₂ at {Math.min(...lunarP)}–{Math.max(...lunarP)} kPa
-            </strong>
-            . EMBER shows engineers where NASA’s data ends for their cabin, and which test is nearest.
+            In the reviewed NASA PSI corpus, {cliff.solidFlight} solid-material flight-test records with reported oxygen
+            stop at <strong>{fmt(cliff.o2Max)}% O₂</strong>. Where pressure is reported,
+            these records lie between {fmt(cliff.kPaMin)} and {fmt(cliff.kPaMax)} kPa.
+            {lunarO2.length && lunarP.length ? (
+              <> The selected lunar design scenarios use <strong>{Math.min(...lunarO2)}–{Math.max(...lunarO2)}% O₂ at {Math.min(...lunarP)}–{Math.max(...lunarP)} kPa</strong>;
+              rover values are exploratory, not a published vehicle specification.</>
+            ) : null}
+            {' '}EMBER compares these historical records with a scenario. It does not run a new fire test.
           </p>
         ) : (
-          <p className="v3-hero-lede">Loading the evidence…</p>
+          <p className="v3-hero-lede">{error ? 'The evidence is currently unavailable.' : 'Loading the evidence…'}</p>
         )}
         <div className="v3-row v3-hero-cta">
           <Link to="/map" className="v3-btn v3-btn-primary">
             Open the evidence map
           </Link>
           <Link to="/lens" className="v3-btn">
-            Check your cabin
+            Check historical test coverage
           </Link>
           <Link to="/ask" className="v3-btn v3-btn-ghost">
             Ask EMBER →
@@ -107,13 +109,13 @@ export function HomePage() {
             <ol className="v3-steps">
               <li>
                 <Link to="/map">
-                  <b>See the map.</b> All {data.counts.tests.toLocaleString('en-US')} test records by oxygen and pressure, with the cabins NASA plans to fly.
+                  <b>See the map.</b> The plotted PSI records with oxygen and pressure data, alongside labeled mission scenarios. Some records lack plottable values.
                 </Link>
               </li>
               <li>
                 <Link to="/lens">
-                  <b>Pick your cabin and material.</b> EMBER ranks the investigations that apply and says <i>Measured</i>, <i>Data nearby</i> or{' '}
-                  <i>Beyond the evidence</i>, with no invented risk percentage.
+                  <b>Pick a scenario and material.</b> Explicitly check existing records for <i>Historical match</i>, <i>Related records</i> or{' '}
+                  <i>No matching flight test</i>—never a fire-risk percentage or safety certification.
                 </Link>
               </li>
               <li>
