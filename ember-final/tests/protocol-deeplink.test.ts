@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   comparisonSeed,
@@ -52,5 +53,20 @@ describe('protocol deep links from recorded investigation tests', () => {
     expect(resolveProtocolTest(records, null, null, ['BASS-II-B1'])?.testId).toBe('BASS-II-B1');
     expect(resolveProtocolTest(records, null, 'SPICE', ['BASS-II-B1'])?.testId).toBe('SPICE-001');
     expect(comparisonSeed(records, null, 'SPICE', ['BASS-II-B1'])).toEqual(['SPICE-001']);
+  });
+});
+
+// The standalone presentation has its own light shell. The web app must embed
+// only its dark chamber so the page does not contain two headers/navigation UIs.
+describe('embedded 3D presentation', () => {
+  it('uses chamber-only mode on the homepage without changing the full-screen URL', () => {
+    const page = readFileSync(new URL('../src/ui/v3/pages/HomePage.tsx', import.meta.url), 'utf8');
+    const intro = readFileSync(new URL('../public/intro.html', import.meta.url), 'utf8');
+    expect(page).toContain('src="./intro.html?embed=1"');
+    expect(page).toContain('href="./intro.html"');
+    expect(intro).toContain("new URLSearchParams(location.search).get('embed') === '1'");
+    expect(intro).toContain('html.embed-mode .header');
+    expect(intro).toContain('html.embed-mode .stage');
+    expect(intro).toContain('html.embed-mode .controls');
   });
 });
