@@ -1,6 +1,6 @@
 name: Publish EMBER to GitHub Pages
 
-# Static build of ember-final: the whole app, the 3D intro and the ten checked Ask answers
+# Static build of the app: the whole site, the 3D intro and the ten checked Ask answers
 # run in the browser with no server and no API key.
 on:
   push:
@@ -19,9 +19,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ember-final
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,7 +32,7 @@ jobs:
         run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ember-final/dist
+          path: dist
 
   deploy:
     needs: build
