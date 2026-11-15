@@ -45,7 +45,7 @@ describe('mission lens is an evidence lookup, not a physical experiment', () => 
 
   it('does not claim an evidence cliff for an empty subset', () => {
     expect(cliffStats([])).toBeNull();
-    expect(cliffStats([row('nonflight', 'burned'), { ...row('unknown', 'burned'), o2: null }]).solidFlight).toBe(1);
+    expect(cliffStats([row('nonflight', 'burned'), { ...row('unknown', 'burned'), o2: null }])?.solidFlight).toBe(1);
   });
 
   it('formats very small nonzero gravity and multi-digit gravity correctly', () => {
