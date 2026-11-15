@@ -99,7 +99,7 @@ a:hover { color: var(--v3-text); text-decoration: underline; text-underline-offs
   .v3-burger { display: inline-flex; margin-left: auto; height: 36px; align-items: center; padding: 0 12px; border-radius: 8px; background: var(--v3-fill); border: 0; color: var(--v3-text); font: inherit; font-size: 0.88rem; cursor: pointer; }
 }
 .v3-main { max-width: 1280px; margin: 0 auto; padding: 48px 24px 96px; }
-.v3-main-full { max-width: none; padding: 0 0 96px; }
+.v3-main-full { width: 100%; min-width: 0; box-sizing: border-box; max-width: none; padding: 0 0 96px; }
 .v3-main:focus { outline: none; }
 .v3-foot { border-top: 1px solid var(--v3-border); color: var(--v3-muted); font-size: 0.82rem; }
 .v3-foot-inner { max-width: 1280px; margin: 0 auto; padding: 24px 24px 40px; display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
