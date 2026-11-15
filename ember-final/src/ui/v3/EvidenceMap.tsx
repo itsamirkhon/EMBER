@@ -80,7 +80,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
       const o2 = Math.round(r.o2);
       const kPa = Math.round(r.kPa / 2.5) * 2.5;
       const key = `${r.inv}|${o2}|${kPa}`;
-      const c = map.get(key) ?? { key, inv: r.inv, phase: r.phase, o2, kPa, n: 0, assumed: r.o2Prov === 'assumed', fuels: new Set<string>() };
+      const c = map.get(key) ?? { key, inv: r.inv, phase: r.phase, o2, kPa, n: 0, assumed: r.o2Prov === 'assumed' || r.kPaProv === 'assumed', fuels: new Set<string>() };
       c.n += 1;
       if (r.fuel) c.fuels.add(r.fuel);
       map.set(key, c);
@@ -153,7 +153,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
               names.get(best.inv) ?? '',
               `≈ ${best.o2}% O₂ at ≈ ${best.kPa} kPa`,
               [...best.fuels].slice(0, 4).join(', '),
-              best.assumed ? 'Atmosphere assumed (ISS cabin air), not measured' : '',
+              best.assumed ? 'At least one atmospheric value is assumed rather than reported' : '',
             ],
           }
         : null,
@@ -266,9 +266,19 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
         </div>
       )}
       <figcaption>
-        {total.toLocaleString('en-US')} microgravity tests report both oxygen and pressure; each mark groups tests within 1% O₂ and 2.5 kPa, larger
-        marks hold more tests{off ? `; ${off} droplet and gas tests above ${YD[1]} kPa are off the scale` : ''}. Hollow marks: atmosphere assumed (SAME / SAME-R
-        report no measured O₂ or pressure). Dashed curves join atmospheres with the same oxygen partial pressure (pO₂ = O₂ fraction × pressure).
+        {total.toLocaleString('en-US')} PSI flight records have oxygen and pressure values available (including inferred/assumed values).
+        Records missing either are not plotted. Each mark groups tests within 1% O₂ and 2.5 kPa; larger marks contain more records
+        {off ? `; ${off} records above ${YD[1]} kPa are off-scale` : ''}. Hollow marks: at least one atmospheric value was assumed.
+        Dashed curves indicate equal oxygen partial pressure (pO₂ = O₂ fraction × pressure).
+        {onPickMission && (
+          <div className="v3-row v3-section" aria-label="Choose a mission scenario">
+            {missions.filter((m) => m.o2Pct !== null && m.pressureKpa !== null).map((m) => (
+              <button key={m.id} type="button" className="v3-btn v3-btn-ghost" onClick={() => onPickMission(m)}>
+                {MISSION_SHORT[m.id] ?? m.label}
+              </button>
+            ))}
+          </div>
+        )}
       </figcaption>
     </figure>
   );
