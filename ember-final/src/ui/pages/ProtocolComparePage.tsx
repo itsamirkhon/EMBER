@@ -186,6 +186,17 @@ export function ProtocolComparePage() {
         </div>
       </div>
 
+      {requestedInv && (
+        <div className="banner banner-info">
+          <span>
+            Showing test protocols for <strong>{requestedInv}</strong> only.{' '}
+            <Link to={`/investigations/${encodeURIComponent(requestedInv)}`}>Back to investigation</Link>
+            {' · '}
+            <Link to="/compare">Compare across all investigations</Link>
+          </span>
+        </div>
+      )}
+
       <div role="tablist" aria-label="Protocol and Comparison views" className="tablist" onKeyDown={handleTabKeyDown}>
         <button
           id="tab-protocol"
@@ -211,7 +222,9 @@ export function ProtocolComparePage() {
         </button>
       </div>
 
-      {corpusLoading ? (
+      {corpusError ? (
+        <div className="banner banner-danger" role="alert">Could not load protocol data: {corpusError}</div>
+      ) : corpusLoading || !corpus ? (
         <div className="card"><p className="muted">Loading test protocol corpus…</p></div>
       ) : null}
 
@@ -226,7 +239,7 @@ export function ProtocolComparePage() {
                     key={pid}
                     type="button"
                     className={`btn btn-sm ${activeTest?.testId === pid ? 'btn-primary' : ''}`}
-                    onClick={() => setSelectedTestId(pid)}
+                    onClick={() => selectTest(pid)}
                   >
                     {pid}
                   </button>
@@ -251,8 +264,9 @@ export function ProtocolComparePage() {
                 <select
                   id="proto-select"
                   value={activeTest?.testId ?? ''}
-                  onChange={(e) => setSelectedTestId(e.target.value)}
+                  onChange={(e) => selectTest(e.target.value)}
                 >
+                  <option value="" disabled>{corpus ? 'Select a recorded test' : 'Loading tests…'}</option>
                   {matchingTestOptions.map((t) => (
                     <option key={t.testId} value={t.testId}>
                       {t.testId} ({t.inv}) — {t.fuel ?? 'n/a'} · {t.initialOutcome}
@@ -392,14 +406,20 @@ export function ProtocolComparePage() {
                 </div>
               ) : null}
             </section>
+          ) : corpus && !corpusError ? (
+            <div className="banner banner-danger" role="alert">
+              {requestedTestId
+                ? `No recorded protocol found for test "${requestedTestId}" in ${requestedInv ?? 'the corpus'}. Nothing was substituted.`
+                : `No recorded protocols available${requestedInv ? ` for ${requestedInv}` : ''}.`}
+            </div>
           ) : null}
         </div>
       ) : (
         <div role="tabpanel" aria-labelledby="tab-compare" tabIndex={0} className="tabpanel stack-lg">
           <div className="card stack-sm">
             <div className="card-header">
-              <h2 className="card-title">Compare 2–4 Tests Side by Side ({compareIds.length}/4)</h2>
-              <div className="btn-group">
+              <h2 className="card-title">Compare Tests Side by Side ({comparedTests.length}/4)</h2>
+              {!requestedInv && <div className="btn-group">
                 <button
                   type="button"
                   className="btn btn-sm"
@@ -414,7 +434,7 @@ export function ProtocolComparePage() {
                 >
                   Preset: CFI Cool Flames
                 </button>
-              </div>
+              </div>}
             </div>
 
             <div className="btn-group">
@@ -432,8 +452,9 @@ export function ProtocolComparePage() {
 
               <div className="field" style={{ minInlineSize: 220 }}>
                 <label htmlFor="cmp-add" className="visually-hidden">Add test to comparison</label>
-                <select id="cmp-add" value={candidateAddId} onChange={(e) => setCandidateAddId(e.target.value)}>
-                  {tests.slice(0, 120).map((t) => (
+                <select id="cmp-add" value={effectiveCandidateId} onChange={(e) => setCandidateAddId(e.target.value)}>
+                  {availableAddTests.length === 0 && <option value="">No more tests in this scope</option>}
+                  {availableAddTests.map((t) => (
                     <option key={t.testId} value={t.testId}>
                       {t.testId} ({t.inv})
                     </option>
@@ -443,14 +464,25 @@ export function ProtocolComparePage() {
               <button
                 type="button"
                 className="btn btn-sm btn-primary"
-                disabled={compareIds.length >= 4 || compareIds.includes(candidateAddId)}
-                onClick={() => setCompareIds((prev) => [...prev, candidateAddId])}
+                disabled={compareIds.length >= 4 || !effectiveCandidateId}
+                onClick={() => {
+                  if (!effectiveCandidateId || !testById.has(effectiveCandidateId)) return;
+                  setCompareIds((prev) => [...prev, effectiveCandidateId]);
+                  setCandidateAddId('');
+                }}
               >
                 + Add Test
               </button>
             </div>
           </div>
 
+          {comparedTests.length < 2 && corpus && (
+            <div className="banner banner-warn" role="status">
+              {requestedTestId && !activeTest
+                ? `Requested test "${requestedTestId}" is not available in ${requestedInv ?? 'the corpus'}; comparisons are blocked.`
+                : 'At least two recorded tests are needed for comparison in this scope.'}
+            </div>
+          )}
           <p className="muted">Query: {activeQuery.rawQuestion} · Endpoint: {activeQuery.targetEndpoint ?? 'unspecified'}. All {comparisons.length} selected pairs are evaluated independently.</p>
           {comparisons.map((comparison) => (
             <section key={comparison.id} className="card stack-md" aria-label={`Scientific comparison ${comparison.testAId} and ${comparison.testBId}`}>
@@ -515,20 +547,20 @@ export function ProtocolComparePage() {
             </section>
           ))}
 
-          <div className="grid-2">
-            <ScatterPlotSvg
-              title="O2 Concentration (%) vs Initial Flow Velocity (cm/s)"
+          {(o2FlowPoints.length > 0 || bassTableSeries.length > 0) && <div className="grid-2">
+            {o2FlowPoints.length > 0 && <ScatterPlotSvg
+              title={requestedInv ? `${requestedInv}: O2 (%) vs Initial Flow (cm/s)` : 'O2 Concentration (%) vs Initial Flow Velocity (cm/s)'}
               xLabel="Initial Flow Velocity (cm/s)"
               yLabel="O2 Concentration (%)"
               points={o2FlowPoints}
-            />
-            <MultiLineSeriesSvg
+            />}
+            {bassTableSeries.length > 0 && <MultiLineSeriesSvg
               title="BASS-II Table 5.1: Spread Rate (mm/s) vs Opposed/Concurrent Flow Velocity"
               xLabel="Flow Velocity (cm/s)"
               yLabel="Spread Rate (mm/s)"
               series={bassTableSeries}
-            />
-          </div>
+            />}
+          </div>}
 
           {sameRPoints.length > 0 ? (
             <ScatterPlotSvg
