@@ -26,9 +26,9 @@ const xOf = (o2: number) => (Math.log10(Math.min(100, Math.max(10, o2))) - 1) * 
 const yOf = (kPa: number) => (kPa / KPA_MAX) * BOX.y;
 const zOf = (g: number) => -g * BOX.z;
 
-const PHASE_COLOR: Record<string, string> = { solid: '#8fb2ff', liquid: '#4fd1c5', gas: '#b9a6ff' };
-const CLIFF = '#ff6a2b';
-const LINE = new THREE.Color('#96b4ff');
+const PHASE_COLOR: Record<string, string> = { solid: '#ecebe2', liquid: '#9fa99c', gas: '#908278' };
+const CLIFF = '#a74c58';
+const LINE = new THREE.Color('#777e70');
 
 /** Camera stops for the three story steps: [position, target]. */
 const VIEWS: Record<SpaceStep, [THREE.Vector3, THREE.Vector3]> = {
@@ -69,12 +69,12 @@ function ringTexture(): THREE.Texture {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
   const g = c.getContext('2d') as CanvasRenderingContext2D;
-  g.strokeStyle = '#e9eef7';
+  g.strokeStyle = '#f1f0e8';
   g.lineWidth = 10;
   g.beginPath();
   g.arc(64, 64, 50, 0, Math.PI * 2);
   g.stroke();
-  g.fillStyle = '#e9eef7';
+  g.fillStyle = '#f1f0e8';
   g.beginPath();
   g.arc(64, 64, 14, 0, Math.PI * 2);
   g.fill();
@@ -126,14 +126,14 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor('#05070d');
+    renderer.setClearColor('#121411');
     wrap.prepend(renderer.domElement);
     // absolutely placed so the canvas never sizes its own container
     Object.assign(renderer.domElement.style, { display: 'block', position: 'absolute', left: '0', top: '0' });
     renderer.domElement.setAttribute('aria-hidden', 'true');
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog('#05070d', 34, 70);
+    scene.fog = new THREE.Fog('#121411', 34, 70);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
     camera.position.copy(reduced ? VIEWS[stepRef.current][0] : START);
 
@@ -143,6 +143,11 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     controls.enableZoom = false;
     controls.enablePan = false;
     controls.rotateSpeed = 0.6;
+    // Continuous slow motion makes the source-derived evidence field spatially
+    // legible. Honor reduced-motion, and stop orbiting when the visitor interacts.
+    controls.autoRotate = !reduced;
+    controls.autoRotateSpeed = 0.22;
+    controls.addEventListener('start', () => { controls.autoRotate = false; });
     controls.minPolarAngle = 0.15;
     controls.maxPolarAngle = Math.PI * 0.495;
     controls.target.copy(VIEWS[stepRef.current][1]);
@@ -163,7 +168,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       }
       const geo = track(new THREE.BufferGeometry());
       geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const mat = track(new THREE.PointsMaterial({ color: '#9fb3d9', size: 1.3, sizeAttenuation: false, transparent: true, opacity: 0.45, fog: false }));
+      const mat = track(new THREE.PointsMaterial({ color: '#b4b7a7', size: 1.3, sizeAttenuation: false, transparent: true, opacity: 0.45, fog: false }));
       scene.add(new THREE.Points(geo, mat));
     }
 
@@ -190,7 +195,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     // the 0 g plane where every test ran
     const orbitPlane = new THREE.Mesh(
       track(new THREE.PlaneGeometry(X, Y)),
-      track(new THREE.MeshBasicMaterial({ color: '#3d7bff', transparent: true, opacity: 0.035, depthWrite: false, side: THREE.DoubleSide })),
+      track(new THREE.MeshBasicMaterial({ color: '#6b7668', transparent: true, opacity: 0.035, depthWrite: false, side: THREE.DoubleSide })),
     );
     orbitPlane.position.set(X / 2, Y / 2, 0);
     frame.add(orbitPlane);
@@ -223,7 +228,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       const jy = (Math.random() - 0.5) * 0.12;
       const jz = -Math.random() * 0.16;
       pos.set([xOf(r.o2 as number) + jx, yOf(r.kPa as number) + jy, zOf(r.g ?? 0) + jz], i * 3);
-      c.set(PHASE_COLOR[r.phase ?? 'solid'] ?? '#8fb2ff');
+      c.set(PHASE_COLOR[r.phase ?? 'solid'] ?? '#ecebe2');
       col.set([c.r, c.g, c.b], i * 3);
       alpha[i] = r.o2Prov === 'assumed' ? 0.3 : 0.9;
       solid[i] = r.phase === 'solid' ? 1 : 0;
@@ -268,8 +273,8 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       sprites.push({ sprite: s, group: g });
       if ((m.gravityG ?? 0) > 0) {
         // drop to the floor, and a trace back to the 0 g plane where the evidence is
-        cabinLines.add(line([p, new THREE.Vector3(p.x, 0, p.z)], '#e9eef7', 0.35, true));
-        cabinLines.add(line([new THREE.Vector3(p.x, 0, p.z), new THREE.Vector3(p.x, 0, 0)], '#e9eef7', 0.18, true));
+        cabinLines.add(line([p, new THREE.Vector3(p.x, 0, p.z)], '#f1f0e8', 0.35, true));
+        cabinLines.add(line([new THREE.Vector3(p.x, 0, p.z), new THREE.Vector3(p.x, 0, 0)], '#f1f0e8', 0.18, true));
       }
     }
 
