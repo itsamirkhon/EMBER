@@ -719,6 +719,40 @@ function testMatchesModelingScope(t: Test, scope: ModelingExportScope): boolean 
   return false;
 }
 
+/**
+ * The complete NASA PSI corpus is a static asset and does not depend on a saved
+ * review or the Node API. Keep exports working on Lightsail's static frontend.
+ */
+export async function exportCorpusText(
+  format: 'json' | 'csv' | 'modeling_csv',
+  modelingScope?: ModelingExportScope,
+): Promise<{ content: string; filename: string; mimeType: string }> {
+  const corpus = await loadStaticCorpus();
+  const version = corpus.corpusVersion.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const ext = format === 'json' ? 'json' : 'csv';
+  const filename = `ember-psi-${version}-${format}.${ext}`;
+  const mimeType = format === 'json' ? 'application/json;charset=utf-8' : 'text/csv;charset=utf-8';
+
+  if (format === 'json') {
+    return { content: JSON.stringify(corpus, null, 2), filename, mimeType };
+  }
+  if (format === 'csv') {
+    return { content: exportFormatters.csv(corpus.tests, corpus.investigations), filename, mimeType };
+  }
+  if (!modelingScope) {
+    throw new Error('Select a compatible fuel phase and target endpoint for Modeling CSV.');
+  }
+  const tests = corpus.tests.filter((test) => testMatchesModelingScope(test, modelingScope));
+  if (tests.length === 0) {
+    throw new Error(`No recorded tests match ${modelingScope.fuelPhase} / ${modelingScope.endpoint}.`);
+  }
+  return {
+    content: exportFormatters.modeling_csv(tests, corpus.investigations),
+    filename,
+    mimeType,
+  };
+}
+
 export async function exportReviewText(
   reviewId: string,
   format: 'markdown' | 'json' | 'csv' | 'modeling_csv',
@@ -740,69 +774,100 @@ export async function exportReviewText(
     qs.set('endpoint', modelingScope.endpoint);
   }
 
-  try {
-    const res = await fetch(`/api/reviews/${encodeURIComponent(reviewId)}/export?${qs.toString()}`);
-    if (res.status === 404 || res.status === 405) {
-      throw new ApiUnavailableError('Export endpoint unavailable');
-    }
-    if (!res.ok) {
-      const errBody = await res.text();
-      try {
-        const parsedErr = JSON.parse(errBody) as ApiEnvelope<unknown>;
-        if (parsedErr.error?.message) throw new Error(parsedErr.error.message);
-      } catch (inner) {
-        if (inner instanceof Error && !(inner instanceof SyntaxError)) throw inner;
-      }
-      throw new Error(`Export failed (${res.status})`);
-    }
-    const contentType = res.headers.get('content-type') ?? '';
-    if (contentType.includes('application/json') && format !== 'json') {
-      const env = (await res.json()) as ApiEnvelope<{ content?: string }>;
-      if (env.status === 'error') throw new Error(env.error?.message ?? 'Export failed');
-      if (env.data?.content) return { content: env.data.content, filename, mimeType };
-    }
-    const text = await res.text();
-    if (format !== 'json' && text.trimStart().startsWith('{') && text.includes('"run_id"')) {
-      const parsed = JSON.parse(text) as ApiEnvelope<{ content?: string }>;
-      if (parsed.data?.content) return { content: parsed.data.content, filename, mimeType };
-    }
-    return { content: text, filename, mimeType };
-  } catch (err) {
-    if (!(err instanceof ApiUnavailableError)) throw err;
-    const [corpus, review] = await Promise.all([
-      loadStaticCorpus(),
-      localReview ? Promise.resolve(localReview) : getReviewSnapshot(reviewId).then((r) => r.snapshot.review),
-    ]);
+  const generateLocally = async (review: Review) => {
     if (format === 'markdown') return { content: exportFormatters.markdown(review), filename, mimeType };
     if (format === 'json') return { content: exportFormatters.json(review), filename, mimeType };
-    requireCurrentReview(review, corpus);
 
-    const evalTestIds = new Set(review.evidencePackage.applicabilityDecisions.map((d) => d.testId));
-    const subsetTests = corpus.tests.filter((t) => evalTestIds.has(t.testId));
-    const baseTests = subsetTests.length > 0 ? subsetTests : corpus.tests;
+    const corpus = await loadStaticCorpus();
+    requireCurrentReview(review, corpus);
+    const ids = new Set(review.evidencePackage.applicabilityDecisions.map((decision) => decision.testId));
+    const evaluated = corpus.tests.filter((test) => ids.has(test.testId));
+    const scopedTests = evaluated.length > 0 ? evaluated : corpus.tests;
 
     if (format === 'csv') {
-      return { content: exportFormatters.csv(baseTests, corpus.investigations), filename, mimeType };
+      return { content: exportFormatters.csv(scopedTests, corpus.investigations), filename, mimeType };
     }
 
     if (!modelingScope) {
-      throw new Error('Select a single compatible fuelPhase and target endpoint for modeling_csv export.');
+      throw new Error('Select a compatible fuel phase and target endpoint for Modeling CSV.');
     }
-    const scopedEvaluated = baseTests.filter((t) => testMatchesModelingScope(t, modelingScope));
-    const scopedCorpus =
-      scopedEvaluated.length > 0
-        ? scopedEvaluated
-        : corpus.tests.filter((t) => testMatchesModelingScope(t, modelingScope));
-    if (scopedCorpus.length === 0) {
-      throw new Error(
-        `No tests matched compatible modeling endpoint "${modelingScope.endpoint}" in fuelPhase "${modelingScope.fuelPhase}".`,
-      );
+    const matching = scopedTests.filter((test) => testMatchesModelingScope(test, modelingScope));
+    const fallback = matching.length > 0
+      ? matching
+      : corpus.tests.filter((test) => testMatchesModelingScope(test, modelingScope));
+    if (fallback.length === 0) {
+      throw new Error(`No recorded tests match ${modelingScope.fuelPhase} / ${modelingScope.endpoint}.`);
     }
     return {
-      content: exportFormatters.modeling_csv(scopedCorpus, corpus.investigations),
+      content: exportFormatters.modeling_csv(fallback, corpus.investigations),
       filename,
       mimeType,
     };
+  };
+
+  // The page already holds the exact reviewed snapshot. Generate from that
+  // snapshot instead of requesting a route that a static host may rewrite to
+  // the SPA HTML entrypoint with status 200.
+  if (localReview) return generateLocally(localReview);
+
+  try {
+    let res: Response;
+    try {
+      res = await fetch(`/api/reviews/${encodeURIComponent(reviewId)}/export?${qs.toString()}`);
+    } catch {
+      throw new ApiUnavailableError('Review export API not reachable');
+    }
+    const contentType = (res.headers.get('content-type') ?? '').toLowerCase();
+    if (res.status === 404 || res.status === 405 || contentType.includes('text/html')) {
+      throw new ApiUnavailableError('Export API unavailable on this static site');
+    }
+    if (!res.ok) {
+      const body = await res.text();
+      try {
+        const payload = JSON.parse(body) as ApiEnvelope<unknown>;
+        if (payload.error?.message) throw new Error(payload.error.message);
+      } catch (error) {
+        if (error instanceof Error && !(error instanceof SyntaxError)) throw error;
+      }
+      throw new Error(`Export API failed (${res.status})`);
+    }
+
+    const text = await res.text();
+    const trimmed = text.trimStart();
+    if (!trimmed || /^<(?:!doctype\s+html|html|head|body)\b/i.test(trimmed)) {
+      throw new ApiUnavailableError('Export response was an HTML page or empty');
+    }
+    if (contentType.includes('application/json')) {
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        throw new ApiUnavailableError('Export API returned invalid JSON');
+      }
+      if (typeof parsed === 'object' && parsed !== null && 'status' in parsed && 'run_id' in parsed) {
+        const envelope = parsed as ApiEnvelope<{ content?: string }>;
+        if (envelope.status === 'error') throw new Error(envelope.error?.message ?? 'Export API error');
+        if (typeof envelope.data?.content === 'string') {
+          return { content: envelope.data.content, filename, mimeType };
+        }
+        throw new ApiUnavailableError('Export API returned a response without file content');
+      }
+      if (format !== 'json') {
+        throw new ApiUnavailableError('Export API returned JSON instead of a text or CSV file');
+      }
+    } else if (format === 'json') {
+      try {
+        JSON.parse(text);
+      } catch {
+        throw new ApiUnavailableError('Export API did not return a JSON document');
+      }
+    }
+
+    return { content: text, filename, mimeType };
+  } catch (error) {
+    if (!(error instanceof ApiUnavailableError)) throw error;
+    const review = (await getReviewSnapshot(reviewId)).snapshot.review;
+    return generateLocally(review);
   }
 }
 
