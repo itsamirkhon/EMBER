@@ -27,6 +27,12 @@ const JOINT_IN_DOMAIN_THRESHOLD = 1.5;
 /** A test counts as covering the query's oxygen when it is within this many points of O2 (all other conditions equal). */
 export const O2_IN_DOMAIN_POINTS = 2;
 const JOINT_SCALES = { o2Pct: O2_IN_DOMAIN_POINTS / JOINT_IN_DOMAIN_THRESHOLD, pressureKpa: 15, flowCmS: 8 } as const;
+/** How far a single condition may differ before a test stops counting as covering the query (all other conditions equal). */
+export const MATCH_TOLERANCE = {
+  o2Pct: O2_IN_DOMAIN_POINTS,
+  pressureKpa: JOINT_SCALES.pressureKpa * JOINT_IN_DOMAIN_THRESHOLD,
+  flowCmS: JOINT_SCALES.flowCmS * JOINT_IN_DOMAIN_THRESHOLD,
+} as const;
 
 export interface ApplicabilityOptions {
   investigation?: Investigation;

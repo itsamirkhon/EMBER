@@ -26,6 +26,8 @@
   --v3-brand: var(--v3-text);
   --v3-good: #a9bfa3;
   --v3-warn: #dec49b;
+  /* Earth and history reference atmospheres on the evidence map. */
+  --v3-ref: #a9bfa3;
   --v3-yellow: #dec49b;
   --v3-bad: #e08b90;
   --v3-solid: #ecebe2;
@@ -524,3 +526,30 @@ html, body { overflow-x: hidden; }
 .v3-lens-advanced.v3-card { margin: 0; padding: 18px 24px; }
 .v3-lens-advanced.v3-card > summary { padding: 3px 0; }
 .v3-lens-advanced.v3-card > section { padding-top: 8px; }
+
+/* 1 g vs 0 g margin table on the evidence map page */
+.v3-table-wrap { overflow-x: auto; margin: 14px 0 10px; }
+.v3-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.v3-table th, .v3-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--v3-border); vertical-align: top; }
+.v3-table thead th { color: var(--v3-muted); font-weight: 500; font-size: 12.5px; }
+.v3-table tbody th { color: var(--v3-text); font-weight: 500; }
+.v3-table td { color: var(--v3-text-2); font-variant-numeric: tabular-nums; }
+.v3-table .v3-num-bad { color: var(--v3-cliff-text); font-weight: 500; }
+
+/* Nearest-test protocol note and next-evidence gap order */
+.v3-near-protocol { font-size: 13px; color: var(--v3-text-2); background: var(--v3-fill); border-radius: var(--v3-radius-sm); padding: 8px 10px; line-height: 1.5; }
+.v3-near-protocol-tag { display: inline-block; font-size: 11.5px; font-weight: 500; color: var(--v3-warn); border: 1px solid rgba(222, 196, 155, 0.45); border-radius: 999px; padding: 1px 8px; margin-right: 6px; }
+.v3-why { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--v3-border); border-radius: var(--v3-radius-sm); background: var(--v3-fill); }
+.v3-why ol { margin: 8px 0 6px 20px; padding: 0; line-height: 1.6; color: var(--v3-text-2); }
+.v3-why p { margin: 0; color: var(--v3-text-2); }
+
+/* Judges' tour bar */
+.v3-tour { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: var(--v3-surface-2); border-top: 1px solid var(--v3-border-2); box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35); }
+.v3:has(.v3-tour) .v3-foot { padding-bottom: 120px; }
+.v3-tour-inner { max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.v3-tour-step { font-family: var(--v3-mono); font-size: 12px; color: var(--v3-cliff-text); white-space: nowrap; }
+.v3-tour-body { flex: 1 1 420px; font-size: 14px; color: var(--v3-text-2); line-height: 1.5; }
+.v3-tour-body b { color: var(--v3-text); font-weight: 500; }
+.v3-tour-actions { display: flex; gap: 8px; }
+.v3-focus-tour { margin-left: 10px; }
+.v3 .v3-page [id] { scroll-margin-top: 150px; }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EvidenceMap } from '../EvidenceMap';
 import { cliffStats, fmt, useCompact } from '../data';
 import { Loading } from '../ui';
+import { tourHref } from '../Tour';
 
 const EvidenceSpace = lazy(() => import('../EvidenceSpace'));
 
@@ -45,6 +46,9 @@ export function HomePage() {
           </p>
           <Link to="/lens?mission=lunar-rover&material=PMMA" className="v3-btn v3-btn-primary v3-btn-lg v3-focus-cta">
             Check your cabin <span aria-hidden="true">↗</span>
+          </Link>
+          <Link to={tourHref(1)} className="v3-btn v3-btn-ghost v3-focus-tour">
+            Judges’ tour · 2 minutes
           </Link>
           <p className="v3-focus-disclaimer">
             A historical evidence check. Not a fire simulation or a safety certification.

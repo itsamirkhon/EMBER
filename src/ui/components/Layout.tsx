@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEmber } from '../context/EmberContext';
 import { SourceModal } from './SourceModal';
+import { TourBar } from '../v3/Tour';
 
 /** The four screens a judge or engineer needs, always visible. */
 const PRIMARY = [
@@ -106,6 +107,8 @@ export function Layout({ children }: { children: ReactNode }) {
           </nav>
         </div>
       </header>
+
+      <TourBar />
 
       <main id="main-content" className={`v3-main${home ? ' v3-main-full' : ''}`} tabIndex={-1} key={loc.pathname}>
         {children}

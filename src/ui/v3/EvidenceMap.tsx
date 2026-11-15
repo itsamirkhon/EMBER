@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, type PointerEvent } from 'react';
 import type { FuelPhase, Mission } from '../../core';
-import { MISSION_SHORT, fmt, type Cliff, type InvBrief, type Row } from './data';
+import { MISSION_SHORT, REFERENCE_POINTS, fmt, type Cliff, type InvBrief, type ReferencePoint, type Row } from './data';
 
 /** Colour per investigation, one hue family per fuel phase: blue = solid, teal = liquid, violet = gas.
  *  Orange is kept for the evidence cliff alone. */
@@ -50,6 +50,8 @@ export interface EvidenceMapProps {
   selected?: { o2: number; kPa: number; label: string } | null;
   onPickMission?: (m: Mission) => void;
   compact?: boolean;
+  /** Familiar Earth and history atmospheres for scale. Defaults to REFERENCE_POINTS; pass [] to hide. */
+  references?: ReferencePoint[];
 }
 
 const W = 900;
@@ -61,7 +63,7 @@ const sx = (v: number) => M.left + ((v - XD[0]) / (XD[1] - XD[0])) * (W - M.left
 const sy = (v: number) => H - M.bottom - ((v - YD[0]) / (YD[1] - YD[0])) * (H - M.top - M.bottom);
 const PO2_SEA = 21.2;
 
-export function EvidenceMap({ rows, investigations, missions, cliff, phase, highlight, selected, onPickMission }: EvidenceMapProps) {
+export function EvidenceMap({ rows, investigations, missions, cliff, phase, highlight, selected, onPickMission, references = REFERENCE_POINTS }: EvidenceMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [hover, setHover] = useState<{ x: number; y: number; title: string; lines: string[] } | null>(null);
   const names = useMemo(() => new Map(investigations.map((i) => [i.id, i.name])), [investigations]);
@@ -133,6 +135,11 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
         title: g.map((x) => x.label).join(' · '),
         lines: [`${fmt(m.o2Pct)}% O₂ at ${fmt(m.pressureKpa)} kPa · ${fmt(m.gravityG, 3)} g`, `O₂ partial pressure ${fmt(po2)} kPa (${(po2 / PO2_SEA).toFixed(2)}× sea level)`, onPickMission ? 'Click to check this cabin' : ''],
       });
+      return;
+    }
+    const ref = references.find((x) => Math.hypot(sx(x.o2) - p.px, sy(x.kPa) - p.py) < 14);
+    if (ref) {
+      setHover({ x: sx(ref.o2), y: sy(ref.kPa), title: `${ref.label} · reference, not a test`, lines: [`${fmt(ref.o2)}% O₂ at ${fmt(ref.kPa)} kPa`, ref.note, `Source: ${ref.source.label}`] });
       return;
     }
     let best: Cell | null = null;
@@ -221,6 +228,24 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
           />
         ))}
 
+        {references.filter((x) => x.kPa <= YD[1] && x.o2 <= XD[1]).map((x) => {
+          const cx = sx(x.o2);
+          const cy = sy(x.kPa);
+          const right = x.o2 > 80;
+          const below = x.id === 'oxygen-enriched';
+          return (
+            <g key={x.id} aria-label={`${x.label}: ${fmt(x.o2)}% oxygen at ${fmt(x.kPa)} kPa. Reference atmosphere, not a test.`}>
+              <rect x={cx - 5.5} y={cy - 5.5} width={11} height={11} transform={`rotate(45 ${cx} ${cy})`} fill="var(--v3-bg)" stroke="var(--v3-ref)" strokeWidth={1.6} />
+              <text
+                x={cx + (right ? -12 : 12)} y={cy + (below ? 18 : 0)} dy="0.32em" textAnchor={right ? 'end' : 'start'} fontSize="11.5" fontStyle="italic"
+                fill="var(--v3-ref)" stroke="var(--v3-surface)" strokeWidth={4} paintOrder="stroke" strokeLinejoin="round"
+              >
+                {x.label}
+              </text>
+            </g>
+          );
+        })}
+
         {groups.map((g) => {
           const m = g[0];
           const x = sx(m.o2Pct as number);
@@ -263,6 +288,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
         Records missing either are not plotted. Each mark groups tests within 1% O₂ and 2.5 kPa; larger marks contain more records
         {off ? `; ${off} records above ${YD[1]} kPa are off-scale` : ''}. Hollow marks: at least one atmospheric value was assumed.
         Dashed curves indicate equal oxygen partial pressure (pO₂ = O₂ fraction × pressure).
+        {references.length > 0 && <> Diamonds are familiar Earth and history atmospheres for scale ({references.map((x) => x.label).join('; ')}); they are not tests.</>}
         {onPickMission && (
           <div className="v3-row v3-section" aria-label="Choose a mission scenario">
             {missions.filter((m) => m.o2Pct !== null && m.pressureKpa !== null).map((m) => (
@@ -297,6 +323,12 @@ export function MapLegend({ investigations, phase, highlight, onHighlight }: { i
             <circle cx="7" cy="7" r="5" fill="var(--v3-bg)" stroke="var(--v3-text)" strokeWidth="1.5" />
           </svg>
           Planned cabin
+        </span>
+        <span>
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+            <rect x="3" y="3" width="8" height="8" transform="rotate(45 7 7)" fill="var(--v3-bg)" stroke="var(--v3-ref)" strokeWidth="1.5" />
+          </svg>
+          Earth / history reference
         </span>
         <span>
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
