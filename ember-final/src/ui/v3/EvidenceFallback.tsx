@@ -22,7 +22,8 @@ export function EvidenceFallback({ rows, missions, cliff }: Props) {
       r.o2 >= 10 && r.o2 <= 45 && r.kPa >= 30 && r.kPa <= 112,
   );
 
-  const m = missions.find((x) => x.id === 'lunar-rover');
+  // Match the homepage's NASA-documented exploration-atmosphere example.
+  const m = missions.find((x) => x.id === 'lunar-base') ?? missions.find((x) => x.id === 'lunar-rover');
   const view = { left: 58, top: 50, width: 506, height: 278 };
   const x = (oxygen: number) => view.left + ((oxygen - 10) / 35) * view.width;
   const y = (pressure: number) => view.top + ((112 - pressure) / 82) * view.height;
