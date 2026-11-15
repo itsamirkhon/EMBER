@@ -59,13 +59,13 @@ Idempotent `pipeline/build_corpus.py` with SHA-256 `manifest_v2.json` and 7-tabl
 *Benchmark: `100` gold cases across `36` non-overlapping `groupId` clusters (`50 dev / 20 val / 30 test`), `annotationProvenance: preliminary_team_annotation_from_primary_nasa_sources`:*
 
 - **Full EMBER v2 (`Variant D`) vs. Baselines (`A` BM25 / `B` Hybrid RAG / `C` Static Matcher):**
-  - **Investigation Recall@5 / nDCG@5:** **`97.6%`** (`92.75/95`) / **`0.9621`** (best across all variants)
-  - **Test Recall@5:** **`58.6%`** overall (`59.6%` on held-out `test`) vs **`36.3%`** (`25.6%`) for Static Matcher
-  - **Pairwise Comparability 3-Way (`n=20`):** **`95.0%`** (`19/20`) vs `75.0%` Static / `25.0%` RAG / `20.0%` BM25
-  - **Expected Rule Recall (`/106`):** **`74.5%`** vs **`0.0%`** for Baselines A, B, and C
+  - **Investigation Recall@5 / nDCG@5:** **`97.4%`** (`92.5/95`) / **`0.9606`** (best across all variants)
+  - **Test Recall@5:** **`58.8%`** overall (`60.8%` on held-out `test`) vs **`36.3%`** (`25.6%`) for Static Matcher
+  - **Pairwise Comparability 3-Way (`n=20`):** **`90.0%`** (`18/20`) vs `75.0%` Static / `25.0%` RAG / `20.0%` BM25
+  - **Expected Rule Recall (`/106`):** **`75.5%`** vs **`0.0%`** for Baselines A, B, and C
   - **JEV Atomic Accuracy / Brier:** **`89.5%`** (`94/105`) / **`0.1157`** (vs uncalibrated `83.8%` / `0.1586`)
-  - **Config-Change Dep. F1 / Planner Exactness / Verifier Pass:** **`68.6%`** (`24/35`) / **`100.0%`** (`10/10`) / **`96.0%`** (`96/100`)
-- **Competitor Audit (Zero Fabricated Metrics):** `EMBER_v2` `62/100` vs Common-Data adapters (`StaticMatcher 61/100`, `RAG 44/100`, `BM25 40/100`); external peer systems (**FlameBound**, **MicroFire Atlas**, **Fotia**, **HEARTH**) = **`0` evaluated** (`outside_claimed_scope` / `not_run`).
+  - **Config-Change Dep. F1 / Planner Exactness / Verifier Pass:** **`43.3%`** (`26/60`) / **`100.0%`** (`10/10`) / **`95.0%`** (`95/100`)
+- **Competitor Audit (Zero Fabricated Metrics):** `EMBER_v2` `67/100` vs Common-Data adapters (`StaticMatcher 61/100`, `RAG 44/100`, `BM25 40/100`); external peer systems (**FlameBound**, **MicroFire Atlas**, **Fotia**, **HEARTH**) = **`0` evaluated** (`outside_claimed_scope` / `not_run`).
 
 ---
 
@@ -79,4 +79,4 @@ Idempotent `pipeline/build_corpus.py` with SHA-256 `manifest_v2.json` and 7-tabl
 
 ## <= 30-Second Video Script (69 Words)
 
-> Standard AI search fails spacecraft fire safety, confusing ventilation shutoffs with flame extinction, cool flames with non-ignition, and burner jets with cabin air. EMBER v2 turns 15 NASA PSI investigations, 1,678 tests, 4,074 protocol steps, and 2,378 events into a protocol-gated workbench. On our preliminary 100-case benchmark, EMBER achieves 95% comparability accuracy, 81.2% applicability F1, 74.5% rule recall, and 100% planner constraint preservation, refusing out-of-domain guesses rather than extrapolating.
+> Standard AI search fails spacecraft fire safety, confusing ventilation shutoffs with flame extinction, cool flames with non-ignition, and burner jets with cabin air. EMBER v2 turns 15 NASA PSI investigations with test tables, 1,678 tests, 4,074 protocol steps, and 2,378 events into a protocol-gated workbench. On our preliminary 100-case benchmark, EMBER achieves 90% comparability accuracy, 82.6% applicability F1, 75.5% rule recall, and 100% planner constraint preservation, refusing out-of-domain guesses rather than extrapolating.

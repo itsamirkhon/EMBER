@@ -98,7 +98,7 @@ export function ExplorerPage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>The {investigations.length} NASA investigations</h1>
+          <h1>The {investigations.length} PSI investigations with test tables</h1>
           <p className="page-lead">
             {activeSnapshot ? 'Ranked for the selected saved review' : 'Example ranking (no review selected)'}: <span className="mono">{activeQuery.rawQuestion.slice(0, 96)}{activeQuery.rawQuestion.length > 96 ? '…' : ''}</span>. Three separate scales: does it answer the question, do its tests match the conditions, how reliable is the data.
           </p>

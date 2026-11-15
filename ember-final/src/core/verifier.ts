@@ -98,6 +98,8 @@ function collectTestNumbers(t: Test, nums: Set<number>): void {
   for (const c of candidates) {
     if (c !== null && c !== undefined && Number.isFinite(c)) nums.add(c);
   }
+  // Fuel and geometry descriptors ("ethane (100%)", "60/40", "5 x 29 cm sample") are printed verbatim in draft claims.
+  for (const n of extractNumbersFromText(`${t.fuel ?? ''} ${t.geometry ?? ''}`)) nums.add(n);
 }
 
 function extractNumbersFromText(text: string): number[] {
@@ -158,8 +160,8 @@ function citedEvidenceText(item: SynthesisClaimItem, pkg: EvidencePackage): stri
 }
 
 function quantities(text: string): { value: number; unit: string }[] {
-  const pattern = /(?<![a-zA-Z0-9])(-?\d+(?:\.\d+)?)\s*(mm[²2]\s*\/\s*s|mm\s*\/\s*s|cm\s*\/\s*s|kpa|atm|mm|cm|nm|%|g)(?![a-zA-Z])/gi;
-  return [...text.replace(/%vol\b/gi, '%').matchAll(pattern)].map((m) => ({ value: Number(m[1]), unit: m[2].toLowerCase().replace(/\s+/g, '').replace('²', '2') }));
+  const pattern = /(?<![a-zA-Z0-9])(-?\d+(?:\.\d+)?)\s*(mm(?:[²2]|\^2)\s*\/\s*s|mm\s*\/\s*s|cm\s*\/\s*s|kpa|atm|mm|cm|nm|%|g)(?![a-zA-Z])/gi;
+  return [...text.replace(/%vol\b/gi, '%').matchAll(pattern)].map((m) => ({ value: Number(m[1]), unit: m[2].toLowerCase().replace(/\s+/g, '').replace('²', '2').replace('^', '') }));
 }
 
 function sameNumber(a: number, b: number): boolean {

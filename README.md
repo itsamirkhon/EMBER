@@ -2,7 +2,7 @@
 
 **NASA Space Apps Challenge 2026 · “Flame in Freefall”**
 
-> Every NASA fire experiment in one place — and the line where the evidence ends.
+> NASA’s fire experiments in one place — and the line where the evidence ends.
 
 None of the 261 solid-material flight tests with measured oxygen in NASA’s Physical Sciences Informatics (PSI) repository ran above **22.7% O₂**, and all ran near 98–102 kPa. Lunar cabins plan **30–34% O₂ at 56–70 kPa**. EMBER shows a spacecraft fire-safety engineer which NASA investigations apply to their cabin, the nearest real tests and how far away they are, and which flight test would close the gap. It never gives a fire-risk percentage.
 
@@ -17,7 +17,7 @@ None of the 261 solid-material flight tests with measured oxygen in NASA’s Phy
 | `#/map` | Evidence map: all tests by O₂ × pressure with mission atmospheres and the evidence cliff |
 | `#/lens` | Mission lens: environment, task, material → *Measured* / *Data nearby* / *Beyond the evidence*, three ranking scales, nearest real tests with axis gaps, next experiment |
 | `#/ask` | Ask EMBER: cited answers; ten pre-computed answers work without a server |
-| `#/investigations`, `#/compare`, `#/export` | Cards for the 15 investigations, protocol comparison, CSV/JSON with source row for every record |
+| `#/investigations`, `#/compare`, `#/export` | Cards for the 15 investigations with test tables, protocol comparison, CSV/JSON with source row for every record |
 | `#/earth`, `#/trust` | Back to Earth (NASA Spinoff) and the self-check page (backtest vs baseline, claim checks, limits) |
 
 ## Run it

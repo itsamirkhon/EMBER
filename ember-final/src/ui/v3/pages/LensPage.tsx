@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { parseResearchQuery, rankInvestigationsV2, type CorpusV2, type FuelPhase, type InvestigationRankV2 } from '../../../core';
+import { O2_IN_DOMAIN_POINTS, evaluateApplicability, parseResearchQuery, rankInvestigationsV2, type CorpusV2, type FuelPhase, type InvestigationRankV2, type Test } from '../../../core';
 import { useEmber } from '../../context/EmberContext';
 import { invColor } from '../EvidenceMap';
 import {
@@ -13,7 +13,7 @@ const DEFAULT: LensInput = { missionId: 'lunar-rover', o2: 30, kPa: 70.3, flow: 
 
 /** Plain-language reasons for the engine's rule codes. */
 const REASON: Record<string, string> = {
-  gravity_regime_gap: 'Gravity differs: every flight test ran in microgravity; none at lunar or Martian gravity.',
+  gravity_regime_gap: 'Gravity differs: every flight test in NASA PSI ran in microgravity; PSI has none at lunar or Martian gravity.',
   simulated_analogue_gravity: 'Only a simulated-gravity analogue exists for this, not a flight test.',
   out_of_tested_envelope: 'Your oxygen, pressure or airflow lie outside the combinations that were tested.',
   unsupported_joint_combination: 'Each value was tested somewhere, but never together in one test.',
@@ -43,6 +43,8 @@ export interface EngineResult {
   rankings: InvestigationRankV2[];
   reasons: string[];
   warnings: string[];
+  /** Oxygen range of the tests counted as applicable, so a reader can see how far from the query they ran. */
+  o2Range: { min: number; max: number; n: number } | null;
 }
 
 /** Browser number inputs are not a guarantee against pasted out-of-range values. */
@@ -61,7 +63,19 @@ export function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
   const best = Math.max(0, ...rankings.filter((x) => x.inv.fuelPhase === l.phase).map((x) => x.relevanceScore));
   const codes = new Set(rankings.filter((x) => x.inv.fuelPhase === l.phase && x.relevanceScore >= best - 0.01).flatMap((x) => x.topReasonCodes));
   const reasons = REASON_ORDER.filter((c) => codes.has(c)).map((c) => REASON[c]).slice(0, 3);
-  return { status, admissible, conditional, rankings, reasons, warnings: q.validationWarnings };
+  // Only the investigations that matched are re-evaluated, a few hundred tests at most.
+  const matched = new Map(rankings.filter((r) => r.admissibleCount > 0).map((r) => [r.inv.id, r.inv]));
+  const byInv = new Map<string, Test[]>();
+  for (const t of corpus.tests) if (matched.has(t.inv)) (byInv.get(t.inv) ?? byInv.set(t.inv, []).get(t.inv)!).push(t);
+  const o2: number[] = [];
+  for (const [id, tests] of byInv) {
+    for (const t of tests) {
+      const v = t.atmosphere.o2.value;
+      if (v !== null && evaluateApplicability(q, t, { investigation: matched.get(id), allInvTests: tests }).verdict === 'admissible') o2.push(v);
+    }
+  }
+  const o2Range = o2.length ? { min: Math.min(...o2), max: Math.max(...o2), n: o2.length } : null;
+  return { status, admissible, conditional, rankings, reasons, warnings: q.validationWarnings, o2Range };
 }
 
 export function LensPage() {
@@ -281,6 +295,12 @@ export function LensPage() {
                 </div>
                 <p className="v3-verdict-text">{PLAIN[engine.status].short}.</p>
                 <p className="v3-small v3-muted">{PLAIN[engine.status].help}</p>
+                {engine.o2Range && (
+                  <p className="v3-small v3-muted">
+                    The {engine.o2Range.n} applicable tests ran at {fmt(engine.o2Range.min)}–{fmt(engine.o2Range.max)}% <Term k="o2">O₂</Term>; your cabin is at {fmt(l.o2)}%. EMBER counts a test as
+                    applicable when its oxygen is within about {O2_IN_DOMAIN_POINTS} points of yours and the other conditions also match.
+                  </p>
+                )}
                 {engine.reasons.length > 0 && engine.status !== 'measured' && (
                   <ul className="v3-reasons">
                     {engine.reasons.map((reason) => <li key={reason}>{reason}</li>)}

@@ -38,7 +38,7 @@ Open the local Vite URL (default `http://localhost:5173`). Vite mounts the integ
 
 ### Step 2 (`0:15–0:25`) — Research Dashboard & 3-Axis Investigation Ranker (`/#/explorer`)
 
-1. Click **`Explorer`** in the top navigation bar (`/#/explorer`) to view all **15 NASA PSI investigations**.
+1. Click **`Explorer`** in the top navigation bar (`/#/explorer`) to view the **15 NASA PSI investigations with test tables**.
 2. Point out the **three separated score bars** on each investigation card:
    - **1. Question Relevance**
    - **2. Observation Applicability**

@@ -23,8 +23,10 @@ import type {
   Test,
 } from './types';
 
-const JOINT_SCALES = { o2Pct: 3, pressureKpa: 15, flowCmS: 8 } as const;
 const JOINT_IN_DOMAIN_THRESHOLD = 1.5;
+/** A test counts as covering the query's oxygen when it is within this many points of O2 (all other conditions equal). */
+export const O2_IN_DOMAIN_POINTS = 2;
+const JOINT_SCALES = { o2Pct: O2_IN_DOMAIN_POINTS / JOINT_IN_DOMAIN_THRESHOLD, pressureKpa: 15, flowCmS: 8 } as const;
 
 export interface ApplicabilityOptions {
   investigation?: Investigation;

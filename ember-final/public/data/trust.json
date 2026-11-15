@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-14T23:41:07.926Z",
+ "generatedAt": "2026-11-15T11:28:33.707Z",
  "corpusVersion": "2.0.1-scientific-fixes",
  "method": "Grouped leave-out: each flight test with a recorded flame / no-flame outcome is hidden together with its replicate group, then its conditions are run through the applicability engine against the remaining tests of the same fuel phase. Assumed-atmosphere records (SAME / SAME-R) are not scored.",
  "outcome": "Flame established (ignited, burned, spread, hot ignition, jet flame) vs not (no ignition, went out by itself).",
@@ -12,17 +12,17 @@
    },
    "byStatus": {
     "measured": {
-     "n": 187,
+     "n": 186,
      "correct": 174,
      "baselineCorrect": 170
     },
     "nearby": {
-     "n": 56,
+     "n": 55,
      "correct": 43,
      "baselineCorrect": 35
     },
     "beyond": {
-     "n": 2,
+     "n": 4,
      "correct": 0,
      "baselineCorrect": 2
     }
@@ -41,19 +41,19 @@
    },
    "byStatus": {
     "measured": {
-     "n": 201,
-     "correct": 137,
-     "baselineCorrect": 150
+     "n": 181,
+     "correct": 119,
+     "baselineCorrect": 134
     },
     "nearby": {
-     "n": 82,
-     "correct": 78,
-     "baselineCorrect": 78
+     "n": 96,
+     "correct": 92,
+     "baselineCorrect": 90
     },
     "beyond": {
-     "n": 125,
-     "correct": 96,
-     "baselineCorrect": 117
+     "n": 131,
+     "correct": 100,
+     "baselineCorrect": 121
     }
    },
    "baselineClass": {
