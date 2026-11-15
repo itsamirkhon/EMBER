@@ -27,7 +27,7 @@ describe('focused EMBER evidence workflow', () => {
 
   it('moves the real 3D field with reduced-motion respect and 2D fallback', () => {
     expect(home).toContain('lazy(() => import(\'../EvidenceSpace\'))');
-    expect(home).toContain('EvidenceMap');
+    expect(home).toContain('EvidenceFallback');
     expect(home).toContain('onFail={() => setRenderFailed(true)}');
     expect(scene).toContain('controls.autoRotate = !reduced;');
     expect(scene).toContain('controls.autoRotate = false;');
