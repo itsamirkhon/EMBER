@@ -10,7 +10,9 @@ const nav = read('../src/ui/components/Layout.tsx');
 describe('focused EMBER evidence workflow', () => {
   it('has one primary user action instead of competing demo modules', () => {
     expect(home.match(/v3-btn-primary/g)).toHaveLength(1);
-    expect(home).toContain('Check a mission scenario');
+    expect(home).toContain('Explore the evidence gap');
+    expect(home).toContain('The missing <em>flight test.</em>');
+    expect(home).toContain('to="/lens?mission=lunar-base"');
     expect(home).toContain('navigate(\'/lens?mission=\'');
     expect(home).not.toContain('<iframe');
     expect(home).not.toContain('Same fire, different rules');
@@ -21,13 +23,13 @@ describe('focused EMBER evidence workflow', () => {
     expect(home).toContain('cliffStats(data.rows)');
     expect(home).toContain('A coverage boundary is not a physical flammability threshold.');
     expect(home).toContain('Not a fire simulation or a safety certification.');
-    expect(home).toContain('cliff.solidFlight');
-    expect(home).toContain('Inspect NASA records');
+    expect(home).toContain('cliff?.solidFlight');
+    expect(home).toContain('NASA atmosphere reference');
   });
 
   it('moves the real 3D field with reduced-motion respect and 2D fallback', () => {
     expect(home).toContain('lazy(() => import(\'../EvidenceSpace\'))');
-    expect(home).toContain('EvidenceMap');
+    expect(home).toContain('EvidenceFallback');
     expect(home).toContain('onFail={() => setRenderFailed(true)}');
     expect(scene).toContain('controls.autoRotate = !reduced;');
     expect(scene).toContain('controls.autoRotate = false;');
