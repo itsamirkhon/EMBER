@@ -44,11 +44,18 @@ function Bar({ label, b, note }: { label: React.ReactNode; b: Bucket; note?: str
 }
 
 export function TrustPage() {
-  const { data } = useCompact();
+  const { data, error: compactError } = useCompact();
   const [trust, setTrust] = useState<TrustFile | null>(null);
+  const [trustError, setTrustError] = useState<string | null>(null);
   useEffect(() => {
-    fetch('./data/trust.json').then((r) => (r.ok ? r.json() : null)).then(setTrust, () => setTrust(null));
+    let live = true;
+    fetch('./data/trust.json')
+      .then((r) => r.ok ? r.json() as Promise<TrustFile> : Promise.reject(new Error('HTTP ' + r.status)))
+      .then((result) => { if (live) setTrust(result); },
+            (error: unknown) => { if (live) setTrustError(error instanceof Error ? error.message : String(error)); });
+    return () => { live = false; };
   }, []);
+  const trustIsStale = Boolean(trust && data && trust.corpusVersion !== data.corpusVersion);
   const cliff = useMemo(() => (data ? cliffStats(data.rows) : null), [data]);
   const ee = data?.extractionEval as { n?: number; correct?: number; partial?: number; wrong?: number } | undefined;
   const oa = data?.outcomeAudit as { n?: number; ruleAnswered?: number; agree?: number; wrong?: number; missed?: number } | undefined;
@@ -60,7 +67,8 @@ export function TrustPage() {
         itself, next to a baseline, and lists what has not been checked.
       </PageHead>
 
-      {!data && <Loading what="Loading…" />}
+      {compactError && <div className="v3-callout v3-callout-warn" role="alert">NASA PSI data unavailable: {compactError}</div>}
+      {!data && !compactError && <Loading what="Loading…" />}
       {data && cliff && (
         <>
           <section className="v3-card v3-section">
@@ -79,8 +87,14 @@ export function TrustPage() {
 
           <section className="v3-card v3-section">
             <h2 className="v3-h2">2 · Do the status labels mean anything?</h2>
-            {!trust ? (
-              <p className="v3-muted">Backtest not available in this build.</p>
+            {!trust || trustIsStale ? (
+              <div className="v3-callout v3-callout-warn" role="alert">
+                {trustIsStale
+                  ? 'Backtest results use a different PSI corpus version; they are withheld until regenerated.'
+                  : trustError
+                    ? 'Backtest data could not be loaded: ' + trustError
+                    : 'Backtest results are not available in this build.'}
+              </div>
             ) : (
               <>
                 <p className="v3-small v3-muted">
@@ -112,8 +126,8 @@ export function TrustPage() {
                 <ul className="v3-list">
                   <li>
                     <b>Solid materials:</b> {pct(trust.phases.solid.all.correct / trust.phases.solid.all.n)} vs{' '}
-                    {pct(trust.phases.solid.all.baselineCorrect / trust.phases.solid.all.n)} baseline. Answers labelled <i>Measured</i> are more often
-                    right than those labelled <i>Data nearby</i>, so the labels carry information. Most solids burned, so the baseline is already high.
+                    {pct(trust.phases.solid.all.baselineCorrect / trust.phases.solid.all.n)} baseline. Answers labelled <i>Historical match</i> were more often
+                    right than those labelled <i>Related records</i>, so the labels carry information. Most solids burned, so the baseline is already high.
                   </li>
                   <li>
                     <b>Gas flames:</b> {pct(trust.phases.gas.all.correct / trust.phases.gas.all.n)} vs{' '}
