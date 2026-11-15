@@ -84,40 +84,39 @@ body.panel-open{overflow:hidden}.close{min-width:44px;min-height:44px}
 
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* mission-control theme, shared with the main EMBER site */
-:root{--paper:#05070d;--ink:#e9eef7;--muted:#a3b0c6;--line:rgba(150,180,255,.14);--red:#ff6a2b;--soft:#111a2a;--white:#0b111c;--accent:#3d7bff;--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Consolas,monospace}
-html,body{font-family:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
-::selection{background:rgba(61,123,255,.4)}
-.lead{color:#a3b0c6}
-.small-disclaimer,.stage-note,.declaration{color:#74829b}
-.stage-note button{color:#8fb2ff}
-.stage{background:#0b111c;border:1px solid rgba(150,180,255,.1)}
-.control-head label{color:#a3b0c6}
-.control-head output{color:#e9eef7}
-.control-scale,.step-number{color:#74829b}
-.step-link{color:#74829b}
-.step-text span{color:#74829b}
-.slider{background:linear-gradient(to right,var(--accent) var(--fill,40%),rgba(150,180,255,.16) var(--fill,40%))}
-.slider::-webkit-slider-runnable-track{background:linear-gradient(to right,var(--accent) var(--fill),rgba(150,180,255,.16) var(--fill))}
-.slider::-moz-range-track{background:rgba(150,180,255,.16)}
-.slider::-moz-range-progress{background:var(--accent)}
-.slider::-webkit-slider-thumb{background:#e9eef7;border-color:#e9eef7;box-shadow:0 0 0 3px #05070d}
-.slider::-moz-range-thumb{background:#e9eef7;border-color:#e9eef7}
-.present-button,.arrow-button.next,.wide-button{background:#3d7bff;border-color:#3d7bff;color:#fff}
-.present-button:hover,.arrow-button.next:hover,.wide-button:hover{background:#5a8fff;border-color:#5a8fff}
-.arrow-button{color:#e9eef7}
-.link-button,.plain,.secondary{color:#e9eef7}
-.drawer{background:#0b111c;box-shadow:-20px 0 70px #0008}
-.drawer-head{background:#0b111c}
-.source-note{background:#111a2a;color:#a3b0c6}
-.form-field select,.form-field input{background:#111a2a;color:#e9eef7}
-.toast{background:#18233a}
-.audit-status{border-color:rgba(255,106,43,.35)}
-.comparison-table th{border-bottom-color:rgba(150,180,255,.26)}
-.controls{background:#0b111c;border-color:rgba(150,180,255,.1)}
-.slider::-webkit-slider-thumb{border:0}
-h1{font-weight:500;letter-spacing:-.035em}
+/* Embedded in EMBER's dark v3 site: show the chamber, not a second site. */
+html.embed-mode, html.embed-mode body { height:100%; margin:0; overflow:hidden; background:#141519; }
+html.embed-mode .header,
+html.embed-mode .story,
+html.embed-mode .controls,
+html.embed-mode .stage-note,
+html.embed-mode .footer,
+html.embed-mode .autoplay-meter { display:none!important; }
+html.embed-mode .main {
+  display:block!important; box-sizing:border-box; width:100%; max-width:none;
+  height:100dvh; min-height:0; padding:0!important; margin:0!important;
+}
+html.embed-mode .stage-stack { width:100%; height:100%; min-height:0; }
+html.embed-mode .stage { height:100%!important; min-height:0!important; border-radius:0; }
+html.embed-mode .stage-top { top:14px; left:18px; right:18px; }
+html.embed-mode .specimen-label { top:38px; left:18px; }
+html.embed-mode .labels { top:56px; }
+html.embed-mode .scene-divider { top:68px; bottom:64px; }
+html.embed-mode .stage-bar { left:16px; right:16px; bottom:12px; }
+@media (max-width:600px) {
+  html.embed-mode .stage-top { top:12px; left:12px; right:12px; }
+  html.embed-mode .specimen-label { top:34px; left:12px; }
+  html.embed-mode .labels { top:64px; }
+  html.embed-mode .stage-bar { left:10px; right:10px; }
+}
 </style>
+<script>
+  // Preserves the standalone presentation while embedding only the dark chamber
+  // in the current site. Apply before first paint to avoid flashing light UI.
+  if (new URLSearchParams(location.search).get('embed') === '1') {
+    document.documentElement.classList.add('embed-mode');
+  }
+</script>
 </head>
 <body>
 <div id="autoplayMeter" class="autoplay-meter"></div>

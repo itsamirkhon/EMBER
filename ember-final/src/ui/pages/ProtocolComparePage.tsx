@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   compareTests,
   hasCoolFlameContinuation,
@@ -10,65 +10,103 @@ import {
 import { MultiLineSeriesSvg, ScatterPlotSvg, type ScatterPoint } from '../components/ScientificCharts';
 import { GasRoleBadge, ProvenanceBadge, StatusPill, VerdictBadge } from '../components/StatusPill';
 import { formatLocator, useEmber } from '../context/EmberContext';
+import { comparisonSeed, resolveProtocolTest, scopedProtocolTests } from '../protocolSelection';
 
 const DEFAULT_PROTOCOL_PRESETS = ['BASS-II-B1', 'BASS-II-B10', 'BASS-II-M1', 'CFI-1206', 'SAME-R-51a'];
+const EMPTY_TESTS: Test[] = [];
 
 export function ProtocolComparePage() {
-  const [searchParams] = useSearchParams();
-  const initialTestId = searchParams.get('testId');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedTestId = searchParams.get('testId');
+  const requestedInv = searchParams.get('inv');
   const { corpus, corpusLoading, ensureCorpus, activeSnapshot, openSourceRef } = useEmber();
 
   const [activeTab, setActiveTab] = useState<'protocol' | 'compare'>('protocol');
-  const [selectedTestId, setSelectedTestId] = useState<string>(initialTestId ?? 'BASS-II-B1');
+  const [selectedTestId, setSelectedTestId] = useState<string | null>(requestedTestId);
   const [testFilter, setTestFilter] = useState('');
-  const [compareIds, setCompareIds] = useState<string[]>(['BASS-II-B1', 'BASS-II-B10', 'BASS-II-M1']);
-  const [candidateAddId, setCandidateAddId] = useState('BASS-II-O1');
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [candidateAddId, setCandidateAddId] = useState('');
+  const [corpusError, setCorpusError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!corpus) {
-      void ensureCorpus();
+      void ensureCorpus().catch((err: unknown) => setCorpusError(err instanceof Error ? err.message : String(err)));
+    } else {
+      setCorpusError(null);
     }
   }, [corpus, ensureCorpus]);
 
+  const tests = corpus?.tests ?? EMPTY_TESTS;
+  const scopedTests = useMemo(() => scopedProtocolTests(tests, requestedInv), [tests, requestedInv]);
+  const testById = useMemo(() => new Map(scopedTests.map((t) => [t.testId, t])), [scopedTests]);
+  const activeTest: Test | null = useMemo(
+    () => resolveProtocolTest(scopedTests, selectedTestId, requestedInv, DEFAULT_PROTOCOL_PRESETS),
+    [scopedTests, selectedTestId, requestedInv],
+  );
+
+  // Deep links, including navigation between different investigations, reset the
+  // selected protocol. Never substitute another investigation's default record.
   useEffect(() => {
-    if (initialTestId) {
-      setSelectedTestId(initialTestId);
-      setActiveTab('protocol');
-    }
-  }, [initialTestId]);
+    setSelectedTestId(requestedTestId);
+    setActiveTab('protocol');
+    setTestFilter('');
+  }, [requestedTestId, requestedInv]);
 
-  const tests = corpus?.tests ?? [];
+  // On corpus arrival, seed comparisons from the requested test and its
+  // investigation rather than the previous hard-coded BASS-II examples.
+  useEffect(() => {
+    if (!corpus) return;
+    const seed = comparisonSeed(scopedTests, requestedTestId, requestedInv, DEFAULT_PROTOCOL_PRESETS);
+    setCompareIds(seed);
+    setCandidateAddId(scopedTests.find((t) => !seed.includes(t.testId))?.testId ?? '');
+  }, [corpus, scopedTests, requestedTestId, requestedInv]);
 
-  const testById = useMemo(() => new Map(tests.map((t) => [t.testId, t])), [tests]);
-
-  const activeTest: Test | null = useMemo(() => {
-    if (testById.has(selectedTestId)) return testById.get(selectedTestId) ?? null;
-    for (const pid of DEFAULT_PROTOCOL_PRESETS) {
-      if (testById.has(pid)) return testById.get(pid) ?? null;
-    }
-    return tests[0] ?? null;
-  }, [testById, selectedTestId, tests]);
+  const selectTest = (id: string) => {
+    if (!scopedTests.some((t) => t.testId === id)) return;
+    setSelectedTestId(id);
+    const seed = comparisonSeed(scopedTests, id, requestedInv, DEFAULT_PROTOCOL_PRESETS);
+    setCompareIds(seed);
+    setCandidateAddId(scopedTests.find((t) => !seed.includes(t.testId))?.testId ?? '');
+    setSearchParams(requestedInv ? { inv: requestedInv, testId: id } : { testId: id }, { replace: true });
+  };
 
   const matchingTestOptions = useMemo(() => {
     const q = testFilter.trim().toLowerCase();
     const list = q
-      ? tests.filter((t) =>
+      ? scopedTests.filter((t) =>
           `${t.testId} ${t.inv} ${t.fuel ?? ''} ${t.terminalEvent ?? ''}`.toLowerCase().includes(q),
         )
-      : tests;
+      : scopedTests;
     const sliced = list.slice(0, 120);
     if (activeTest && !sliced.some((t) => t.testId === activeTest.testId)) {
       return [activeTest, ...sliced];
     }
     return sliced;
-  }, [tests, testFilter, activeTest]);
+  }, [scopedTests, testFilter, activeTest]);
 
-  const activeQuery = useMemo(
-    () =>
-      activeSnapshot?.review.query ??
-      parseResearchQuery('PMMA flame spread and extinction under flow reduction in concurrent flow'),
-    [activeSnapshot],
+  const availableAddTests = useMemo(
+    () => scopedTests.filter((t) => !compareIds.includes(t.testId)).slice(0, 120),
+    [scopedTests, compareIds],
   );
+  const effectiveCandidateId = availableAddTests.some((t) => t.testId === candidateAddId)
+    ? candidateAddId
+    : availableAddTests[0]?.testId ?? '';
+
+  const activeQuery = useMemo(() => {
+    if (!requestedInv && activeSnapshot?.review.query) return activeSnapshot.review.query;
+    if (!activeTest) return parseResearchQuery('Compare recorded experimental outcomes');
+    return parseResearchQuery(
+      `Compare ${activeTest.inv} ${activeTest.fuel ?? 'fuel'} experimental outcomes`,
+      {
+        fuelPhase: activeTest.fuelPhase,
+        material: activeTest.fuel,
+        o2Pct: activeTest.atmosphere.o2.value,
+        pressureKpa: activeTest.atmosphere.pressure.value,
+        gravityG: activeTest.gravity.gravityG.value,
+      },
+      { applyEnvironmentDefaults: false },
+    );
+  }, [activeSnapshot, activeTest, requestedInv]);
 
   const comparedTests = useMemo(
     () => compareIds.map((id) => testById.get(id)).filter((test): test is Test => Boolean(test)),
@@ -84,7 +122,7 @@ export function ProtocolComparePage() {
 
   // Extract BASS-II Table 5.1 spread rate series & SAME-R aging series & O2 vs Flow scatter
   const o2FlowPoints = useMemo<ScatterPoint[]>(() => {
-    const bassAndCfi = tests
+    const bassAndCfi = scopedTests
       .filter((t) => t.atmosphere.o2.value !== null && t.flow.initialFlowCmS.value !== null)
       .slice(0, 180);
     return bassAndCfi.map((t) => ({
@@ -98,11 +136,11 @@ export function ProtocolComparePage() {
           ? '#ff453a'
           : '#64d2ff',
     }));
-  }, [tests, compareIds]);
+  }, [scopedTests, compareIds]);
 
   const bassTableSeries = useMemo(() => {
     const palette = ['#ff9f0a', '#64d2ff', '#30d158', '#bf5af2', '#ffd60a'];
-    const matching = tests.filter((t) => t.inv === 'BASS-II' && t.extra && typeof t.extra.tmTable5_1 === 'object' && t.extra.tmTable5_1 !== null);
+    const matching = scopedTests.filter((t) => t.inv === 'BASS-II' && t.extra && typeof t.extra.tmTable5_1 === 'object' && t.extra.tmTable5_1 !== null);
     return matching.slice(0, 5).map((t, idx) => {
       const tbl = t.extra.tmTable5_1 as { velocitiesCmS?: number[]; spreadRatesMmS?: number[] };
       const vel = tbl.velocitiesCmS ?? [];
@@ -115,10 +153,10 @@ export function ProtocolComparePage() {
         points,
       };
     });
-  }, [tests]);
+  }, [scopedTests]);
 
   const sameRPoints = useMemo<ScatterPoint[]>(() => {
-    return tests
+    return scopedTests
       .filter((t) => t.inv === 'SAME-R' && t.particleSizeNm.value !== null && t.extra?.['Net aging time (sec)'] != null)
       .map((t) => ({
         id: t.testId,
@@ -128,7 +166,7 @@ export function ProtocolComparePage() {
         color: '#30d158',
       }))
       .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
-  }, [tests]);
+  }, [scopedTests]);
 
   const handleTabKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Home' || e.key === 'End') {
@@ -141,12 +179,25 @@ export function ProtocolComparePage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>Compare experiments</h1>
+          <h1>{requestedInv ? `Recorded protocol · ${requestedInv}` : 'Compare experiments'}</h1>
           <p className="page-lead">
-            Put two tests or investigations side by side: their conditions, the sequence of each test, and what differs. Similar records describe; they do not prove cause and effect.
+            {requestedInv
+              ? 'Inspect the selected experiment’s actual stage-bound protocol, then compare recorded tests from the same investigation. Missing records are shown as missing, never replaced by an unrelated experiment.'
+              : 'Put tests or investigations side by side: their conditions, the sequence of each test, and what differs. Similar records describe; they do not prove cause and effect.'}
           </p>
         </div>
       </div>
+
+      {requestedInv && (
+        <div className="banner banner-info">
+          <span>
+            Showing test protocols for <strong>{requestedInv}</strong> only.{' '}
+            <Link to={`/investigations/${encodeURIComponent(requestedInv)}`}>Back to investigation</Link>
+            {' · '}
+            <Link to="/compare">Compare across all investigations</Link>
+          </span>
+        </div>
+      )}
 
       <div role="tablist" aria-label="Protocol and Comparison views" className="tablist" onKeyDown={handleTabKeyDown}>
         <button
@@ -173,7 +224,9 @@ export function ProtocolComparePage() {
         </button>
       </div>
 
-      {corpusLoading ? (
+      {corpusError ? (
+        <div className="banner banner-danger" role="alert">Could not load protocol data: {corpusError}</div>
+      ) : corpusLoading || !corpus ? (
         <div className="card"><p className="muted">Loading test protocol corpus…</p></div>
       ) : null}
 
@@ -188,7 +241,7 @@ export function ProtocolComparePage() {
                     key={pid}
                     type="button"
                     className={`btn btn-sm ${activeTest?.testId === pid ? 'btn-primary' : ''}`}
-                    onClick={() => setSelectedTestId(pid)}
+                    onClick={() => selectTest(pid)}
                   >
                     {pid}
                   </button>
@@ -213,8 +266,9 @@ export function ProtocolComparePage() {
                 <select
                   id="proto-select"
                   value={activeTest?.testId ?? ''}
-                  onChange={(e) => setSelectedTestId(e.target.value)}
+                  onChange={(e) => selectTest(e.target.value)}
                 >
+                  <option value="" disabled>{corpus ? 'Select a recorded test' : 'Loading tests…'}</option>
                   {matchingTestOptions.map((t) => (
                     <option key={t.testId} value={t.testId}>
                       {t.testId} ({t.inv}) — {t.fuel ?? 'n/a'} · {t.initialOutcome}
@@ -354,14 +408,20 @@ export function ProtocolComparePage() {
                 </div>
               ) : null}
             </section>
+          ) : corpus && !corpusError ? (
+            <div className="banner banner-danger" role="alert">
+              {requestedTestId
+                ? `No recorded protocol found for test "${requestedTestId}" in ${requestedInv ?? 'the corpus'}. Nothing was substituted.`
+                : `No recorded protocols available${requestedInv ? ` for ${requestedInv}` : ''}.`}
+            </div>
           ) : null}
         </div>
       ) : (
         <div role="tabpanel" aria-labelledby="tab-compare" tabIndex={0} className="tabpanel stack-lg">
           <div className="card stack-sm">
             <div className="card-header">
-              <h2 className="card-title">Compare 2–4 Tests Side by Side ({compareIds.length}/4)</h2>
-              <div className="btn-group">
+              <h2 className="card-title">Compare Tests Side by Side ({comparedTests.length}/4)</h2>
+              {!requestedInv && <div className="btn-group">
                 <button
                   type="button"
                   className="btn btn-sm"
@@ -376,7 +436,7 @@ export function ProtocolComparePage() {
                 >
                   Preset: CFI Cool Flames
                 </button>
-              </div>
+              </div>}
             </div>
 
             <div className="btn-group">
@@ -394,8 +454,9 @@ export function ProtocolComparePage() {
 
               <div className="field" style={{ minInlineSize: 220 }}>
                 <label htmlFor="cmp-add" className="visually-hidden">Add test to comparison</label>
-                <select id="cmp-add" value={candidateAddId} onChange={(e) => setCandidateAddId(e.target.value)}>
-                  {tests.slice(0, 120).map((t) => (
+                <select id="cmp-add" value={effectiveCandidateId} onChange={(e) => setCandidateAddId(e.target.value)}>
+                  {availableAddTests.length === 0 && <option value="">No more tests in this scope</option>}
+                  {availableAddTests.map((t) => (
                     <option key={t.testId} value={t.testId}>
                       {t.testId} ({t.inv})
                     </option>
@@ -405,14 +466,25 @@ export function ProtocolComparePage() {
               <button
                 type="button"
                 className="btn btn-sm btn-primary"
-                disabled={compareIds.length >= 4 || compareIds.includes(candidateAddId)}
-                onClick={() => setCompareIds((prev) => [...prev, candidateAddId])}
+                disabled={compareIds.length >= 4 || !effectiveCandidateId}
+                onClick={() => {
+                  if (!effectiveCandidateId || !testById.has(effectiveCandidateId)) return;
+                  setCompareIds((prev) => [...prev, effectiveCandidateId]);
+                  setCandidateAddId('');
+                }}
               >
                 + Add Test
               </button>
             </div>
           </div>
 
+          {comparedTests.length < 2 && corpus && (
+            <div className="banner banner-warn" role="status">
+              {requestedTestId && !activeTest
+                ? `Requested test "${requestedTestId}" is not available in ${requestedInv ?? 'the corpus'}; comparisons are blocked.`
+                : 'At least two recorded tests are needed for comparison in this scope.'}
+            </div>
+          )}
           <p className="muted">Query: {activeQuery.rawQuestion} · Endpoint: {activeQuery.targetEndpoint ?? 'unspecified'}. All {comparisons.length} selected pairs are evaluated independently.</p>
           {comparisons.map((comparison) => (
             <section key={comparison.id} className="card stack-md" aria-label={`Scientific comparison ${comparison.testAId} and ${comparison.testBId}`}>
@@ -477,20 +549,20 @@ export function ProtocolComparePage() {
             </section>
           ))}
 
-          <div className="grid-2">
-            <ScatterPlotSvg
-              title="O2 Concentration (%) vs Initial Flow Velocity (cm/s)"
+          {(o2FlowPoints.length > 0 || bassTableSeries.length > 0) && <div className="grid-2">
+            {o2FlowPoints.length > 0 && <ScatterPlotSvg
+              title={requestedInv ? `${requestedInv}: O2 (%) vs Initial Flow (cm/s)` : 'O2 Concentration (%) vs Initial Flow Velocity (cm/s)'}
               xLabel="Initial Flow Velocity (cm/s)"
               yLabel="O2 Concentration (%)"
               points={o2FlowPoints}
-            />
-            <MultiLineSeriesSvg
+            />}
+            {bassTableSeries.length > 0 && <MultiLineSeriesSvg
               title="BASS-II Table 5.1: Spread Rate (mm/s) vs Opposed/Concurrent Flow Velocity"
               xLabel="Flow Velocity (cm/s)"
               yLabel="Spread Rate (mm/s)"
               series={bassTableSeries}
-            />
-          </div>
+            />}
+          </div>}
 
           {sameRPoints.length > 0 ? (
             <ScatterPlotSvg

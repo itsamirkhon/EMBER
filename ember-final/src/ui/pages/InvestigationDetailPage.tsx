@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { Range, Test } from '../../core';
 import { getInvestigationDetail, type InvestigationDetailData } from '../apiClient';
+import { protocolHref } from '../protocolSelection';
 import { SortableTable, type TableColumn } from '../components/SortableTable';
 import { ProvenanceBadge, StatusPill } from '../components/StatusPill';
 import { useEmber } from '../context/EmberContext';
@@ -78,7 +79,7 @@ export function InvestigationDetailPage() {
       isRowHeader: true,
       sortValue: (t) => t.testId,
       render: (t) => (
-        <Link to={`/compare?testId=${encodeURIComponent(t.testId)}`} className="mono">
+        <Link to={protocolHref(inv.id, t.testId)} className="mono">
           {t.testId}
         </Link>
       ),
@@ -146,7 +147,7 @@ export function InvestigationDetailPage() {
       key: 'protocol',
       label: 'Protocol',
       render: (t) => (
-        <Link to={`/compare?testId=${encodeURIComponent(t.testId)}`} className="btn btn-sm">
+        <Link to={protocolHref(inv.id, t.testId)} className="btn btn-sm">
           Steps ({t.segments.length})
         </Link>
       ),

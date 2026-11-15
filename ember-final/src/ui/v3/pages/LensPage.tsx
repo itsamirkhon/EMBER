@@ -36,16 +36,7 @@ const REASON_ORDER = [
   'enclosure_scale_mismatch', 'protocol_or_flow_mismatch', 'operator_termination_not_physical_extinction', 'cool_flame_continuation_caveat', 'planned_only_matrix',
 ];
 
-function useDebounced<T>(value: T, ms: number): T {
-  const [v, setV] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setV(value), ms);
-    return () => clearTimeout(id);
-  }, [value, ms]);
-  return v;
-}
-
-interface EngineResult {
+export interface EngineResult {
   status: Plain;
   admissible: number;
   conditional: number;
@@ -54,7 +45,13 @@ interface EngineResult {
   warnings: string[];
 }
 
-function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
+/** Browser number inputs are not a guarantee against pasted out-of-range values. */
+export function clampFlowInput(raw: string): number {
+  const value = Number(raw);
+  return Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0;
+}
+
+export function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
   const q = parseResearchQuery('', lensOverrides(l), { applyEnvironmentDefaults: false });
   const rankings = rankInvestigationsV2(q, corpus);
   const admissible = rankings.reduce((s, r) => s + r.admissibleCount, 0);
@@ -71,13 +68,10 @@ export function LensPage() {
   const { data, error: compactError } = useCompact();
   const { ensureCorpus } = useEmber();
   const [params, setParams] = useSearchParams();
-  const [corpus, setCorpus] = useState<CorpusV2 | null>(null);
-  const [corpusError, setCorpusError] = useState<string | null>(null);
   const [l, setL] = useState<LensInput>(DEFAULT);
-
-  useEffect(() => {
-    ensureCorpus().then(setCorpus, (e: unknown) => setCorpusError(String(e)));
-  }, [ensureCorpus]);
+  const [lastCheck, setLastCheck] = useState<{ signature: string; result: EngineResult } | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [checkError, setCheckError] = useState<string | null>(null);
 
   // ?mission=<id> from the map
   const missionParam = params.get('mission');
@@ -95,13 +89,30 @@ export function LensPage() {
     return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([m]) => m);
   }, [data, l.phase]);
 
-  const dl = useDebounced(l, 160);
-  const engine = useMemo(() => (corpus ? runEngine(corpus, dl) : null), [corpus, dl]);
+  const signature = JSON.stringify(l);
+  const engine = lastCheck?.signature === signature ? lastCheck.result : null;
   const nearest = useMemo(() => (data ? nearestTests(l, data.rows, 3) : []), [data, l]);
   const cliff = useMemo(() => (data ? cliffStats(data.rows) : null), [data]);
   const set = (patch: Partial<LensInput>) => setL((p) => ({ ...p, ...patch }));
   const setCustom = (patch: Partial<LensInput>) => setL((p) => ({ ...p, ...patch, missionId: 'custom' }));
-  const stale = engine !== null && dl !== l;
+
+  const checkHistoricalEvidence = async () => {
+    const scenario = l;
+    const scenarioSignature = signature;
+    setChecking(true);
+    setCheckError(null);
+    try {
+      // Evaluates records already published in NASA PSI. This DOES NOT perform
+      // a new experiment, simulation, design certification or fire prediction.
+      const corpus = await ensureCorpus();
+      const result = runEngine(corpus, scenario);
+      setLastCheck({ signature: scenarioSignature, result });
+    } catch (e) {
+      setCheckError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setChecking(false);
+    }
+  };
 
   if (!data) return <div className="v3-page">{compactError ? <div role="alert" className="v3-callout v3-callout-warn">Could not load NASA PSI data: {compactError}</div> : <Loading what="Loading NASA PSI data…" />}</div>;
   const mission = data.missions.find((m) => m.id === l.missionId);
@@ -109,9 +120,9 @@ export function LensPage() {
 
   return (
     <div className="v3-page">
-      <PageHead eyebrow="Check a cabin" title="Does NASA’s fire data cover your cabin?">
-        Pick a cabin, a task and a material. EMBER runs all {data.counts.tests.toLocaleString('en-US')} NASA test records through nine
-        applicability rules and answers in plain words: <b>Measured</b>, <b>Data nearby</b> or <b>Beyond the evidence</b>.
+      <PageHead eyebrow="Mission lens" title="Does NASA’s data cover your cabin?">
+        Select a hypothetical environment, task and material. Then check how {data.counts.tests.toLocaleString('en-US')} existing NASA PSI records
+        compare under nine applicability rules. No physical tests are run, and these results do not predict fire risk or certify safety.
       </PageHead>
 
       <div className="v3-split">
@@ -131,7 +142,24 @@ export function LensPage() {
               <span>your own values</span>
             </button>
           </div>
-          {mission?.assumption && <p className="v3-small v3-warn-text">Some values for this environment are EMBER assumptions, not NASA specifications.</p>}
+          {mission && (
+            <div className="v3-small v3-muted">
+              {mission.assumption || Object.values(mission.assumptionDetail ?? {}).some(Boolean) ? (
+                <p className="v3-warn-text">
+                  Scenario values are not all NASA operational specifications.
+                  {Object.entries(mission.assumptionDetail ?? {}).filter(([, assumed]) => assumed)
+                    .map(([field]) => field === 'flowCmS' ? 'airflow' : field === 'o2Pct' ? 'oxygen' : field === 'pressureKpa' ? 'pressure' : 'gravity')
+                    .join(', ') && (
+                    <> Assumed: {Object.entries(mission.assumptionDetail ?? {}).filter(([, assumed]) => assumed)
+                      .map(([field]) => field === 'flowCmS' ? 'airflow' : field === 'o2Pct' ? 'oxygen' : field === 'pressureKpa' ? 'pressure' : 'gravity')
+                      .join(', ')}.</>
+                  )}
+                </p>
+              ) : null}
+              {mission.flowCmS === null && <p className="v3-warn-text">NASA ventilation speed was not reported for this preset. The 0–20 cm/s input is an exploratory assumption.</p>}
+              {mission.sources.length > 0 && <p>Preset basis: <Ext href={mission.sources[0].url}>{mission.sources[0].label}</Ext>. Inspect the source before using these conditions.</p>}
+            </div>
+          )}
 
           <h2 className="v3-h3"><span className="v3-step-n">2</span> What are you checking?</h2>
           <div className="v3-seg v3-seg-wrap" role="group" aria-label="Task">
@@ -166,14 +194,18 @@ export function LensPage() {
             </label>
           </div>
 
-          <h2 className="v3-h3"><span className="v3-step-n">4</span> Fine-tune the atmosphere</h2>
+          <h2 className="v3-h3">4 · Atmosphere to check</h2>
+          <p className="v3-small v3-muted">
+            These controls define a scenario for comparison with existing records. They do not select a safe atmosphere,
+            run a combustion simulation or recommend oxygen and pressure settings.
+          </p>
           <div className="v3-slider">
             <div className="v3-slider-head">
               <label htmlFor="lens-o2"><Term k="o2">Oxygen</Term></label>
               <output htmlFor="lens-o2">{fmt(l.o2)}%</output>
             </div>
             <input id="lens-o2" type="range" min={10} max={100} step={0.5} value={l.o2} onChange={(e) => setCustom({ o2: Number(e.target.value) })} />
-            {cliff && (
+            {cliff && Number.isFinite(cliff.o2Max) && (
               <div className="v3-slider-mark" style={{ left: `${((cliff.o2Max - 10) / 90) * 100}%` }} aria-hidden>
                 <span>last solid flight test {fmt(cliff.o2Max)}%</span>
               </div>
@@ -191,11 +223,17 @@ export function LensPage() {
           <div className="v3-fields v3-fields-3">
             <label>
               <span>Airflow min, cm/s</span>
-              <input type="number" min={0} max={100} value={l.flow[0]} onChange={(e) => setCustom({ flow: [Number(e.target.value) || 0, Math.max(Number(e.target.value) || 0, l.flow[1])] })} />
+              <input type="number" min={0} max={100} value={l.flow[0]} onChange={(e) => {
+                const low = clampFlowInput(e.target.value);
+                setCustom({ flow: [low, Math.max(low, l.flow[1])] });
+              }} />
             </label>
             <label>
               <span>Airflow max, cm/s</span>
-              <input type="number" min={0} max={100} value={l.flow[1]} onChange={(e) => setCustom({ flow: [Math.min(l.flow[0], Number(e.target.value) || 0), Number(e.target.value) || 0] })} />
+              <input type="number" min={0} max={100} value={l.flow[1]} onChange={(e) => {
+                const high = clampFlowInput(e.target.value);
+                setCustom({ flow: [Math.min(l.flow[0], high), high] });
+              }} />
             </label>
             <label>
               <span><Term k="g">Gravity, g</Term></span>
@@ -206,39 +244,54 @@ export function LensPage() {
         </section>
 
         <div className="v3-stack">
-          <section className={`v3-card v3-verdict v3-verdict-${engine?.status ?? 'pending'}`} aria-live="polite">
-            {!engine ? (
-              corpusError ? (
-                <div className="v3-callout v3-callout-warn">Could not load the full corpus: {corpusError}</div>
-              ) : (
-                <Loading what="Loading the full corpus (26 MB) to run the applicability rules…" />
-              )
-            ) : (
-              <>
+          <section className="v3-card v3-verdict" aria-live="polite" aria-labelledby="lens-status-h">
+            <div className="v3-eyebrow">Historical evidence check</div>
+            <h2 id="lens-status-h" className="v3-h2">What do existing experiments tell us?</h2>
+            <p className="v3-small v3-muted">
+              Run the applicability rules against the published PSI records for the selected
+              scenario. This is a database check, not a new fire test, simulation or safety recommendation.
+            </p>
+            <div className="v3-row">
+              <button type="button" className="v3-btn v3-btn-primary" onClick={() => void checkHistoricalEvidence()}
+                disabled={checking}>
+                {checking ? 'Checking recorded experiments…' : engine ? 'Check evidence again' : 'Check historical evidence'}
+              </button>
+              <span className="v3-small v3-muted">
+                {lastCheck && !engine ? 'Scenario changed. Check again for an updated status.' :
+                  engine ? 'Checked against the current scenario.' : 'No evidence check run for these settings.'}
+              </span>
+            </div>
+            {checkError && <div className="v3-callout v3-callout-warn" role="alert">
+              Evidence check failed: {checkError}
+            </div>}
+            {engine && (
+              <div className="v3-stack" style={{ marginTop: 18 }}>
                 <div className="v3-verdict-top">
                   <div>
                     <div className="v3-muted v3-small">
-                      {l.material || `Any ${l.phase} material`} · {env} · {fmt(l.o2)}% O₂ · {fmt(l.kPa)} kPa · {fmtG(l.g)}
+                      {l.material || 'Any ' + l.phase + ' material'} · {env} · {fmt(l.o2)}% O₂ · {fmt(l.kPa)} kPa · {fmtG(l.g)}
                     </div>
                     <PlainBadge status={engine.status} large />
                   </div>
                   <div className="v3-verdict-count">
-                    <b>{engine.admissible}</b> tests apply
+                    <b>{engine.admissible}</b> matching recorded tests
                     <br />
-                    <b>{engine.conditional}</b> apply with caveats
+                    <b>{engine.conditional}</b> records with caveats
                   </div>
                 </div>
                 <p className="v3-verdict-text">{PLAIN[engine.status].short}.</p>
-                {engine.status !== 'measured' && engine.reasons.length > 0 && (
+                <p className="v3-small v3-muted">{PLAIN[engine.status].help}</p>
+                {engine.reasons.length > 0 && engine.status !== 'measured' && (
                   <ul className="v3-reasons">
-                    {engine.reasons.map((r) => (
-                      <li key={r}>{r}</li>
-                    ))}
+                    {engine.reasons.map((reason) => <li key={reason}>{reason}</li>)}
                   </ul>
                 )}
-                {engine.status === 'beyond' && <p className="v3-small v3-muted">EMBER gives no fire-risk percentage here, or anywhere. The nearest real tests are below.</p>}
-                {stale && <p className="v3-small v3-muted">Updating…</p>}
-              </>
+                {engine.warnings.length > 0 && (
+                  <div className="v3-callout v3-callout-warn">
+                    {engine.warnings.map((warning) => <p key={warning}>{warning}</p>)}
+                  </div>
+                )}
+              </div>
             )}
           </section>
 
@@ -249,6 +302,7 @@ export function LensPage() {
               small gap; orange is a large gap or unknown.
             </p>
             <div className="v3-nearest">
+              {nearest.length === 0 && <div className="v3-callout">No flight records with reported oxygen and pressure were found for this fuel phase. Unknown conditions cannot be ranked as close.</div>}
               {nearest.map((n) => (
                 <article key={n.row.testId} className="v3-near">
                   <div className="v3-near-head">
@@ -304,19 +358,19 @@ export function LensPage() {
             </section>
           )}
 
-          {engine && !stale && engine.status !== 'measured' && nearest[0] && (
+          {engine && engine.status !== 'measured' && nearest[0] && (
             <section className="v3-card v3-next" aria-labelledby="next-h">
-              <div className="v3-eyebrow">Next experiment</div>
-              <h2 id="next-h" className="v3-h2">The flight test that would shrink this gap most</h2>
+              <div className="v3-eyebrow">Research gap · not a test protocol</div>
+              <h2 id="next-h" className="v3-h2">Evidence still needed for this scenario</h2>
               <p>
-                Burn <b>{l.material || nearest[0].row.fuel || `a ${l.phase} sample`}</b> at <b>{fmt(l.o2)}% O₂ and {fmt(l.kPa)} kPa</b>
-                {l.flow[1] > 0 ? <>, with airflow across {l.flow[0]}–{l.flow[1]} cm/s,</> : ''} in microgravity first, using the same kind of flow
-                duct as {nearest[0].row.inv}. Today the nearest flown test is {nearest[0].row.testId} at {fmt(nearest[0].row.o2)}% O₂ and{' '}
-                {fmt(nearest[0].row.kPa)} kPa.
-                {l.g > 0.01 && <> A test at {fmtG(l.g)} would then be needed too: no partial-gravity combustion flight data exist in PSI.</>}
+                The nearest recorded {l.phase}-fuel test, <b>{nearest[0].row.testId}</b> ({nearest[0].row.inv}),
+                used <b>{fmt(nearest[0].row.o2)}% O₂</b> and <b>{fmt(nearest[0].row.kPa)} kPa</b>,
+                whereas your scenario specifies <b>{fmt(l.o2)}% O₂</b> and <b>{fmt(l.kPa)} kPa</b>.
+                {l.g > 0.01 && <> The scenario is at {fmtG(l.g)}, which existing microgravity flight records cannot directly validate.</>}
               </p>
               <p className="v3-small v3-muted">
-                Derived from the gap between your conditions and the nearest record; it is a pointer to missing data, not a test plan.
+                This identifies missing experimental coverage; it is not a proposed burn procedure, validated protocol,
+                or proof that any material is safe or unsafe.
               </p>
             </section>
           )}

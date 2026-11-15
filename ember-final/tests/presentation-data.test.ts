@@ -53,6 +53,7 @@ describe('public evidence presentation provenance', () => {
       record('assumed-pressure', { o2: 21, kPa: 40, kPaProv: 'assumed' }),
     ];
     const stats = cliffStats(rows);
+    if (!stats) throw new Error('Expected populated solid-material flight subset');
     expect(stats.solidFlight).toBe(3);
     expect(stats.kPaMin).toBe(98.3);
     expect(stats.kPaMax).toBe(101.3);

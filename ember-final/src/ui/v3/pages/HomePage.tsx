@@ -65,94 +65,63 @@ export function HomePage() {
   }, [step, touched]);
 
   const lunar = data?.missions.filter((m) => m.id === 'lunar-base' || m.id === 'lunar-rover') ?? [];
-  const lunarO2 = lunar.map((m) => m.o2Pct ?? 0);
-  const lunarP = lunar.map((m) => m.pressureKpa ?? 0);
-  const plotted = data ? data.rows.filter((r) => r.o2 !== null && r.kPa !== null && r.kPa <= 120).length : 0;
-  const apollo = data?.history[0];
-  const pick = (id: string) => nav(`/lens?mission=${encodeURIComponent(id)}`);
+  const lunarO2 = lunar.flatMap((m) => m.o2Pct === null ? [] : [m.o2Pct]);
+  const lunarP = lunar.flatMap((m) => m.pressureKpa === null ? [] : [m.pressureKpa]);
 
   return (
-    <div className="v3-page v3-home">
-      <section className="v3-hero3d" aria-label="The evidence in 3D">
-        {data && cliff ? (
-          webgl && !failed ? (
-            <Suspense fallback={<div className="v3-hero3d-canvas" />}>
-              <EvidenceSpace rows={data.rows} missions={data.missions} cliff={cliff} step={step} onPickMission={(m) => pick(m.id)} onFail={() => setFailed(true)} />
-            </Suspense>
-          ) : (
-            <div className="v3-hero3d-fallback">
-              <EvidenceMap rows={data.rows} investigations={data.investigations} missions={data.missions} cliff={cliff} phase="solid" compact onPickMission={(m) => pick(m.id)} />
-            </div>
-          )
-        ) : (
-          <div className="v3-hero3d-canvas" />
-        )}
-
-        <div className="v3-hero3d-copy">
-          <div className="v3-eyebrow">NASA Space Apps 2026 · Flame in Freefall</div>
-          <h1>
-            No NASA flight test has burned a solid material above <span className="cliff">{cliff ? `${fmt(cliff.o2Max)}%` : '22.7%'}</span> oxygen
-          </h1>
+    <div className="v3-page">
+      <section className="v3-hero">
+        <div className="v3-eyebrow">NASA Space Apps 2026 · Flame in Freefall</div>
+        <h1>
+          NASA’s spaceflight fire evidence, together. <em>And the line where it ends.</em>
+        </h1>
+        {cliff ? (
           <p className="v3-hero-lede">
-            Lunar cabins are planned at{' '}
-            <strong>
-              {lunar.length ? `${Math.min(...lunarO2)}–${Math.max(...lunarO2)}%` : '30–34%'} <Term k="o2">O₂</Term>
-            </strong>{' '}
-            and{' '}
-            <strong>
-              {lunar.length ? `${Math.min(...lunarP)}–${Math.max(...lunarP)}` : '56.5–70.3'} <Term k="kpa">kPa</Term>
-            </strong>
-            . EMBER puts every fire experiment in NASA’s <Term k="psi">PSI</Term> database in one place and shows where the evidence ends for your cabin.
+            In the reviewed NASA PSI corpus, {cliff.solidFlight} solid-material flight-test records with reported oxygen
+            stop at <strong>{fmt(cliff.o2Max)}% O₂</strong>. Where pressure is reported,
+            these records lie between {fmt(cliff.kPaMin)} and {fmt(cliff.kPaMax)} kPa where reported.
+            {lunarO2.length && lunarP.length ? (
+              <> The selected lunar design scenarios use <strong>{Math.min(...lunarO2)}–{Math.max(...lunarO2)}% O₂ at {Math.min(...lunarP)}–{Math.max(...lunarP)} kPa</strong>;
+              rover values are exploratory, not a published vehicle specification.</>
+            ) : null}
+            {' '}EMBER compares these historical records with a scenario. It does not run a new fire test.
           </p>
-          <div className="v3-row v3-hero-cta">
-            <Link to="/lens" className="v3-btn v3-btn-primary v3-btn-lg">
-              Check a cabin
-            </Link>
-            <Link to="/map" className="v3-btn v3-btn-lg">
-              Open the evidence map
-            </Link>
-          </div>
-        </div>
-
-        <div className="v3-hero3d-steps" role="group" aria-label="Walk through the evidence">
-          {STEPS.map((s, i) => (
-            <button
-              key={s.title}
-              type="button"
-              className={`v3-hero3d-step${s.cliff ? ' cliff' : ''}`}
-              aria-pressed={step === i}
-              onClick={() => {
-                setTouched(true);
-                setStep(i as SpaceStep);
-              }}
-            >
-              <i>{i + 1}</i>
-              <b>{s.title}</b>
-              <span>{s.body(plotted.toLocaleString('en-US'), cliff ? fmt(cliff.o2Max) : '22.7')}</span>
-            </button>
-          ))}
-        </div>
-
-        {webgl && !failed && (
-          <div className="v3-hero3d-legend" aria-label="Legend">
-            <span>
-              <i style={{ background: 'var(--v3-solid)' }} /> Solid material test
-            </span>
-            <span>
-              <i style={{ background: 'var(--v3-liquid)' }} /> Liquid droplet test
-            </span>
-            <span>
-              <i style={{ background: 'var(--v3-gas)' }} /> Gas flame test
-            </span>
-            <span>
-              <i className="ring" /> Planned cabin
-            </span>
-            <span>
-              <i className="wall" /> Evidence cliff
-            </span>
-            <div className="v3-hero3d-hint">Drag to rotate · click a cabin</div>
-          </div>
+        ) : (
+          <p className="v3-hero-lede">{error ? 'The evidence is currently unavailable.' : 'Loading the evidence…'}</p>
         )}
+        <div className="v3-row v3-hero-cta">
+          <Link to="/map" className="v3-btn v3-btn-primary">
+            Open the evidence map
+          </Link>
+          <Link to="/lens" className="v3-btn">
+            Check historical test coverage
+          </Link>
+          <Link to="/ask" className="v3-btn v3-btn-ghost">
+            Ask EMBER →
+          </Link>
+        </div>
+
+      <section className="v3-stage" aria-labelledby="v3-stage-title">
+        <div className="v3-stage-header">
+          <div>
+            <div className="v3-eyebrow">Interactive concept · 1 g versus microgravity</div>
+            <h2 id="v3-stage-title">How gravity changes a flame</h2>
+            <p>Compare buoyant flow on Earth with the near-weightless environment of orbit.</p>
+          </div>
+          <a href="./intro.html" target="_blank" rel="noopener noreferrer" className="v3-btn">
+            Explore full presentation ↗
+          </a>
+        </div>
+        <iframe
+          src="./intro.html?embed=1"
+          title="Interactive 3D chamber: compare fire at Earth gravity and microgravity"
+          loading="lazy"
+          allow="fullscreen"
+        />
+        <div className="v3-stage-note">
+          <span>Drag to orbit · Conceptual 3D illustration, not a physical simulation or a safety prediction.</span>
+          <Link to="/map">Explore the actual NASA flight evidence →</Link>
+        </div>
       </section>
 
       <div className="v3-wrap">
@@ -192,43 +161,22 @@ export function HomePage() {
                   <p>A cabin fire in pure oxygen killed three astronauts on the pad. NASA lowered cabin oxygen and changed materials.</p>
                   {apollo?.sources[0] && <Ext href={apollo.sources[0].url}>{apollo.sources[0].label}</Ext>}
                 </article>
-                <article>
-                  <time>ISS era</time>
-                  <div className="fig">
-                    {fmt(cliff.o2Min)}–{fmt(cliff.o2Max)}%
-                  </div>
-                  <h3>What has been flight-tested</h3>
-                  <p>
-                    {cliff.solidFlight} solid-material flight tests with measured oxygen, all near sea-level pressure ({Math.round(cliff.kPaMin)}–
-                    {Math.round(cliff.kPaMax)} kPa) and all in <Term k="ug">microgravity</Term>.
-                  </p>
-                </article>
-                <article className="now">
-                  <time>Artemis and beyond</time>
-                  <div className="fig">
-                    {lunar.length ? `${Math.min(...lunarO2)}–${Math.max(...lunarO2)}%` : '30–34%'}
-                  </div>
-                  <h3>What lunar cabins plan</h3>
-                  <p>
-                    Higher oxygen at lower pressure, in 1/6 g. No solid-material flight test overlaps these conditions. That gap is what EMBER makes
-                    visible.
-                  </p>
-                </article>
-              </div>
-            </section>
+              ))}
+            </div>
+          </section>
 
-            <section className="v3-section">
-              <div className="v3-section-head">
-                <h2 className="v3-h2">What you can do here</h2>
-                <p>Three tools, all running in your browser on NASA data. No login, no API key.</p>
-              </div>
-              <div className="v3-tools">
-                <Link to="/lens" className="v3-tool">
-                  {Icon.cabin}
-                  <b>Check a cabin</b>
-                  Pick the ISS, a lunar rover or your own atmosphere and a material. EMBER answers Measured, Data nearby or Beyond the evidence, and lists
-                  the nearest real tests.
-                  <span className="go">Check a cabin →</span>
+          <section className="v3-section">
+            <h2 className="v3-h2">Two minutes for an engineer</h2>
+            <ol className="v3-steps">
+              <li>
+                <Link to="/map">
+                  <b>See the map.</b> The plotted PSI records with oxygen and pressure data, alongside labeled mission scenarios. Some records lack plottable values.
+                </Link>
+              </li>
+              <li>
+                <Link to="/lens">
+                  <b>Pick a scenario and material.</b> Explicitly check existing records for <i>Historical match</i>, <i>Related records</i> or{' '}
+                  <i>No matching flight test</i>—never a fire-risk percentage or safety certification.
                 </Link>
                 <Link to="/map" className="v3-tool">
                   {Icon.map}

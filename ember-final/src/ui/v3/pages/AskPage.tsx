@@ -4,7 +4,8 @@ import type { AnswerBoundary, CorpusV2, Review } from '../../../core';
 import { createReview } from '../../apiClient';
 import { useEmber } from '../../context/EmberContext';
 import { invColor } from '../EvidenceMap';
-import { fmt, fmtG, outcomeText } from '../data';
+import { fmt, fmtG, outcomeText, useCompact } from '../data';
+import { safeExternalHost } from '../../safeUrl';
 import { Ext, Loading, PageHead } from '../ui';
 
 type Citation =
@@ -42,9 +43,10 @@ const BOUNDARY: Record<AnswerBoundary, { label: string; cls: string; help: strin
 const strip = (t: string) => t.replace(/\s*\[[^\]]+\]/g, '').trim();
 
 /** Turns an in-browser review into the same shape as the pre-computed answers. */
-function fromReview(question: string, review: Review, corpus: CorpusV2 | null): Answer {
+export function fromReview(question: string, review: Review, corpus: CorpusV2 | null): Answer {
   const s = review.synthesis;
-  const live = s.mode === 'LIVE_AI';
+  // Never present unverified model text as verified scientific evidence.
+  const live = s.mode === 'LIVE_AI' && review.verification.passed;
   const items = (list: Review['synthesis']['observedFact']) => list.map((c) => ({ text: strip(c.text), citations: c.citations, provenance: c.provenance }));
   const ids = live
     ? [...new Set([...s.observedFact, ...s.authorInterpretation, ...s.engineeringImplication].flatMap((c) => c.citations))]
@@ -189,7 +191,7 @@ function AnswerView({ a }: { a: Answer }) {
             {c.kind === 'test' ? (
               <>
                 <span className="v3-swatch" style={{ background: invColor(c.inv) }} /> <b>{c.inv} · {c.id.replace(/^chk-test-/, '')}</b> — {c.fuel ?? 'material not reported'},{' '}
-                {fmt(c.o2)}% O₂, {fmt(c.pressureKpa)} kPa, {c.flowCmS === null ? 'airflow not reported' : `${fmt(c.flowCmS)} cm/s`}, {fmtG(c.gravityG ?? 0)}:{' '}
+                {fmt(c.o2)}% O₂, {fmt(c.pressureKpa)} kPa, {c.flowCmS === null ? 'airflow not reported' : `${fmt(c.flowCmS)} cm/s`}, {c.gravityG === null ? 'gravity not reported' : fmtG(c.gravityG)}:{' '}
                 <i>{outcomeText(c.outcome, c.terminal)}</i>.
                 {c.note && <div className="v3-quote">“{c.note}”</div>}
                 <div className="v3-small v3-muted">
@@ -207,7 +209,7 @@ function AnswerView({ a }: { a: Answer }) {
                 {c.text && <div>{c.text}</div>}
                 {c.quote && <div className="v3-quote">“{c.quote}”</div>}
                 <div className="v3-small v3-muted">
-                  <Ext href={c.url}>{c.url ? new URL(c.url).hostname.replace('www.', '') : 'source'}</Ext>
+                  <Ext href={c.url}>{safeExternalHost(c.url) ?? 'source'}</Ext>
                   {c.status !== 'observed' && <> · {c.status.replace(/_/g, ' ')}</>}
                 </div>
               </>
@@ -228,6 +230,7 @@ export function AskPage() {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const { ensureCorpus } = useEmber();
+  const { data: compact } = useCompact();
 
   useEffect(() => {
     fetch('./data/ask_answers.json')
@@ -241,6 +244,7 @@ export function AskPage() {
     if (q.length < 8) return;
     setBusy(true);
     setNote(null);
+    setCustom(null);
     try {
       const { snapshot, meta } = await createReview({ question: q, useLiveAi: true, title: q.slice(0, 72) });
       const corpus = await ensureCorpus().catch(() => null);
@@ -257,7 +261,8 @@ export function AskPage() {
     }
   }
 
-  const current = custom ?? file?.answers.find((a) => a.id === selected) ?? null;
+  const staleAnswers = Boolean(file && compact && file.corpusVersion !== compact.corpusVersion);
+  const current = custom ?? (staleAnswers ? null : file?.answers.find((a) => a.id === selected)) ?? null;
 
   return (
     <div className="v3-page">
@@ -284,7 +289,8 @@ export function AskPage() {
         <nav className="v3-card v3-qlist" aria-label="Checked questions">
           <h2 className="v3-h3">Ten checked answers</h2>
           <p className="v3-small v3-muted">Pre-computed for this static site, so they work without a server or API key.</p>
-          {error && <p className="v3-small">Could not load the answers ({error}).</p>}
+          {error && <p role="alert" className="v3-small v3-warn-text">Could not load the answers ({error}).</p>}
+          {staleAnswers && <p role="alert" className="v3-small v3-warn-text">These cached answers were generated for a different corpus version. They are hidden until regenerated.</p>}
           {!file && !error && <Loading what="Loading…" />}
           {file?.answers.map((a) => (
             <button
@@ -311,7 +317,11 @@ export function AskPage() {
           )}
         </nav>
         <div>
-          {current ? <AnswerView a={current} /> : file ? null : <Loading what="Loading answers…" />}
+          {current ? <AnswerView a={current} /> : staleAnswers ? (
+            <div className="v3-callout v3-callout-warn" role="alert">Cached answers do not match the current PSI corpus. Ask a question to run a fresh local review, or regenerate the cached answers.</div>
+          ) : error ? (
+            <div className="v3-callout v3-callout-warn" role="alert">The cached answers are unavailable. You can still ask a new question.</div>
+          ) : file ? null : <Loading what="Loading answers…" />}
           <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
             Want every rule decision behind an answer? <Link to="/review">Open the full scientific review</Link>.
           </p>

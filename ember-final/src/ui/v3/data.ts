@@ -114,8 +114,10 @@ export interface Cliff {
 }
 
 /** "Evidence cliff": solid-material flight tests with a reported (not assumed) oxygen value. */
-export function cliffStats(rows: Row[]): Cliff {
+export function cliffStats(rows: Row[]): Cliff | null {
   const solid = rows.filter((r) => r.phase === 'solid' && r.o2 !== null && r.o2Prov !== 'assumed' && r.gravityMode === 'actual_flight');
+  // Zero matching flight records is NOT evidence for an O2=0% threshold.
+  if (solid.length === 0) return null;
   const withP = solid.filter((r) => r.kPa !== null && r.kPaProv !== 'assumed');
   const above = solid.filter((r) => (r.o2 ?? 0) > 22.5);
   const gas = rows.filter((r) => r.phase === 'gas' && r.o2 !== null && r.o2Prov !== 'assumed');
@@ -123,12 +125,12 @@ export function cliffStats(rows: Row[]): Cliff {
     solidFlight: solid.length,
     o2Min: Math.min(...solid.map((r) => r.o2 as number)),
     o2Max: Math.max(...solid.map((r) => r.o2 as number)),
-    kPaMin: Math.min(...withP.map((r) => r.kPa as number)),
-    kPaMax: Math.max(...withP.map((r) => r.kPa as number)),
+    kPaMin: withP.length ? Math.min(...withP.map((r) => r.kPa as number)) : Number.NaN,
+    kPaMax: withP.length ? Math.max(...withP.map((r) => r.kPa as number)) : Number.NaN,
     above225: above.length,
     above225Inv: [...new Set(above.map((r) => r.inv))],
     assumedSmoke: rows.filter((r) => r.phase === 'solid' && r.o2Prov === 'assumed').length,
-    gasMaxO2: Math.max(...gas.map((r) => r.o2 as number)),
+    gasMaxO2: gas.length ? Math.max(...gas.map((r) => r.o2 as number)) : Number.NaN,
   };
 }
 
@@ -148,7 +150,7 @@ export const TASKS: { id: Task; label: string; hint: string }[] = [
   { id: 'material_screening', label: 'Prevent', hint: 'Will this material burn and spread?' },
   { id: 'smoke_detection', label: 'Detect', hint: 'What smoke does it make?' },
   { id: 'fire_suppression', label: 'Suppress', hint: 'What puts the flame out?' },
-  { id: 'atmosphere_selection', label: 'Choose the atmosphere', hint: 'How do O₂ and pressure change it?' },
+  // Atmosphere coverage is controlled by the oxygen/pressure inputs below; it cannot select a safe atmosphere.
 ];
 
 export interface LensInput {
@@ -168,7 +170,9 @@ const ENV: Record<string, ResearchQuery['habitableEnvironment']> = {
 
 export function lensFromMission(m: Mission, prev: LensInput): LensInput {
   const f = m.flowCmS;
-  const flow: [number, number] = Array.isArray(f) ? [f[0], f[1]] : typeof f === 'number' ? [f, f] : prev.flow;
+  // Missing ventilation speed must not silently inherit the previous mission's values.
+  // The form will mark this [0, 20] exploratory range as an assumption.
+  const flow: [number, number] = Array.isArray(f) ? [f[0], f[1]] : typeof f === 'number' ? [f, f] : [0, 20];
   return { ...prev, missionId: m.id, o2: m.o2Pct ?? prev.o2, kPa: m.pressureKpa ?? prev.kPa, flow, g: m.gravityG ?? prev.g };
 }
 
@@ -236,7 +240,8 @@ export function nearestTests(l: LensInput, rows: Row[], k = 3): Nearest[] {
   const out: Nearest[] = [];
   for (const s of scored) {
     // skip exact repeats of the same condition so three different tests are shown
-    const key = `${s.row.inv}|${s.row.fuel}|${s.row.o2}|${s.row.kPa}|${s.row.flow}`;
+    // Do not collapse opposing outcomes from experiments at identical conditions.
+    const key = `${s.row.inv}|${s.row.fuel}|${s.row.o2}|${s.row.kPa}|${s.row.flow}|${s.row.outcome}|${s.row.terminal}`;
     if (seen.has(key)) continue;
     seen.add(key);
     out.push({ ...s, gaps: gapsFor(l, s.row) });
@@ -276,7 +281,8 @@ export function gapsFor(l: LensInput, r: Row): AxisGap[] {
 }
 
 export function fmtG(g: number): string {
-  return g <= 0.01 ? '0 g' : `${g.toFixed(g < 1 ? 3 : 0).replace(/0+$/, '').replace(/\.$/, '')} g`;
+  if (g === 0) return '0 g';
+  return `${g.toLocaleString('en-US', { maximumFractionDigits: g < 1 ? 3 : 1 })} g`;
 }
 
 // ------------------------------------------------------------------ plain language
@@ -284,9 +290,9 @@ export function fmtG(g: number): string {
 export type Plain = 'measured' | 'nearby' | 'beyond';
 
 export const PLAIN: Record<Plain, { label: string; short: string; help: string }> = {
-  measured: { label: 'Measured', short: 'Real flight tests match these conditions', help: 'At least one NASA flight test passes every applicability rule for these conditions.' },
-  nearby: { label: 'Data nearby', short: 'Close tests exist, with caveats', help: 'Tests are close, but at least one rule needs a caveat (for example assumed atmosphere or a gravity gap).' },
-  beyond: { label: 'Beyond the evidence', short: 'No NASA flight test covers this', help: 'No flight test in PSI passes the applicability rules. The outcome is not established by the data.' },
+  measured: { label: 'Historical match', short: 'Existing NASA records pass the applicability rules for this question', help: 'This identifies previously recorded matching tests. It does not certify a spacecraft design or predict a new fire.' },
+  nearby: { label: 'Related records', short: 'Related tests exist but require caveats', help: 'Existing tests are relevant, but at least one rule has a caveat such as assumed atmosphere or a gravity gap.' },
+  beyond: { label: 'No matching flight test', short: 'No existing flight-test record passes the applicability rules', help: 'This is a comparison to historical PSI data, not the result of a newly performed test. It cannot establish a combustion outcome.' },
 };
 
 const OUTCOME_TEXT: Record<string, string> = {

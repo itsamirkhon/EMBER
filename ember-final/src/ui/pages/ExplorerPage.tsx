@@ -26,10 +26,13 @@ export function ExplorerPage() {
   const [phaseFilter, setPhaseFilter] = useState('');
   const [epistemicFilter, setEpistemicFilter] = useState('');
   const [platformFilter, setPlatformFilter] = useState('');
+  const [corpusError, setCorpusError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!corpus) {
-      void ensureCorpus();
+      void ensureCorpus().catch((error: unknown) =>
+        setCorpusError(error instanceof Error ? error.message : String(error)),
+      );
     }
   }, [corpus, ensureCorpus]);
 
@@ -97,7 +100,7 @@ export function ExplorerPage() {
         <div>
           <h1>The {investigations.length} NASA investigations</h1>
           <p className="page-lead">
-            Ranked for the current question: <span className="mono">{activeQuery.rawQuestion.slice(0, 96)}{activeQuery.rawQuestion.length > 96 ? '…' : ''}</span>. Three separate scales: does it answer the question, do its tests match the conditions, how reliable is the data.
+            {activeSnapshot ? 'Ranked for the selected saved review' : 'Example ranking (no review selected)'}: <span className="mono">{activeQuery.rawQuestion.slice(0, 96)}{activeQuery.rawQuestion.length > 96 ? '…' : ''}</span>. Three separate scales: does it answer the question, do its tests match the conditions, how reliable is the data.
           </p>
         </div>
         <Link to="/review" className="btn btn-sm">
@@ -105,6 +108,9 @@ export function ExplorerPage() {
         </Link>
       </div>
 
+      {corpusError && <div className="banner banner-danger" role="alert">Investigation rankings unavailable: {corpusError}. Search and source links may still work.</div>}
+      {!investigationsLoading && investigations.length === 0 &&
+        <div className="banner banner-warn" role="alert">No investigation records loaded. Check the NASA PSI data bundle and retry.</div>}
       <search className="card" aria-label="Filter NASA PSI Investigations">
         <div className="field-grid">
           <div className="field">

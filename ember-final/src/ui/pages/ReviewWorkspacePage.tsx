@@ -45,7 +45,7 @@ const SAFETY_TASKS: Array<{ id: SafetyTask; label: string }> = [
   { id: 'ventilation_setting', label: 'Ventilation Setting' },
   { id: 'smoke_detection', label: 'Smoke Detection' },
   { id: 'fire_suppression', label: 'Fire Suppression' },
-  { id: 'atmosphere_selection', label: 'Atmosphere Selection' },
+  { id: 'atmosphere_selection', label: 'Atmosphere Evidence Coverage (not a safety recommendation)' },
   { id: 'general_comparison', label: 'General Scientific Comparison' },
 ];
 

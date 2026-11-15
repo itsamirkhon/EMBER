@@ -24,9 +24,10 @@ export function MapPage() {
       <PageHead eyebrow="Evidence map" title="Where NASA’s fire data ends">
         {cliff ? (
           <>
-            Every microgravity fire test in NASA <Term k="psi">PSI</Term>, placed by <Term k="o2">oxygen</Term> and <Term k="kpa">pressure</Term>. The {cliff.solidFlight} solid-material flight tests with measured oxygen
-            sit between {fmt(cliff.o2Min)}% and {fmt(cliff.o2Max)}% O₂ near sea-level pressure. The cabins planned for the Moon and Mars are off
-            to the right, past the <Term k="cliff">evidence cliff</Term>.
+            This chart groups the NASA PSI flight records with available oxygen and pressure values; it omits records
+            where either value is unknown. Among {cliff.solidFlight} solid-material flight-test records with reported oxygen,
+            the range is {fmt(cliff.o2Min)}–{fmt(cliff.o2Max)}% O₂. The mission markers are documented scenarios,
+            not new tests or universal spacecraft specifications.
           </>
         ) : null}
       </PageHead>
@@ -47,6 +48,11 @@ export function MapPage() {
               </div>
               <span className="v3-muted v3-small">Hover a mark for details · click a cabin to check it</span>
             </div>
+            <p className="v3-small v3-muted">
+              Chart coverage: {data.rows.filter((row) => row.o2 !== null && row.kPa !== null && row.gravityMode === 'actual_flight').length.toLocaleString('en-US')}
+              {' '}of {data.counts.tests.toLocaleString('en-US')} indexed records have plottable O₂ and pressure.
+              Assumed values are drawn hollow; missing values are excluded, not set to zero.
+            </p>
             <MapLegend investigations={data.investigations} phase={phase} highlight={highlight} onHighlight={setHighlight} />
             <EvidenceMap
               rows={data.rows}

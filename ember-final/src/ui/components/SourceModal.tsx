@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type MouseEvent } from 'react';
 import { getSourceDetail, type SourceDetail } from '../apiClient';
 import { useEmber } from '../context/EmberContext';
 import { StatusPill } from './StatusPill';
+import { safeExternalUrl } from '../safeUrl';
 
 export function SourceModal() {
   const { sourceModal, closeSourceModal } = useEmber();
@@ -148,8 +149,8 @@ export function SourceModal() {
             ) : null}
 
             <div className="pill-row">
-              {detail.url ? (
-                <a href={detail.url} target="_blank" rel="noreferrer noopener" className="btn btn-sm">
+              {safeExternalUrl(detail.url) ? (
+                <a href={safeExternalUrl(detail.url) ?? undefined} target="_blank" rel="noreferrer noopener" className="btn btn-sm">
                   Open External Source URI
                 </a>
               ) : null}
