@@ -1,4 +1,5 @@
 import {currentEvaluation} from '../core/evaluationVersion';
+import { readSseData, type ReviewProgress } from '../core/reviewStream';
 import {
   ENGINE_VERSION,
   exportFormatters,
@@ -238,6 +239,7 @@ async function fetchApiJson<T>(url: string, init?: RequestInit): Promise<ApiEnve
       },
     });
   } catch (err) {
+    if (init?.signal?.aborted) throw err;
     throw new ApiUnavailableError(err instanceof Error ? err.message : 'Network error');
   }
 
@@ -587,12 +589,43 @@ export async function getReviewSnapshot(reviewId: string): Promise<{ snapshot: S
   }
 }
 
-export async function createReview(params: CreateReviewParams): Promise<{ snapshot: SavedReviewSnapshot; meta: ClientMeta }> {
+export async function createReview(params: CreateReviewParams, onProgress?: (event: ReviewProgress) => void, signal?: AbortSignal): Promise<{ snapshot: SavedReviewSnapshot; meta: ClientMeta }> {
   try {
-    const env = await fetchApiJson<SavedReviewSnapshot>('/api/reviews', {
-      method: 'POST',
-      body: JSON.stringify(params),
-    });
+    let env: ApiEnvelope<SavedReviewSnapshot>;
+    if (onProgress) {
+      let response: Response;
+      try {
+        response = await fetch('/api/reviews', { method: 'POST', headers: { Accept: 'text/event-stream', 'Content-Type': 'application/json' }, body: JSON.stringify(params), signal });
+      } catch (error) {
+        if (signal?.aborted) throw error;
+        throw new ApiUnavailableError('Review API is unreachable');
+      }
+      const contentType = response.headers.get('content-type') ?? '';
+      if ([404, 405].includes(response.status) || (!contentType.includes('application/json') && !contentType.includes('text/event-stream'))) throw new ApiUnavailableError('Streaming API unavailable');
+      if (contentType.includes('text/event-stream')) {
+        if (!response.ok || !response.body) throw new Error('Could not start the review stream');
+        let result: ApiEnvelope<SavedReviewSnapshot> | undefined;
+        for await (const data of readSseData(response.body)) {
+          const event = JSON.parse(data);
+          if (event.type === 'error') throw new Error(event.message ?? 'Review stream interrupted');
+          if (event.type === 'result') result = event.envelope;
+          else if (event.type === 'stage' || event.type === 'claim') onProgress(event);
+        }
+        if (!result) throw new Error('Review stream interrupted before the final checks completed. Please retry.');
+        env = result;
+      } else {
+        // Older API servers still return a complete JSON envelope.
+        env = await response.json();
+      }
+      if (env.status === 'error') throw new Error(env.error?.message ?? 'Review failed');
+      lastBackendMode = 'node_api';
+    } else {
+      env = await fetchApiJson<SavedReviewSnapshot>('/api/reviews', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        signal,
+      });
+    }
     if (!env.data) throw new Error('Empty response from /api/reviews');
     return { snapshot: env.data, meta: { backendSource: 'node_api', warnings: env.warnings } };
   } catch (err) {

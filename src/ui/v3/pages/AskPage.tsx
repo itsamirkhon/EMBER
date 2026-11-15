@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import type { AnswerBoundary, CorpusV2, Review, SourceRef } from '../../../core';
+import { parseResearchQuery, type AnswerBoundary, type CorpusV2, type Review, type SourceRef, type Test, type ResearchQuery } from '../../../core';
+import { asksForEffect } from '../../../core/answerEvidence';
+import { EvidenceComparison, nearestEvidenceTests } from '../AnswerEvidence';
+import type { ReviewProgress } from '../../../core/reviewStream';
 import { isResearchQuestion, QUESTION_SCOPE_REPLY } from '../../../core/questionScope';
 import { createReview } from '../../apiClient';
 import { useEmber } from '../../context/EmberContext';
@@ -30,6 +33,11 @@ interface Answer {
   gaps: string[];
   citations: Citation[];
   checks: string[];
+  tests?: Test[];
+  nearby?: boolean;
+  query?: ResearchQuery;
+  summary?: Item;
+  reviewId?: string;
 }
 
 interface AnswerFile { generatedAt: string; corpusVersion: string; engineVersion: string; retrieval: string; answers: Answer[] }
@@ -54,8 +62,22 @@ export function fromReview(question: string, review: Review, corpus: CorpusV2 | 
     : review.evidencePackage.evidenceChunks.slice(0, 6).map((c) => c.chunkId);
   const claimById = new Map(corpus?.claims.map((c) => [c.id, c]) ?? []);
   const sourceById = new Map(corpus?.sources.map((x) => [x.sourceId, x]) ?? []);
-  const testById = new Map(corpus?.tests.map((t) => [t.testId, t]) ?? []);
-  const chunkRef = new Map(review.evidencePackage.evidenceChunks.map((c) => [c.chunkId, c]));
+  const pool = corpus?.tests ?? review.evidencePackage.evaluatedTests ?? [];
+  const testById = new Map(pool.map((t) => [t.testId, t]));
+  const hits = review.evidencePackage.retrievedHits ?? [];
+  const citedTests = [...new Map(ids.flatMap(id => {
+    const tid = hits.find(h => h.chunk.chunkId === id)?.chunk.testId ?? id.replace(/^chk-test-/, '');
+    const test = testById.get(tid);
+    return test ? [[test.testId, test] as const] : [];
+  })).values()];
+  const query = review.query ?? parseResearchQuery(question);
+  const nearby = s.answerBoundary === 'insufficient_data' || !live || !citedTests.length;
+  const tests = nearby ? nearestEvidenceTests(query, pool) : citedTests;
+  for (const t of tests) if (!ids.some(id => id === t.testId || id === `chk-test-${t.testId}`)) ids.push(t.testId);
+  const chunkRef = new Map<string, { sourceRef: SourceRef; inv: string | null }>([
+    ...hits.map(h => [h.chunk.chunkId, h.chunk] as const),
+    ...review.evidencePackage.evidenceChunks.map(c => [c.chunkId, c] as const),
+  ]);
   const citations: Citation[] = [];
   for (const id of ids) {
     const tid = id.startsWith('chk-test-') ? id.slice(9) : id;
@@ -69,22 +91,24 @@ export function fromReview(question: string, review: Review, corpus: CorpusV2 | 
       });
       continue;
     }
-    if (id.startsWith('chk-claim-')) {
-      const c = claimById.get(id.slice(10));
+    if (id.startsWith('chk-claim-') || id.startsWith('c-')) {
+      const c = claimById.get(id.replace(/^chk-claim-/, ''));
       if (c) {
         citations.push({ id, kind: 'source', title: `Claim ${c.id} · ${c.inv ?? ''}`, text: c.text, quote: c.sourceRef.quote ?? null, url: c.sourceRef.url, inv: c.inv, status: c.epistemicStatus });
         continue;
       }
     }
     const ref = chunkRef.get(id)?.sourceRef;
+    if (!ref) continue;
     const src = ref ? sourceById.get(ref.sourceId) : undefined;
-    citations.push({ id, kind: 'source', title: src?.title ?? ref?.sourceId ?? id, text: ref?.quote ?? '', quote: null, url: ref?.url ?? null, inv: chunkRef.get(id)?.inv ?? null, status: 'observed' });
+    const chunk = hits.find(h => h.chunk.chunkId === id)?.chunk;
+    citations.push({ id, kind: 'source', title: src?.title ?? ref.sourceId, text: ref.quote ?? chunk?.text ?? '', quote: null, url: ref.url ?? null, inv: chunkRef.get(id)?.inv ?? null, status: chunk?.epistemicStatus ?? 'unknown' });
   }
   return {
     id: review.envelope.runId,
     scenario: 'Your question',
     question,
-    boundary: s.answerBoundary,
+    boundary: s.answerBoundary === 'sufficient_observed' && asksForEffect(question) ? 'conditional_or_partial' : s.answerBoundary,
     mode: live ? 'live' : 'in_browser',
     model: live ? s.modelName ?? null : null,
     observed: live ? items(s.observedFact) : [],
@@ -94,6 +118,8 @@ export function fromReview(question: string, review: Review, corpus: CorpusV2 | 
     gaps: review.evidencePackage.gaps.slice(0, 4),
     citations,
     checks: live && review.verification.passed ? ['citations resolve', 'numbers and units', 'observed vs planned', 'constraints kept', 'lexical support'] : [],
+    tests, nearby, query,
+    summary: live ? items(s.engineeringImplication.length ? s.engineeringImplication.slice(0, 1) : s.observedFact.slice(0, 1))[0] : undefined,
   };
 }
 
@@ -111,7 +137,7 @@ function CiteChips({ ids, index }: { ids: string[]; index: Map<string, number> }
   );
 }
 
-function AnswerView({ a }: { a: Answer }) {
+export function AnswerView({ a }: { a: Answer }) {
   const index = useMemo(() => new Map(a.citations.map((c, i) => [c.id, i + 1])), [a]);
   const b = BOUNDARY[a.boundary];
   const hasText = a.observed.length + a.interpretation.length + a.implication.length > 0;
@@ -124,15 +150,19 @@ function AnswerView({ a }: { a: Answer }) {
         <span className="v3-small v3-muted">
           {a.mode === 'checked_model_text' || a.mode === 'live'
             ? `Text by ${a.model ?? 'the model'}, kept only after EMBER's ${a.checks.length || 5} source checks passed`
-            : 'Cited records only: no model text passed EMBER’s checks for this question, so you see the sources themselves'}
+            : 'Showing source records: a verified AI explanation was not available for this review.'}
         </span>
       </div>
 
       {a.boundary === 'insufficient_data' && (
         <p className="v3-callout v3-callout-warn">
-          EMBER found no flight records that answer this directly. It does not guess. The nearest evidence and the open questions are below.
+          No matching flight records in this corpus establish the outcome at your requested conditions. A yes/no answer would be an extrapolation. Nearby records below are context, not a prediction.
         </p>
       )}
+
+      {a.summary && a.boundary !== 'insufficient_data' && <div className="v3-answer-summary"><h3>Quick answer</h3><p>{a.summary.text} <CiteChips ids={a.summary.citations} index={index} /></p></div>}
+      {!a.summary && a.boundary === 'conditional_or_partial' && <p className="v3-callout">The records describe tested conditions, but do not establish a causal response or a general safe setting. Compare their differences below.</p>}
+      {a.tests && <EvidenceComparison tests={a.tests} query={a.query ?? parseResearchQuery(a.question)} nearby={a.nearby ?? false} />}
 
       {hasText && (
         <div className="v3-answer-body">
@@ -186,7 +216,8 @@ function AnswerView({ a }: { a: Answer }) {
         </>
       )}
 
-      <h3>{hasText ? 'Sources' : 'What the sources say'}</h3>
+      <h3>{hasText ? 'Sources' : 'Source records'}</h3>
+      {!a.citations.length && <p className="v3-muted">No source records are available for this review. Try a more specific material or investigation.</p>}
       <ol className="v3-cites">
         {a.citations.map((c, i) => (
           <li key={c.id} id={`cite-${i + 1}`}>
@@ -236,7 +267,10 @@ export function ScopeReplyView({ question }: { question: string }) {
   );
 }
 
-function ThinkingAnswer({ question }: { question: string }) {
+export function ThinkingAnswer({ question, progress = [] }: { question: string; progress?: ReviewProgress[] }) {
+  const stage = progress.filter(e => e.type === 'stage').at(-1);
+  const stageText: Record<string, string> = { retrieval: 'Finding relevant NASA records…', applicability: 'Checking experimental conditions…', synthesis: 'Writing and checking source-linked claims…', verification: 'Checking the complete answer…' };
+  const claims = progress.filter(e => e.type === 'claim');
   return (
     <div className="v3-card v3-answer v3-thinking" role="status" aria-live="polite">
       <div className="v3-muted v3-small">Your question</div>
@@ -245,10 +279,10 @@ function ThinkingAnswer({ question }: { question: string }) {
         <span className="v3-thinking-orb" aria-hidden="true"><span /></span>
         <div>
           <strong>EMBER is thinking<span className="v3-thinking-dots" aria-hidden="true"><i /><i /><i /></span></strong>
-          <p>Reviewing NASA evidence to prepare a source-linked answer. This may take a moment.</p>
+          <p>{stage?.type === 'stage' ? stageText[stage.stage] ?? 'Reviewing NASA evidence…' : 'Connecting to the research service…'}</p>
         </div>
       </div>
-      <div className="v3-thinking-lines" aria-hidden="true"><span /><span /><span /></div>
+      {claims.length > 0 ? <><h3>Checked findings · live preview</h3><p className="v3-small v3-muted">Completed claims appear after source checks. The final answer may replace this preview after whole-answer verification.</p><ul>{claims.map(e => <li key={`${e.section}:${e.claim.id}`}>{e.claim.text}</li>)}</ul></> : <div className="v3-thinking-lines" aria-hidden="true"><span /><span /><span /></div>}
     </div>
   );
 }
@@ -263,6 +297,10 @@ export function AskPage() {
   const [busy, setBusy] = useState(false);
   const [pendingQuestion, setPendingQuestion] = useState('');
   const [note, setNote] = useState<string | null>(null);
+  const [progress, setProgress] = useState<ReviewProgress[]>([]);
+  const [failure, setFailure] = useState<string | null>(null);
+  const [exampleCorpus, setExampleCorpus] = useState<CorpusV2 | null>(null);
+  const activeRequest = useRef<AbortController | null>(null);
   const { ensureCorpus } = useEmber();
   const { data: compact } = useCompact();
 
@@ -271,6 +309,13 @@ export function AskPage() {
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
       .then((d: AnswerFile) => setFile(d), (e: unknown) => setError(String(e)));
   }, []);
+  useEffect(() => () => activeRequest.current?.abort(), []);
+  useEffect(() => {
+    if (!file) return;
+    let active = true;
+    void ensureCorpus().then(corpus => { if (active) setExampleCorpus(corpus); }).catch(() => undefined);
+    return () => { active = false; };
+  }, [file, ensureCorpus]);
 
   async function ask(e: FormEvent) {
     e.preventDefault();
@@ -279,6 +324,8 @@ export function AskPage() {
     setNote(null);
     setCustom(null);
     setScopeQuestion(null);
+    setFailure(null);
+    setProgress([]);
     if (!isResearchQuestion(q)) {
       setScopeQuestion(q);
       return;
@@ -289,24 +336,45 @@ export function AskPage() {
     }
     setPendingQuestion(q);
     setBusy(true);
+    const controller = new AbortController();
+    activeRequest.current = controller;
     try {
-      const { snapshot, meta } = await createReview({ question: q, useLiveAi: true, title: q.slice(0, 72) });
-      const corpus = await ensureCorpus().catch(() => null);
-      setCustom(fromReview(q, snapshot.review, corpus));
+      const corpusPromise = ensureCorpus().catch(() => null);
+      const { snapshot, meta } = await createReview({ question: q, useLiveAi: true, title: q.slice(0, 72) }, event => {
+        setProgress(previous => event.type === 'stage' ? [...previous.filter(e => e.type !== 'stage'), event] : [...previous, event]);
+      }, controller.signal);
+      const corpus = await corpusPromise;
+      if (controller.signal.aborted) throw new Error('Review cancelled');
+      setCustom({ ...fromReview(q, snapshot.review, corpus), reviewId: snapshot.reviewId });
       setNote(
         meta.backendSource === 'static_fallback'
-          ? 'Answered in your browser: no server is attached to this copy of EMBER, so you see the matching cited records rather than model-written text.'
-          : meta.warnings[0] ?? null,
+          ? 'Live review is unavailable. These records were selected in your browser from the saved NASA corpus.'
+          : meta.warnings.length ? snapshot.review.synthesis.fallbackReason === 'verification_failed'
+            ? 'The generated explanation did not pass the source checks. Original records and evidence gaps are shown instead.'
+            : 'Live synthesis is unavailable for this review. Original records and evidence gaps are shown instead.' : null,
       );
     } catch (err) {
-      setNote(`Could not run the review: ${String(err)}`);
+      setFailure(controller.signal.aborted ? 'Review cancelled. The unfinished preview has been cleared.' : `Could not complete the review: ${String(err)}. The unfinished preview has been cleared.`);
     } finally {
+      setProgress([]);
       setBusy(false);
+      activeRequest.current = null;
     }
   }
 
   const staleAnswers = Boolean(file && compact && file.corpusVersion !== compact.corpusVersion);
-  const current = custom ?? (staleAnswers ? null : file?.answers.find((a) => a.id === selected)) ?? null;
+  const saved = staleAnswers ? null : file?.answers.find((a) => a.id === selected);
+  const current = useMemo(() => {
+    if (custom) return custom;
+    if (!saved) return null;
+    const query = parseResearchQuery(saved.question);
+    const ids = new Set(saved.citations.filter(c => c.kind === 'test').map(c => c.id.replace(/^chk-test-/, '')));
+    const cited = exampleCorpus?.tests.filter(t => ids.has(t.testId)) ?? [];
+    const nearby = saved.boundary === 'insufficient_data' || !cited.length;
+    return { ...saved, query, nearby, tests: exampleCorpus ? (nearby ? nearestEvidenceTests(query, exampleCorpus.tests) : cited) : undefined,
+      boundary: saved.boundary === 'sufficient_observed' && asksForEffect(saved.question) ? 'conditional_or_partial' as const : saved.boundary,
+      summary: saved.implication[0] ?? saved.observed[0] };
+  }, [custom, saved, exampleCorpus]);
 
   return (
     <div className="v3-page">
@@ -327,6 +395,7 @@ export function AskPage() {
         <button type="submit" className="v3-btn v3-btn-primary" disabled={busy || !question.trim()}>
           {busy ? 'Thinking…' : 'Ask'}
         </button>
+        {busy && <button type="button" className="v3-btn" onClick={() => activeRequest.current?.abort()}>Stop</button>}
       </form>
       {note && <p className="v3-small v3-muted">{note}</p>}
 
@@ -348,6 +417,7 @@ export function AskPage() {
                 setCustom(null);
                 setScopeQuestion(null);
                 setNote(null);
+                setFailure(null);
                 setSelected(a.id);
               }}
             >
@@ -365,13 +435,13 @@ export function AskPage() {
           )}
         </nav>
         <div>
-          {busy ? <ThinkingAnswer question={pendingQuestion} /> : scopeQuestion ? <ScopeReplyView question={scopeQuestion} /> : current ? <AnswerView a={current} /> : staleAnswers ? (
+          {busy ? <ThinkingAnswer question={pendingQuestion} progress={progress} /> : failure ? <article className="v3-card v3-answer" role="alert"><h2>{pendingQuestion}</h2><p>{failure}</p></article> : scopeQuestion ? <ScopeReplyView question={scopeQuestion} /> : current ? <AnswerView a={current} /> : staleAnswers ? (
             <div className="v3-callout v3-callout-warn" role="alert">Cached answers do not match the current PSI corpus. Ask a question to run a fresh local review, or regenerate the cached answers.</div>
           ) : error ? (
             <div className="v3-callout v3-callout-warn" role="alert">The cached answers are unavailable. You can still ask a new question.</div>
           ) : file ? null : <Loading what="Loading answers…" />}
-          {!busy && !scopeQuestion && <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
-            Want every rule decision behind an answer? <Link to="/review">Open the full scientific review</Link>.
+          {!busy && !scopeQuestion && !failure && <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
+            Want every rule decision behind an answer? <Link to={current?.reviewId ? `/reviews/${encodeURIComponent(current.reviewId)}` : '/review'}>Open the full scientific review</Link>.
           </p>}
         </div>
       </div>

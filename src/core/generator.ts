@@ -1,4 +1,5 @@
 import {classifySynthesisEvidence} from './synthesisEvidence';
+import { asksForEffect } from './answerEvidence';
 /**
  * Grounded synthesis generator with explicit mode ("LIVE_AI" | "DETERMINISTIC_ENGINE" | "SAVED_DEMO_SNAPSHOT")
  * and strict epistemic separation into observedFact / authorInterpretation / engineeringImplication /
@@ -25,6 +26,8 @@ export interface GeneratorOptions {
   savedSnapshot?: GeneratedSynthesis;
   fetchImpl?: typeof fetch;
   strictLive?: boolean;
+  signal?: AbortSignal;
+  consumeResponse?: (response: Response, pkg: EvidencePackage, draft: GeneratedSynthesis) => Promise<string>;
 }
 
 function isInvalidPremise(pkg: EvidencePackage): { invalid: boolean; reason: string | null } {
@@ -66,6 +69,8 @@ export function determineAnswerBoundary(pkg: EvidencePackage): AnswerBoundary {
   const hasObservedTopInv = scopedRankings.some((r) => r.inv.epistemicStatus === 'observed' && r.applicabilityScore >= 0.4);
 
   if (admissibleCount > 0 && (observedEvCount > 0 || hasObservedTopInv)) {
+    // This engine supports descriptive comparisons, not causal identification.
+    if (asksForEffect(pkg.query.rawQuestion)) return 'conditional_or_partial';
     return 'sufficient_observed';
   }
   if (
@@ -322,10 +327,12 @@ export async function generateSynthesis(
   try {
     const res = await fetchFn(endpoint, {
       method: 'POST',
+      signal: options.signal,
       headers,
       body: JSON.stringify({
         model,
         response_format: { type: 'json_object' },
+        ...(options.consumeResponse ? { stream: true } : {}),
         ...(model === DEFAULT_SYNTHESIS_MODEL ? {reasoning_effort:'none'} : {temperature:0}),
         messages: [
           {
@@ -339,8 +346,8 @@ export async function generateSynthesis(
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     fallbackReason = 'invalid_response';
-    const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
-    const raw = data.choices?.[0]?.message?.content;
+    const data = options.consumeResponse ? null : (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
+    const raw = options.consumeResponse ? await options.consumeResponse(res, pkg, det) : data?.choices?.[0]?.message?.content;
     if (!raw) throw new Error('Empty synthesis response');
     const synthesis = parseSynthesis(JSON.parse(raw),context.allowedCitationIds,det);
     validateAuthorAttribution(synthesis,pkg);
@@ -349,6 +356,7 @@ export async function generateSynthesis(
     if (!verifySynthesis(synthesis,pkg).passed) throw new Error('Generated synthesis failed evidence verification');
     return {...synthesis, modelName:model};
   } catch (err) {
+    if (options.signal?.aborted) throw err;
     if (options.strictLive) throw err;
     return {...det, fallbackReason};
   }

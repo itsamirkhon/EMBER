@@ -392,6 +392,20 @@ a:hover { color: var(--v3-text); text-decoration: underline; text-underline-offs
 .v3-answer ul { padding-left: 18px; margin: 0; }
 .v3-answer li + li { margin-top: 8px; }
 .v3-answer-body li { line-height: 1.6; }
+.v3-answer-evidence { min-width: 0; margin: 20px 0; }
+.v3-answer-summary { padding: 0 0 12px; border-bottom: 1px solid var(--v3-border); }
+.v3-answer-table-scroll { max-width: 100%; overflow-x: auto; margin: 12px 0; border: 1px solid var(--v3-border); }
+.v3-answer-table { width: 100%; min-width: 780px; border-collapse: collapse; font-size: 0.82rem; text-align: left; }
+.v3-answer-table caption { padding: 12px; text-align: left; color: var(--v3-text-2); }
+.v3-answer-table th, .v3-answer-table td { padding: 12px; vertical-align: top; border-top: 1px solid var(--v3-border); }
+.v3-answer-table thead { background: var(--v3-surface-2); }
+.v3-answer-table small { display: block; font-size: 0.75rem; }
+.v3-flow-sequence { padding: 16px; margin-top: 16px; border: 1px solid var(--v3-border); background: var(--v3-surface-2); }
+.v3-flow-sequence h4 { margin: 0 0 12px; }
+.v3-flow-sequence ol { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; margin: 0; }
+.v3-flow-sequence li { padding: 6px 10px; border: 1px solid var(--v3-border); background: var(--v3-surface); font-variant-numeric: tabular-nums; }
+.v3-flow-sequence li + li { margin: 0; }
+.v3-flow-sequence li:not(:last-child)::after { content: ' →'; color: var(--v3-text-2); }
 .v3-cite { display: inline-block; min-width: 20px; text-align: center; font-family: var(--v3-mono); font-size: 0.7rem; padding: 1px 6px; margin-left: 2px; border-radius: 4px; background: var(--v3-accent-soft); color: var(--v3-link); vertical-align: 1px; }
 .v3-cite:hover { text-decoration: none; background: var(--v3-accent); color: #fff; }
 .v3-cites { padding-left: 22px; margin: 0; display: grid; gap: 12px; font-size: 0.9rem; }

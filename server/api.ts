@@ -1,6 +1,8 @@
 import {existsSync} from 'node:fs';
 import {join} from 'node:path';
 import {loadOpenRouterAdapters} from './openrouter-runtime';
+import { consumeSynthesisStream } from './synthesisStream';
+import type { ReviewProgress } from '../src/core/reviewStream';
 import {DECISION_MODEL,EMBEDDING_MODEL} from './openrouter';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Connect, Plugin } from 'vite';
@@ -610,6 +612,35 @@ export function createApiHandler(
     const params = validateReviewParams(body);
     // Check before cached replay as well as before provider calls.
     assertQuestionScope(question, overrides);
+    const streaming = req.headers.accept?.includes('text/event-stream') ?? false;
+    const controller = new AbortController();
+    const fetchImpl: typeof fetch = (input, init) => (options.fetchImpl ?? fetch)(input, { ...init, signal: controller.signal });
+    let heartbeat: ReturnType<typeof setInterval> | undefined;
+    res.once('close', () => {
+      if (heartbeat) clearInterval(heartbeat);
+      if (!res.writableEnded) controller.abort();
+    });
+    const emit = (event: ReviewProgress | { type: 'result'; envelope: ApiEnvelope<ReturnType<typeof snapshotToData>> }) => {
+      if (!streaming || res.destroyed || res.writableEnded) return;
+      if (!res.headersSent) {
+        setApiHeaders(res);
+        res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-cache, no-transform');
+        res.setHeader('X-Accel-Buffering', 'no');
+        res.flushHeaders();
+        heartbeat = setInterval(() => { if (!res.destroyed) res.write(': keepalive\n\n'); }, 15000);
+        heartbeat.unref();
+      }
+      res.write(`data: ${JSON.stringify(event)}\n\n`);
+    };
+    const respond = (status: number, data: ReturnType<typeof snapshotToData>, opts: NonNullable<Parameters<typeof sendOk>[3]>) => {
+      if (!streaming) { sendOk(res, status, data, opts); return; }
+      emit({ type: 'result', envelope: { run_id: opts.runId ?? makeRunId(), status: 'ok', mode: opts.mode ?? 'DETERMINISTIC_ENGINE',
+        versions: { ...buildVersions(opts.corpusVersion), ...(opts.decisionPromptVersion ? { jevPrompt: opts.decisionPromptVersion } : {}) },
+        warnings: opts.warnings ?? [], data } });
+      if (heartbeat) clearInterval(heartbeat);
+      res.end();
+    };
 
     const headerIdem = req.headers['idempotency-key'];
     const headerKey = typeof headerIdem === 'string' && headerIdem.trim() ? headerIdem.trim() : undefined;
@@ -640,8 +671,7 @@ export function createApiHandler(
       }
       if (existing && !params.forceNew) {
         const lastRun = existing.runs[existing.runs.length - 1];
-        sendOk(
-          res,
+        respond(
           200,
           snapshotToData(existing, {
             runId: lastRun?.runId ?? existing.review.envelope.runId,
@@ -661,6 +691,7 @@ export function createApiHandler(
 
     const warnings: string[] = [];
     let review;
+    emit({ type: 'stage', stage: 'retrieval' });
 
     if (params.useLiveAi && !apiKey && !openRouterKey) {
       warnings.push('OPENROUTER_API_KEY / OPENAI_API_KEY are not configured on the server; showing deterministic retrieval, heuristic passage triage and templated synthesis.');
@@ -677,7 +708,7 @@ export function createApiHandler(
     } else if (params.useLiveAi && (apiKey || openRouterKey)) {
       try {
         const adapters = openRouterKey
-          ? await loadOpenRouterAdapters(store.rootDir,corpus,index,{apiKey:openRouterKey,fetchImpl:options.fetchImpl})
+          ? await loadOpenRouterAdapters(store.rootDir,corpus,index,{apiKey:openRouterKey,fetchImpl})
           : {};
         review = await runReview({
           ...adapters,
@@ -692,7 +723,10 @@ export function createApiHandler(
           synthesisMode: apiKey ? 'LIVE_AI' : 'DETERMINISTIC_ENGINE',
           apiKey: apiKey ?? undefined,
           model: params.model ?? DEFAULT_SYNTHESIS_MODEL,
-          fetchImpl: options.fetchImpl,
+          fetchImpl,
+          signal: controller.signal,
+          onProgress: stage => emit({ type: 'stage', stage }),
+          consumeResponse: streaming ? (response, pkg, draft) => consumeSynthesisStream(response, pkg, draft, emit) : undefined,
         });
         if (apiKey && review.synthesis.mode !== 'LIVE_AI') {
           const reasons = {
@@ -704,6 +738,7 @@ export function createApiHandler(
           warnings.push(`${reason ? reasons[reason] : 'Live AI synthesis was unavailable'}; fell back explicitly to DETERMINISTIC_ENGINE.`);
         }
       } catch {
+        if (controller.signal.aborted) return;
         warnings.push('Live provider pipeline unavailable (check server key and current embedding artifact); showing deterministic retrieval, heuristic passage triage and templated synthesis.');
         review = runReviewSync({
           question,
@@ -739,8 +774,7 @@ export function createApiHandler(
       warnings,
     });
 
-    sendOk(
-      res,
+    respond(
       201,
       snapshotToData(snapshot, { runId: run.runId, idempotentReplay: false }),
       {
@@ -988,7 +1022,13 @@ export function createApiHandler(
     try {
       await dispatch(req, res);
     } catch (err) {
-      if (res.headersSent) return;
+      if (res.headersSent) {
+        if (res.getHeader('Content-Type') === 'text/event-stream; charset=utf-8' && !res.destroyed) {
+          res.write(`data: ${JSON.stringify({ type: 'error', message: 'The review was interrupted. Please try again.' })}\n\n`);
+          res.end();
+        }
+        return;
+      }
       if (err instanceof QuestionScopeError) {
         sendError(res, 422, err.code, err.message);
         return;
