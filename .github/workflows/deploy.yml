@@ -1,8 +1,15 @@
 name: Deploy Ember to Lightsail
 
+# The AWS deployment still serves web/, while the repository README identifies
+# ember-final/ as the submission. Do not silently change the served app until
+# the team confirms the target and tests it against the current domain.
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: deploy-lightsail
@@ -10,6 +17,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,7 +31,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 26
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: web/package-lock.json
 
       - name: Install dependencies
@@ -36,29 +44,55 @@ jobs:
         run: npm test
 
       - name: Run backtest
-        # regenerate validation.json from the committed data (skipped if tests.json is absent)
         run: if [ -f public/data/tests.json ]; then npm run backtest; fi
 
       - name: Build production bundle
         run: npm run build
 
-      - name: Clean old files on Lightsail
-        if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.LIGHTSAIL_HOST }}
-          username: ${{ secrets.LIGHTSAIL_USER }}
-          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          script: rm -rf /var/www/ember/*
+      - name: Verify build output before contacting the server
+        run: |
+          test -s dist/index.html
+          test -d dist/assets
 
-      - name: Deploy build files to Lightsail via SCP
-        if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+      # Copy the full release to a unique staging directory. Never delete the
+      # live site before SCP completes; an interrupted upload preserves it.
+      - name: Stage complete build on Lightsail
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USER }}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
           source: "web/dist/*"
-          target: "/var/www/ember"
+          target: "/tmp/ember-stage-${{ github.run_id }}-${{ github.run_attempt }}"
           strip_components: 2
           overwrite: true
+
+      - name: Check staged release and promote with rollback
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: |
+            set -eu
+            stage="/tmp/ember-stage-${{ github.run_id }}-${{ github.run_attempt }}"
+            live="/var/www/ember"
+            backup="/tmp/ember-backup-${{ github.run_id }}-${{ github.run_attempt }}"
+
+            test -s "$stage/index.html"
+            test -d "$stage/assets"
+            command -v rsync >/dev/null 2>&1 || {
+              echo "rsync is required on Lightsail; live files not changed"
+              exit 1
+            }
+
+            mkdir -p "$live" "$backup"
+            rsync -a "$live/" "$backup/"
+            if rsync -a --delete "$stage/" "$live/"; then
+              rm -rf -- "$stage" "$backup"
+              echo "Release promoted"
+            else
+              echo "Promotion failed; restoring previous files" >&2
+              rsync -a --delete "$backup/" "$live/"
+              exit 1
+            fi
