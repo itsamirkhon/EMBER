@@ -36,15 +36,15 @@ export function HomePage() {
     <div className="v3-page v3-focus">
       <section className="v3-focus-hero" aria-labelledby="focus-heading">
         <div className="v3-focus-copy">
-          <p className="v3-focus-kicker">EMBER / NASA PHYSICAL SCIENCES INFORMATICS</p>
+          <p className="v3-focus-kicker">EMBER — Evidence Map for Burn &amp; Extinction Risk</p>
           <h1 id="focus-heading">Find the edge of the evidence.</h1>
           <p className="v3-focus-lede">
             Choose a spacecraft environment and a material. EMBER checks which
             NASA fire experiments match the conditions, which are only related,
             and where the record stops.
           </p>
-          <Link to="/lens" className="v3-btn v3-btn-primary v3-btn-lg v3-focus-cta">
-            Check a mission scenario <span aria-hidden="true">↗</span>
+          <Link to="/lens?mission=lunar-rover&material=PMMA" className="v3-btn v3-btn-primary v3-btn-lg v3-focus-cta">
+            Check your cabin <span aria-hidden="true">↗</span>
           </Link>
           <p className="v3-focus-disclaimer">
             A historical evidence check. Not a fire simulation or a safety certification.

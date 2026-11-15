@@ -10,7 +10,8 @@ const nav = read('../src/ui/components/Layout.tsx');
 describe('focused EMBER evidence workflow', () => {
   it('has one primary user action instead of competing demo modules', () => {
     expect(home.match(/v3-btn-primary/g)).toHaveLength(1);
-    expect(home).toContain('Check a mission scenario');
+    expect(home).toContain('Check your cabin');
+    expect(home).toContain('to="/lens?mission=lunar-rover&material=PMMA"');
     expect(home).toContain('navigate(\'/lens?mission=\'');
     expect(home).not.toContain('<iframe');
     expect(home).not.toContain('Same fire, different rules');
@@ -46,7 +47,10 @@ describe('focused EMBER evidence workflow', () => {
     expect(styles).toContain('--v3-accent: #e7e6dc');
     expect(styles).toContain('--v3-cliff: #a74c58');
     expect(styles).not.toContain('--v3-accent: #3d7bff');
-    expect(nav).toContain("{ to: '/lens', label: 'Check evidence' }");
+    for (const label of ['Evidence map', 'Mission lens', 'Ask EMBER', 'Trust']) {
+      expect(nav.slice(nav.indexOf('const PRIMARY'), nav.indexOf('const MORE'))).toContain("label: '" + label + "'");
+    }
+    expect(nav.slice(nav.indexOf('<footer'))).not.toContain('/review');
     for (const path of ['/map', '/export', '/compare', '/investigations', '/ask', '/trust']) {
       expect(nav).toContain("to: '" + path + "'");
     }

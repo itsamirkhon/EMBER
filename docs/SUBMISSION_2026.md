@@ -6,11 +6,11 @@ Every field below is written for the Space Apps project page, in English. Number
 
 ## Project name
 
-**EMBER — Evidence Map for Burn & Extinction Risk**
+**EMBER — Evidence Map for Burn & Extinction Risk** · Team EMBER
 
 ## High-Level Summary
 
-EMBER puts the 15 NASA microgravity fire investigations that have test tables in NASA’s Physical Sciences Informatics (PSI) repository on one map, and shows where that evidence ends. Its central finding: none of the 261 solid-material flight tests with measured oxygen ran above 22.7% O₂, and all ran near 98–102 kPa, while lunar cabins plan 30–34% O₂ at 56–70 kPa, so material choices for the Moon rest on extrapolation. A safety engineer picks a cabin and a material and, in two minutes, sees which NASA investigations apply, the nearest real tests and how far away they are, and which flight test would close the gap. EMBER never gives a fire-risk percentage.
+Across the 15 NASA PSI fire investigations with test tables, none of the 261 solid-material flight tests with measured oxygen ran above 22.7% O₂; all ran near 98–102 kPa, while lunar cabins plan 30–34% O₂ at 56–70 kPa, so material choices for the Moon rest on extrapolation. EMBER — Evidence Map for Burn & Extinction Risk, by Team EMBER — summarizes, ranks and interprets that evidence: it puts the 15 investigations in NASA’s Physical Sciences Informatics (PSI) repository on one map, ranks which of them apply to a given cabin, and interprets how far the nearest tests are from it. A safety engineer picks a cabin and a material and, in two minutes, sees which NASA investigations apply, the nearest real tests and how far away they are, and which flight test would close the gap. EMBER never gives a fire-risk percentage.
 
 ## Links
 
@@ -22,7 +22,7 @@ EMBER puts the 15 NASA microgravity fire investigations that have test tables in
 
 **The problem.** Fire is one of the worst things that can happen in a spacecraft (Apollo 1, the 1997 Mir fire). PSI holds test tables for 15 combustion investigations, but they are scattered across tables, reports and formats. An engineer choosing a cabin lining for an Artemis rover cannot quickly tell which experiments apply to their atmosphere, or whether any do.
 
-**The finding: the evidence cliff.** We normalized 1,678 test records from the 15 PSI investigations with test tables. The 261 solid-material flight tests with a reported oxygen value (BASS, BASS-II, Saffire) ran at 13.6–22.7% O₂ and 98.3–102.2 kPa; only 11 BASS tests went above 22.5%. NASA’s lunar exploration atmosphere is 34% O₂ at 56.5 kPa; the challenge’s rover scenario is 30% at 70.3 kPa. No solid-material flight data overlap these points. Gas flames were flown up to 85% O₂ (ACME CFI-G), but in an oxidizer stream with gaseous fuel, which transfers to fabrics and plastics only qualitatively. NASA work also found that 1 g limiting oxygen concentrations were up to 4 points higher than in microgravity, so ground screening alone can pass materials that burn in orbit. Scope matters: this is about *flight* data in PSI; ground tests at elevated oxygen exist, and short drop-tower and parabolic-flight tests at partial gravity exist in the literature (for example NTRS 20130010991) but are not in PSI.
+**The finding: the evidence cliff.** We normalized 1,678 test records from the 15 PSI investigations with test tables. The 261 solid-material flight tests with a reported oxygen value (BASS, BASS-II, Saffire) ran at 13.6–22.7% O₂ and 98.3–102.2 kPa; only 11 BASS tests went above 22.5%. NASA’s lunar exploration atmosphere is 34% O₂ at 56.5 kPa; the challenge’s rover scenario is 30% at 70.3 kPa. No solid-material flight data overlap these points. Gas flames were flown up to 85% O₂ (ACME CFI-G), but in an oxidizer stream with gaseous fuel, which transfers to fabrics and plastics only qualitatively. NASA work also found that 1 g limiting oxygen concentrations were up to 4 points higher than in microgravity, so ground screening alone can pass materials that burn in orbit. Scope matters: this is about *flight* data in PSI; ground tests at elevated oxygen exist, and partial-gravity tests exist outside PSI: NASA Glenn drop-tower centrifuge tests at lunar gravity (Ferkul and Olson, 2011) and Martian gravity (Olson and Ferkul, 2012, NTRS 20130010991), where some materials burned at lower oxygen than at 1 g, plus aircraft parabolic flights at 0.05–0.6 g. These tests last seconds, so their extinction criteria differ from 1 g tests, and they are not in PSI.
 
 **Who it is for.** A spacecraft fire-safety engineer choosing a cabin material for a lunar rover; second, researchers and students who need cards, comparisons and clean data.
 
@@ -101,7 +101,7 @@ Subtitles: [`demo-video.en.srt`](./demo-video.en.srt). Suggested capture: the li
 
 | Time | Shot | Subtitle |
 |---|---|---|
-| 0:00–0:02 | Team name card | Team <name>, Tashkent |
+| 0:00–0:02 | Team name card | Team EMBER, Tashkent |
 | 0:02–0:05 | Intro: flame at 1 g vs microgravity | Fire in space follows different rules. |
 | 0:05–0:10 | Home headline | EMBER: NASA’s fire experiments in one place — and where the evidence ends. |
 | 0:10–0:20 | Evidence map, then the lunar rover in the mission lens (“Beyond the evidence”) | No solid-material flight test in NASA PSI went above 22.7% O₂. Lunar cabins plan 30%+. |

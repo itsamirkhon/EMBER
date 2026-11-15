@@ -1,6 +1,8 @@
-# EMBER
+# EMBER — Evidence Map for Burn & Extinction Risk
 
-**NASA Space Apps Challenge 2026 · Flame in Freefall**
+**Team EMBER · NASA Space Apps Challenge 2026 · Flame in Freefall**
+
+15 NASA PSI investigations with test tables · 261 solid-material flight tests with reported oxygen · none above **22.7% O₂**.
 
 **One job:** Compare proposed spacecraft fire conditions with the historical experimental record in NASA's Physical Sciences Informatics (PSI) database. EMBER identifies recorded flight tests that match a question, related tests that need caveats, and conditions outside the tested evidence.
 
@@ -8,7 +10,7 @@ EMBER **does not run a new combustion experiment**, calculate a flammability thr
 
 ## Try the workflow
 
-1. **Choose a mission scenario** and a material in **Check evidence** (`#/lens`). Adjust oxygen and pressure if necessary. Research task, airflow, and gravity can be edited under **Advanced**.
+1. **Choose a mission scenario** and a material in **Mission lens** (`#/lens`); **Check your cabin** on the home page opens it with the lunar rover and PMMA. Adjust oxygen and pressure if necessary. Research task, airflow, and gravity can be edited under **Advanced**.
 2. Click **Check historical evidence**. The result comes from source-backed applicability rules applied to indexed NASA PSI records, not a simulated fire.
 3. Read the **nearest recorded flight tests**, their experimental conditions, and linked source table rows. Use **Evidence map** (`#/map`) when you need to inspect the broader dataset.
 
