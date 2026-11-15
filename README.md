@@ -31,7 +31,7 @@ See [technical documentation](docs/TECHNICAL.md), [scientific interpretation](do
 - `#/map`: plottable PSI records and mission markers
 - `#/investigations`, `#/compare`: investigation details, source protocols, comparisons
 - `#/export`: source-linked corpus JSON and CSV, modeling exports, review reports
-- `#/ask`, `#/trust`: cited question answering, checks and backtests
+- `#/ask`, `#/trust`: cited question answering, data checks and endpoint-label audit
 - `#/earth`, `#/review`: NASA spinoffs and advanced research workspace
 - `/intro.html`: separate educational flame illustration (not a combustion simulation)
 
@@ -49,6 +49,8 @@ npm run test:intro
 npm run build        # static site in dist/ (what gets deployed)
 npm run dev
 ```
+
+Rebuilding the scientific artifacts with `npm run corpus` also requires Python packages `numpy`, `scikit-learn`, and `openpyxl`. Then run `npm run data:compact` and `npm run data:trust`; cached Ask answers must match the resulting corpus version. `scripts/refresh-ask-provenance.mts` can refresh citation metadata only when its comparison proves the scientific payload unchanged.
 
 Static deployment requires no API key. Live model-written answers require the separate server-side API and are not the default scientific evidence flow. Never add provider credentials to frontend code or commits.
 
