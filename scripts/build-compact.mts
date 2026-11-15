@@ -1,5 +1,5 @@
 /**
- * Builds public/data/compact.json: a ~150 kB slice of corpus_v2 for the intro, the evidence map,
+ * Builds public/data/compact.json: a compact slice of corpus_v2 for the intro, the evidence map,
  * the mission lens's nearest-test view, Back to Earth and Trust. The full corpus (26 MB) is only
  * loaded where the applicability engine or full records are needed.
  *
@@ -10,7 +10,7 @@ import type { CorpusV2 } from '../src/core';
 
 const corpus = JSON.parse(readFileSync('public/data/corpus_v2.json', 'utf8')) as CorpusV2;
 
-/** One row per test: [testId, inv, phase, fuel, o2, o2Prov, kPa, kPaProv, flow, g, outcome, terminal, gravityMode, table, row, url, geometry, thicknessMm, spreadMmS] */
+/** One row per test: [testId, inv, phase, fuel, o2, o2Prov, kPa, kPaProv, flow, g, outcome, terminal, gravityMode, table, row, url, geometry, thicknessMm, spreadMmS, optional oxygen/pressure/observation SourceRefs] */
 const tests = corpus.tests.map((t) => [
   t.testId,
   t.inv,
@@ -31,6 +31,7 @@ const tests = corpus.tests.map((t) => [
   t.geometry,
   t.thicknessMm.value,
   t.spreadRateMmS.value,
+  ...(t.observationSourceRef ? [t.atmosphere.o2.sourceRef, t.atmosphere.pressure.sourceRef, t.observationSourceRef] : []),
 ]);
 
 const investigations = corpus.investigations.map((i) => ({

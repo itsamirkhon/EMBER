@@ -11,7 +11,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import {
   DEFAULT_SYNTHESIS_MODEL, ENGINE_VERSION, generateSynthesis, runReviewSync, verifySynthesis,
-  type ChunkRecord, type ChunksIndex, type CorpusV2, type GeneratedSynthesis, type Review,
+  type SourceRef, type ChunkRecord, type ChunksIndex, type CorpusV2, type GeneratedSynthesis, type Review,
 } from '../src/core';
 
 const corpus = JSON.parse(readFileSync('public/data/corpus_v2.json', 'utf8')) as CorpusV2;
@@ -38,7 +38,7 @@ const testById = new Map(corpus.tests.map((t) => [t.testId, t]));
 const invById = new Map(corpus.investigations.map((i) => [i.id, i]));
 
 type Citation =
-  | { id: string; kind: 'test'; inv: string; fuel: string | null; o2: number | null; pressureKpa: number | null; flowCmS: number | null; gravityG: number | null; outcome: string; terminal: string | null; note: string | null; url: string | null; table: string | null; row: number | null }
+  | { id: string; kind: 'test'; inv: string; fuel: string | null; o2: number | null; pressureKpa: number | null; flowCmS: number | null; gravityG: number | null; outcome: string; terminal: string | null; note: string | null; url: string | null; table: string | null; row: number | null; conditionSources?: { oxygen?: SourceRef; pressure?: SourceRef; observations?: SourceRef } }
   | { id: string; kind: 'source'; title: string; text: string; quote: string | null; url: string | null; inv: string | null; status: string }
   | { id: string; kind: 'investigation'; inv: string; name: string; url: string | null };
 
@@ -54,6 +54,7 @@ function resolveCitation(id: string): Citation | null {
       o2: test.atmosphere.o2.value, pressureKpa: test.atmosphere.pressure.value, flowCmS: test.flow.initialFlowCmS.value,
       gravityG: test.gravity.gravityG.value, outcome: test.initialOutcome, terminal: test.terminalEvent, note: test.outcomeRaw,
       url: test.sourceRef.url, table: test.sourceRef.locator?.table ?? null, row: test.sourceRef.locator?.row ?? null,
+      conditionSources: test.observationSourceRef ? { oxygen: test.atmosphere.o2.sourceRef, pressure: test.atmosphere.pressure.sourceRef, observations: test.observationSourceRef } : undefined,
     };
   }
   const invId = id.startsWith('card:') ? id.slice(5) : invById.has(id) ? id : null;

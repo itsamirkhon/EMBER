@@ -16,6 +16,7 @@ export type Provenance = 'reported' | 'series_level' | 'derived' | 'assumed' | '
 export type GasRole = 'ambient' | 'oxidizer_stream' | 'fuel' | 'diluent';
 
 export interface SourceLocator {
+  sheet?: string | null;
   page?: number | null;
   table?: string | null;
   row?: number | null;
@@ -165,6 +166,7 @@ export interface Test {
   initialOutcome: string;
   terminalEvent: string | null;
   outcomeRaw: string | null;
+  observationSourceRef?: SourceRef;
   segments: ProtocolStep[];
   events: TestEvent[];
   spreadRateMmS: ScientificValue<number>;

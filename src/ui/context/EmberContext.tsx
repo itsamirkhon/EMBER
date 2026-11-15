@@ -63,6 +63,7 @@ export function formatLocator(ref?: Partial<SourceRef>): string | null {
   if (loc.section) parts.push(loc.section);
   if (loc.page !== undefined && loc.page !== null) parts.push(`p.${loc.page}`);
   if (loc.table) parts.push(`Table ${loc.table}`);
+  if (loc.sheet) parts.push(`sheet “${loc.sheet}”`);
   if (loc.row !== undefined && loc.row !== null) parts.push(`row ${loc.row}`);
   if (loc.cell) parts.push(`cell ${loc.cell}`);
   return parts.length > 0 ? parts.join(' · ') : null;

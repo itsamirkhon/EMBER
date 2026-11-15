@@ -3,7 +3,7 @@
  * the evidence map and nearest-test views without loading the 26 MB corpus.
  */
 import { useEffect, useState } from 'react';
-import type { FuelPhase, Mission, ResearchQuery, StoryItem } from '../../core';
+import type { FuelPhase, Mission, ResearchQuery, StoryItem, SourceRef } from '../../core';
 import { normalizeGravityRegime } from '../../core';
 
 export interface Row {
@@ -26,6 +26,9 @@ export interface Row {
   geometry: string | null;
   thicknessMm: number | null;
   spreadMmS: number | null;
+  o2Source?: SourceRef | null;
+  pressureSource?: SourceRef | null;
+  observationSource?: SourceRef | null;
 }
 
 export interface InvBrief {
@@ -60,7 +63,7 @@ export interface Compact {
   outcomeAudit: Record<string, unknown>;
 }
 
-type RawRow = [string, string, FuelPhase | null, string | null, number | null, string, number | null, string, number | null, number | null, string, string | null, string, string | null, number | null, string | null, string | null, number | null, number | null];
+type RawRow = [string, string, FuelPhase | null, string | null, number | null, string, number | null, string, number | null, number | null, string, string | null, string, string | null, number | null, string | null, string | null, number | null, number | null, SourceRef?, SourceRef?, SourceRef?];
 
 let compactPromise: Promise<Compact> | null = null;
 
@@ -73,6 +76,7 @@ export function loadCompact(): Promise<Compact> {
         const rows: Row[] = raw.tests.map((r) => ({
           testId: r[0], inv: r[1], phase: r[2], fuel: r[3], o2: r[4], o2Prov: r[5], kPa: r[6], kPaProv: r[7], flow: r[8], g: r[9],
           outcome: r[10], terminal: r[11], gravityMode: r[12], table: r[13], row: r[14], url: r[15], geometry: r[16], thicknessMm: r[17], spreadMmS: r[18],
+          o2Source: r[19], pressureSource: r[20], observationSource: r[21],
         }));
         const { tests: _drop, ...rest } = raw;
         void _drop;

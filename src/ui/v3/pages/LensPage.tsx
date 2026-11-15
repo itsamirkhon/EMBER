@@ -421,8 +421,17 @@ export function LensPage() {
                   )}
                   <div className="v3-small v3-muted">
                     Source: <Ext href={n.row.url}>{n.row.table ?? n.row.inv}</Ext>
-                    {n.row.row !== null ? `, row ${n.row.row}` : ''}
+                    {n.row.row !== null ? `, row ${n.row.row}` : ''}{n.row.observationSource ? ' (test identity)' : ''}
+                    {n.row.o2Source?.locator?.sheet && <><br />Atmosphere: <Ext href={n.row.o2Source.url}>{n.row.o2Source.locator.table}</Ext>,
+                      {' '}sheet “{n.row.o2Source.locator.sheet}”, row {n.row.o2Source.locator.row}
+                      {' '}(O₂ {n.row.o2Source.locator.cell}; pressure {n.row.pressureSource?.locator?.cell}).</>}
+                    {n.row.observationSource?.locator && <><br />Observations/protocol: {n.row.observationSource.locator.cell}
+                      {' '}on the same workbook sheet. Parsed notes, not a measured extinction limit.</>}
                   </div>
+                  {n.row.observationSource?.quote && <details className="v3-small">
+                    <summary>Read source observations</summary>
+                    <p>{n.row.observationSource.quote}</p>
+                  </details>}
                 </article>
               ))}
             </div>

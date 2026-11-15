@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-11-14T23:48:16.313Z",
- "corpusVersion": "2.0.1-scientific-fixes",
+ "corpusVersion": "2.0.2-bass-provenance",
  "engineVersion": "2.1.0-interpret",
  "retrieval": "offline hybrid (BM25 + TF-IDF/SVD + structured filter)",
  "answers": [
@@ -721,7 +721,54 @@
      "note": "Very bright sooty ball.   Lots of vapor jetting.   N2 on at 1 minute.   Blew off stagnation region but N2 did not extinguish wake,  even with air flow off.  Don turned off air, then N2 after some seconds.  Wake flame sooty and wind-blown.  ",
      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
      "table": "PSI-26_Experimental table_BASS.csv",
-     "row": 4
+     "row": 4,
+     "conditionSources": {
+      "oxygen": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 6,
+        "cell": "AA6"
+       },
+       "quote": "0.221",
+       "context": "BASS BASS-3-18: o2; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      },
+      "pressure": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 6,
+        "cell": "AB6"
+       },
+       "quote": "0.97",
+       "context": "BASS BASS-3-18: pressure; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      },
+      "observations": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 6,
+        "cell": "AD6"
+       },
+       "quote": "Very bright sooty ball.   Lots of vapor jetting.   N2 on at 1 minute.   Blew off stagnation region but N2 did not extinguish wake,  even with air flow off.  Don turned off air, then N2 after some seconds.  Wake flame sooty and wind-blown.  Only extinguishes when all flow stops.  N2 is entraining air to flame zone.  Don noted that there was no soot on the sphere, just the 'char layer'.  ~ 2 minute total burn.  ",
+       "context": "BASS BASS-3-18: observations; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      }
+     }
     },
     {
      "id": "BASS-8-45",
@@ -737,7 +784,54 @@
      "note": "No filter on this test.  Don didn't reset the camera trigger, so only got 100 frames.  Very low flows possible (AIR reading 0) at FAN 42.  Apparent at end with N2 extinguishment.  Flame doesn't go out until fan goes to 38.",
      "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
      "table": "PSI-26_Experimental table_BASS.csv",
-     "row": 9
+     "row": 9,
+     "conditionSources": {
+      "oxygen": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 11,
+        "cell": "AA11"
+       },
+       "quote": "0.217",
+       "context": "BASS BASS-8-45: o2; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      },
+      "pressure": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 11,
+        "cell": "AB11"
+       },
+       "quote": "0.98",
+       "context": "BASS BASS-8-45: pressure; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      },
+      "observations": {
+       "sourceId": "psi-26",
+       "url": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-26",
+       "doi": "10.60555/58h4-dy80",
+       "fileHash": "850910541fc9c802d00aa9de14758205103642184249b419c09868df2fbea6e8",
+       "corpusVersion": "2.0.2-bass-provenance",
+       "locator": {
+        "table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx",
+        "sheet": "as run matrix",
+        "row": 11,
+        "cell": "AD11"
+       },
+       "quote": "No filter on this test.  Don didn't reset the camera trigger, so only got 100 frames.  Very low flows possible (AIR reading 0) at FAN 42.  Apparent at end with N2 extinguishment.  Flame doesn't go out until fan goes to 38.",
+       "context": "BASS BASS-8-45: observations; O2 workbook fraction × 100; pressure atm × 101.325 kPa"
+      }
+     }
     }
    ],
    "checks": [
@@ -1468,5 +1562,10 @@
    ],
    "checks": []
   }
- ]
+ ],
+ "provenanceRefresh": {
+  "previousCorpusVersion": "2.0.1-scientific-fixes",
+  "refreshedAt": "2026-11-15T17:49:09.090Z",
+  "scope": "Citation metadata only; scientific payload compared unchanged. Original generated prose, date and checks retained, not revalidated."
+ }
 }
