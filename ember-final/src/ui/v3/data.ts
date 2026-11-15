@@ -134,6 +134,19 @@ export function cliffStats(rows: Row[]): Cliff | null {
   };
 }
 
+/** Published flight tests that are not in NASA PSI, drawn as annotations, never mixed into the corpus. */
+export const OUTSIDE_PSI = [
+  {
+    id: 'saffire-vi-2',
+    label: 'Saffire-VI · VI-2',
+    o2: 31.0,
+    kPa: 54.1,
+    g: 0,
+    note: 'SIBAL cloth, Cygnus, Jan 2024. Published in NTRS, not in PSI.',
+    url: 'https://ntrs.nasa.gov/citations/20240002981',
+  },
+];
+
 // ------------------------------------------------------------------ missions → query
 
 export const MISSION_SHORT: Record<string, string> = {

@@ -22,7 +22,7 @@ const MORE = [
 function Logo() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden className="v3-logo-mark">
-      <path d="M16 3c2 6 9 9 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 4 0-4 1-7 2-10z" fill="#ff6a2b" />
+      <path d="M16 3c2 6 9 9 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 4 0-4 1-7 2-10z" fill="#1e7a46" />
     </svg>
   );
 }
