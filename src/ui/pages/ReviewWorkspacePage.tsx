@@ -270,23 +270,6 @@ export function ReviewWorkspacePage() {
             Every rule decision, retrieved passage and verification check behind an answer. For a quick answer use <Link to="/ask">Ask EMBER</Link>; for your cabin use <Link to="/lens">Check a cabin</Link>.
           </p>
         </div>
-
-        <div className="btn-group">
-          <button
-            type="button"
-            className="btn btn-sm"
-            onClick={() => navigate('/reviews/demo-pmma-lunar')}
-          >
-            Demo 1: PMMA Lunar Rover
-          </button>
-          <button
-            type="button"
-            className="btn btn-sm"
-            onClick={() => navigate('/reviews/demo-cool-flame')}
-          >
-            Demo 2: CFI/FLEX Cool Flames
-          </button>
-        </div>
       </div>
 
       {/* Saved / Judge Snapshots Switcher */}

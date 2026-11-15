@@ -25,14 +25,14 @@ Open the local Vite URL (default `http://localhost:5173`). Vite mounts the integ
 
 ### Step 1 (`0:00–0:15`) — Scenario A: Lunar Rover PMMA & Pre-Seeded Snapshots (`/`)
 
-1. Open **`/#/`** (loads **`demo-pmma-lunar`** automatically) or click **`Demo 1: PMMA Lunar Rover`** in the header of the **Scientific Evidence Review Workspace**.
+1. Open **`/#/review`** (loads **`demo-pmma-lunar`** automatically) or select **`★ demo-pmma-lunar`** under **Saved & Pre-Seeded Review Snapshots**.
 2. Point out the **Execution Mode** badge (`SAVED_DEMO_SNAPSHOT`) and **Live Parsed `ResearchQuery` Confirmation**:
    - Environment: `lunar_rover` (`30% O2` `[ambient]`, `70.3 kPa`, `5 cm/s` `concurrent` flow, `0.166g` `partial_gravity`, `large_enclosure`)
    - Fuel & Endpoint: `PMMA` (`solid`), `extinction_under_flow_change`
    - Non-blocking open parameters recorded transparently: `unknownFields: ["thicknessMm"]`
 3. Highlight the **Answer Boundary** KPI: **`insufficient_data`** (`0` admissible / `0` conditional across the `80` evaluated tests in the candidate pool) with **Verifier Gate: `All 5 Checks Passed`** (`Citations`, `Numeric & Units`, `Epistemic Provenance`, `Constraint Preservation`, `Lexical Entailment`).
-4. Expand any item in **Observed Experimental Facts (`4`)**, **Author Interpretations (`1`)**, **Preserved Conflicts & Counterevidence (`2`)**, or **Open Evidence Gaps (`4`)** to inspect the `ProvenanceTrace` (`ProtocolStep -> Event -> ApplicabilityDecision -> SourceRef quote & locator`), and click **`Demo 2: CFI/FLEX Cool Flames`** (`demo-cool-flame`) to contrast an in-domain liquid droplet scenario (**`sufficient_observed`**, `15` admissible / `35` conditional across `259` evaluated tests, `6` observed facts, `1` preserved conflict).
-5. Click back to **`Demo 1: PMMA Lunar Rover`** before moving to Step 2.
+4. Expand any item in **Observed Experimental Facts (`4`)**, **Author Interpretations (`1`)**, **Preserved Conflicts & Counterevidence (`2`)**, or **Open Evidence Gaps (`4`)** to inspect the `ProvenanceTrace` (`ProtocolStep -> Event -> ApplicabilityDecision -> SourceRef quote & locator`), and click **`★ demo-cool-flame`** under **Saved & Pre-Seeded Review Snapshots** to contrast an in-domain liquid droplet scenario (**`sufficient_observed`**, `15` admissible / `35` conditional across `259` evaluated tests, `6` observed facts, `1` preserved conflict).
+5. Click back to **`★ demo-pmma-lunar`** under **Saved & Pre-Seeded Review Snapshots** before moving to Step 2.
 
 ---
 
