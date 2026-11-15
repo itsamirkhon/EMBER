@@ -3,18 +3,19 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEmber } from '../context/EmberContext';
 import { SourceModal } from './SourceModal';
 
-/** One visible decision. Everything else stays accessible as research support. */
+/** The four screens a judge or engineer needs, always visible. */
 const PRIMARY = [
-  { to: '/lens', label: 'Check evidence' },
+  { to: '/map', label: 'Evidence map' },
+  { to: '/lens', label: 'Mission lens' },
+  { to: '/ask', label: 'Ask EMBER' },
+  { to: '/trust', label: 'Trust' },
 ];
 
+/** Research support, one click away. */
 const MORE = [
-  { to: '/map', label: 'Evidence map', hint: 'Plot recorded oxygen and pressure' },
   { to: '/investigations', label: 'Investigations', hint: 'Source records and methods' },
   { to: '/compare', label: 'Compare tests', hint: 'Recorded protocols, not inferred experiments' },
   { to: '/export', label: 'Download data', hint: 'Export verified source-linked records' },
-  { to: '/ask', label: 'Ask EMBER', hint: 'Retrieve existing source-backed answers' },
-  { to: '/trust', label: 'Limitations', hint: 'How far to trust the evidence' },
   { to: '/earth', label: 'Back to Earth', hint: 'Research outcomes beyond spacecraft' },
   { to: '/review', label: 'Full review', hint: 'Advanced scientific workbench' },
 ];
@@ -113,7 +114,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <footer className="v3-foot">
         <div className="v3-foot-inner">
           <span>
-            EMBER · Evidence Map for Burn and Extinction Risk · NASA Space Apps Challenge 2026, “Flame in Freefall”. Data: NASA{' '}
+            EMBER — Evidence Map for Burn &amp; Extinction Risk · Team EMBER · NASA Space Apps Challenge 2026, “Flame in Freefall”. Data: NASA{' '}
             <a href="https://psi.nasa.gov/" target="_blank" rel="noreferrer">
               Physical Sciences Informatics
             </a>{' '}

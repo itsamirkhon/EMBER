@@ -87,14 +87,18 @@ export function LensPage() {
   const [checking, setChecking] = useState(false);
   const [checkError, setCheckError] = useState<string | null>(null);
 
-  // ?mission=<id> from the map
+  // ?mission=<id> from the map or home, optionally with &material=<name>
   const missionParam = params.get('mission');
+  const materialParam = params.get('material');
   useEffect(() => {
-    if (!data || !missionParam) return;
-    const m = data.missions.find((x) => x.id === missionParam);
-    if (m) setL((p) => lensFromMission(m, p));
+    if (!data || (!missionParam && !materialParam)) return;
+    const m = missionParam ? data.missions.find((x) => x.id === missionParam) : undefined;
+    setL((p) => {
+      const next = m ? lensFromMission(m, p) : p;
+      return materialParam ? { ...next, phase: 'solid', material: materialParam } : next;
+    });
     setParams({}, { replace: true });
-  }, [data, missionParam, setParams]);
+  }, [data, missionParam, materialParam, setParams]);
 
   const materials = useMemo(() => {
     if (!data) return [];
@@ -134,9 +138,12 @@ export function LensPage() {
 
   return (
     <div className="v3-page">
-      <PageHead eyebrow="Mission lens" title="Does NASA’s data cover your cabin?">
-        Select a hypothetical environment, task and material. Then check how {data.counts.tests.toLocaleString('en-US')} existing NASA PSI records
-        compare under nine applicability rules. No physical tests are run, and these results do not predict fire risk or certify safety.
+      <PageHead eyebrow="Mission lens" title="Has NASA ever flight-tested this material in your cabin’s atmosphere?">
+        <p>Know what the evidence supports. Test what matters next.</p>
+        <p className="v3-small v3-muted">
+          Select a hypothetical environment, task and material. Then check how {data.counts.tests.toLocaleString('en-US')} existing NASA PSI records
+          compare under nine applicability rules. No physical tests are run, and these results do not predict fire risk or certify safety.
+        </p>
       </PageHead>
 
       <div className="v3-split">

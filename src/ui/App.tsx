@@ -15,9 +15,9 @@ import { MapPage } from './v3/pages/MapPage';
 import { TrustPage } from './v3/pages/TrustPage';
 
 const ROUTE_TITLES: Array<[RegExp, string]> = [
-  [/^\/$/, 'EMBER · Where NASA’s fire evidence ends'],
+  [/^\/$/, 'EMBER — Evidence Map for Burn & Extinction Risk'],
   [/^\/map/, 'Evidence map · EMBER'],
-  [/^\/lens/, 'Check a cabin · EMBER'],
+  [/^\/lens/, 'Mission lens · EMBER'],
   [/^\/ask/, 'Ask EMBER'],
   [/^\/investigations\/./, 'Investigation · EMBER'],
   [/^\/investigations/, 'Investigations · EMBER'],
@@ -33,7 +33,7 @@ function RouteManager() {
 
   useEffect(() => {
     const matched = ROUTE_TITLES.find(([re]) => re.test(location.pathname));
-    document.title = matched ? matched[1] : 'EMBER · Evidence Map for Burn & Extinction Risk';
+    document.title = matched ? matched[1] : 'EMBER — Evidence Map for Burn & Extinction Risk';
     window.scrollTo(0, 0);
   }, [location.pathname]);
 

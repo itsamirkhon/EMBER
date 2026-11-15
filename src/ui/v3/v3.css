@@ -116,6 +116,8 @@ a:hover { color: var(--v3-text); text-decoration: underline; text-underline-offs
 .v3-head { margin-bottom: 32px; }
 .v3-lede { color: var(--v3-text-2); font-size: 1.08rem; line-height: 1.55; max-width: 68ch; }
 .v3-lede b { color: var(--v3-text); font-weight: 500; }
+.v3-lede p { margin: 0 0 10px; }
+.v3-lede p:last-child { margin-bottom: 0; }
 .v3-muted { color: var(--v3-muted); }
 .v3-small { font-size: 0.85rem; }
 .v3-warn-text { color: var(--v3-warn); }
