@@ -52,7 +52,7 @@ export function HomePage() {
           {data && (
             <div className="v3-focus-metrics" aria-label="NASA PSI source records">
               <div><b>{data.counts.tests.toLocaleString('en-US')}</b><span>indexed test records</span></div>
-              <div><b>{data.counts.investigations}</b><span>NASA PSI investigations</span></div>
+              <div><b>{data.counts.investigations}</b><span>NASA PSI investigations with test tables</span></div>
             </div>
           )}
           {error && <div role="alert" className="v3-callout v3-callout-warn">NASA evidence data could not load: {error}</div>}

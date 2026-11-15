@@ -16,7 +16,7 @@ The homepage (`#/`) illustrates the actual indexed test coordinates in an intera
 
 ## Scientific boundary
 
-The reviewed corpus contains **1,678 normalized records across 15 PSI investigations**. Among its **261 solid-material flight-test records with reported oxygen**, the upper recorded oxygen fraction is **22.7%**. This is a **coverage boundary for a specific subset**, not a universal NASA threshold and not a statement that higher-oxygen experiments never existed. Some atmospheric values are reconstructed or assumed; the UI flags those limitations.
+The reviewed corpus contains **1,678 normalized records across the 15 PSI investigations that have test tables**. Among its **261 solid-material flight-test records with reported oxygen**, the upper recorded oxygen fraction is **22.7%**. This is a **coverage boundary for a specific subset**, not a universal NASA threshold and not a statement that higher-oxygen experiments never existed. Some atmospheric values are reconstructed or assumed; the UI flags those limitations.
 
 See [technical documentation](docs/TECHNICAL.md), [scientific interpretation](docs/INTERPRET_STATUS.md), [submission sources](docs/SUBMISSION_2026.md) and the [concept](docs/CONCEPT.md).
 
