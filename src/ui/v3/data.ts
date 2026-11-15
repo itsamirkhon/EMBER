@@ -134,6 +134,78 @@ export function cliffStats(rows: Row[]): Cliff | null {
   };
 }
 
+// ------------------------------------------------------------------ Earth and history reference points
+
+/** Familiar atmospheres drawn on the evidence map for scale. They are not tests and not mission scenarios. */
+export interface ReferencePoint {
+  id: string;
+  label: string;
+  o2: number;
+  kPa: number;
+  note: string;
+  source: { label: string; url: string };
+}
+
+export const REFERENCE_POINTS: ReferencePoint[] = [
+  {
+    id: 'airliner',
+    label: 'Airliner cabin',
+    o2: 21,
+    kPa: 75.3,
+    note: 'Ordinary air at the highest cabin altitude allowed in normal flight, 8,000 ft (75.3 kPa in the standard atmosphere).',
+    source: { label: 'US 14 CFR § 25.841(a), pressurized cabins', url: 'https://www.law.cornell.edu/cfr/text/14/25.841' },
+  },
+  {
+    id: 'oxygen-enriched',
+    label: '“Oxygen-enriched” on Earth',
+    o2: 23.5,
+    kPa: 101.3,
+    note: 'Health-care fire codes treat air above 23.5% O₂ as an oxygen-enriched atmosphere with added fire precautions. It sits just past the last solid-material flight test.',
+    source: { label: 'NFPA 99 Health Care Facilities Code, definition of oxygen-enriched atmosphere', url: 'https://www.nfpa.org/codes-and-standards/nfpa-99-standard-development/99' },
+  },
+  {
+    id: 'apollo-1',
+    label: 'Apollo 1 pad test, 1967',
+    o2: 100,
+    kPa: 115.1,
+    note: 'Pure oxygen at 16.7 psia during the plugs-out test in which the fire killed the crew. The review board named this atmosphere a main cause.',
+    source: { label: 'Report of the Apollo 204 Review Board', url: 'https://www.nasa.gov/history/Apollo204/desc.html' },
+  },
+];
+
+// ------------------------------------------------------------------ ground screening vs microgravity
+
+/**
+ * Olson, Ruff and Miller, NASA/TM-2008-215260, Table 1. 0 g values come from 5.18 s drops in the NASA Glenn
+ * Zero Gravity Research Facility with 30 cm/s concurrent flow; 1 g values are NASA-STD-6001 Test 1 data from WSTF.
+ * ULOI = lowest O₂ that burned, MOC = highest O₂ that self-extinguished.
+ */
+export interface MarginRow {
+  material: string;
+  kPa: number;
+  psia: number;
+  uloi1g: number;
+  moc1g: number;
+  uloi0g: number;
+  moc0g: number;
+}
+
+export const MARGIN_SOURCE = {
+  label: 'Olson, Ruff and Miller, NASA/TM-2008-215260, Table 1',
+  url: 'https://ntrs.nasa.gov/citations/20080034883',
+};
+
+export const MARGIN_ROWS: MarginRow[] = [
+  { material: 'Nomex HT90-40 fabric', kPa: 101.3, psia: 14.7, uloi1g: 25.4, moc1g: 22, uloi0g: 23, moc0g: 22 },
+  { material: 'Ultem 1000 film, 10 mil', kPa: 70.3, psia: 10.2, uloi1g: 26.5, moc1g: 24, uloi0g: 24, moc0g: 23 },
+  { material: 'Mylar G film', kPa: 70.3, psia: 10.2, uloi1g: 20.8, moc1g: 20, uloi0g: 17, moc0g: 16 },
+];
+
+/** The report's equation 1: mean 0 g limit minus mean 1 g limit. Negative = burns at lower O₂ in microgravity. */
+export function marginDelta(r: MarginRow): number {
+  return (r.uloi0g + r.moc0g) / 2 - (r.uloi1g + r.moc1g) / 2;
+}
+
 // ------------------------------------------------------------------ missions → query
 
 export const MISSION_SHORT: Record<string, string> = {
@@ -321,6 +393,19 @@ export function outcomeText(outcome: string, terminal?: string | null): string {
   const a = OUTCOME_TEXT[outcome] ?? outcome.replace(/_/g, ' ');
   const b = terminal && terminal !== outcome ? TERMINAL_TEXT[terminal] ?? terminal.replace(/_/g, ' ') : '';
   return b ? `${a}; ${b}` : a;
+}
+
+/**
+ * A note when the test protocol changed conditions during the burn, so the recorded outcome belongs to that
+ * sequence rather than to a burn at constant conditions.
+ */
+export function protocolNote(outcome: string, terminal?: string | null): string | null {
+  const t = terminal ?? '';
+  if (t === 'extinguished_at_reduced_flow') return 'Airflow was reduced step by step during this test until the flame went out. The result describes that sequence, not a burn at the airflow listed.';
+  if (t === 'flow_turned_off') return 'The crew turned the airflow off during this test. The end of the burn was an operator action, not a measured extinction limit.';
+  if (t === 'extinguished_by_N2' || outcome === 'extinguished_by_N2') return 'A nitrogen jet was applied to put the flame out. The result describes suppression, not natural extinction.';
+  if (t === 'blowoff') return 'Airflow was raised until the flame blew off. The result describes that sequence, not a burn at the airflow listed.';
+  return null;
 }
 
 export const fmt = (v: number | null | undefined, d = 1) => (v === null || v === undefined || Number.isNaN(v) ? '—' : Number.isInteger(v) ? String(v) : v.toFixed(d));

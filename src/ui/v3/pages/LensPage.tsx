@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { O2_IN_DOMAIN_POINTS, evaluateApplicability, parseResearchQuery, rankInvestigationsV2, type CorpusV2, type FuelPhase, type InvestigationRankV2, type Test } from '../../../core';
+import { MATCH_TOLERANCE, O2_IN_DOMAIN_POINTS, evaluateApplicability, parseResearchQuery, rankInvestigationsV2, type CorpusV2, type FuelPhase, type InvestigationRankV2, type Test } from '../../../core';
 import { useEmber } from '../../context/EmberContext';
 import { invColor } from '../EvidenceMap';
 import {
-  MISSION_SHORT, PLAIN, TASKS, cliffStats, fmt, fmtG, kpaToPsi, lensFromMission, lensOverrides, nearestTests, outcomeText, useCompact,
+  MISSION_SHORT, PLAIN, TASKS, cliffStats, fmt, fmtG, kpaToPsi, lensFromMission, lensOverrides, nearestTests, outcomeText, protocolNote, useCompact,
   type LensInput, type Plain,
 } from '../data';
 import { AtmosphereBar, Ext, GapChips, Loading, PageHead, PlainBadge, ScaleBar, Term } from '../ui';
+import { TOUR_ANCHORS, useTourStep } from '../Tour';
 
 const DEFAULT: LensInput = { missionId: 'lunar-rover', o2: 30, kPa: 70.3, flow: [0, 20], g: 0.166, phase: 'solid', material: 'PMMA', task: 'material_screening' };
 
@@ -78,6 +79,44 @@ export function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
   return { status, admissible, conditional, rankings, reasons, warnings: q.validationWarnings, o2Range };
 }
 
+export interface RankedGap {
+  axis: 'o2' | 'kPa' | 'flow' | 'g' | 'material';
+  label: string;
+  /** Gap divided by the tolerance the applicability rules allow on that axis; categorical gaps count as 10. */
+  size: number;
+  text: string;
+}
+
+/** Orders the gaps between the scenario and its nearest flight test by how many rule tolerances each one spans. */
+export function rankGaps(l: LensInput, r: { o2: number | null; kPa: number | null; flow: number | null; g: number | null; fuel: string | null }): RankedGap[] {
+  const out: RankedGap[] = [];
+  if (r.o2 !== null) {
+    const d = l.o2 - r.o2;
+    const k = Math.abs(d) / MATCH_TOLERANCE.o2Pct;
+    if (k > 1) out.push({ axis: 'o2', label: 'Oxygen', size: k, text: `Oxygen: ${d > 0 ? '+' : '−'}${fmt(Math.abs(d))} points, ${k.toFixed(1)}× the ${MATCH_TOLERANCE.o2Pct}-point match tolerance.` });
+  }
+  if (r.kPa !== null) {
+    const d = l.kPa - r.kPa;
+    const k = Math.abs(d) / MATCH_TOLERANCE.pressureKpa;
+    if (k > 1) out.push({ axis: 'kPa', label: 'Pressure', size: k, text: `Pressure: ${d > 0 ? '+' : '−'}${fmt(Math.abs(d))} kPa, ${k.toFixed(1)}× the ${fmt(MATCH_TOLERANCE.pressureKpa)} kPa match tolerance.` });
+  }
+  if (r.flow !== null) {
+    const d = r.flow < l.flow[0] ? l.flow[0] - r.flow : r.flow > l.flow[1] ? r.flow - l.flow[1] : 0;
+    const k = d / MATCH_TOLERANCE.flowCmS;
+    if (k > 1) out.push({ axis: 'flow', label: 'Airflow', size: k, text: `Airflow: ${fmt(d)} cm/s outside your range, ${k.toFixed(1)}× the ${fmt(MATCH_TOLERANCE.flowCmS)} cm/s match tolerance.` });
+  }
+  if (r.g !== null && Math.abs(r.g - l.g) > 0.01) {
+    out.push({ axis: 'g', label: 'Gravity', size: 10, text: `Gravity: ${fmtG(r.g)} in the test, ${fmtG(l.g)} in your scenario. No combustion flight test in NASA PSI ran at partial gravity, so no tolerance can bridge this.` });
+  }
+  const mat = l.material.trim();
+  if (mat && (r.fuel ?? '').toLowerCase() !== mat.toLowerCase()) {
+    out.push({ axis: 'material', label: 'Material', size: 10, text: `Material: the test burned ${r.fuel ?? 'an unreported material'}, not ${mat}.` });
+  }
+  // Numeric gaps first, largest first; then the categorical gaps that no tolerance can bridge.
+  const categorical = (g: RankedGap) => (g.axis === 'g' || g.axis === 'material' ? 1 : 0);
+  return out.sort((a, b) => categorical(a) - categorical(b) || b.size - a.size);
+}
+
 export function LensPage() {
   const { data, error: compactError } = useCompact();
   const { ensureCorpus } = useEmber();
@@ -90,6 +129,7 @@ export function LensPage() {
   // ?mission=<id> from the map or home, optionally with &material=<name>
   const missionParam = params.get('mission');
   const materialParam = params.get('material');
+  const tourStep = useTourStep();
   useEffect(() => {
     if (!data || (!missionParam && !materialParam)) return;
     const m = missionParam ? data.missions.find((x) => x.id === missionParam) : undefined;
@@ -97,8 +137,10 @@ export function LensPage() {
       const next = m ? lensFromMission(m, p) : p;
       return materialParam ? { ...next, phase: 'solid', material: materialParam } : next;
     });
-    setParams({}, { replace: true });
-  }, [data, missionParam, materialParam, setParams]);
+    // Keep the tour step in the URL so the guided path survives the scenario being applied.
+    const tour = params.get('tour');
+    setParams(tour ? { tour } : {}, { replace: true });
+  }, [data, missionParam, materialParam, params, setParams]);
 
   const materials = useMemo(() => {
     if (!data) return [];
@@ -111,6 +153,7 @@ export function LensPage() {
   const engine = lastCheck?.signature === signature ? lastCheck.result : null;
   const nearest = useMemo(() => (data ? nearestTests(l, data.rows, 3) : []), [data, l]);
   const cliff = useMemo(() => (data ? cliffStats(data.rows) : null), [data]);
+  const gapOrder = useMemo(() => (nearest[0] ? rankGaps(l, nearest[0].row) : []), [l, nearest]);
   const set = (patch: Partial<LensInput>) => setL((p) => ({ ...p, ...patch }));
   const setCustom = (patch: Partial<LensInput>) => setL((p) => ({ ...p, ...patch, missionId: 'custom' }));
 
@@ -131,6 +174,21 @@ export function LensPage() {
       setChecking(false);
     }
   };
+
+  // Judges' tour: run the check without a click, then bring the step's section into view.
+  useEffect(() => {
+    if (!tourStep || tourStep < 2 || !data || missionParam || materialParam || checking || checkError) return;
+    if (lastCheck?.signature !== signature) void checkHistoricalEvidence();
+    // checkHistoricalEvidence reads the current scenario; the signature dependency covers it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourStep, data, missionParam, materialParam, signature, lastCheck, checking, checkError]);
+
+  useEffect(() => {
+    const anchor = tourStep ? TOUR_ANCHORS[tourStep] : undefined;
+    if (!anchor || !engine) return;
+    const id = window.setTimeout(() => document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    return () => window.clearTimeout(id);
+  }, [tourStep, engine]);
 
   if (!data) return <div className="v3-page">{compactError ? <div role="alert" className="v3-callout v3-callout-warn">Could not load NASA PSI data: {compactError}</div> : <Loading what="Loading NASA PSI data…" />}</div>;
   const mission = data.missions.find((m) => m.id === l.missionId);
@@ -356,6 +414,11 @@ export function LensPage() {
                     Result: <b>{outcomeText(n.row.outcome, n.row.terminal)}</b>
                     {n.row.spreadMmS !== null && <> · spread {fmt(n.row.spreadMmS, 2)} mm/s</>}
                   </div>
+                  {protocolNote(n.row.outcome, n.row.terminal) && (
+                    <div className="v3-near-protocol">
+                      <span className="v3-near-protocol-tag">Conditions changed during test</span> {protocolNote(n.row.outcome, n.row.terminal)}
+                    </div>
+                  )}
                   <div className="v3-small v3-muted">
                     Source: <Ext href={n.row.url}>{n.row.table ?? n.row.inv}</Ext>
                     {n.row.row !== null ? `, row ${n.row.row}` : ''}
@@ -408,6 +471,21 @@ export function LensPage() {
                 whereas your scenario specifies <b>{fmt(l.o2)}% O₂</b> and <b>{fmt(l.kPa)} kPa</b>.
                 {l.g > 0.01 && <> The scenario is at {fmtG(l.g)}, which existing microgravity flight records cannot directly validate.</>}
               </p>
+              {gapOrder.length > 0 && (
+                <div className="v3-why">
+                  <b>What separates your scenario from this test</b>
+                  <ol>
+                    {gapOrder.map((g) => (
+                      <li key={g.axis}>{g.text}</li>
+                    ))}
+                  </ol>
+                  <p className="v3-small">
+                    {gapOrder[0].axis === 'o2' || gapOrder[0].axis === 'kPa'
+                      ? `A flight test at your oxygen and pressure with ${l.material || 'the same material'} would remove the largest gaps at once${l.g > 0.01 ? '; the gravity gap would remain until a partial-gravity test exists' : ''}.`
+                      : `The largest gap is ${gapOrder[0].label.toLowerCase()}; closing it needs a test that changes that condition first.`}
+                  </p>
+                </div>
+              )}
               <p className="v3-small v3-muted">
                 This identifies missing experimental coverage; it is not a proposed burn procedure, validated protocol,
                 or proof that any material is safe or unsafe.
