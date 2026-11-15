@@ -4,7 +4,11 @@
 
 15 NASA PSI investigations with test tables · 261 solid-material flight tests with reported oxygen · none above **22.7% O₂**.
 
+![EMBER: every NASA PSI microgravity fire test as a 3D model on an engineering pad, with the evidence cliff at 22.7% O₂ and the lunar cabins past it](docs/media/ember-hero.png)
+
 **One job:** Compare proposed spacecraft fire conditions with the historical experimental record in NASA's Physical Sciences Informatics (PSI) database. EMBER identifies recorded flight tests that match a question, related tests that need caveats, and conditions outside the tested evidence.
+
+Scope note: the oxygen boundary is the highest reported O₂ among solid-material flight tests **in PSI** (22.7%). Outside PSI, NASA’s Saffire-VI burned one SIBAL cloth sample at 31% O₂ and 54.1 kPa in January 2024 ([NTRS 20240002981](https://ntrs.nasa.gov/citations/20240002981)); EMBER shows it as a labelled annotation, never as a corpus record.
 
 EMBER **does not run a new combustion experiment**, calculate a flammability threshold, predict fire probability, or certify spacecraft safety.
 

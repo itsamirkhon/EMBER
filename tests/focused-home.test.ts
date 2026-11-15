@@ -43,9 +43,10 @@ describe('focused EMBER evidence workflow', () => {
   });
 
   it('uses one restrained color-token source, with research paths still available', () => {
-    expect(styles).toContain('--v3-bg: #121411');
-    expect(styles).toContain('--v3-accent: #e7e6dc');
-    expect(styles).toContain('--v3-cliff: #a74c58');
+    // Oxygen Green: pad ground, oxygen-cylinder green action, one highlighter reserved for the coverage boundary
+    expect(styles).toContain('--v3-bg: #eef2e2');
+    expect(styles).toContain('--v3-accent: #1e7a46');
+    expect(styles).toContain('--v3-cliff: #c8e62e');
     expect(styles).not.toContain('--v3-accent: #3d7bff');
     for (const label of ['Evidence map', 'Mission lens', 'Ask EMBER', 'Trust']) {
       expect(nav.slice(nav.indexOf('const PRIMARY'), nav.indexOf('const MORE'))).toContain("label: '" + label + "'");

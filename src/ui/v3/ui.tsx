@@ -17,7 +17,7 @@ function StatusIcon({ s }: { s: Plain }) {
     return (
       <svg viewBox="0 0 20 20" aria-hidden className="v3-ico">
         <circle cx="10" cy="10" r="9" fill="currentColor" />
-        <path d="M5.6 10.4l2.9 2.9 5.9-6.6" stroke="#04140a" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5.6 10.4l2.9 2.9 5.9-6.6" stroke="#fff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   if (s === 'nearby')

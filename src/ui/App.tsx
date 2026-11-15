@@ -1,18 +1,21 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { EmberProvider } from './context/EmberContext';
-import { ExplorerPage } from './pages/ExplorerPage';
-import { ExportPage } from './pages/ExportPage';
-import { InvestigationDetailPage } from './pages/InvestigationDetailPage';
-import { ProtocolComparePage } from './pages/ProtocolComparePage';
-import { ReviewWorkspacePage } from './pages/ReviewWorkspacePage';
-import { AskPage } from './v3/pages/AskPage';
-import { EarthPage } from './v3/pages/EarthPage';
 import { HomePage } from './v3/pages/HomePage';
-import { LensPage } from './v3/pages/LensPage';
-import { MapPage } from './v3/pages/MapPage';
-import { TrustPage } from './v3/pages/TrustPage';
+import { Loading } from './v3/ui';
+
+// every route but the landing page loads on first visit, so the hero ships alone
+const ExplorerPage = lazy(() => import('./pages/ExplorerPage').then((m) => ({ default: m.ExplorerPage })));
+const ExportPage = lazy(() => import('./pages/ExportPage').then((m) => ({ default: m.ExportPage })));
+const InvestigationDetailPage = lazy(() => import('./pages/InvestigationDetailPage').then((m) => ({ default: m.InvestigationDetailPage })));
+const ProtocolComparePage = lazy(() => import('./pages/ProtocolComparePage').then((m) => ({ default: m.ProtocolComparePage })));
+const ReviewWorkspacePage = lazy(() => import('./pages/ReviewWorkspacePage').then((m) => ({ default: m.ReviewWorkspacePage })));
+const AskPage = lazy(() => import('./v3/pages/AskPage').then((m) => ({ default: m.AskPage })));
+const EarthPage = lazy(() => import('./v3/pages/EarthPage').then((m) => ({ default: m.EarthPage })));
+const LensPage = lazy(() => import('./v3/pages/LensPage').then((m) => ({ default: m.LensPage })));
+const MapPage = lazy(() => import('./v3/pages/MapPage').then((m) => ({ default: m.MapPage })));
+const TrustPage = lazy(() => import('./v3/pages/TrustPage').then((m) => ({ default: m.TrustPage })));
 
 const ROUTE_TITLES: Array<[RegExp, string]> = [
   [/^\/$/, 'EMBER — Evidence Map for Burn & Extinction Risk'],
@@ -39,6 +42,7 @@ function RouteManager() {
 
   return (
     <Layout>
+      <Suspense fallback={<div className="v3-page"><Loading what="Loading…" /></div>}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/map" element={<MapPage />} />
@@ -67,6 +71,7 @@ function RouteManager() {
           }
         />
       </Routes>
+      </Suspense>
     </Layout>
   );
 }
