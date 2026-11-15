@@ -1,12 +1,12 @@
 import { Suspense, lazy, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { EvidenceMap } from '../EvidenceMap';
+import { EvidenceFallback } from '../EvidenceFallback';
 import { cliffStats, fmt, useCompact } from '../data';
 import { Loading } from '../ui';
 
 const EvidenceSpace = lazy(() => import('../EvidenceSpace'));
 
-/** WebGL is optional. The 2D NASA evidence map is a real, usable fallback. */
+/** WebGL is optional. The 2D PSI evidence plot is a real, usable fallback. */
 function hasWebGL(): boolean {
   try {
     const canvas = document.createElement('canvas');
@@ -28,6 +28,7 @@ export function HomePage() {
   const [webgl] = useState(hasWebGL);
   const [renderFailed, setRenderFailed] = useState(false);
 
+  const lunarReference = data?.missions.find((mission) => mission.id === 'lunar-base');
   const checkMission = (id: string) => {
     navigate('/lens?mission=' + encodeURIComponent(id));
   };
@@ -36,18 +37,22 @@ export function HomePage() {
     <div className="v3-page v3-focus">
       <section className="v3-focus-hero" aria-labelledby="focus-heading">
         <div className="v3-focus-copy">
-          <p className="v3-focus-kicker">EMBER / NASA PHYSICAL SCIENCES INFORMATICS</p>
-          <h1 id="focus-heading">Find the edge of the evidence.</h1>
+          <p className="v3-focus-kicker">NASA SPACE APPS / THE MISSING EXPERIMENT</p>
+          <h1 id="focus-heading">The missing <em>flight test.</em></h1>
           <p className="v3-focus-lede">
-            Choose a spacecraft environment and a material. EMBER checks which
-            NASA fire experiments match the conditions, which are only related,
-            and where the record stops.
+            NASA’s published lunar exploration-atmosphere reference proposes
+            <strong> {lunarReference?.o2Pct ?? 34}% oxygen at {fmt(lunarReference?.pressureKpa ?? 56.5)} kPa</strong>.
+            In EMBER’s reviewed NASA PSI corpus, the <strong>{cliff?.solidFlight ?? '261'} solid-material
+            flight records</strong> with reported oxygen reach only <strong>{cliff ? fmt(cliff.o2Max) : '22.7'}%</strong>.
+            Which historical experiments can actually inform that mission?
           </p>
-          <Link to="/lens" className="v3-btn v3-btn-primary v3-btn-lg v3-focus-cta">
-            Check a mission scenario <span aria-hidden="true">↗</span>
+          <Link to="/lens?mission=lunar-base" className="v3-btn v3-btn-primary v3-btn-lg v3-focus-cta">
+            Explore the evidence gap <span aria-hidden="true">↗</span>
           </Link>
           <p className="v3-focus-disclaimer">
-            A historical evidence check. Not a fire simulation or a safety certification.
+            A coverage boundary is not a physical flammability threshold.
+            Not a fire simulation or a safety certification.
+            {' '}<a href="https://ntrs.nasa.gov/citations/20240003211" target="_blank" rel="noopener noreferrer">NASA atmosphere reference</a>.
           </p>
           {data && (
             <div className="v3-focus-metrics" aria-label="NASA PSI source records">
@@ -60,7 +65,7 @@ export function HomePage() {
 
         <div className="v3-focus-visual" aria-label="Interactive NASA PSI evidence visualization">
           <div className="v3-focus-visual-top">
-            <span>Recorded evidence / 3D</span>
+            <span>Recorded evidence / {webgl && !renderFailed ? '3D' : '2D'}</span>
             <span>{webgl && !renderFailed ? 'Drag to examine' : '2D evidence view'}</span>
           </div>
           {data && cliff ? (
@@ -77,14 +82,10 @@ export function HomePage() {
               </Suspense>
             ) : (
               <div className="v3-focus-map-fallback">
-                <EvidenceMap
+                <EvidenceFallback
                   rows={data.rows}
-                  investigations={data.investigations}
                   missions={data.missions}
                   cliff={cliff}
-                  phase="solid"
-                  compact
-                  onPickMission={(mission) => checkMission(mission.id)}
                 />
               </div>
             )
@@ -93,34 +94,15 @@ export function HomePage() {
               {error ? '3D evidence unavailable while source data is offline.' : <Loading what="Loading NASA PSI evidence…" />}
             </div>
           )}
-          <div className="v3-focus-visual-bottom">
-            <span>Dots = indexed tests with plottable conditions</span>
-            <span>Mission markers = proposed scenarios, not flight tests</span>
-          </div>
+          {webgl && !renderFailed && (
+            <div className="v3-focus-visual-bottom">
+              <span>Points show indexed PSI records with reported plotting dimensions</span>
+              <span>Mission markers are scenarios, not flight experiments</span>
+            </div>
+          )}
         </div>
       </section>
 
-      {cliff && (
-        <section className="v3-focus-finding" aria-label="The evidence finding">
-          <div className="v3-focus-finding-text">
-            <span className="v3-focus-kicker">A gap in the historical record</span>
-            <h2>
-              {fmt(cliff.o2Max)}% O₂ is the upper reported oxygen level
-              in this corpus's solid-material flight-test subset.
-            </h2>
-          </div>
-          <div className="v3-focus-finding-side">
-            <p>
-              {cliff.solidFlight} solid-material flight records have reported oxygen.
-              A coverage boundary is not a physical flammability threshold.
-              Explore the underlying observations before interpreting it for a mission.
-            </p>
-            <Link to="/map" className="v3-focus-textlink">
-              Inspect NASA records <span aria-hidden="true">↗</span>
-            </Link>
-          </div>
-        </section>
-      )}
     </div>
   );
 }
