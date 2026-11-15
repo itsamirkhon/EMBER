@@ -68,7 +68,7 @@ function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
 }
 
 export function LensPage() {
-  const { data } = useCompact();
+  const { data, error: compactError } = useCompact();
   const { ensureCorpus } = useEmber();
   const [params, setParams] = useSearchParams();
   const [corpus, setCorpus] = useState<CorpusV2 | null>(null);
@@ -103,7 +103,7 @@ export function LensPage() {
   const setCustom = (patch: Partial<LensInput>) => setL((p) => ({ ...p, ...patch, missionId: 'custom' }));
   const stale = engine !== null && dl !== l;
 
-  if (!data) return <div className="v3-page"><Loading what="Loading NASA PSI data…" /></div>;
+  if (!data) return <div className="v3-page">{compactError ? <div role="alert" className="v3-callout v3-callout-warn">Could not load NASA PSI data: {compactError}</div> : <Loading what="Loading NASA PSI data…" />}</div>;
   const mission = data.missions.find((m) => m.id === l.missionId);
   const env = l.missionId === 'custom' ? 'Custom cabin' : MISSION_SHORT[l.missionId] ?? mission?.label ?? 'Cabin';
 
@@ -122,7 +122,7 @@ export function LensPage() {
               <button key={m.id} type="button" className="v3-mission" aria-pressed={l.missionId === m.id} onClick={() => setL((p) => lensFromMission(m, p))}>
                 <b>{MISSION_SHORT[m.id] ?? m.label}</b>
                 <span>
-                  {fmt(m.o2Pct)}% O₂ · {fmt(m.pressureKpa)} kPa · {fmtG(m.gravityG ?? 0)}
+                  {fmt(m.o2Pct)}% O₂ · {fmt(m.pressureKpa)} kPa · {m.gravityG === null ? 'gravity not reported' : fmtG(m.gravityG)}
                 </span>
               </button>
             ))}
@@ -245,7 +245,7 @@ export function LensPage() {
           <section className="v3-card" aria-labelledby="near-h">
             <h2 id="near-h" className="v3-h2">Nearest real flight tests</h2>
             <p className="v3-small v3-muted">
-              Closest {l.phase}-fuel flight records to your conditions, and how far each one is on every axis. A grey chip is the same; amber is a
+              Closest {l.phase}-fuel flight records with reported (not assumed) oxygen and pressure. These are analogues, not necessarily applicable tests. A grey chip is the same; amber is a
               small gap; orange is a large gap or unknown.
             </p>
             <div className="v3-nearest">
@@ -259,7 +259,7 @@ export function LensPage() {
                     <span className="v3-muted">{n.row.fuel ?? 'material not reported'}</span>
                   </div>
                   <div className="v3-near-cond">
-                    {fmt(n.row.o2)}% O₂ · {fmt(n.row.kPa)} kPa · {n.row.flow === null ? 'airflow not reported' : `${fmt(n.row.flow)} cm/s`} · {fmtG(n.row.g ?? 0)}
+                    {fmt(n.row.o2)}% O₂ · {fmt(n.row.kPa)} kPa · {n.row.flow === null ? 'airflow not reported' : `${fmt(n.row.flow)} cm/s`} · {n.row.g === null ? 'gravity not reported' : fmtG(n.row.g)}
                   </div>
                   <GapChips gaps={n.gaps} />
                   <div className="v3-near-out">
@@ -304,7 +304,7 @@ export function LensPage() {
             </section>
           )}
 
-          {engine && engine.status !== 'measured' && nearest[0] && (
+          {engine && !stale && engine.status !== 'measured' && nearest[0] && (
             <section className="v3-card v3-next" aria-labelledby="next-h">
               <div className="v3-eyebrow">Next experiment</div>
               <h2 id="next-h" className="v3-h2">The flight test that would shrink this gap most</h2>
