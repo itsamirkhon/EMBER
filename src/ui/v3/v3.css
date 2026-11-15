@@ -733,3 +733,4 @@ body { background-image: var(--v3-pad); background-attachment: fixed; font-size:
 .v3-tour { border-top: 1px solid var(--v3-text); }
 .v3-table thead th { border-bottom: 1px solid var(--v3-text); }
 @media (max-width: 760px) { .v3-finding { grid-template-columns: 1fr; gap: 12px; } }
+.v3-focus-earth { margin: 14px 0 0; color: var(--v3-text-2); line-height: 1.6; }

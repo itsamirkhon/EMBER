@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, type PointerEvent } from 'react';
 import type { FuelPhase, Mission } from '../../core';
-import { MISSION_SHORT, REFERENCE_POINTS, fmt, type Cliff, type InvBrief, type ReferencePoint, type Row } from './data';
+import { LUNAR_MATERIAL_BAND, MISSION_SHORT, REFERENCE_POINTS, fmt, type Cliff, type InvBrief, type ReferencePoint, type Row } from './data';
 
 /** Colour per investigation, one family per fuel phase: pine = solid, teal-green = liquid, olive = gas.
  *  Highlighter chartreuse is kept for the evidence cliff alone. */
@@ -137,6 +137,11 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
       });
       return;
     }
+    const band = LUNAR_MATERIAL_BAND;
+    if (bandVisible && p.px >= sx(band.o2From) + 10 && p.px <= sx(band.o2To) + 4 && Math.abs(sy(band.kPa) - p.py) < 9) {
+      setHover({ x: sx(band.o2To), y: sy(band.kPa), title: band.label, lines: [band.note, `Source: ${band.source.label}`] });
+      return;
+    }
     const ref = references.find((x) => Math.hypot(sx(x.o2) - p.px, sy(x.kPa) - p.py) < 14);
     if (ref) {
       setHover({ x: sx(ref.o2), y: sy(ref.kPa), title: `${ref.label} · reference, not a test`, lines: [`${fmt(ref.o2)}% O₂ at ${fmt(ref.kPa)} kPa`, ref.note, `Source: ${ref.source.label}`] });
@@ -169,6 +174,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
   }
 
   const cliffX = sx(cliff.o2Max);
+  const bandVisible = missions.some((m) => m.id === LUNAR_MATERIAL_BAND.missionId && m.o2Pct === LUNAR_MATERIAL_BAND.o2From && m.pressureKpa === LUNAR_MATERIAL_BAND.kPa);
   const isSelected = (m: Mission) => !!selected && Math.abs((m.o2Pct ?? -1) - selected.o2) < 0.01 && Math.abs((m.pressureKpa ?? -1) - selected.kPa) < 0.01;
   const selectedIsMission = !!selected && groups.some((g) => g.some(isSelected));
 
@@ -246,6 +252,16 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
           );
         })}
 
+        {bandVisible && (
+          <g aria-label={`${LUNAR_MATERIAL_BAND.label}: ${LUNAR_MATERIAL_BAND.o2From} to ${LUNAR_MATERIAL_BAND.o2To}% oxygen at ${LUNAR_MATERIAL_BAND.kPa} kPa`}>
+            <line x1={sx(LUNAR_MATERIAL_BAND.o2From)} x2={sx(LUNAR_MATERIAL_BAND.o2To)} y1={sy(LUNAR_MATERIAL_BAND.kPa)} y2={sy(LUNAR_MATERIAL_BAND.kPa)} stroke="var(--v3-text)" strokeOpacity={0.55} strokeWidth={6} strokeLinecap="round" />
+            <line x1={sx(LUNAR_MATERIAL_BAND.o2To)} x2={sx(LUNAR_MATERIAL_BAND.o2To)} y1={sy(LUNAR_MATERIAL_BAND.kPa) - 7} y2={sy(LUNAR_MATERIAL_BAND.kPa) + 7} stroke="var(--v3-text)" strokeOpacity={0.7} strokeWidth={1.5} />
+            <text x={sx(LUNAR_MATERIAL_BAND.o2From)} y={sy(LUNAR_MATERIAL_BAND.kPa) + 20} fontSize="11" fill="var(--v3-text-2)" stroke="var(--v3-surface)" strokeWidth={4} paintOrder="stroke" strokeLinejoin="round">
+              {LUNAR_MATERIAL_BAND.label}
+            </text>
+          </g>
+        )}
+
         {groups.map((g) => {
           const m = g[0];
           const x = sx(m.o2Pct as number);
@@ -288,6 +304,7 @@ export function EvidenceMap({ rows, investigations, missions, cliff, phase, high
         Records missing either are not plotted. Each mark groups tests within 1% O₂ and 2.5 kPa; larger marks contain more records
         {off ? `; ${off} records above ${YD[1]} kPa are off-scale` : ''}. Hollow marks: at least one atmospheric value was assumed.
         Dashed curves indicate equal oxygen partial pressure (pO₂ = O₂ fraction × pressure).
+        {bandVisible && <> The bar from the lunar habitat marks oxygen up to {LUNAR_MATERIAL_BAND.o2To}%, the level NASA required materials to be rated for in its chamber test of that atmosphere (a test rating, not a control band).</>}
         {references.length > 0 && <> Diamonds are familiar Earth and history atmospheres for scale ({references.map((x) => x.label).join('; ')}); they are not tests.</>}
         {onPickMission && (
           <div className="v3-row v3-section" aria-label="Choose a mission scenario">
