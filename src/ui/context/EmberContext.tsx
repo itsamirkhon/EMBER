@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import type { CorpusV2, Investigation, SourceRef } from '../../core';
 import {
   createReview,
@@ -66,6 +67,9 @@ export function formatLocator(ref?: Partial<SourceRef>): string | null {
   if (loc.cell) parts.push(`cell ${loc.cell}`);
   return parts.length > 0 ? parts.join(' · ') : null;
 }
+
+/** Routes that list the investigation catalog or saved reviews. */
+export const CATALOG_ROUTES = /^\/(investigations|explorer|review|reviews)(\/|$)/;
 
 export function EmberProvider({ children }: { children: ReactNode }) {
   const [investigations, setInvestigations] = useState<Investigation[]>([]);
@@ -153,25 +157,27 @@ export function EmberProvider({ children }: { children: ReactNode }) {
     }
   }, [corpus]);
 
+  // The investigation catalog and saved reviews come from the 25 MB static corpus when no API is running.
+  // Load them only on the screens that list them, so the home page, map, lens and Ask stay light.
+  const loc = useLocation();
+  const needsCatalog = CATALOG_ROUTES.test(loc.pathname);
+  const catalogStarted = useRef(false);
   useEffect(() => {
-    let cancelled = false;
+    if (!needsCatalog || catalogStarted.current) return;
+    catalogStarted.current = true;
     (async () => {
       try {
         const [invRes, revRes] = await Promise.all([getInvestigations(), listReviews()]);
-        if (cancelled) return;
         setInvestigations(invRes.investigations);
         setReviews(revRes.reviews);
         setBackendSource(getLastBackendSource());
       } catch {
         // Handled per-page if static assets fail
       } finally {
-        if (!cancelled) setInvestigationsLoading(false);
+        setInvestigationsLoading(false);
       }
     })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  }, [needsCatalog]);
 
   const openSourceRef = useCallback((ref: Partial<SourceRef> & { sourceId: string }) => {
     setSourceModal({

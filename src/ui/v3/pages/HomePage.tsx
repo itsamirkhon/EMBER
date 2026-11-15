@@ -122,6 +122,13 @@ export function HomePage() {
             <Link to="/map" className="v3-focus-textlink">
               Inspect NASA records <span aria-hidden="true">↗</span>
             </Link>
+            <p className="v3-focus-earth">
+              Back on Earth, NASA links the same experiments to smoke detection for submarines, fire safety in mines and
+              airplanes, and fire models for buildings and wildfires.{' '}
+              <Link to="/earth" className="v3-focus-textlink">
+                Back to Earth <span aria-hidden="true">↗</span>
+              </Link>
+            </p>
           </div>
         </section>
       )}

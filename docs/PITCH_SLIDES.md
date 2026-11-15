@@ -73,6 +73,7 @@ Idempotent `pipeline/build_corpus.py` with SHA-256 `manifest_v2.json` and 7-tabl
 
 - **Three Explicit Modes:** `SAVED_DEMO_SNAPSHOT` (`demo-pmma-lunar`, `demo-cool-flame`), `DETERMINISTIC_ENGINE` (default offline live engine), and optional server-side `LIVE_AI` (strictly post-checked by all 5 verifier gates).
 - **Non-Qualification Disclaimer:** EMBER v2 is a **scientific evidence workbench**, **not** flight certification or NASA qualification. PSI v2 has `0` actual orbital partial-gravity (`0.166g`/`0.38g`) flammability rows, `FLEX-2` is `planned_only`, and schematic diagrams are labeled non-computational.
+- **Back on Earth:** NASA links the same experiments to smoke detection for submarines and underwater labs (SAME), fire models for wildfires and buildings (BASS / BASS-II), and fire safety in mines, airplanes and submarines (Saffire); see the site's Back to Earth page.
 - **Immediate Roadmap:** Pairwise boundary scoping (`GOLD-002`/`005`), null-flow handling inside `testJointDistance` (`GOLD-058`), `SIBAL` woven-fabric exemption in `RULE-UNK-01` (`GOLD-045`), and `buildDependencies` per-parameter filtering.
 
 ---
