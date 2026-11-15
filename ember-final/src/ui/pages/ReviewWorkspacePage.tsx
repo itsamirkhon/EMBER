@@ -265,9 +265,9 @@ export function ReviewWorkspacePage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>Scientific Evidence Review Workspace</h1>
+          <h1>Full scientific review</h1>
           <p className="page-lead">
-            Query NASA PSI microgravity combustion experiments with role-checked atmosphere specs, stage-bound protocol matching, applicability rule gates, and expandable citation provenance.
+            Every rule decision, retrieved passage and verification check behind an answer. For a quick answer use <Link to="/ask">Ask EMBER</Link>; for your cabin use the <Link to="/lens">mission lens</Link>.
           </p>
         </div>
 
@@ -675,10 +675,8 @@ export function ReviewWorkspacePage() {
               <span className="mono muted">({review.envelope.runId} · {review.envelope.timingMs.total} ms)</span>
             </div>
             <div className="btn-group">
-              <Link to="/variants" className="btn btn-sm">Inspect Design Variants</Link>
-              <Link to="/planner" className="btn btn-sm">Plan Test Budget</Link>
-              <Link to="/modeling" className="btn btn-sm">Run Domain Predictor</Link>
-              <Link to="/export" className="btn btn-sm">Export Bundle</Link>
+              <Link to="/lens" className="btn btn-sm">Open the mission lens</Link>
+              <Link to="/export" className="btn btn-sm">Export this review</Link>
             </div>
           </div>
 
@@ -795,8 +793,8 @@ export function ReviewWorkspacePage() {
               </ul>
               {review.evidencePackage.gaps.length > 0 ? (
                 <div className="pill-row">
-                  <Link to="/planner" className="btn btn-sm btn-primary">
-                    Design Test Programme for Gaps →
+                  <Link to="/lens" className="btn btn-sm btn-primary">
+                    See the nearest tests for these gaps →
                   </Link>
                 </div>
               ) : null}

@@ -95,13 +95,13 @@ export function ExplorerPage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>PSI Investigation Explorer ({investigations.length} Investigations)</h1>
+          <h1>The {investigations.length} NASA investigations</h1>
           <p className="page-lead">
-            Ranked against active review query: <span className="mono">{activeQuery.rawQuestion.slice(0, 96)}{activeQuery.rawQuestion.length > 96 ? '…' : ''}</span>. Separates Question Relevance, Observation Applicability, and Evidence Quality.
+            Ranked for the current question: <span className="mono">{activeQuery.rawQuestion.slice(0, 96)}{activeQuery.rawQuestion.length > 96 ? '…' : ''}</span>. Three separate scales: does it answer the question, do its tests match the conditions, how reliable is the data.
           </p>
         </div>
-        <Link to="/" className="btn btn-sm">
-          Change Active Query
+        <Link to="/review" className="btn btn-sm">
+          Change the question
         </Link>
       </div>
 
@@ -197,13 +197,13 @@ export function ExplorerPage() {
 
                 {rank ? (
                   <div className="stack-sm card-elevated" style={{ padding: '0.75rem' }}>
-                    <ScoreBar label="1. Question Relevance" score={rank.relevanceScore} tone="info" />
-                    <ScoreBar label="2. Observation Applicability" score={rank.applicabilityScore} tone="ok" />
-                    <ScoreBar label="3. Evidence Quality & Completeness" score={rank.evidenceQualityScore} />
+                    <ScoreBar label="Answers the question" score={rank.relevanceScore} tone="info" />
+                    <ScoreBar label="Matches the conditions" score={rank.applicabilityScore} tone="ok" />
+                    <ScoreBar label="Data reliability" score={rank.evidenceQualityScore} />
                     <div className="pill-row" style={{ fontSize: '0.78rem' }}>
-                      <span className="tabular">Admissible: <strong>{rank.admissibleCount}</strong></span>
-                      <span className="tabular">Conditional: <strong>{rank.conditionalCount}</strong></span>
-                      <span className="tabular">Inadmissible: <strong>{rank.inadmissibleCount}</strong></span>
+                      <span className="tabular">Apply: <strong>{rank.admissibleCount}</strong></span>
+                      <span className="tabular">With caveats: <strong>{rank.conditionalCount}</strong></span>
+                      <span className="tabular">Does not apply: <strong>{rank.inadmissibleCount}</strong></span>
                     </div>
                     {rank.unsupportedJointWarning ? (
                       <div className="banner banner-warn" style={{ padding: '0.45rem 0.65rem', fontSize: '0.8rem' }}>

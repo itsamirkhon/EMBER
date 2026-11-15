@@ -28,6 +28,8 @@ jobs:
         run: npm run lint
       - name: Test core and API with mocked providers
         run: npm test
+      - name: Test the 3D intro evidence gate
+        run: node --test tests/presentation/support.test.cjs
       - name: Build
         run: npm run build
       - name: Install pipeline test dependencies

@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f5f2"><meta name="color-scheme" content="light"><meta name="description" content="EMBER: an interactive presentation of combustion evidence and its limits.">
+<title>EMBER / Fire, without assumptions.</title>
+<style>
+:root{--paper:#f6f5f2;--ink:#1d1d1d;--muted:#6d6d69;--line:#dcdcd7;--red:#d9432e;--soft:#eae9e4;--white:#fff;--mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button,a,input,select{touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--red);outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.4}button{color:inherit}a{color:inherit}::selection{background:#f1b8aa}button svg{pointer-events:none}.hidden,[hidden]{display:none!important}
+.header{height:80px;padding:0 38px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:11px;text-decoration:none}.brand-icon{width:26px;height:29px;display:flex;gap:3px;align-items:flex-end}.brand-icon i{display:block;width:6px;background:var(--red);transform:skew(-12deg);height:17px}.brand-icon i:nth-child(2){height:28px}.brand-icon i:nth-child(3){height:23px}.wordmark{font-size:25px;font-weight:750;letter-spacing:-1px}.brand-caption{padding-left:22px;border-left:1px solid var(--line);font-family:var(--mono);font-size:10px;line-height:1.6;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}.left-brand{display:flex;align-items:center;gap:25px}.top-actions{display:flex;align-items:center;gap:22px}.plain{border:0;background:transparent;padding:9px 0;font-size:12px;color:var(--muted)}.plain:hover{color:var(--ink)}.present-button{background:var(--ink);border:1px solid var(--ink);border-radius:3px;color:white;font-size:12px;padding:11px 16px;display:flex;align-items:center;gap:13px}.live-indicator{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;color:var(--muted)}.live-indicator i{width:5px;height:5px;border-radius:50%;background:var(--red)}
+.main{display:grid;grid-template-columns:365px minmax(0,1fr);gap:30px;padding:30px 38px 22px;max-width:1920px;margin:auto;min-height:620px;height:calc(100svh - 186px)}.story{position:relative;display:flex;flex-direction:column;padding:15px 12px 10px 0;min-width:0}.eyebrow{font:10px var(--mono);letter-spacing:.10em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:11px}.eyebrow .line{height:1px;width:24px;background:var(--red)}.story h1{font-size:clamp(49px,4.2vw,76px);font-weight:600;line-height:1.005;letter-spacing:-.065em;margin:31px 0 23px}.story h1 em{font-style:normal;color:var(--red)}.lead{font-size:15px;color:#60605d;line-height:1.7;max-width:33ch;margin:0}.insight{border-left:2px solid var(--red);padding:0 0 0 15px;margin:25px 0 0;max-width:32ch}.insight strong{font-size:12px;font-weight:600;line-height:1.55;display:block}.insight p{color:var(--muted);font-size:12px;line-height:1.6;margin:7px 0 0}.story-foot{margin-top:auto;padding-top:23px}.link-button{border:0;background:transparent;padding:0 0 7px;border-bottom:1px solid var(--ink);font-size:12px;display:inline-flex;gap:35px;align-items:center}.small-disclaimer{font:10px/1.65 var(--mono);color:#86867f;max-width:39ch;margin-top:15px}.stage-stack{display:flex;flex-direction:column;min-width:0;min-height:0}.stage{position:relative;background:#141519;flex:1;min-height:390px;border-radius:5px 5px 0 0;overflow:hidden;isolation:isolate}.stage canvas{position:absolute;inset:0;display:block;width:100%;height:100%;touch-action:none;cursor:grab}.stage canvas:active{cursor:grabbing}.stage-top{position:absolute;top:23px;left:25px;right:25px;display:flex;justify-content:space-between;gap:20px;pointer-events:none;color:#d2d2cf;font:9px var(--mono);letter-spacing:.1em;z-index:2}.stage-top .status-dot{display:inline-block;background:#c9c9c6;border-radius:50%;width:4px;height:4px;margin-right:7px}.stage-top .render-status{color:#8d8e90}.specimen-label{position:absolute;left:25px;top:49px;font:10px/1.8 var(--mono);color:#8e8f92;z-index:2;pointer-events:none}.labels{position:absolute;left:0;right:0;top:78px;display:grid;grid-template-columns:1fr 1fr;z-index:2;pointer-events:none;text-align:center}.label strong{font-size:24px;font-weight:400;letter-spacing:-.04em;color:#f1f1ee}.label span{display:block;color:#868789;font:9px var(--mono);letter-spacing:.12em;margin-top:7px;text-transform:uppercase}.scene-divider{position:absolute;top:80px;bottom:72px;left:50%;border-left:1px solid #ffffff12;pointer-events:none}.labels.single{grid-template-columns:1fr;top:72px}.stage-bar{position:absolute;left:25px;right:25px;bottom:21px;display:flex;justify-content:space-between;align-items:center;color:#999a9b;gap:10px;z-index:3}.motion-controls{display:flex;align-items:center;gap:8px}.stage-button{border:1px solid #ffffff29;background:#15161ab5;color:#d8d8d5;border-radius:3px;padding:8px 10px;display:flex;align-items:center;gap:7px;font-size:10px;backdrop-filter:blur(6px)}.stage-button:hover,.stage-button.active{border-color:#aaa;background:#2c2d30}.camera-hint{font:9px var(--mono);text-align:right;line-height:1.6}.status-flag{position:absolute;right:25px;top:52px;padding:6px 8px;border:1px solid #f1d3cb47;color:#e8c0b6;font:9px var(--mono);background:#241c1c94;z-index:3}.flag-white{color:#c4c4bd;border-color:#68686366;background:#1f2024c9}.gpu-error{position:absolute;inset:0;background:#17181a;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:50px;color:#ddd;text-align:center;z-index:6}.gpu-error h3{font-size:24px;font-weight:400}.gpu-error p{font-size:14px;color:#aaa;max-width:38ch;line-height:1.6}.gpu-error .poster{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25;z-index:-1}.gpu-error button{background:white;border:0;padding:12px 20px;border-radius:3px;color:#222;margin-top:15px}.loading{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:#16171a;color:#999;font:11px var(--mono)}
+.controls{background:white;border:1px solid var(--line);border-top:0;padding:19px 22px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;border-radius:0 0 5px 5px}.control-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:6px}.control-head label{font-size:11px;color:#686862}.control-head output{font:13px var(--mono);color:#1f1f1f;white-space:nowrap}.slider{appearance:none;width:100%;height:3px;background:linear-gradient(to right,var(--ink) var(--fill,40%),#e8e8e3 var(--fill,40%));display:block;margin:12px 0;cursor:pointer}.slider::-webkit-slider-thumb{appearance:none;border-radius:50%;width:12px;height:12px;background:white;border:2px solid #222;box-shadow:0 0 0 3px #fff}.slider::-moz-range-thumb{border-radius:50%;width:9px;height:9px;background:white;border:2px solid #222}.control-scale{display:flex;justify-content:space-between;font:9px var(--mono);color:#a0a09a}.stage-note{font:9px/1.5 var(--mono);color:#82827a;margin-top:10px;display:flex;justify-content:space-between;gap:12px}.stage-note button{font:inherit;color:#5a5a54;background:transparent;border:0;padding:0;text-decoration:underline}
+.footer{height:106px;padding:0 38px 20px;display:flex;align-items:center;gap:36px;max-width:1920px;margin:auto}.step-nav{display:grid;grid-template-columns:repeat(4,1fr);flex:1;gap:26px}.step-link{border:0;border-top:1px solid var(--line);background:transparent;text-align:left;padding:14px 0 0;color:#999a93;display:flex;gap:15px;transition:color .2s}.step-link.active{border-top:2px solid var(--red);color:var(--ink);padding-top:13px}.step-number{font:10px var(--mono);color:#999}.step-link.active .step-number{color:var(--red)}.step-text strong{font-size:12px;font-weight:500;display:block}.step-text span{font-size:10px;margin-top:5px;display:block;color:#96968e}.arrows{display:flex;align-items:center;gap:8px}.arrow-button{height:40px;width:40px;border:1px solid var(--line);border-radius:50%;background:transparent;display:grid;place-items:center;font-size:19px}.arrow-button.next{background:var(--ink);color:white;border-color:var(--ink)}
+.drawer-backdrop{position:fixed;inset:0;background:#0005;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}.drawer-backdrop.open{opacity:1;pointer-events:auto}.drawer{position:fixed;right:0;top:0;bottom:0;width:min(590px,96vw);background:var(--paper);z-index:21;box-shadow:-20px 0 70px #0002;transform:translateX(105%);transition:transform .25s ease;overflow:auto;visibility:hidden}.drawer.open{transform:translateX(0);visibility:visible}.drawer-head{padding:25px 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--paper);z-index:1}.drawer-head h2{margin:0;font-size:20px;font-weight:500;letter-spacing:-.03em}.close{border:1px solid var(--line);background:transparent;width:32px;height:32px;border-radius:50%;font-size:20px}.drawer-body{padding:25px 30px 40px}.drawer-body .eyebrow{margin:6px 0 20px}.evidence-title{font-size:30px;line-height:1.1;letter-spacing:-.04em;font-weight:500;margin:12px 0}.body-copy{font-size:13px;line-height:1.7;color:var(--muted)}.audit-status{font:10px var(--mono);color:var(--red);display:inline-block;border:1px solid #d9432e44;padding:8px 10px;margin-bottom:7px}.reason{padding:10px 0 10px 17px;border-bottom:1px solid var(--line);font-size:12px;line-height:1.6;position:relative}.reason:before{content:'\2014';position:absolute;left:0;color:var(--red)}.comparison-table{width:100%;border-collapse:collapse;font-size:12px;margin:25px 0}.comparison-table th{font:9px var(--mono);text-align:left;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--ink)}.comparison-table td{padding:12px 8px;border-bottom:1px solid var(--line)}.comparison-table td:first-child{color:var(--muted)}.data-card{padding:16px 0;border-top:1px solid var(--line)}.data-card header{display:flex;justify-content:space-between;font-size:14px;margin-bottom:9px}.data-card p{margin:5px 0;color:var(--muted);font:10px/1.7 var(--mono)}.data-card a{font:10px var(--mono)}.source-note{background:#eeede7;padding:14px 16px;font:10px/1.7 var(--mono);color:#707068;margin:20px 0}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:22px 0}.form-field label{display:block;font:10px var(--mono);color:var(--muted);margin-bottom:9px}.form-field select,.form-field input{width:100%;border:1px solid var(--line);border-radius:3px;background:white;color:var(--ink);padding:12px;font-size:13px}.wide-button{width:100%;padding:12px;background:var(--ink);color:white;border:0;border-radius:3px;margin:8px 0;font-size:12px}.secondary{background:transparent;border:1px solid var(--line);color:var(--ink)}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,30px);background:#202020;color:white;padding:13px 20px;font-size:12px;border-radius:4px;opacity:0;pointer-events:none;transition:.2s;z-index:40;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.sources-list{font-size:12px;line-height:1.8}.sources-list p{border-top:1px solid var(--line);padding-top:14px}.sources-list a{color:var(--ink)}.declaration{padding-top:18px;border-top:1px solid var(--line);font:10px/1.8 var(--mono);color:#7a7a73}.autoplay-meter{height:2px;background:var(--red);position:fixed;top:0;left:0;width:0;z-index:50}.tabular{font-variant-numeric:tabular-nums}.screen-reader{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(min-width:1600px){.main{grid-template-columns:420px minmax(0,1fr);gap:55px;padding-top:36px}.story h1{font-size:80px}.lead{font-size:17px}.insight{margin-top:32px}.insight strong,.insight p{font-size:13px}.header,.main,.footer{padding-left:55px;padding-right:55px}}
+@media(max-width:1150px){.header{padding:0 24px}.main{grid-template-columns:290px minmax(0,1fr);gap:24px;padding:24px;min-height:590px}.story h1{font-size:51px}.story .lead{font-size:14px}.insight{margin-top:20px}.brand-caption,.live-indicator{display:none}.footer{padding:0 24px 15px;gap:20px}.step-nav{gap:15px}.controls{gap:16px;padding:17px}.stage-top{left:18px;right:18px;font-size:8px}.stage-bar{left:18px;right:18px}.camera-hint{font-size:8px}.stage-note{font-size:8px}.specimen-label{left:18px}.control-head{flex-direction:column;gap:7px}}
+@media(max-width:850px){.header{height:66px;padding:0 19px}.top-actions{gap:15px}.top-actions .plain{font-size:11px}.present-button{font-size:11px;padding:10px}.main{height:auto;display:flex;flex-direction:column;padding:28px 19px 16px;gap:24px;min-height:0}.story{padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:25px}.story .eyebrow{grid-column:1/-1;font-size:9px}.story h1{margin:22px 0 0;font-size:48px;grid-row:2/4;align-self:start}.lead{margin-top:22px;font-size:13px!important}.insight{margin:17px 0 0;padding-left:10px}.insight strong,.insight p{font-size:11px}.story-foot{grid-column:1/-1;padding-top:23px;display:flex;align-items:center;justify-content:space-between;gap:20px}.small-disclaimer{margin:0;font-size:8px;max-width:40ch}.link-button{font-size:11px;white-space:nowrap;gap:15px}.stage{flex:none;height:440px;min-height:0}.controls{grid-template-columns:1fr 1fr 1fr}.control-head{flex-direction:row}.footer{height:95px;padding:6px 19px 20px;gap:12px}.step-text span{display:none}.step-link{gap:7px}.step-number{font-size:9px}.step-text strong{font-size:10px}.arrows{gap:5px}.arrow-button{width:30px;height:30px;font-size:16px}.step-nav{gap:10px}.stage-note{font-size:8px}.brand-caption{display:none}}
+@media(max-width:520px){.top-actions #sourcesButton{display:none}.wordmark{font-size:22px}.header{gap:7px}.top-actions{gap:11px}.story{grid-template-columns:1fr}.story h1{grid-row:auto;font-size:50px;max-width:10ch;margin-top:20px}.lead{margin-top:18px;max-width:42ch}.insight{display:none}.story-foot{padding-top:18px}.small-disclaimer{max-width:26ch}.stage{height:430px}.stage-top{font-size:7px;left:13px;right:13px}.stage-top .render-status{max-width:10ch;text-align:right;line-height:1.5}.specimen-label{left:13px;font-size:8px}.labels{top:89px}.label strong{font-size:21px}.label span{font-size:7px}.stage-bar{left:13px;right:13px;bottom:16px}.camera-hint{display:none}.stage-button{font-size:9px;padding:8px}.controls{gap:15px;padding:16px 13px}.control-head{flex-direction:column;gap:6px}.control-head label{font-size:10px}.control-head output{font-size:12px}.control-scale{font-size:8px}.stage-note{display:block;font-size:8px}.stage-note button{margin-top:5px;display:block}.step-number{display:none}.footer{padding-top:10px}.drawer-body{padding:22px}.drawer-head{padding:20px 22px}}
+
+/* Touch layout: the viewport is primary, not a scaled desktop sidebar. */
+.mobile-title{display:none}.touch-hint{display:none}
+.drawer{overscroll-behavior:contain}.drawer-body{overflow-wrap:anywhere}
+body.panel-open{overflow:hidden}.close{min-width:44px;min-height:44px}
+@media(max-width:850px){
+ html{scroll-padding-bottom:96px}
+ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+ .header{padding-left:max(19px,env(safe-area-inset-left,0px));padding-right:max(19px,env(safe-area-inset-right,0px))}
+ .plain,.present-button{min-height:44px}
+ .footer{position:fixed;bottom:0;left:0;right:0;height:auto;min-height:70px;padding:8px max(19px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(19px,env(safe-area-inset-left,0px));background:var(--paper);border-top:1px solid var(--line);z-index:10}
+ .step-nav{gap:12px}.step-link{min-height:48px;padding:12px 0 5px;align-items:center;gap:8px}.step-link.active{padding-top:11px}
+ .step-text strong{font-size:12px}.arrow-button{width:44px;height:44px;font-size:19px}
+ .stage-button{min-height:44px;min-width:44px;font-size:11px;justify-content:center}
+ .stage-bar{bottom:15px}.motion-controls{gap:7px}
+ .controls{padding:13px 16px 16px;gap:18px}
+ .control-head{margin-bottom:0}.control-head label{font-size:12px}.control-head output{font-size:13px}
+ .slider{height:44px;margin:0;background:transparent;--fill:0%}
+ .slider::-webkit-slider-runnable-track{height:3px;background:linear-gradient(to right,var(--ink) var(--fill),#e8e8e3 var(--fill));border-radius:2px}
+ .slider::-webkit-slider-thumb{width:20px;height:20px;margin-top:-8.5px;border:2px solid var(--ink);box-shadow:0 0 0 3px white}
+ .slider::-moz-range-track{height:3px;background:#e8e8e3}.slider::-moz-range-progress{height:3px;background:var(--ink)}
+ .slider::-moz-range-thumb{width:16px;height:16px;background:white;border:2px solid var(--ink)}
+ .touch-hint{display:block;margin:0 0 9px;color:#6c6c65;font:10px var(--mono)}
+ .stage-note{font-size:10px;line-height:1.65;display:block;padding:4px 0}
+ .stage-note button{min-height:44px;display:inline-flex;align-items:center;font-size:12px;margin-top:1px}
+ .camera-hint{display:none}
+ .drawer{width:min(590px,100vw);padding-bottom:env(safe-area-inset-bottom,0px)}
+ .drawer-head{padding-top:max(12px,env(safe-area-inset-top,0px))}
+ .form-field input,.form-field select{font-size:16px;min-height:48px}
+ .wide-button{min-height:48px;font-size:14px}.body-copy{font-size:14px}
+ .toast{bottom:calc(88px + env(safe-area-inset-bottom,0px));font-size:13px}
+}
+@media(max-width:520px){
+ .header{height:64px;padding:0 16px;gap:8px}.left-brand{gap:8px}.brand{gap:9px}.wordmark{font-size:23px}
+ .brand-icon{width:23px}.top-actions{gap:12px}.present-button{padding:10px 12px;gap:8px}
+ #exploreButton{font-size:12px;max-width:67px;line-height:1.3;text-align:left}
+ .main{padding:22px 16px 12px;gap:20px}
+ .story{display:block}.story .eyebrow{font-size:8px;letter-spacing:.05em;gap:10px}
+ .story h1{font-size:clamp(34px,10.6vw,48px);letter-spacing:-.055em;line-height:1.05;max-width:none;margin:17px 0 0}
+ .desktop-title{display:none}.mobile-title{display:inline}
+ .lead{font-size:13px!important;line-height:1.6;max-width:48ch;margin:13px 0 0}
+ .story-foot{display:none}.insight{display:none}
+ .stage{height:410px}.stage-top{top:17px;font-size:7px;left:12px;right:12px;gap:8px}
+ .stage-top .render-status{max-width:12ch;font-size:7px}.specimen-label{top:39px;left:12px;font-size:8px}
+ .labels{top:59px}.labels.single{top:80px}.label strong{font-size:23px}.label span{font-size:7px;letter-spacing:.055em}
+ .scene-divider{top:72px;bottom:72px}
+ .stage-bar{left:12px;right:12px}.motion-controls{width:100%;display:grid;grid-template-columns:1fr 1fr 1.2fr .9fr;gap:6px}
+ .stage-button{font-size:10px;padding:7px 4px;gap:5px}.status-flag{top:58px;right:12px;left:12px;max-width:max-content;font-size:7px;padding:5px 7px}
+ .status-flag:not(.hidden)~.stage-bar{z-index:3}
+ .controls{padding:14px 14px 16px;gap:15px;grid-template-columns:1fr}
+ .control{display:grid;grid-template-columns:1fr minmax(0,1.65fr);gap:0 18px;align-items:center;border-bottom:1px solid #ededeb;padding-bottom:4px}
+ .control:last-child{border:0;padding-bottom:0}
+ .control-head{flex-direction:column;gap:6px;align-items:flex-start;grid-row:1/3}
+ .control-scale{font-size:8px;grid-column:2;padding:0 0 9px}
+ .footer{gap:0;padding-left:16px;padding-right:16px}
+ .step-nav{gap:12px}.step-link{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding-top:8px}
+ .step-link.active{padding-top:7px}.step-number{display:block;font-size:9px}.step-text strong{font-size:11px}
+ .arrows{display:none}
+ .drawer-body{padding:20px 18px 35px}.drawer-head{padding-left:18px;padding-right:18px}
+ .comparison-table{font-size:11px;table-layout:fixed}.comparison-table th,.comparison-table td{padding:11px 5px;overflow-wrap:anywhere}
+ .data-card p{font-size:10px}.data-card a{display:inline-flex;align-items:center;min-height:44px;font-size:11px}
+ .form-row{gap:12px}.source-note{font-size:11px}.source-note code{font-size:10px}
+}
+@media(max-width:370px){.wordmark{font-size:21px}.brand-icon{transform:scale(.88);transform-origin:left center;width:22px}.header{padding:0 12px}.top-actions{gap:8px}.main{padding-left:12px;padding-right:12px}.stage{height:380px}.step-nav{gap:8px}}
+@media(max-width:850px) and (orientation:landscape){.story h1{font-size:38px}.main{padding-top:18px}.stage{height:430px}.main .story-foot{display:none}.footer{min-height:60px}.step-link{min-height:44px}}
+
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="autoplayMeter" class="autoplay-meter"></div>
+<header class="header">
+ <div class="left-brand"><a href="#observe" class="brand" aria-label="EMBER home"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="wordmark">EMBER</span></a><div class="brand-caption">Evidence for fire<br>in space.</div></div>
+ <div class="top-actions"><span class="live-indicator"><i></i><span id="dataIndicator">Source-linked concept</span></span><button class="plain" id="sourcesButton">Sources &amp; limits</button><button class="plain" id="exploreButton">Explore controls</button><a class="plain" id="openMapLink" href="./#/map" target="_top" style="text-decoration:none">Open the map &#8594;</a><button class="present-button" id="presentButton"><span id="presentText">Present</span><span aria-hidden="true">&#8599;</span></button></div>
+</header>
+<main class="main">
+ <section class="story" aria-labelledby="headline"><div class="eyebrow"><span class="line"></span><span id="chapter">01 / A DIFFERENT ENVIRONMENT</span></div><h1 id="headline">Same fire.<br>Different<br><em>rules.</em></h1><p class="lead" id="lead">On Earth, hot gas rises. In microgravity, buoyant flow disappears. See what changes before asking what is safe.</p><div class="insight"><strong id="insightTitle">Change one condition. See the difference.</strong><p id="insightText">A still-air wick analogy, shown at 1 g and microgravity. The fuel and atmosphere are held constant.</p></div><div class="story-foot"><div><button id="storyAction" class="link-button"><span id="storyActionText">Follow the experiment</span><span aria-hidden="true">&#8594;</span></button><p id="footnote" class="small-disclaimer">Interactive scientific illustration.<br>Not a combustion prediction.</p></div></div></section>
+ <section class="stage-stack" aria-label="Interactive 3D chamber">
+  <div class="stage" id="stage">
+   <canvas id="scene" role="img" aria-label="Animated volumetric 3D illustration of flames in an optical chamber. Drag to orbit; use sliders to explore."></canvas>
+   <div class="stage-top"><span><i class="status-dot"></i>CONCEPTUAL OPTICAL CHAMBER</span><span id="renderStatus" class="render-status">INITIALIZING GPU</span></div>
+   <div class="specimen-label" id="specimenLabel">WICK ANALOGY / STILL AIR</div>
+   <div class="labels" id="labels"><div class="label"><strong id="leftGravity">1.00 g</strong><span id="leftRegime">Earth / buoyant flow</span></div><div class="label" id="rightLabel"><strong>~0 g</strong><span>Orbit / no buoyant flow</span></div></div>
+   <div class="scene-divider" id="divider"></div>
+   <div id="statusFlag" class="status-flag hidden">ILLUSTRATION, NOT A PREDICTION</div>
+   <div class="stage-bar"><div class="motion-controls"><button id="pauseButton" class="stage-button" aria-label="Pause animation"><span id="pauseIcon">&#8545;</span><span id="pauseText">Pause</span></button><button id="compareButton" class="stage-button active" aria-pressed="true">Compare</button><button id="flowButton" class="stage-button" aria-pressed="false">Flow tracers</button><button id="resetCamera" class="stage-button" aria-label="Reset camera">&#8634; View</button></div><div class="camera-hint">DRAG TO ORBIT<br>SCROLL TO ZOOM</div></div>
+   <div id="loading" class="loading">Compiling volume renderer&hellip;</div>
+   <div id="gpuError" class="gpu-error hidden"><div class="poster" id="fallbackPoster"></div><h3>3D graphics are unavailable here.</h3><p>The evidence and presentation still work. Open this HTML in Chrome or Edge with graphics acceleration enabled for the interactive chamber.</p><button id="retryGpu">Retry renderer</button></div>
+  </div>
+  <div class="controls"><div class="control"><div class="control-head"><label for="gravity">Gravity</label><output id="gravityOut">0.000 g</output></div><input class="slider" id="gravity" type="range" min="0" max="1" value="0" step="0.001"><div class="control-scale"><span>MICROGRAVITY</span><span>EARTH</span></div></div><div class="control"><div class="control-head"><label for="airflow">Airflow</label><output id="airflowOut">0.0 cm/s</output></div><input class="slider" id="airflow" type="range" min="0" max="20" value="0" step="0.1"><div class="control-scale"><span>STILL AIR</span><span>20 cm/s</span></div></div><div class="control"><div class="control-head"><label for="oxygen">Oxygen</label><output id="oxygenOut">21.0%</output></div><input class="slider" id="oxygen" type="range" min="12" max="40" value="21" step="0.1"><div class="control-scale"><span>12%</span><span>40%</span></div></div></div>
+  <div class="stage-note"><span class="touch-hint">DRAG TO ORBIT / PINCH TO ZOOM</span><span id="stageNote">Appearance is illustrative. Flame color is not a universal gravity indicator.</span><button id="evidenceButton">Inspect source evidence &#8599;</button></div>
+ </section>
+</main>
+<footer class="footer"><nav class="step-nav" aria-label="Presentation chapters"><button class="step-link active" data-step="0" aria-current="step"><span class="step-number">01</span><span class="step-text"><strong>Observe</strong><span>Remove buoyancy</span></span></button><button class="step-link" data-step="1"><span class="step-number">02</span><span class="step-text"><strong>Intervene</strong><span>Introduce airflow</span></span></button><button class="step-link" data-step="2"><span class="step-number">03</span><span class="step-text"><strong>Trace</strong><span>Inspect the source</span></span></button><button class="step-link" data-step="3"><span class="step-number">04</span><span class="step-text"><strong>Question</strong><span>Expose the gap</span></span></button></nav><div class="arrows"><button id="prevButton" class="arrow-button" aria-label="Previous chapter">&#8592;</button><button id="nextButton" class="arrow-button next" aria-label="Next chapter">&#8594;</button></div></footer>
+<div class="drawer-backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><div class="drawer-head"><h2 id="drawerTitle">Source evidence</h2><button id="closeDrawer" class="close" aria-label="Close panel">&times;</button></div><div class="drawer-body" id="drawerBody"></div></aside>
+<div class="toast" id="toast" role="status"></div><input id="importFile" type="file" accept=".json,application/json" hidden>
+<script id="snapshot" type="application/json">{
+  "kind": "source-table-excerpt",
+  "repo": "itsamirkhon/EMBER",
+  "commit": "81b52936326fb22ba1c1249160404c5455d36a80",
+  "sourceBlob": "7e1d36d2381eb9bd02b758aa35c6167f14c25294",
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+  "note": "14 explicitly PMMA-labelled rows from CSV lines 2-20. This is a subset, not the entire experiment or pipeline output. Pressure, calibrated airflow and physical outcome are deliberately null/unknown.",
+  "tests": [
+    {
+      "inv": "BASS-II",
+      "testId": "B1",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "100 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 2
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B2",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "200 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 3
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B4",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.3,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "300 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 5
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B6",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 0.1 mm PMMA film",
+        "rawAirDisplay": "3   5   approaching 10",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 7
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B8",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "10   max",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 9
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B9",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.1 mm PMMA film",
+        "rawAirDisplay": "2   <1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 10
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B10",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "5  4  3  2  1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 11
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B11",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "5   3   1   <1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 12
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B14",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 15.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "5  3  2   ext",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 15
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B15",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.1 mm PMMA film",
+        "rawAirDisplay": "10   max",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 16
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B16",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 17.3,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 100 micron thick PMMA",
+        "rawAirDisplay": "3  0.5 pot   0.4 pot",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 17
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B17",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 17.5,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "5   3    pot 0.4",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 18
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B18",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 17.4,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "10   blowoff",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 19
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B19",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 17.3,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 100 micron thick PMMA",
+        "rawAirDisplay": "10   blowoff",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 20
+      }
+    }
+  ]
+}
+</script>
+<script>/* EMBER presentation support gate. Additive: does not modify evidence.ts.
+ * Pure UMD module. Runtime data uses the existing TestRow field names.
+ * Relevance is not predictive validity. No probability is generated here.
+ */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.EmberSupport=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';
+ const DIMS=['o2Pct','pressureKpa','flowCmS','gravityG'];
+ const LABELS={o2Pct:'oxygen',pressureKpa:'pressure',flowCmS:'airflow',gravityG:'gravity'};
+ const SCALES={o2Pct:3,pressureKpa:15,flowCmS:8,gravityG:.5};
+ const text=v=>typeof v==='string'?v.trim().toLowerCase().replace(/\s+/g,' '):'';
+ const finite=v=>typeof v==='number'&&Number.isFinite(v);
+ const eps=1e-6;
+ const EXPLICIT_OUTCOMES=new Set(['burned','flame_spread','extinguished','self_extinguished','no_ignition']);
+ function validate(q){
+  const errors=[];
+  for(const k of DIMS){const v=q[k];if(!finite(v))errors.push(`${LABELS[k]} must be a finite scalar.`);}
+  if(finite(q.o2Pct)&&(q.o2Pct<0||q.o2Pct>100))errors.push('Oxygen must be in [0,100] percent.');
+  if(finite(q.pressureKpa)&&q.pressureKpa<=0)errors.push('Pressure must be positive.');
+  if(finite(q.flowCmS)&&q.flowCmS<0)errors.push('Airflow cannot be negative.');
+  if(finite(q.gravityG)&&q.gravityG<0)errors.push('Gravity cannot be negative.');
+  if(!['solid','liquid','gas'].includes(q.fuelPhase))errors.push('Specify a supported fuel phase.');
+  if(!text(q.fuel))errors.push('Specify the material or fuel.');
+  if(!text(q.geometry))errors.push('Specify specimen geometry.');
+  if(q.thicknessMm!=null&&(!finite(q.thicknessMm)||q.thicknessMm<=0))errors.push('Thickness must be positive.');
+  if(q.diameterMm!=null&&(!finite(q.diameterMm)||q.diameterMm<=0))errors.push('Diameter must be positive.');
+  return errors;
+ }
+ function compare(q,t){
+  const reasons=[],missing=[],differences={};let sum=0;
+  if(t.fuelPhase!==q.fuelPhase)reasons.push('Different or undocumented fuel phase.');
+  if(text(t.fuel)!==text(q.fuel))reasons.push('Different or undocumented material.');
+  if(text(t.geometry)!==text(q.geometry))reasons.push('Different or undocumented specimen geometry.');
+  if(!finite(t.gravityG))missing.push('gravity');
+  else if(Math.abs(t.gravityG-q.gravityG)>eps)reasons.push('Different gravity regime; no transfer model validated.');
+  for(const k of DIMS){
+   if(!finite(t[k])){if(!missing.includes(LABELS[k]))missing.push(LABELS[k]);sum+=4;differences[k]=null;}
+   else{differences[k]=t[k]-q[k];sum+=((t[k]-q[k])/SCALES[k])**2;}
+  }
+  for(const k of ['thicknessMm','diameterMm']){
+   if(q[k]!=null){if(!finite(t[k]))missing.push(k);else if(Math.abs(q[k]-t[k])>eps)reasons.push(`Different specimen ${k==='thicknessMm'?'thickness':'diameter'}.`);}
+  }
+  if(q.diluent && text(q.diluent)!==text(t.diluent))reasons.push('Different or undocumented diluent.');
+  if(finite(q.diluentPct)&&(!finite(t.diluentPct)||Math.abs(q.diluentPct-t.diluentPct)>eps))reasons.push('Diluent concentration does not match.');
+  const sourced=!!(t.source&&t.source.file&&Number.isInteger(t.source.row)&&t.source.row>0);
+  if(!sourced)reasons.push('No row-level source locator.');
+  const explicit=EXPLICIT_OUTCOMES.has(t.outcome);
+  if(!explicit)reasons.push('No explicit physical outcome; completion/disruption is not a safety label.');
+  const exact=reasons.length===0&&missing.length===0&&DIMS.every(k=>Math.abs(differences[k])<=eps);
+  const sameContext=reasons.length===0&&missing.length===0;
+  return {test:t,distance:Math.sqrt(sum),differences,reasons,missing,exact,sameContext,sourced,explicit};
+ }
+ function assess(q,rows){
+  const errors=validate(q);
+  if(errors.length)return {status:'invalid',title:'Invalid query',reasons:errors,observations:[],related:[],canPredict:false,pBurn:null};
+  // Identical source rows do not become independent corroborating tests.
+  const seen=new Set();const clean=[];
+  for(const t of Array.isArray(rows)?rows:[]){if(!t||typeof t!=='object')continue;const key=JSON.stringify([t.inv,t.testId,t.source?.file,t.source?.row]);if(!seen.has(key)){seen.add(key);clean.push(t);}}
+  const all=clean.map(t=>compare(q,t));
+  const related=all.filter(x=>x.test.fuelPhase===q.fuelPhase&&text(x.test.fuel)===text(q.fuel)).sort((a,b)=>a.distance-b.distance);
+  const exact=related.filter(x=>x.exact);
+  if(exact.length){return {status:'observed',title:'Matching source observation',reasons:['This is a recorded outcome, not a safety certification or a validated risk probability.'],observations:exact.map(x=>x.test),related:related.slice(0,5),canPredict:false,pBurn:null};}
+  const context=related.filter(x=>x.sameContext);
+  if(context.length){return {status:'nearby',title:'Nearby evidence, not a measured answer',reasons:['Conditions differ from the source rows. Interpolation requires a separately validated model.'],observations:[],related:related.slice(0,5),canPredict:false,pBurn:null};}
+  const gravityMatch=related.some(x=>finite(x.test.gravityG)&&Math.abs(x.test.gravityG-q.gravityG)<=eps);
+  const reasons=[];
+  if(!related.length)reasons.push('No source rows for the requested fuel phase and material.');
+  else if(!gravityMatch)reasons.push('No matching gravity regime in the loaded source rows.');
+  if(related[0]){
+   if(related[0].missing.length)reasons.push('Source row does not report: '+related[0].missing.join(', ')+'.');
+   reasons.push(...related[0].reasons.filter(r=>!r.startsWith('Different gravity')));
+  }
+  return {status:'unsupported',title:'Not established by these records',reasons:[...new Set(reasons)],observations:[],related:related.slice(0,5),canPredict:false,pBurn:null};
+ }
+ // Wrap the existing engine without misrepresenting its kNN vote as validated risk.
+ function gateEstimate(query,engineEstimate){
+  const rows=[...(engineEstimate?.measuredTests||[]),...(engineEstimate?.neighbours||[]).map(n=>n.test)];
+  const support=assess(query,rows);
+  return {support,originalStatus:engineEstimate?.status||null,rawEngineVote:engineEstimate?.pBurn??null,displayRisk:null,displayInterval:null,explanation:'The raw engine vote is retained for debugging only; it is not displayed as a calibrated probability.'};
+ }
+ return {validate,compare,assess,gateEstimate};
+});
+</script>
+<script id="fragmentShader" type="x-shader/x-fragment">precision highp float;
+uniform vec2 uResolution;
+uniform float uTime;
+uniform float uGravity;
+uniform float uFlow;
+uniform float uOxygen;
+uniform float uPressure;
+uniform float uYaw;
+uniform float uPitch;
+uniform float uZoom;
+uniform float uSplit;
+uniform float uTransport;
+uniform float uFuel;
+uniform float uAnimate;
+const float PI=3.14159265359;
+
+float hash31(vec3 p){p=fract(p*.1031);p+=dot(p,p.yzx+33.33);return fract((p.x+p.y)*p.z);}
+float noise3(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z);}
+float fbm(vec3 p){return .55*noise3(p)+.28*noise3(p*2.02+6.4)+.17*noise3(p*4.03-4.6);}
+float sdBox(vec3 p,vec3 b){vec3 q=abs(p)-b;return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.);}
+float sdCyl(vec3 p,float radius,float halfH){vec2 q=abs(vec2(length(p.xz),p.y))-vec2(radius,halfH);return min(max(q.x,q.y),0.)+length(max(q,0.));}
+float sdRing(vec3 p,float outerR,float innerR,float h){return max(sdCyl(p,outerR,h),-sdCyl(p,innerR,h+0.01));}
+vec2 closer(vec2 a,vec2 b){return a.x<b.x?a:b;}
+
+// Precision-machined conceptual optical chamber. Not a NASA hardware replica.
+vec2 sceneSDF(vec3 p){
+ vec2 r=vec2(p.y+.52,1.);
+ r=closer(r,vec2(sdCyl(p-vec3(0,-.34,0),1.05,.17),2.));
+ r=closer(r,vec2(sdRing(p-vec3(0,-.15,0),1.10,.88,.055),3.));
+ r=closer(r,vec2(sdRing(p-vec3(0,-.08,0),1.015,.91,.017),4.));
+ r=closer(r,vec2(sdRing(p-vec3(0,2.00,0),1.10,.90,.055),3.));
+ r=closer(r,vec2(sdRing(p-vec3(0,2.065,0),1.045,.94,.025),4.));
+ // Back posts keep the optical window unobstructed.
+ for(int i=0;i<2;i++){
+   float x=(float(i)*2.-1.)*.76;
+   r=closer(r,vec2(sdCyl(p-vec3(x,.94,-.68),.027,1.06),3.));
+   r=closer(r,vec2(sdCyl(p-vec3(x,-.20,-.68),.07,.035),4.));
+   r=closer(r,vec2(sdCyl(p-vec3(x,2.08,-.68),.047,.025),3.));
+ }
+ // Repeated bolts in the lower flange, with a recessed hex-like slot.
+ vec3 bp=p;float ang=atan(p.z,p.x);float sec=2.*PI/10.;float a=mod(ang+sec*.5,sec)-sec*.5;
+ bp.xz=vec2(cos(a),sin(a))*length(p.xz)-vec2(.99,0.);
+ float screw=sdCyl(bp-vec3(0,-.085,0),.038,.018);
+ screw=max(screw,-sdBox(bp-vec3(0,-.067,0),vec3(.023,.008,.004)));
+ r=closer(r,vec2(screw,4.));
+ // Specimen stage and ceramic wick holder.
+ r=closer(r,vec2(sdCyl(p-vec3(0,-.03,0),.38,.06),3.));
+ r=closer(r,vec2(sdCyl(p-vec3(0,.08,0),.16,.07),5.));
+ if(uFuel<.5){
+   r=closer(r,vec2(sdCyl(p-vec3(0,.195,0),.018,.065),6.));
+ }else{
+   r=closer(r,vec2(sdBox(p-vec3(0,.18,0),vec3(.25,.018,.14)),5.));
+   r=closer(r,vec2(sdBox(p-vec3(-.22,.135,0),vec3(.035,.07,.18)),3.));
+   r=closer(r,vec2(sdBox(p-vec3(.22,.135,0),vec3(.035,.07,.18)),3.));
+ }
+ return r;
+}
+vec3 normalAt(vec3 p){const float e=.001;vec2 k=vec2(1.,-1.);return normalize(k.xyy*sceneSDF(p+k.xyy*e).x+k.yyx*sceneSDF(p+k.yyx*e).x+k.yxy*sceneSDF(p+k.yxy*e).x+k.xxx*sceneSDF(p+k.xxx*e).x);}
+float ambientOcc(vec3 p,vec3 n){float ao=0.,scale=1.;for(int i=1;i<5;i++){float h=.035*float(i);ao+=(h-sceneSDF(p+n*h).x)*scale;scale*=.65;}return clamp(1.-ao*3.,0.,1.);}
+vec3 environment(vec3 r){
+ vec3 c=mix(vec3(.008,.009,.011),vec3(.11,.12,.13),smoothstep(-.2,.9,r.y));
+ c+=vec3(1.15,1.20,1.30)*pow(max(0.,dot(r,normalize(vec3(-2.,2.,1.5)))),45.);
+ c+=vec3(.7,.73,.8)*pow(max(0.,dot(r,normalize(vec3(3.,.9,-1.)))),70.);
+ c+=vec3(.35,.36,.4)*pow(max(0.,dot(r,normalize(vec3(0.,3.,-3.)))),50.);
+ c+=vec3(.95)*exp(-pow((r.x+.52)/.055,2.))*smoothstep(-.2,.65,r.y);
+ c+=vec3(.65)*exp(-pow((r.x-.70)/.045,2.))*smoothstep(-.1,.7,r.y);
+ return c;
+}
+float glowSource(vec3 p,float g){return exp(-length((p-vec3(0,.72,0))*vec3(1.8,1.,1.8))*1.8);}
+vec3 shade(vec3 p,vec3 rd,float mat,float g){
+ vec3 n=normalAt(p);vec3 view=-rd;
+ vec3 light=normalize(vec3(-3.,4.,3.));
+ vec3 halfV=normalize(light+view);
+ float ndl=max(dot(n,light),0.);
+ float ao=ambientOcc(p,n);
+ vec3 color;float rough,metal;
+ if(mat<1.5){color=vec3(.012,.013,.015);rough=.9;metal=.1;}
+ else if(mat<2.5){color=vec3(.075,.079,.084);rough=.4;metal=.75;}
+ else if(mat<3.5){color=vec3(.53,.55,.57);rough=.23;metal=.9;}
+ else if(mat<4.5){color=vec3(.64,.65,.67);rough=.18;metal=.95;}
+ else if(mat<5.5){color=vec3(.22,.23,.24);rough=.85;metal=.03;}
+ else{color=vec3(.07,.05,.035);rough=.9;metal=0.;}
+ // Fine brushed finish on machined surfaces, not color noise on the flame.
+ if(mat>1.5 && mat<4.5){float grain=sin(p.y*440.)*.006;color+=grain;}
+ vec3 env=environment(reflect(rd,n));
+ float fres=pow(1.-max(dot(n,view),0.),5.);
+ vec3 spec=mix(vec3(.04),color,metal);
+ float shin=mix(12.,160.,1.-rough);
+ vec3 outC=color*(.13+.65*ndl)*ao*(1.-metal*.6);
+ outC+=env*(spec+(1.-spec)*fres)*(.7-rough*.25)*ao;
+ outC+=spec*pow(max(dot(n,halfV),0.),shin)*(2.5-rough)*ao;
+ vec3 flameC=mix(vec3(.16,.35,1.),vec3(1.,.30,.045),smoothstep(.05,.8,g));
+ outC+=flameC*glowSource(p,g)*max(dot(n,normalize(vec3(0,.65,0)-p)),0.)*.6;
+ if(mat>5.5)outC+=vec3(.9,.10,.005)*smoothstep(.16,.27,p.y);
+ return outC;
+}
+vec2 rayBox(vec3 ro,vec3 rd,vec3 lo,vec3 hi){vec3 inv=1./rd;vec3 a=(lo-ro)*inv,b=(hi-ro)*inv;vec3 mn=min(a,b),mx=max(a,b);return vec2(max(max(mn.x,mn.y),mn.z),min(min(mx.x,mx.y),mx.z));}
+
+// An artistic radiance field. Time advects turbulence, not measured chemistry.
+// No buoyant advection is added at g=0; imposed ventilation acts independently.
+vec4 flameVolume(vec3 p,float g){
+ float t=uTime;
+ float oxy=clamp((uOxygen-12.)/18.,.12,1.25);
+ float pressureScale=clamp(sqrt(uPressure/101.3),.72,1.2);
+ vec3 q=p-vec3(0,.23,0);
+ float h=mix(.66,1.48,pow(g,.5));
+ h*=mix(.90,1.10,oxy);
+ float y=q.y/h;
+ float phase=t*(.25+g*.75);
+ float flowShift=uFlow*.040*pow(max(y,0.),1.20);
+ q.x-=flowShift;
+ // G-dependent advection vanishes exactly at zero gravity. Slow oscillation remains.
+ vec3 adv=vec3(q.x*5.5-t*uFlow*.055,q.y*5.5-t*g*1.75,q.z*5.5);
+ float n=fbm(adv+vec3(sin(t*.53)*.16,0,cos(t*.41)*.14));
+ float w=sin(y*7.-phase*5.)*.070*g+sin(y*14.+phase*2.)*.020*g;
+ q.x+=w*max(y,0.);
+ q.z+=sin(y*12.+phase*3.)*.018*g*max(y,0.);
+ float r=length(q.xz);
+ float shape;
+ float sphereR=.43*mix(.9,1.04,oxy);
+ // Quiescent microgravity: a rounded luminous envelope, not an upward particle fountain.
+ vec3 sph=q-vec3(0,.27,0);
+ if(uFuel>.5){sph=vec3(q.x*.8,(q.y-.16)*1.2,q.z*1.5);}
+ sph.x/=1.+uFlow*.020;
+ float sphere=length(sph)/sphereR;
+ float width=(.21*pow(max(1.-y,0.),.85)+.006)*sqrt(max(y,0.)*5.+.04);
+ width*=pressureScale;
+ float plume=r/max(width,.01);
+ shape=mix(sphere,plume,smoothstep(0.,.60,g));
+ float perturb=(n-.5)*mix(.14,.55,g)*smoothstep(.0,.6,y+.25);
+ float boundary=shape+perturb;
+ float mask=(1.-smoothstep(.80,1.20,boundary));
+ float heightMask=mix(1.,smoothstep(-.03,.03,y)*(1.-smoothstep(.90,1.02,y)),smoothstep(.02,.7,g));
+ // Keep the wick/plate attachment visible and the core optically hollow.
+ float shell=exp(-pow((boundary-.87)*8.5,2.));
+ float hollow=smoothstep(.25,.75,boundary);
+ float density=mix(shell*.62,mask*(.02+.98*hollow),smoothstep(.02,.7,g))*heightMask;
+ float hot=1.-clamp(boundary*.68+y*.15,0.,1.);
+ float fine=noise3(adv*2.7+vec3(0,-t*g*1.5,0));
+ density*=.72+fine*.48;
+ float chemBase=(1.-smoothstep(.015,.07,q.y))*.85;
+ vec3 warm=mix(vec3(1.6,.055,.002),vec3(2.4,.74,.05),smoothstep(.1,.78,hot));
+ warm=mix(warm,vec3(2.8,1.6,.46),pow(hot,4.)*.75);
+ warm=mix(warm,vec3(.10,.21,1.8),chemBase);
+ vec3 blue=mix(vec3(.003,.012,.05),vec3(.015,.09,.55),smoothstep(.35,.95,boundary));
+ blue+=vec3(.025,.07,.18)*pow(max(0.,1.-abs(boundary-.91)*5.),3.)*.28;
+ float regime=smoothstep(.02,.7,g);
+ vec3 emission=mix(blue,warm,regime);
+ density*=mix(1.1,2.5,regime);
+ if(uFuel>.5){density*=1.-smoothstep(.95,1.2,abs(q.x)*2.);}
+ return vec4(emission*density,density);
+}
+vec3 volumeIntegrate(vec3 ro,vec3 rd,float maxT,float g,vec3 behind){
+ vec2 b=rayBox(ro,rd,vec3(-.95,-.02,-.8),vec3(1.6,2.02,.8));
+ float t=max(b.x,0.);float endT=min(b.y,maxT);
+ if(endT<=t)return behind;
+ float stepS=(endT-t)/48.;
+ t+=stepS*hash31(vec3(gl_FragCoord.xy,fract(uTime*.1)));
+ vec3 light=vec3(0.);float trans=1.;
+ for(int i=0;i<48;i++){
+  vec3 p=ro+rd*t;
+  vec4 f=flameVolume(p,g);
+  float opacity=1.-exp(-f.a*stepS*2.6);
+  light+=trans*f.rgb*stepS*2.7;
+  trans*=1.-opacity*.38;
+  t+=stepS;
+ }
+ return behind*trans+light;
+}
+vec3 glassPass(vec3 ro,vec3 rd,float hitT,vec3 c){
+ float A=dot(rd.xz,rd.xz),B=2.*dot(ro.xz,rd.xz),C=dot(ro.xz,ro.xz)-.98*.98;
+ float d=B*B-4.*A*C;if(d<0.)return c;
+ float t=(-B-sqrt(d))/(2.*A);vec3 p=ro+rd*t;
+ if(t>0. && t<hitT && p.y>-.08 && p.y<1.98){
+  vec3 n=normalize(vec3(p.x,0,p.z));
+  float f=.025+.20*pow(1.-abs(dot(-rd,n)),4.);
+  c=mix(c,environment(reflect(rd,n)),f);
+  // Narrow reflections from photographic strip lights on clear glass.
+  vec3 rr=reflect(rd,n);
+  float strip=pow(max(dot(rr,normalize(vec3(-2.,1.,2.))),0.),150.);
+  c+=vec3(.25)*strip;
+ }
+ return c;
+}
+vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
+void main(){
+ vec2 frag=gl_FragCoord.xy;
+ vec2 res=uResolution;
+ float g=uGravity;
+ if(uSplit>.5){if(frag.x<res.x*.5)g=1.;else{g=0.;frag.x-=res.x*.5;}res.x*=.5;}
+ vec2 uv=(frag*2.-res)/res.y;
+ float yaw=uYaw;
+ vec3 target=vec3(0,.79,0);
+ float fitted=max(uSplit>.5?4.725:4.5,2.30/(res.x/res.y));
+ float dist=fitted*(uZoom/4.5);
+ vec3 ro=target+vec3(sin(yaw)*cos(uPitch),sin(uPitch),cos(yaw)*cos(uPitch))*dist;
+ vec3 ww=normalize(target-ro),uu=normalize(cross(ww,vec3(0,1,0))),vv=cross(uu,ww);
+ vec3 rd=normalize(uv.x*uu+uv.y*vv+ww*1.72);
+ float t=.02;float material=0.;bool hit=false;
+ for(int i=0;i<100;i++){
+  vec2 h=sceneSDF(ro+rd*t);
+  if(h.x<.0012){hit=true;material=h.y;break;}
+  t+=h.x*.85;
+  if(t>18.)break;
+ }
+ vec3 bg=vec3(.003,.0032,.004)+vec3(.008,.0085,.010)*exp(-dot(uv*vec2(.7,1.),uv*vec2(.7,1.))*.9);
+ vec3 c=hit?shade(ro+rd*t,rd,material,g):bg;
+ if(hit && material<1.5)c=mix(bg,c,exp(-pow(t/7.,2.)));
+ c=volumeIntegrate(ro,rd,hit?t:18.,g,c);
+ c=glassPass(ro,rd,hit?t:18.,c);
+ // Flow tracers are opt-in, labelled conceptual in the UI.
+ if(uTransport>.5){
+  vec2 bb=rayBox(ro,rd,vec3(-.9,.1,-.6),vec3(.9,1.6,.6));
+  float planeT=(-.28-ro.z)/rd.z;vec3 p=ro+rd*planeT;
+  if(planeT>0. && planeT<t && abs(p.x)<.88 && p.y>.24 && p.y<1.65){
+   float yy=p.y-(g*.11)*smoothstep(-.2,.6,p.x);
+   float line=1.-smoothstep(.0,.006,abs(mod(yy,.22)-.11));
+   float speed=uFlow*.14;
+   float dash=step(.65,fract(p.x*2.5-uTime*speed));
+   float vis=clamp(uFlow/5.,0.,1.);
+   c+=vec3(.13,.16,.19)*line*dash*vis;
+  }
+ }
+ c=aces(c*1.25);
+ c=pow(c,vec3(1./2.2));
+ c*=1.-.18*dot(uv*.5,uv*.5);
+ gl_FragColor=vec4(c,1.);
+}
+</script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const SNAPSHOT=JSON.parse($('snapshot').textContent);
+const state={step:0,gravity:0,flow:0,oxygen:21,pressure:101.3,fuel:'PMMA',geometry:'film',thickness:.1,split:true,tracers:false,playing:!matchMedia('(prefers-reduced-motion: reduce)').matches,illustrationFuel:0,drawer:null,rows:SNAPSHOT.tests,dataMode:'offline source excerpt',dataOrigin:SNAPSHOT.commit};
+const chapters=[
+ {id:'observe',eyebrow:'01 / A DIFFERENT ENVIRONMENT',title:'Same fire.<br>Different<br><em>rules.</em>',lead:'On Earth, hot gas rises. In microgravity, buoyant flow disappears. See what changes before asking what is safe.',insight:'Change one condition. See the difference.',body:'A low-momentum wick analogy at 1 g and microgravity. The fuel and atmosphere are held constant.',action:'Follow the experiment',note:'Interactive scientific illustration.<br>Not a combustion prediction.',specimen:'WICK ANALOGY / STILL AIR',gravity:0,flow:0,o:21,p:101.3,split:true,trace:false,fuel:0},
+ {id:'intervene',eyebrow:'02 / TRANSPORT, NOT MAGIC',title:'No gravity.<br>Still<br><em>moving.</em>',lead:'A fan can move gases even when buoyancy cannot. Introduce airflow and watch the illustrated reaction zone shift.',insight:'Ventilation is a separate variable.',body:'Move the airflow slider from still air to 20 cm/s. The visible tracers describe imposed transport, not a measured velocity field.',action:'Trace the evidence',note:'Motion explains a mechanism.<br>It does not establish a safe airflow.',specimen:'WICK ANALOGY / FORCED FLOW',gravity:0,flow:7,o:21,p:101.3,split:false,trace:true,fuel:0},
+ {id:'trace',eyebrow:'03 / FROM A QUESTION TO A SOURCE',title:'A source.<br>Not just<br><em>a score.</em>',lead:'The flame is an illustration. The evidence is a row you can inspect: material, oxygen, test identifier and original source.',insight:'BASS-II / test B1',body:'The PSI table records 22.2% oxygen, a 100-micron PMMA film and 5 cm/s opposed airflow; pressure (101.3 kPa) is given for the whole series, not per test. The flame spread at 2.2 mm/s until the crew turned the flow off.',action:'Open the source record',note:'Source rows are real repository records.<br>Unknown fields stay unknown.',specimen:'PMMA FILM / GEOMETRY SCHEMATIC',gravity:0,flow:5,o:22.2,p:101.3,split:false,trace:false,fuel:1},
+ {id:'question',eyebrow:'04 / AN HONEST BOUNDARY',title:'The Moon<br>is not<br><em>halfway.</em>',lead:'A lunar scenario changes gravity, atmosphere and pressure together. Earth and orbital tests do not automatically validate the result.',insight:'30% O2 / 70.3 kPa / 0.166 g',body:'No solid-material flight test in NASA PSI ran above 22.7% O2, and all ran near 100 kPa. This rover cabin is beyond the evidence: the outcome is not established.',action:'Open the evidence map',note:'No validated partial-gravity model.<br>No invented risk percentage.',specimen:'LUNAR QUERY / UNVALIDATED VISUAL',gravity:.166,flow:5,o:30,p:70.3,split:false,trace:false,fuel:1}
+];
+let renderer=null,autoTimer=null,autoStart=0,opener=null,lastTimestamp=0;
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function query(){return {o2Pct:state.oxygen,pressureKpa:state.pressure,flowCmS:state.flow,gravityG:state.gravity,fuelPhase:'solid',fuel:state.fuel,geometry:state.geometry,thicknessMm:state.thickness};}
+function assessment(){return EmberSupport.assess(query(),state.rows);}
+function toast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('toast').classList.remove('show'),3500);}
+function sliderFill(e){e.style.setProperty('--fill',100*(Number(e.value)-Number(e.min))/(Number(e.max)-Number(e.min))+'%');}
+function updateControls(){
+ [['gravity',state.gravity],['airflow',state.flow],['oxygen',state.oxygen]].forEach(([k,v])=>{$(k).value=v;sliderFill($(k));});
+ $('gravityOut').textContent=state.gravity.toFixed(3)+' g';$('airflowOut').textContent=state.flow.toFixed(1)+' cm/s';$('oxygenOut').textContent=state.oxygen.toFixed(1)+'%';
+ $('compareButton').classList.toggle('active',state.split);$('compareButton').setAttribute('aria-pressed',String(state.split));$('flowButton').classList.toggle('active',state.tracers);$('flowButton').setAttribute('aria-pressed',String(state.tracers));
+ $('labels').classList.toggle('single',!state.split);$('rightLabel').hidden=!state.split;$('divider').hidden=!state.split;
+ $('leftGravity').textContent=state.split?'1.00 g':state.gravity.toFixed(3)+' g';
+ $('leftRegime').textContent=state.split?'Earth / buoyant flow':state.gravity<.002?'Microgravity / no buoyant flow':state.gravity<.99?'Partial gravity / illustrative':'Earth / buoyant flow';
+ $('pauseText').textContent=state.playing?'Pause':'Resume';$('pauseIcon').innerHTML=state.playing?'&#8545;':'&#9655;';$('pauseButton').setAttribute('aria-label',state.playing?'Pause animation':'Resume animation');
+ $('statusFlag').classList.toggle('hidden',state.step<2);
+ $('statusFlag').textContent=state.step===3?'OUTCOME NOT ESTABLISHED':'SOURCE DATA ≠ FLAME RECONSTRUCTION';
+ $('dataIndicator').textContent=state.rows.length+' source rows / '+(state.dataMode==='offline source excerpt'?'excerpt':'loaded');
+ if(state.drawer==='evidence')renderEvidence();
+}
+function go(step,fromAuto=false){
+ if(!fromAuto)stopTour();state.step=(step+4)%4;const c=chapters[state.step];
+ Object.assign(state,{gravity:c.gravity,flow:c.flow,oxygen:c.o,pressure:c.p,split:c.split,tracers:c.trace,illustrationFuel:c.fuel});
+ $('chapter').textContent=c.eyebrow;$('headline').innerHTML='<span class="desktop-title">'+c.title+'</span><span class="mobile-title">'+['Same fire.<br><em>Different rules.</em>','No gravity.<br><em>Still moving.</em>','A source.<br><em>Not just a score.</em>','The Moon is<br><em>not halfway.</em>'][state.step]+'</span>';$('lead').textContent=c.lead;$('insightTitle').textContent=c.insight;$('insightText').textContent=c.body;$('storyActionText').textContent=c.action;$('footnote').innerHTML=c.note;$('specimenLabel').textContent=c.specimen;
+ document.querySelectorAll('[data-step]').forEach(b=>{const active=+b.dataset.step===state.step;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});
+ if(location.hash!=='#'+c.id)history.replaceState(null,'','#'+c.id);
+ updateControls();if(renderer){renderer.reset();renderer.dirty=true;}
+}
+function stopTour(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;$('presentText').textContent='Present';$('autoplayMeter').style.width='0';}
+function startTour(){if(autoTimer){stopTour();return;}go(0);state.playing=true;updateControls();autoStart=performance.now();autoTimer=setInterval(()=>{if(state.step===3){stopTour();return;}go(state.step+1,true);autoStart=performance.now();},16000);$('presentText').textContent='Stop tour';document.documentElement.requestFullscreen?.().catch(()=>{});}
+function openDrawer(kind){document.body.classList.add('panel-open');opener=document.activeElement;state.drawer=kind;$('drawer').classList.add('open');$('backdrop').classList.add('open');document.querySelector('main').inert=true;document.querySelector('footer').inert=true;document.querySelector('header').inert=true;if(kind==='evidence')renderEvidence();else if(kind==='controls')renderExplore();else renderSources();$('closeDrawer').focus();}
+function closeDrawer(){document.body.classList.remove('panel-open');state.drawer=null;$('drawer').classList.remove('open');$('backdrop').classList.remove('open');document.querySelector('main').inert=false;document.querySelector('footer').inert=false;document.querySelector('header').inert=false;opener?.focus();}
+function value(v,unit){return typeof v==='number'&&Number.isFinite(v)?v.toFixed(unit==='g'?3:1)+' '+unit:'Not reported';}
+function sourceURL(t){if(t.source?.sourceId&&/^PSI-\d+$/.test(t.source.sourceId))return 'https://psi.nasa.gov/physci/repo/data/investigations/'+t.source.sourceId;return 'https://psi.nasa.gov/physci/repo/search?q='+encodeURIComponent(t.inv||'');}
+function renderEvidence(){
+ const a=assessment(),q=query(),r=a.related[0]?.test;
+ $('drawerTitle').textContent='Evidence, inspected';
+ const rs=a.reasons.map(x=>'<div class="reason">'+esc(x)+'</div>').join('');
+ const rows=[['Material',q.fuel,r?.fuel??'Not reported'],['Geometry',q.geometry,r?.geometry??'Not reported'],['Oxygen',value(q.o2Pct,'%'),value(r?.o2Pct,'%')],['Pressure',value(q.pressureKpa,'kPa'),value(r?.pressureKpa,'kPa')],['Airflow',value(q.flowCmS,'cm/s'),value(r?.flowCmS,'cm/s')],['Gravity',value(q.gravityG,'g'),value(r?.gravityG,'g')]];
+ $('drawerBody').innerHTML='<div class="eyebrow">QUERY / SOURCE / LIMIT</div><span class="audit-status">'+esc(a.status.toUpperCase())+'</span><h3 class="evidence-title">'+esc(a.title)+'</h3><p class="body-copy">The source record and the animation are separate. A nearby experiment is not automatically a measured answer to this query.</p>'+rs+'<table class="comparison-table"><thead><tr><th>CONDITION</th><th>YOUR QUERY</th><th>'+esc(r?.testId||'SOURCE')+'</th></tr></thead><tbody>'+rows.map(x=>'<tr>'+x.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table><div class="eyebrow">RELATED SOURCE ROWS</div>'+a.related.slice(0,4).map(x=>{const t=x.test;return '<article class="data-card"><header><strong>'+esc(t.inv)+' / '+esc(t.testId)+'</strong><span>'+esc(value(t.o2Pct,'% O2'))+'</span></header><p>'+esc(t.extra?.rawMaterial||t.fuel||'')+'</p><p>File: '+esc(t.source?.file||'not provided')+'<br>CSV row: '+esc(t.source?.row||'not provided')+' / outcome: '+esc(t.outcome)+'</p><a href="'+esc(sourceURL(t))+'" target="_blank" rel="noopener noreferrer">Open NASA PSI investigation &#8599;</a></article>';}).join('')+'<div class="source-note">'+esc(state.dataMode==='offline source excerpt'?SNAPSHOT.note:'Loaded TestRow records: '+state.rows.length+'. Provenance and missing fields are checked at the presentation boundary.')+'</div><button class="wide-button" id="exportEvidence">Export this evidence audit</button><button class="wide-button secondary" id="importEvidence">Load engine tests.json</button><p class="declaration">No fire-risk score, suppression dose, safe-flow recommendation or validated flame reconstruction is produced by this presentation.</p>';
+ $('exportEvidence').onclick=exportAudit;$('importEvidence').onclick=()=>$('importFile').click();
+}
+function renderExplore(){
+ $('drawerTitle').textContent='Explore the mission';
+ $('drawerBody').innerHTML='<div class="eyebrow">CUSTOM QUERY</div><h3 class="evidence-title">Change conditions.<br>Keep the caveats.</h3><p class="body-copy">The visible sliders change an illustrative radiance field. Evidence matching runs separately against source records. Material selection updates the evidence query; it does not create calibrated material physics.</p><div class="form-row"><div class="form-field"><label for="pInput">PRESSURE / kPa</label><input id="pInput" type="number" min="1" max="300" step=".1" value="'+state.pressure+'"></div><div class="form-field"><label for="matInput">MATERIAL</label><select id="matInput"><option value="PMMA">PMMA</option><option value="cotton">Cotton</option><option value="cellulose">Cellulose</option></select></div></div><div class="form-row"><div class="form-field"><label for="shapeInput">GEOMETRY</label><select id="shapeInput"><option value="film">Film</option><option value="rod">Rod</option><option value="sheet">Sheet</option></select></div><div class="form-field"><label for="thickInput">THICKNESS / mm</label><input id="thickInput" type="number" min=".001" max="50" step=".05" value="'+state.thickness+'"></div></div><button class="wide-button" id="applyQuery">Apply and inspect evidence</button><button class="wide-button secondary" id="resetMission">Reset this chapter</button><div class="source-note">O2 partial pressure = oxygen fraction x total pressure.<br>Current query: '+(state.oxygen*.01*state.pressure).toFixed(2)+' kPa.<br>This number is not itself a flammability criterion.</div><div class="eyebrow">KEYBOARD</div><p class="body-copy">Left / right arrows: chapters<br>Space: pause or resume motion<br>F: fullscreen<br>R: reset camera<br>Escape: close this panel</p>';
+ $('matInput').value=state.fuel;$('shapeInput').value=state.geometry;
+ $('applyQuery').onclick=()=>{const p=Number($('pInput').value),th=Number($('thickInput').value);if(!Number.isFinite(p)||p<=0||p>300||!Number.isFinite(th)||th<=0){toast('Enter positive pressure and thickness.');return;}state.pressure=p;state.thickness=th;state.fuel=$('matInput').value;state.geometry=$('shapeInput').value;state.drawer='evidence';renderEvidence();updateControls();};
+ $('resetMission').onclick=()=>{closeDrawer();go(state.step);};
+}
+function renderSources(){
+ $('drawerTitle').textContent='Sources & limitations';
+ $('drawerBody').innerHTML='<div class="eyebrow">SCIENCE / SOFTWARE / PROVENANCE</div><h3 class="evidence-title">What is real.<br>What is rendered.</h3><p class="body-copy">The hardware is a conceptual optical chamber, not a replica of a NASA instrument. The volumetric flame is a procedural 3D illustration, not CFD, a temperature measurement or an inferred experiment video.</p><div class="sources-list"><p><strong>1 / Mechanism</strong><br><a target="_blank" rel="noopener noreferrer" href="https://www.nasa.gov/image-article/candle-flame-1g-vs-microgravity/">NASA: Candle Flame &mdash; 1 g vs. Microgravity &#8599;</a><br>Supports the still-air candle analogy. It is not a universal description of every fuel.</p><p><strong>2 / Important exception</strong><br><a target="_blank" rel="noopener noreferrer" href="https://www.nasa.gov/image-article/studying-flames-microgravity/">NASA: Studying Flames in Microgravity &#8599;</a><br>Soot can form in microgravity. Blue color alone is not a diagnosis of gravity or cool-flame chemistry.</p><p><strong>3 / Source records</strong><br><a target="_blank" rel="noopener noreferrer" href="https://psi.nasa.gov/physci/repo/data/investigations/PSI-25">NASA PSI-25 / BASS-II &#8599;</a><br>The offline excerpt preserves 14 PMMA-labelled rows from the team repository. It is not the full BASS-II dataset.</p><p><strong>4 / Team integration</strong><br>itsamirkhon/EMBER<br>Snapshot: <code>81b5293</code><br>Data contract: <code>web/src/lib/types.ts</code><br>Raw CSV blob: <code>7e1d36d</code></p></div><div class="source-note">No claim is made that the imported dataset, the upstream nearest-neighbour estimator or this rendering is a certified spacecraft safety system. Neighbour votes are not calibrated risk probabilities.</div><p class="body-copy">This file has no external JavaScript, fonts or CDN dependencies. The renderer uses native WebGL. It automatically attempts to read same-origin <code>data/tests.json</code> when hosted with EMBER; otherwise it keeps the clearly labelled offline excerpt.</p><button class="wide-button secondary" id="sourceImport">Load the latest engine dataset</button><p class="declaration">EMBER / independent project concept. Not an official NASA product.</p>';
+ $('sourceImport').onclick=()=>$('importFile').click();
+}
+function exportAudit(){const data={version:1,query:query(),support:assessment(),dataMode:state.dataMode,dataOrigin:state.dataOrigin,renderer:{kind:'procedural 3D radiance illustration',validated:false},generatedAt:new Date().toISOString()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='EMBER_evidence_audit.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Evidence audit exported with source rows and limitations.');}
+const OUTCOME_MAP={ignited_flame_spread:'flame_spread',ignited_burned:'burned',burned:'burned',self_extinguished:'self_extinguished',no_ignition:'no_ignition'};
+function fromCompact(c){if(!c||!Array.isArray(c.tests))return c;return c.tests.map(r=>({testId:r[0],inv:r[1],fuelPhase:r[2],fuel:r[3],o2Pct:r[4],pressureKpa:r[6],flowCmS:r[8],gravityG:r[9],outcome:OUTCOME_MAP[r[10]]||r[10]||'unknown',geometry:r[16]??null,thicknessMm:r[17]??null,diameterMm:null,diluent:null,diluentPct:null,source:{sourceId:r[1],file:r[13],row:r[14]}}));}
+function adoptData(obj,origin){const rows=Array.isArray(obj)?obj:obj?.tests; if(!Array.isArray(rows)||rows.length===0||!rows.every(t=>t&&typeof t.testId==='string'&&typeof t.inv==='string'&&t.source!==null&&typeof t.source==='object'&&!Array.isArray(t.source)))throw new Error('Expected non-empty EMBER TestRow[] data with testId, inv and source.');state.rows=rows;state.dataOrigin=origin;state.dataMode='engine dataset';updateControls();}
+async function loadRepoData(base=location.href,fetcher=fetch){let origin;try{origin=new URL(base);}catch{return;}if(!/^https?:$/.test(origin.protocol))return;try{const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),4500);let response;try{response=await fetcher(new URL('./data/compact.json',origin),{signal:ac.signal,credentials:'same-origin'});}finally{clearTimeout(timer);}if(!response.ok)return;adoptData(fromCompact(await response.json()),'EMBER corpus '+'2.0.1 (data/compact.json)');}catch(e){/* Offline excerpt stays explicitly labelled. */}}
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>25000000)throw new Error('Dataset exceeds 25 MB.');adoptData(JSON.parse(await f.text()),'Imported file: '+f.name);toast('Loaded '+state.rows.length+' engine source rows.');if(state.drawer==='evidence')renderEvidence();}catch(err){toast(err.message);}e.target.value='';};
+
+class VolumeRenderer{
+ constructor(canvas){
+  this.canvas=canvas;this.time=0;this.count=0;this.dirty=true;this.yaw=-.16;this.pitch=.16;this.zoom=4.5;this.last=performance.now();this.lost=false;
+  this.gl=canvas.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:true,powerPreference:matchMedia('(pointer:coarse)').matches?'default':'high-performance'});
+  if(!this.gl)throw new Error('WebGL not available');
+  const gl=this.gl;
+  const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){const info=gl.getShaderInfoLog(s);gl.deleteShader(s);throw new Error(info);}return s;};
+  this.program=gl.createProgram();gl.attachShader(this.program,compile(gl.VERTEX_SHADER,'attribute vec2 aPosition; void main(){gl_Position=vec4(aPosition,0.,1.);}'));gl.attachShader(this.program,compile(gl.FRAGMENT_SHADER,$('fragmentShader').textContent));gl.linkProgram(this.program);if(!gl.getProgramParameter(this.program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(this.program));
+  gl.useProgram(this.program);const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const a=gl.getAttribLocation(this.program,'aPosition');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+  this.uniforms={};for(const n of ['uResolution','uTime','uGravity','uFlow','uOxygen','uPressure','uYaw','uPitch','uZoom','uSplit','uTransport','uFuel','uAnimate'])this.uniforms[n]=gl.getUniformLocation(this.program,n);
+  this.maxPixels=matchMedia('(max-width:600px)').matches?260000:560000;this.pixelScale=1;this.lastDraw=0;this.resize();
+  this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(canvas.parentElement);
+  // Pointer Events work with mouse, pen and one/two-finger touch.
+  this.pointers=new Map();this.lastPinch=null;
+  const pinchDistance=()=>{const p=[...this.pointers.values()];return p.length>=2?Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y):null;};
+  canvas.addEventListener('pointerdown',e=>{
+   if(e.pointerType==='mouse'&&e.button!==0)return;
+   this.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+   try{canvas.setPointerCapture(e.pointerId);}catch{}
+   this.lastPinch=pinchDistance();stopTour();
+  });
+  canvas.addEventListener('pointermove',e=>{
+   const previous=this.pointers.get(e.pointerId);if(!previous)return;
+   this.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+   if(this.pointers.size>=2){
+    const distance=pinchDistance();
+    if(this.lastPinch>5&&distance>5)this.zoom=Math.max(3.1,Math.min(7.5,this.zoom*this.lastPinch/distance));
+    this.lastPinch=distance;
+   }else{
+    this.yaw+=(e.clientX-previous.x)*.006;
+    this.pitch=Math.max(-.05,Math.min(.70,this.pitch+(e.clientY-previous.y)*.003));
+   }
+   this.dirty=true;
+  });
+  const end=e=>{this.pointers.delete(e.pointerId);this.lastPinch=pinchDistance();};
+  canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);canvas.addEventListener('lostpointercapture',end);
+  canvas.addEventListener('wheel',e=>{e.preventDefault();this.zoom=Math.max(3.1,Math.min(7.5,this.zoom+e.deltaY*.0025));this.dirty=true;},{passive:false});
+  canvas.addEventListener('dblclick',()=>this.reset());
+  this.visible=true;
+  this.visibilityObserver=new IntersectionObserver(entries=>{this.visible=entries[0]?.isIntersecting!==false;this.last=performance.now();},{threshold:.01});
+  this.visibilityObserver.observe(canvas);
+  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.lost=true;showGpuError('Graphics context lost.');});
+  canvas.addEventListener('webglcontextrestored',()=>location.reload());
+  $('gpuError').classList.add('hidden');$('loading').classList.add('hidden');$('renderStatus').textContent='VOLUME RENDER / LIVE';
+ }
+ reset(){this.yaw=-.16;this.pitch=.16;this.zoom=state.split?4.5:4.45;this.dirty=true;}
+ resize(){const rect=this.canvas.getBoundingClientRect();let scale=Math.min(devicePixelRatio||1,1.5,Math.sqrt(this.maxPixels/(rect.width*rect.height)))*this.pixelScale;this.canvas.width=Math.max(2,Math.round(rect.width*scale));this.canvas.height=Math.max(2,Math.round(rect.height*scale));this.gl.viewport(0,0,this.canvas.width,this.canvas.height);this.dirty=true;}
+ frame(now){if(!this.dirty&&matchMedia('(pointer:coarse)').matches&&now-this.lastDraw<33)return;this.lastDraw=now;const delta=Math.min((now-this.last)/1000,.08);this.last=now;if(this.lost)return;if(state.playing)this.time+=delta;if(!state.playing&&!this.dirty)return;
+  const gl=this.gl,u=this.uniforms;gl.useProgram(this.program);gl.uniform2f(u.uResolution,this.canvas.width,this.canvas.height);
+  const values={uTime:this.time,uGravity:state.gravity,uFlow:state.flow,uOxygen:state.oxygen,uPressure:state.pressure,uYaw:this.yaw,uPitch:this.pitch,uZoom:this.zoom,uSplit:state.split?1:0,uTransport:state.tracers?1:0,uFuel:state.illustrationFuel,uAnimate:state.playing?1:0};
+  for(const [name,v] of Object.entries(values))gl.uniform1f(u[name],v);gl.drawArrays(gl.TRIANGLES,0,6);this.count++;this.dirty=false;
+ }
+}
+function showGpuError(message){$('loading').classList.add('hidden');$('gpuError').classList.remove('hidden');$('renderStatus').textContent='3D UNAVAILABLE';console.warn('EMBER renderer: '+message);}
+function initRenderer(){try{renderer=new VolumeRenderer($('scene'));renderer.frame(performance.now());}catch(e){showGpuError(e.message);}}
+$('retryGpu').onclick=()=>{if(renderer?.lost)location.reload();else initRenderer();};
+function tick(now){if(renderer&&!document.hidden&&renderer.visible&&!state.drawer)renderer.frame(now);if(autoTimer)$('autoplayMeter').style.width=Math.min(100,(now-autoStart)/16000*100)+'%';requestAnimationFrame(tick);}
+[['gravity','gravity'],['airflow','flow'],['oxygen','oxygen']].forEach(([id,key])=>{$(id).oninput=e=>{state[key]=Number(e.target.value);if(key==='gravity')state.split=false;stopTour();updateControls();if(renderer)renderer.dirty=true;};});
+$('pauseButton').onclick=()=>{state.playing=!state.playing;updateControls();};$('compareButton').onclick=()=>{state.split=!state.split;renderer?.reset();updateControls();};$('flowButton').onclick=()=>{state.tracers=!state.tracers;updateControls();if(renderer)renderer.dirty=true;};$('resetCamera').onclick=()=>renderer?.reset();
+$('storyAction').onclick=()=>state.step===3?openApp('map'):state.step>=2?openDrawer('evidence'):go(state.step+1);
+function openApp(route){const target=new URL('./#/'+route,location.href);(window.top||window).location.href=target.href;}
+$('prevButton').onclick=()=>go(state.step-1);$('nextButton').onclick=()=>go(state.step+1);document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>go(+b.dataset.step));
+$('sourcesButton').onclick=()=>openDrawer('sources');$('exploreButton').onclick=()=>openDrawer('controls');$('evidenceButton').onclick=()=>openDrawer('evidence');$('closeDrawer').onclick=closeDrawer;$('backdrop').onclick=closeDrawer;$('presentButton').onclick=startTour;
+window.addEventListener('keydown',e=>{
+ if(state.drawer){if(e.key==='Escape'){closeDrawer();e.preventDefault();}if(e.key==='Tab'){const nodes=[...$('drawer').querySelectorAll('button,a,input,select')].filter(x=>!x.disabled);const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}}return;}
+ if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+ if(e.key==='ArrowRight'){e.preventDefault();go(state.step+1);}else if(e.key==='ArrowLeft'){e.preventDefault();go(state.step-1);}else if(e.code==='Space'){e.preventDefault();state.playing=!state.playing;updateControls();}else if(e.key.toLowerCase()==='r')renderer?.reset();else if(e.key.toLowerCase()==='f'){if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.().catch(()=>toast('Fullscreen is unavailable in this preview.'));}
+});
+const initial=chapters.findIndex(c=>location.hash==='#'+c.id);go(initial>=0?initial:0);initRenderer();requestAnimationFrame(tick);loadRepoData();
+window.__EMBER__={state,query,assessment,go,get renderer(){return renderer;},adoptData,loadRepoData,version:'2026-11-14.2-mobile'};
+</script>
+</body>
+</html>

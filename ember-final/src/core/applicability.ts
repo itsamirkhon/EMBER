@@ -97,27 +97,42 @@ function gapToValue(qv: number | [number, number], tv: number): number {
   return Math.abs(qv - tv);
 }
 
+/** Normalized units added for a dimension the test does not report: unknown is not "near". */
+const JOINT_UNKNOWN_PENALTY = 1;
+
 function testJointDistance(query: ResearchQuery, test: Test): number | null {
   const diffs: number[] = [];
+  let known = 0;
   if (query.o2Pct !== null) {
     const tv = test.atmosphere.o2.value;
-    if (tv === null) return null;
-    diffs.push((query.o2Pct - tv) / JOINT_SCALES.o2Pct);
+    if (tv === null) diffs.push(JOINT_UNKNOWN_PENALTY);
+    else {
+      known += 1;
+      diffs.push((query.o2Pct - tv) / JOINT_SCALES.o2Pct);
+    }
   }
   if (query.pressureKpa !== null) {
     const tv = test.atmosphere.pressure.value;
-    if (tv === null) return null;
-    diffs.push((query.pressureKpa - tv) / JOINT_SCALES.pressureKpa);
+    if (tv === null) diffs.push(JOINT_UNKNOWN_PENALTY);
+    else {
+      known += 1;
+      diffs.push((query.pressureKpa - tv) / JOINT_SCALES.pressureKpa);
+    }
   }
   if (query.flowCmS !== null) {
     const flows: number[] = [];
     if (test.flow.initialFlowCmS.value !== null) flows.push(test.flow.initialFlowCmS.value);
     if (test.flow.sequenceCmS) flows.push(...test.flow.sequenceCmS);
-    if (flows.length === 0) return null;
-    const minFlowGap = Math.min(...flows.map((f) => gapToValue(query.flowCmS!, f)));
-    diffs.push(minFlowGap / JOINT_SCALES.flowCmS);
+    if (flows.length === 0) diffs.push(JOINT_UNKNOWN_PENALTY);
+    else {
+      known += 1;
+      const minFlowGap = Math.min(...flows.map((f) => gapToValue(query.flowCmS!, f)));
+      diffs.push(minFlowGap / JOINT_SCALES.flowCmS);
+    }
   }
   if (diffs.length === 0) return 0;
+  // No reported condition at all: the distance is undefined, not small.
+  if (known === 0) return null;
   return Math.sqrt(diffs.reduce((s, z) => s + z * z, 0));
 }
 

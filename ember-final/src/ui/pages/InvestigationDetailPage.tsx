@@ -78,7 +78,7 @@ export function InvestigationDetailPage() {
       isRowHeader: true,
       sortValue: (t) => t.testId,
       render: (t) => (
-        <Link to={`/protocol-compare?testId=${encodeURIComponent(t.testId)}`} className="mono">
+        <Link to={`/compare?testId=${encodeURIComponent(t.testId)}`} className="mono">
           {t.testId}
         </Link>
       ),
@@ -146,7 +146,7 @@ export function InvestigationDetailPage() {
       key: 'protocol',
       label: 'Protocol',
       render: (t) => (
-        <Link to={`/protocol-compare?testId=${encodeURIComponent(t.testId)}`} className="btn btn-sm">
+        <Link to={`/compare?testId=${encodeURIComponent(t.testId)}`} className="btn btn-sm">
           Steps ({t.segments.length})
         </Link>
       ),
@@ -158,7 +158,7 @@ export function InvestigationDetailPage() {
       <div className="page-header">
         <div>
           <p className="muted" style={{ margin: '0 0 0.25rem' }}>
-            <Link to="/explorer">← Back to Explorer</Link> · {inv.family} · PSI {inv.psi ?? 'n/a'}
+            <Link to="/investigations">← All investigations</Link> · {inv.family} · PSI {inv.psi ?? 'n/a'}
           </p>
           <h1>{inv.id} — {inv.name}</h1>
           <div className="pill-row" style={{ marginBlockStart: '0.5rem' }}>

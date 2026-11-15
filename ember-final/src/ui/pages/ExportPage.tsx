@@ -102,9 +102,9 @@ export function ExportPage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>Review Export &amp; Modeling Dataset Builder</h1>
+          <h1>Download the data</h1>
           <p className="page-lead">
-            Export traceable Markdown dossiers, reproducible JSON snapshots, and replicate-grouped Modeling CSVs without mixing incompatible fuel phases or imputing unknown fields as zero.
+            Clean test tables for modeling, with the PSI source and row of every record, plus Markdown and JSON reports of a review. Unknown values stay empty; they are never filled with zero, and fuel phases are never mixed.
           </p>
         </div>
       </div>

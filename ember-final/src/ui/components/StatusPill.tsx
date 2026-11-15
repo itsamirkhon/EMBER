@@ -21,14 +21,14 @@ export function StatusPill({ tone = 'neutral', icon, label, title }: StatusPillP
 
 export function ModeBadge({ mode }: { mode: SynthesisMode | string }) {
   if (mode === 'LIVE_AI') {
-    return <StatusPill tone="info" icon="⚡" label="LIVE_AI" title="Verified synthesis with live OpenAI evaluator" />;
+    return <StatusPill tone="info" icon="⚡" label="Model text, checked" title="Model-written synthesis kept only after EMBER's source checks passed" />;
   }
   if (mode === 'SAVED_DEMO_SNAPSHOT') {
     return (
       <StatusPill
         tone="accent"
         icon="◈"
-        label="SAVED_DEMO_SNAPSHOT"
+        label="Saved example"
         title="Pre-computed deterministic benchmark snapshot"
       />
     );
@@ -37,8 +37,8 @@ export function ModeBadge({ mode }: { mode: SynthesisMode | string }) {
     <StatusPill
       tone="ok"
       icon="⚙"
-      label="DETERMINISTIC_ENGINE"
-      title="Exact local deterministic applicability, Passage triage, and verification engine"
+      label="Rule-based"
+      title="Applicability rules, passage triage and verification run without an AI model"
     />
   );
 }
@@ -46,26 +46,26 @@ export function ModeBadge({ mode }: { mode: SynthesisMode | string }) {
 export function VerdictBadge({ verdict }: { verdict: ApplicabilityVerdict }) {
   switch (verdict) {
     case 'admissible':
-      return <StatusPill tone="ok" icon="✓" label="Admissible" />;
+      return <StatusPill tone="ok" icon="✓" label="Applies" />;
     case 'conditional_support':
-      return <StatusPill tone="warn" icon="⚠" label="Conditional" />;
+      return <StatusPill tone="warn" icon="⚠" label="Applies with caveats" />;
     case 'planned_only':
-      return <StatusPill tone="planned" icon="◷" label="Planned Matrix Only" />;
+      return <StatusPill tone="planned" icon="◷" label="Planned, no results yet" />;
     case 'inadmissible':
-      return <StatusPill tone="danger" icon="✕" label="Inadmissible" />;
+      return <StatusPill tone="danger" icon="✕" label="Does not apply" />;
   }
 }
 
 export function AnswerBoundaryBadge({ boundary }: { boundary: AnswerBoundary }) {
   switch (boundary) {
     case 'sufficient_observed':
-      return <StatusPill tone="ok" icon="✓" label="Sufficient Observed Evidence" />;
+      return <StatusPill tone="ok" icon="✓" label="Answered from observed data" />;
     case 'conditional_or_partial':
-      return <StatusPill tone="warn" icon="⚠" label="Conditional / Partial Support" />;
+      return <StatusPill tone="warn" icon="⚠" label="Partly answered" />;
     case 'insufficient_data':
-      return <StatusPill tone="danger" icon="∅" label="Insufficient Observed Data" />;
+      return <StatusPill tone="danger" icon="∅" label="Not established by the data" />;
     case 'invalid_premise':
-      return <StatusPill tone="danger" icon="!" label="Invalid / Confounded Premise" />;
+      return <StatusPill tone="danger" icon="!" label="Premise not supported" />;
   }
 }
 
@@ -94,13 +94,13 @@ export function GasRoleBadge({ role }: { role: GasRole | string }) {
       <StatusPill
         tone="danger"
         icon="⊘"
-        label="Role: oxidizer_stream (Burner Jet)"
+        label="O₂ in burner stream, not cabin air"
         title="NOT cabin ambient atmosphere — localized oxidizer stream around burner/injector"
       />
     );
   }
   if (role === 'ambient') {
-    return <StatusPill tone="ok" icon="○" label="Role: ambient" />;
+    return <StatusPill tone="ok" icon="○" label="O₂ in cabin air" />;
   }
   return <StatusPill tone="info" icon="○" label={`Role: ${role}`} />;
 }

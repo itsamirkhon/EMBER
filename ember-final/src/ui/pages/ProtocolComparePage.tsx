@@ -141,9 +141,9 @@ export function ProtocolComparePage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>Protocol Timeline &amp; Experimental Comparison</h1>
+          <h1>Compare experiments</h1>
           <p className="page-lead">
-            Inspect stage-bound observations, compare experiments, and keep query applicability separate from causal support.
+            Put two tests or investigations side by side: their conditions, the sequence of each test, and what differs. Similar records describe; they do not prove cause and effect.
           </p>
         </div>
       </div>

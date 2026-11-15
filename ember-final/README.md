@@ -1,5 +1,7 @@
 # EMBER 2.1.0
 
+> For the judge-facing product (evidence map, mission lens, Ask EMBER, Trust) and how to publish it, start with the [repository README](../README.md) and [`docs/SUBMISSION_2026.md`](./docs/SUBMISSION_2026.md). The presentation layer lives in `src/ui/v3/` and reads the same scientific core as the workbench below. The workbench views (full review, investigations, comparison, export) remain available; Planner, Modeling Lab, Variant Diff and Evaluation were removed from the app.
+
 **Spacecraft Fire Evidence Lab** — a scientific workbench for finding, comparing and interpreting NASA combustion evidence for a specified configuration, and identifying what requires additional research.
 
 The current corpus contains **15 investigations, 1,678 records, 145 source-linked claims, 68 source records and 2,463 retrieval chunks**. The 1,678 records include series aggregates and reconstructed protocol representations; they are **not 1,678 independent experimental runs**. Claim quotations were checked against cached source text. That check does not independently validate their scientific meaning, attribution or applicability.

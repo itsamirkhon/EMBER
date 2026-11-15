@@ -1,92 +1,77 @@
 import type { ReactNode } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { ENGINE_VERSION } from '../apiClient';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useEmber } from '../context/EmberContext';
 import { SourceModal } from './SourceModal';
-import { ModeBadge, StatusPill } from './StatusPill';
 
 const NAV_ITEMS = [
-  { to: '/', label: 'Review Workspace', end: true },
-  { to: '/explorer', label: 'Explorer' },
-  { to: '/insights', label: 'Insights' },
-  { to: '/protocol-compare', label: 'Protocol & Compare' },
-  { to: '/variants', label: 'Variant Diff' },
-  { to: '/planner', label: 'Planner' },
-  { to: '/modeling', label: 'Modeling Lab' },
-  { to: '/export', label: 'Export' },
-  { to: '/evaluation', label: 'Evaluation' },
+  { to: '/map', label: 'Evidence map' },
+  { to: '/lens', label: 'Mission lens' },
+  { to: '/ask', label: 'Ask EMBER' },
+  { to: '/investigations', label: 'Investigations' },
+  { to: '/compare', label: 'Compare' },
+  { to: '/export', label: 'Data' },
+  { to: '/earth', label: 'Back to Earth' },
+  { to: '/trust', label: 'Trust' },
 ];
 
+function Logo() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden className="v3-logo-mark">
+      <path d="M16 3c2 6 9 9 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 4 0-4 1-7 2-10z" fill="#ff9f0a" />
+      <path d="M16 15c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-5 .5 1 1 1.5 1.5 1.5 0-2 .2-3 .5-4.5z" fill="#000" opacity=".5" />
+    </svg>
+  );
+}
+
 export function Layout({ children }: { children: ReactNode }) {
-  const { activeSnapshot, backendSource, announcement } = useEmber();
+  const { announcement } = useEmber();
+  const loc = useLocation();
+  // the full-screen intro page keeps its own minimal chrome
+  const home = loc.pathname === '/';
 
   return (
-    <div className="app-shell">
+    <div className="app-shell v3">
       <a href="#main-content" className="skip-link visually-hidden">
         Skip to main content
       </a>
-
       <div className="visually-hidden" role="status" aria-live="polite">
         {announcement}
       </div>
 
-      <header className="site-header">
-        <div className="header-inner">
-          <div className="brand-group">
-            <span className="brand-mark" aria-hidden="true">
-              EMB
-            </span>
-            <div>
-              <Link to="/" className="brand-title">
-                EMBER v2 · Evidence-Grounded Spacecraft Fire Safety Workbench
-              </Link>
-              <span className="brand-subtitle">
-                15 NASA PSI Investigations · Stage-Bound Protocols · Provenance & Refusal Gate
-              </span>
-            </div>
-          </div>
-
-          <div className="header-meta">
-            {activeSnapshot ? (
-              <ModeBadge mode={activeSnapshot.review.synthesis.mode} />
-            ) : (
-              <StatusPill tone="neutral" icon="○" label="No Active Review" />
-            )}
-            <StatusPill
-              tone={backendSource === 'node_api' ? 'info' : 'warn'}
-              icon={backendSource === 'node_api' ? '●' : '◈'}
-              label={backendSource === 'node_api' ? 'Node API Connected' : 'Static Offline Fallback'}
-            />
-          </div>
-        </div>
-
-        <nav aria-label="Primary" className="primary-nav">
-          <ul className="nav-list">
+      <header className={`v3-top${home ? ' v3-top-home' : ''}`}>
+        <div className="v3-top-inner">
+          <Link to="/" className="v3-logo" aria-label="EMBER home">
+            <Logo />
+            EMBER
+          </Link>
+          <nav aria-label="Primary" className="v3-nav">
             {NAV_ITEMS.map((item) => (
-              <li key={item.to}>
-                <NavLink
-                  to={item.to}
-                  end={item.end}
-                  className="nav-link"
-                >
-                  {item.label}
-                </NavLink>
-              </li>
+              <NavLink key={item.to} to={item.to} className={({ isActive }) => (isActive ? 'active' : undefined)}>
+                {item.label}
+              </NavLink>
             ))}
-          </ul>
-        </nav>
+          </nav>
+        </div>
       </header>
 
-      <main id="main-content" className="main-container" tabIndex={-1}>
+      <main id="main-content" className="v3-main" tabIndex={-1} key={loc.pathname}>
         {children}
       </main>
 
-      <footer className="site-footer">
-        <div className="footer-inner">
+      <footer className="v3-foot">
+        <div className="v3-foot-inner">
           <span>
-            EMBER v2 ({ENGINE_VERSION}) — Scientific Evidence Workbench. Observed findings, author interpretations, and conceptual schematics are strictly separated.
+            EMBER · Evidence Map for Burn &amp; Extinction Risk · NASA Space Apps Challenge 2026, “Flame in Freefall”. Data: NASA{' '}
+            <a href="https://psi.nasa.gov/" target="_blank" rel="noreferrer">
+              Physical Sciences Informatics
+            </a>{' '}
+            and NTRS. Not an official NASA product, not a certification tool.
           </span>
-          <span className="mono muted">NASA PSI Corpus v2</span>
+          <span className="v3-row">
+            <Link to="/trust">How far to trust it</Link>
+            <Link to="/review">Full scientific review</Link>
+            <a href="./intro.html">3D intro</a>
+          </span>
         </div>
       </footer>
 

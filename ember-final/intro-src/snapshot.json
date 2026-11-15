@@ -1,0 +1,430 @@
+{
+  "kind": "source-table-excerpt",
+  "repo": "itsamirkhon/EMBER",
+  "commit": "81b52936326fb22ba1c1249160404c5455d36a80",
+  "sourceBlob": "7e1d36d2381eb9bd02b758aa35c6167f14c25294",
+  "sourceUrl": "https://psi.nasa.gov/physci/repo/data/investigations/PSI-25",
+  "note": "14 explicitly PMMA-labelled rows from CSV lines 2-20. This is a subset, not the entire experiment or pipeline output. Pressure, calibrated airflow and physical outcome are deliberately null/unknown.",
+  "tests": [
+    {
+      "inv": "BASS-II",
+      "testId": "B1",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "100 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 2
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B2",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "200 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 3
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B4",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.3,
+      "diameterMm": null,
+      "o2Pct": 22.2,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "300 micron PMMA film   2 cm wide",
+        "rawAirDisplay": "5",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 5
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B6",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 0.1 mm PMMA film",
+        "rawAirDisplay": "3   5   approaching 10",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 7
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B8",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "10   max",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 9
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B9",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.1 mm PMMA film",
+        "rawAirDisplay": "2   <1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 10
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B10",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "5  4  3  2  1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 11
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B11",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.2 mm PMMA film",
+        "rawAirDisplay": "5   3   1   <1",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 12
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B14",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 15.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "5  3  2   ext",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 15
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B15",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 21.0,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm   0.1 mm PMMA film",
+        "rawAirDisplay": "10   max",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 16
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B16",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 17.3,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 100 micron thick PMMA",
+        "rawAirDisplay": "3  0.5 pot   0.4 pot",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 17
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B17",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 17.5,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "5   3    pot 0.4",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 18
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B18",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.2,
+      "diameterMm": null,
+      "o2Pct": 17.4,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "1 cm wide 200 micron thick PMMA",
+        "rawAirDisplay": "10   blowoff",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 19
+      }
+    },
+    {
+      "inv": "BASS-II",
+      "testId": "B19",
+      "fuel": "PMMA",
+      "fuelPhase": "solid",
+      "geometry": "film",
+      "thicknessMm": 0.1,
+      "diameterMm": null,
+      "o2Pct": 17.3,
+      "pressureKpa": null,
+      "flowCmS": null,
+      "gravityG": 0,
+      "diluent": null,
+      "diluentPct": null,
+      "outcome": "unknown",
+      "outcomeRaw": null,
+      "spreadRateMmS": null,
+      "burningRateMm2S": null,
+      "particleSizeNm": null,
+      "extra": {
+        "rawMaterial": "2 cm 100 micron thick PMMA",
+        "rawAirDisplay": "10   blowoff",
+        "gravityProvenance": "Investigation context: ISS microgravity; nominal 0g, not a row-level accelerometer measurement."
+      },
+      "source": {
+        "sourceId": "PSI-25",
+        "file": "PSI-25_Experimental table_BASS-II.csv",
+        "row": 20
+      }
+    }
+  ]
+}

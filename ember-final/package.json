@@ -13,7 +13,12 @@
     "corpus": "python3 pipeline/build_corpus.py",
     "embeddings:openrouter": "node --env-file-if-exists=.env --import tsx pipeline/embed_openrouter.ts",
     "eval:interpret": "tsx eval/interpret/run.ts",
-    "eval:interpret:numeric": "tsx eval/interpret/run-numeric.ts"
+    "eval:interpret:numeric": "tsx eval/interpret/run-numeric.ts",
+    "test:intro": "node --test tests/presentation/support.test.cjs",
+    "data:compact": "tsx scripts/build-compact.mts",
+    "data:trust": "tsx scripts/build-trust.mts",
+    "data:ask": "tsx scripts/build-ask-answers.mts",
+    "intro": "python3 scripts/build-intro.py"
   },
   "dependencies": {
     "react": "^19.3.1",

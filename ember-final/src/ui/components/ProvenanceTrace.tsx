@@ -56,7 +56,7 @@ export function ProvenanceTrace({
                 </div>
                 <div className="btn-group">
                   <Link
-                    to={`/protocol-compare?testId=${encodeURIComponent(dec.testId)}`}
+                    to={`/compare?testId=${encodeURIComponent(dec.testId)}`}
                     className="btn btn-sm"
                   >
                     Open Protocol
