@@ -75,5 +75,8 @@ describe('mission lens is an evidence lookup, not a physical experiment', () => 
       result.admissible > 0 ? 'measured' : result.conditional > 0 ? 'nearby' : 'beyond',
     );
     expect(JSON.stringify(result)).not.toMatch(/fireRiskPercent|riskProbability|predictedIgnition/);
+    // This "beyond" verdict must remain a coverage gap for the historical
+    // 30% O2 / 70.3 kPa lunar-rover scenario, never a predicted burn outcome.
+    expect(result.status).toBe('beyond');
   });
 });
