@@ -592,3 +592,8 @@ body { background-image: var(--v3-pad); background-attachment: fixed; font-size:
 .v3 table th { color: var(--v3-text); }
 
 .v3 { --font-mono: var(--v3-num); }
+/* wide record tables scroll inside their own box on phones instead of widening the page */
+.v3-main, .v3 .main-container { min-width: 0; }
+.v3 .table-wrapper { max-width: 100%; overflow-x: auto; }
+@media (max-width: 760px) { .v3 .main-container table { display: block; max-width: 100%; overflow-x: auto; } }
+.v3 [class*="stack"] > *, .v3 [class*="grid"] > * { min-width: 0; }
