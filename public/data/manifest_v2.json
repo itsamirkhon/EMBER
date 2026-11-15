@@ -1,6 +1,6 @@
 {
-  "corpusVersion": "2.0.1-scientific-fixes",
-  "generatedAt": "2026-11-14T21:49:31Z",
+  "corpusVersion": "2.0.2-bass-provenance",
+  "generatedAt": "2026-11-15T17:45:32Z",
   "generator": "pipeline/build_corpus.py",
   "counts": {
     "investigations": 15,
@@ -135,16 +135,16 @@
   },
   "generatedFiles": {
     "public/data/corpus_v2.json": {
-      "sha256": "762a57cc12b4b24497a9a7eacb5a4761fcae1d9cca8d2724fdb3c94fbfb9a3a9",
-      "bytes": 25777532
+      "sha256": "b694e355c32d321a6e9917a879c7fac9572296e1a4122ea4d7d790645bbd2203",
+      "bytes": 25825394
     },
     "public/data/chunks_index.json": {
-      "sha256": "46ce2677008a17ffde831187e087a89c46f1bc0f0bb108bf0fe77ce16c50ad4e",
-      "bytes": 7152604
+      "sha256": "1e458903603e0f8e18728fcc48a32b8a71891b806d383c9e52078cbe8d505563",
+      "bytes": 7169798
     },
     "data/ember_corpus.sqlite": {
-      "sha256": "b64a6262e985be5efa369ac238ade39d4b7fc700125fbab72f5a0c6f6d7aef25",
-      "bytes": 60715008
+      "sha256": "1f76212e2946c3df735693e0c237a27048677890e7ee0c636576b63370ee9af2",
+      "bytes": 60874752
     }
   },
   "rawFiles": {
@@ -551,10 +551,6 @@
     "data/raw/ntrs/TM-20210011385_appendixA.json": {
       "sha256": "9e70ddec131d69006a25cddfb4a0a3c090c8b0d8ecc03bb4b38d8830e9fcaee0",
       "bytes": 117778
-    },
-    "data/reviews_store.json": {
-      "sha256": "d8672e50d24fa0d25c54c1807cd856f45dca3f314e45c5db70d39cad862cc4f5",
-      "bytes": 1122873
     },
     "data/sources_cache.json": {
       "sha256": "b89400297fa4ec287443ca7943ba155bcde56f676d0641ef6632b9502bf02343",

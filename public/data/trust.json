@@ -1,70 +1,31 @@
 {
- "generatedAt": "2026-11-15T11:28:33.707Z",
- "corpusVersion": "2.0.1-scientific-fixes",
- "method": "Grouped leave-out: each flight test with a recorded flame / no-flame outcome is hidden together with its replicate group, then its conditions are run through the applicability engine against the remaining tests of the same fuel phase. Assumed-atmosphere records (SAME / SAME-R) are not scored.",
- "outcome": "Flame established (ignited, burned, spread, hot ignition, jet flame) vs not (no ignition, went out by itself).",
- "phases": {
-  "solid": {
-   "all": {
-    "n": 245,
-    "correct": 217,
-    "baselineCorrect": 207
-   },
-   "byStatus": {
-    "measured": {
-     "n": 186,
-     "correct": 174,
-     "baselineCorrect": 170
+  "schemaVersion": 2,
+  "status": "withdrawn_pending_independent_validation",
+  "generatedAt": "2026-11-15T17:45:35.920Z",
+  "corpusVersion": "2.0.2-bass-provenance",
+  "method": "Descriptive audit of corpus outcome labels in actual-flight records with non-assumed, available oxygen and pressure. Counts include reconstructed protocols and series aggregates; they are not independent experiments or verified endpoint truth.",
+  "outcome": "Candidate flame-establishment labels: explicit ignition/burning labels vs no_ignition. Self-extinction, non-flaming pyrolysis and unknown outcomes are unscored; extinction does not mean a flame never formed.",
+  "phases": {
+    "solid": {
+      "records": 259,
+      "positive": 205,
+      "negative": 7,
+      "ambiguous": 47,
+      "excludedAtmosphere": 146
     },
-    "nearby": {
-     "n": 55,
-     "correct": 43,
-     "baselineCorrect": 35
+    "gas": {
+      "records": 333,
+      "positive": 271,
+      "negative": 62,
+      "ambiguous": 0,
+      "excludedAtmosphere": 556
     },
-    "beyond": {
-     "n": 4,
-     "correct": 0,
-     "baselineCorrect": 2
+    "liquid": {
+      "records": 352,
+      "positive": 339,
+      "negative": 0,
+      "ambiguous": 13,
+      "excludedAtmosphere": 32
     }
-   },
-   "baselineClass": {
-    "yes": 245,
-    "no": 0
-   },
-   "excluded": 160
-  },
-  "gas": {
-   "all": {
-    "n": 408,
-    "correct": 311,
-    "baselineCorrect": 345
-   },
-   "byStatus": {
-    "measured": {
-     "n": 181,
-     "correct": 119,
-     "baselineCorrect": 134
-    },
-    "nearby": {
-     "n": 96,
-     "correct": 92,
-     "baselineCorrect": 90
-    },
-    "beyond": {
-     "n": 131,
-     "correct": 100,
-     "baselineCorrect": 121
-    }
-   },
-   "baselineClass": {
-    "yes": 408,
-    "no": 0
-   },
-   "excluded": 481
   }
- },
- "liquidExcluded": {
-  "rows": 384,
-  "withNegativeOutcome": 0
- }
 }

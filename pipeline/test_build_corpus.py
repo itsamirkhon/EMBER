@@ -120,7 +120,7 @@ class TestEmberCorpusV2(unittest.TestCase):
             "outcomeAudit",
         }
         self.assertEqual(set(self.corpus.keys()), expected_keys)
-        self.assertEqual(self.corpus["corpusVersion"], "2.0.1-scientific-fixes")
+        self.assertEqual(self.corpus["corpusVersion"], "2.0.2-bass-provenance")
         self.assertEqual(len(self.corpus["investigations"]), 15)
         self.assertEqual(len(self.corpus["tests"]), 1678)
         self.assertEqual(len(self.corpus["claims"]), 145)
@@ -323,6 +323,25 @@ class TestEmberCorpusV2(unittest.TestCase):
             self.assertTrue(fp.exists(), rel)
             self.assertEqual(meta["sha256"], _sha256(fp), rel)
             self.assertEqual(meta["bytes"], fp.stat().st_size, rel)
+
+
+class BassPrimaryWorkbookTests(unittest.TestCase):
+    def test_all_bass_joins_and_conversions_match_workbook(self):
+        from openpyxl import load_workbook
+        corpus = json.loads(CORPUS_PATH.read_text())
+        path = ROOT / "data/raw/PSI-26/PSI-26_Science Documents_As Run_Test Matrix.xlsx"
+        workbook = load_workbook(path, read_only=True, data_only=True)
+        rows = dict(enumerate(workbook["as run matrix"].iter_rows(values_only=True), 1))
+        workbook.close()
+        for test in (t for t in corpus["tests"] if t["inv"] == "BASS"):
+            row = rows[test["extra"]["asRunRow"]]
+            self.assertEqual(str(row[2]), test["extra"]["As Run Test #"])
+            self.assertEqual(str(row[3]), test["extra"]["Test #"])
+            for field, raw, factor in [("o2", row[26], 100), ("pressure", row[27], 101.325)]:
+                value = test["atmosphere"][field]["value"]
+                if value is not None:
+                    self.assertIsInstance(raw, (float, int))
+                    self.assertAlmostEqual(value, raw * factor, delta=0.051 if field == "pressure" else 0.006)
 
 
 if __name__ == "__main__":

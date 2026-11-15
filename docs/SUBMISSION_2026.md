@@ -1,6 +1,6 @@
 # EMBER — Space Apps 2026 project page (paste-ready)
 
-Every field below is written for the Space Apps project page, in English. Numbers come from the live corpus (`2.0.1-scientific-fixes`) and are recomputed on the site's Trust page. Replace the two `<…>` links after publishing.
+Every field below is written for the Space Apps project page, in English. Numbers come from the live corpus (`2.0.2-bass-provenance`) and are recomputed on the site's Trust page. Replace the two `<…>` links after publishing.
 
 ---
 
@@ -38,7 +38,7 @@ Across the 15 NASA PSI fire investigations with test tables, none of the 261 sol
 **How applicability works.** A test supports a question only if it passes all nine rules: recorded outcome, material, geometry, unknown values never count as a match, oxygen in cabin air vs a burner stream, assumed atmospheres capped, no transfer of 0 g or 1 g results to the Moon or Mars, crew flow shut-off is not an extinction limit, and O₂ / pressure / airflow must have been tested together. Rules, not a black box.
 
 **What we checked, and what we did not.**
-- Grouped leave-out backtest (each test hidden with its replicates): solid materials 89% vs an 84% always-“it burns” baseline, *Measured* answers were right 94% of the time against a 91% baseline (a small gain, since most solids burn) and did better against *Data nearby* (78% vs a 64% baseline), but the labels say how close the evidence is, not how likely a fire is. Gas flames: 76% vs 85% baseline, *worse* than the baseline, shown as such.
+- The earlier outcome backtest was withdrawn: it incorrectly treated self-extinction as no flame establishment. Trust now publishes a reproducible endpoint-label audit, not predictive accuracy. Applicability requires independent expert validation; no gain over a baseline is claimed.
 - 145 AI-extracted claims, every quote found verbatim in the source (145/145); a 36-claim sample re-read: 29 correct, 7 partial, 0 wrong (same model family graded, so optimistic).
 - BASS outcomes parsed from free-text notes: 30 random rows read in full, 29/30 agree, 0 wrong.
 - While finishing EMBER we found and fixed a bug in our own engine: tests with an unreported airflow skipped the joint-conditions rule, so 16% O₂ tests counted as evidence for a 30% O₂ cabin. A regression test now guards it.
@@ -83,7 +83,7 @@ Also used:
 - **Ask EMBER answers**: OpenAI `gpt-6-luna` writes prose only from the retrieved, applicability-checked evidence. EMBER keeps a model answer only if five automatic checks pass (citations resolve, numbers and units match, observed vs planned kept apart, query constraints kept, lexical support); otherwise it shows the cited records instead. Six of the ten published answers are model text that passed; four are citations only. The public site runs no AI at all: these ten answers are pre-computed.
 - **Retrieval and decisions on the server version**: Google `gemini-embedding-2` and `gemini-decision-1` via OpenRouter (optional; the public site uses an offline BM25 + TF-IDF/SVD index).
 - **Software development**: AI coding assistants (Anthropic Claude, OpenAI models) helped write code, tests and documentation; the team reviewed and ran all of it.
-- **Not AI**: ranking, the nine applicability rules, the three statuses and the backtest are deterministic code.
+- **Not AI**: ranking, the nine applicability rules, the three statuses and the endpoint-label audit are deterministic code.
 - **Images**: no AI-generated images or video. The 3D flame is procedural WebGL. No NASA logos are used.
 
 ## References
@@ -114,6 +114,6 @@ Subtitles: [`demo-video.en.srt`](./demo-video.en.srt). Suggested capture: the li
 2. **Problem** — Apollo 1 and Mir; Artemis cabins at 30–34% O₂; 15 investigations with test tables, scattered across PSI.
 3. **Finding** — the evidence map: 261 solid flight tests at ≤ 22.7% O₂ and ~100 kPa vs lunar cabins at 30–34% and 56–70 kPa.
 4. **Product** — mission lens for the lunar rover: *Beyond the evidence*, nearest tests with gaps, the next experiment.
-5. **Why trust it** — nine rules; backtest vs baseline (solids 89% vs 84%, gas flames below baseline, shown); verbatim quotes 145/145; the bug we found and fixed.
+5. **Why trust it** — nine rules; the withdrawn backtest and current endpoint-label audit; verbatim quotes 145/145; the bug we found and fixed.
 6. **NASA data and AI** — 15 PSI investigations with test tables + 52 NTRS reports; AI extracts claims and writes checked prose, rules decide.
 7. **Next** — the flight test that closes the gap; Back to Earth (smoke detectors, firefighter gear, water mist, mine and submarine fire models).

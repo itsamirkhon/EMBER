@@ -30,7 +30,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import normalize
 
-CORPUS_VERSION = "2.0.1-scientific-fixes"
+CORPUS_VERSION = "2.0.2-bass-provenance"
 EMBEDDING_MODEL = "tfidf-lsa-svd-64d-v1"
 EMBEDDING_DIM = 64
 
@@ -1295,6 +1295,30 @@ def assign_group_ids(tests: list[dict[str, Any]]) -> None:
             m["groupId"] = gid
 
 
+def bass_workbook_rows() -> dict[int, tuple[Any, ...]]:
+    """Read primary workbook once; asRunRow is a locator, never an unverified join."""
+    from openpyxl import load_workbook
+    path = RAW_DIR / "PSI-26" / "PSI-26_Science Documents_As Run_Test Matrix.xlsx"
+    workbook = load_workbook(path, read_only=True, data_only=True)
+    rows = dict(enumerate(workbook["as run matrix"].iter_rows(values_only=True), start=1))
+    workbook.close()
+    return rows
+
+
+def bass_source_refs(row: dict[str, Any], cells: tuple[Any, ...], source_map: dict[str, dict[str, Any]], file_hash: str) -> dict[str, dict[str, Any]]:
+    extra = row["extra"]
+    number = int(extra["asRunRow"])
+    if str(cells[2]) != str(extra["As Run Test #"]) or str(cells[3]) != str(extra["Test #"]):
+        raise ValueError(f"BASS workbook identity mismatch at row {number}: {row['testId']}")
+    refs = {}
+    for field, column, index in [("o2", "AA", 26), ("pressure", "AB", 27), ("flow", "K", 10), ("observations", "AD", 29)]:
+        refs[field] = make_source_ref("psi-26", source_map, file_hash=file_hash,
+            locator={"table": "PSI-26_Science Documents_As Run_Test Matrix.xlsx", "sheet": "as run matrix", "row": number, "cell": f"{column}{number}"},
+            quote=str(cells[index]) if cells[index] is not None else None,
+            context=f"BASS {row['testId']}: {field}; O2 workbook fraction × 100; pressure atm × 101.325 kPa")
+    return refs
+
+
 def reconstruct_all_tests(
     legacy_tests: list[dict[str, Any]],
     source_map: dict[str, dict[str, Any]],
@@ -1303,6 +1327,7 @@ def reconstruct_all_tests(
 ) -> list[dict[str, Any]]:
     """Transform all 1,678 legacy tests into EMBER v2 Test records."""
     v2_tests: list[dict[str, Any]] = []
+    bass_rows = bass_workbook_rows()
     for row in legacy_tests:
         inv = row["inv"]
         tid = row["testId"]
@@ -1319,7 +1344,7 @@ def reconstruct_all_tests(
             locator["row"] = int(src_meta["row"])
         if extra.get("tmAppendixRef"):
             locator["section"] = str(extra["tmAppendixRef"])
-        src_ref = make_source_ref(sid, source_map, file_hash=fhash, locator=locator, quote=row.get("outcomeRaw"), context=f"{inv} test {tid}")
+        src_ref = make_source_ref(sid, source_map, file_hash=fhash, locator=locator, quote=None if inv == "BASS" else row.get("outcomeRaw"), context=f"{inv} test {tid}")
 
         app_row = appA_by_id.get(tid.replace("BASS-II-", "")) if inv == "BASS-II" else None
         geom, thickness, diameter, width = _infer_geometry_and_dims(row, src_ref)
@@ -1327,9 +1352,21 @@ def reconstruct_all_tests(
         atm = extract_atmosphere(row, src_ref)
         flow = extract_flow_spec(row, src_ref, app_row)
         gravity = extract_gravity(row, src_ref)
+        observation_ref = None
+        if inv == "BASS":
+            cells = bass_rows[int(extra["asRunRow"])]
+            refs = bass_source_refs(row, cells, source_map, by_basename["PSI-26_Science Documents_As Run_Test Matrix.xlsx"])
+            atm["o2"]["sourceRef"] = refs["o2"]
+            atm["o2"]["originalValue"] = cells[26]
+            atm["o2"]["originalUnit"] = "volume fraction"
+            atm["pressure"]["sourceRef"] = refs["pressure"]
+            atm["pressure"]["originalValue"] = cells[27]
+            atm["pressure"]["originalUnit"] = "atm"
+            flow["initialFlowCmS"]["sourceRef"] = refs["flow"]
+            observation_ref = refs["observations"]
 
         if inv in ("BASS", "BASS-II"):
-            segs, evts, init_out, term_ev = _segments_bass_family(row, flow, atm, src_ref)
+            segs, evts, init_out, term_ev = _segments_bass_family(row, flow, atm, observation_ref or src_ref)
         elif inv in ("CFI", "FLEX"):
             segs, evts, init_out, term_ev = _segments_droplet(row, flow, atm, src_ref)
         elif inv in ("SAME", "SAME-R"):
@@ -1368,6 +1405,7 @@ def reconstruct_all_tests(
             "initialOutcome": init_out,
             "terminalEvent": term_ev,
             "outcomeRaw": row.get("outcomeRaw"),
+            **({"observationSourceRef": observation_ref} if observation_ref else {}),
             "segments": segs,
             "events": evts,
             "spreadRateMmS": make_sv(row.get("spreadRateMmS"), "mm/s", "reported" if row.get("spreadRateMmS") is not None else "unknown", original_value=extra.get("ug Spread Rate"), source_ref=src_ref),
@@ -1729,7 +1767,7 @@ def _format_test_chunk(t: dict[str, Any]) -> dict[str, Any]:
         "sectionHeader": header,
         "tableUnits": table_units,
         "text": txt,
-        "sourceRef": t["sourceRef"],
+        "sourceRef": t.get("observationSourceRef") or t["sourceRef"],
     }
 
 

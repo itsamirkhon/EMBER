@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cliffStats, fmt, pct, useCompact } from '../data';
-import { Loading, PageHead, PlainBadge } from '../ui';
+import { cliffStats, fmt, useCompact } from '../data';
+import { Loading, PageHead } from '../ui';
 
-interface Bucket { n: number; correct: number; baselineCorrect: number }
-interface PhaseResult { all: Bucket; byStatus: Record<'measured' | 'nearby' | 'beyond', Bucket>; excluded: number }
-interface TrustFile { generatedAt: string; corpusVersion: string; method: string; outcome: string; phases: Record<string, PhaseResult>; liquidExcluded: { rows: number; withNegativeOutcome: number } }
+interface PhaseResult { records: number; positive: number; negative: number; ambiguous: number; excludedAtmosphere: number }
+interface TrustFile { schemaVersion: number; status: string; generatedAt: string; corpusVersion: string; method: string; outcome: string; phases: Record<string, PhaseResult> }
 
 const RULES: [string, string][] = [
   ['Outcome', 'The test recorded the outcome your question needs (ignition, spread, extinction, smoke size…). Smoke is never treated as a flame.'],
@@ -19,30 +18,6 @@ const RULES: [string, string][] = [
   ['Joint conditions', 'O₂, pressure and airflow must have been tested together, not just each somewhere.'],
 ];
 
-function Bar({ label, b, note }: { label: React.ReactNode; b: Bucket; note?: string }) {
-  if (!b.n) return null;
-  const acc = b.correct / b.n;
-  const base = b.baselineCorrect / b.n;
-  const below = acc < base;
-  return (
-    <div className="v3-bar-row">
-      <div className="v3-bar-head">
-        <span>
-          {label}
-          {note && <span className="v3-muted"> · {note}</span>}
-        </span>
-        <span>
-          <b className={below ? 'v3-warn-text' : ''}>{pct(acc)}</b> vs {pct(base)} baseline · n={b.n}
-        </span>
-      </div>
-      <div className="v3-bar-track" role="img" aria-label={`accuracy ${pct(acc)}, baseline ${pct(base)}, ${b.n} tests`}>
-        <div className={`v3-bar-fill${below ? ' below' : ''}`} style={{ width: `${acc * 100}%` }} />
-        <div className="v3-bar-mark" style={{ left: `calc(${base * 100}% - 1px)` }} />
-      </div>
-    </div>
-  );
-}
-
 export function TrustPage() {
   const { data, error: compactError } = useCompact();
   const [trust, setTrust] = useState<TrustFile | null>(null);
@@ -55,7 +30,7 @@ export function TrustPage() {
             (error: unknown) => { if (live) setTrustError(error instanceof Error ? error.message : String(error)); });
     return () => { live = false; };
   }, []);
-  const trustIsStale = Boolean(trust && data && trust.corpusVersion !== data.corpusVersion);
+  const trustIsStale = Boolean(trust && data && (trust.corpusVersion !== data.corpusVersion || trust.schemaVersion !== 2 || trust.status !== 'withdrawn_pending_independent_validation'));
   const cliff = useMemo(() => (data ? cliffStats(data.rows) : null), [data]);
   const ee = data?.extractionEval as { n?: number; correct?: number; partial?: number; wrong?: number } | undefined;
   const oa = data?.outcomeAudit as { n?: number; ruleAnswered?: number; agree?: number; wrong?: number; missed?: number } | undefined;
@@ -63,8 +38,7 @@ export function TrustPage() {
   return (
     <div className="v3-page">
       <PageHead eyebrow="Trust" title="How far you can trust EMBER.">
-        EMBER does not predict whether a cabin will catch fire. It says where NASA’s data applies. This page checks that claim against the data
-        itself, next to a baseline, and lists what has not been checked.
+        EMBER does not predict whether a cabin will catch fire. It says where NASA’s data applies. This page separates reproducible data checks from scientific validation that remains unfinished.
       </PageHead>
 
       {compactError && <div className="v3-callout v3-callout-warn" role="alert">NASA PSI data unavailable: {compactError}</div>}
@@ -86,65 +60,35 @@ export function TrustPage() {
           </section>
 
           <section className="v3-card v3-section">
-            <h2 className="v3-h2">2 · Do the status labels mean anything?</h2>
+            <h2 className="v3-h2">2 · Outcome backtest withdrawn</h2>
+            <p className="v3-callout v3-callout-warn">
+              The earlier backtest incorrectly counted self-extinction as “no flame established”. A flame can form and then go out.
+              Its accuracy percentages and claimed gains over a baseline have been withdrawn; they do not validate the applicability labels.
+            </p>
             {!trust || trustIsStale ? (
-              <div className="v3-callout v3-callout-warn" role="alert">
-                {trustIsStale
-                  ? 'Backtest results use a different PSI corpus version; they are withheld until regenerated.'
-                  : trustError
-                    ? 'Backtest data could not be loaded: ' + trustError
-                    : 'Backtest results are not available in this build.'}
-              </div>
+              <p role="alert">{trustIsStale ? 'Outcome audit is incompatible with this corpus; results withheld.' : trustError ? 'Outcome audit unavailable: ' + trustError : 'Loading outcome audit…'}</p>
             ) : (
               <>
-                <p className="v3-small v3-muted">
-                  {trust.method} Outcome: {trust.outcome} Baseline: always guess the most common outcome of the remaining tests (here always
-                  “flame established”).
-                </p>
+                <p>{trust.method}</p>
+                <p className="v3-small v3-muted">{trust.outcome}</p>
                 <div className="v3-grid-2">
-                  {(['solid', 'gas'] as const).map((ph) => {
-                    const r = trust.phases[ph];
-                    if (!r) return null;
-                    return (
-                      <div key={ph}>
-                        <h3>{ph === 'solid' ? 'Solid materials' : 'Gas flames'}</h3>
-                        <div className="v3-bars">
-                          <Bar label={<b>All tests</b>} b={r.all} />
-                          <Bar label={<PlainBadge status="measured" />} b={r.byStatus.measured} />
-                          <Bar label={<PlainBadge status="nearby" />} b={r.byStatus.nearby} />
-                          <Bar label={<PlainBadge status="beyond" />} b={r.byStatus.beyond} note="nearest test shown, not claimed" />
-                        </div>
-                      </div>
-                    );
+                  {(['solid', 'gas', 'liquid'] as const).map((phase) => {
+                    const result = trust.phases[phase];
+                    if (!result) return null;
+                    return <article key={phase}>
+                      <h3>{phase === 'solid' ? 'Solid materials' : phase === 'gas' ? 'Gas flames' : 'Liquid droplets'}</h3>
+                      <p>{result.records} records: {result.positive} candidate positive, {result.negative} candidate negative,
+                        {' '}{result.ambiguous} ambiguous/unscored. {result.excludedAtmosphere} additional records excluded for missing or assumed atmosphere.</p>
+                    </article>;
                   })}
                 </div>
-                <div className="v3-legend v3-small" aria-hidden>
-                  <span><i style={{ background: 'var(--v3-accent)' }} /> EMBER, nearest applicable tests</span>
-                  <span><i style={{ background: 'var(--v3-warn)' }} /> below baseline</span>
-                  <span><i style={{ background: '#fff', width: 2 }} /> baseline</span>
-                </div>
-                <ul className="v3-list">
-                  <li>
-                    <b>Solid materials:</b> {pct(trust.phases.solid.all.correct / trust.phases.solid.all.n)} vs{' '}
-                    {pct(trust.phases.solid.all.baselineCorrect / trust.phases.solid.all.n)} baseline. <i>Historical match</i> answers were right{' '}
-                    {pct(trust.phases.solid.byStatus.measured.correct / trust.phases.solid.byStatus.measured.n)} of the time against a{' '}
-                    {pct(trust.phases.solid.byStatus.measured.baselineCorrect / trust.phases.solid.byStatus.measured.n)} baseline: a small gain, because most solids
-                    burned. They did better against <i>Related records</i> ({pct(trust.phases.solid.byStatus.nearby.correct / trust.phases.solid.byStatus.nearby.n)} vs{' '}
-                    {pct(trust.phases.solid.byStatus.nearby.baselineCorrect / trust.phases.solid.byStatus.nearby.n)} baseline), but the labels say how close the evidence
-                    is, not how likely a fire is.
-                  </li>
-                  <li>
-                    <b>Gas flames:</b> {pct(trust.phases.gas.all.correct / trust.phases.gas.all.n)} vs{' '}
-                    {pct(trust.phases.gas.all.baselineCorrect / trust.phases.gas.all.n)} baseline: <b>worse than always guessing “it lights”</b>.
-                    Nearby gas-flame tests do not transfer well, which is one more reason EMBER shows records instead of a risk number.
-                  </li>
-                  <li>
-                    Liquid droplets are not scored: {trust.liquidExcluded.withNegativeOutcome} of {trust.liquidExcluded.rows} droplet records have a
-                    no-flame outcome, so there is nothing to predict.
-                  </li>
-                </ul>
               </>
             )}
+            <p><b>Required before publishing a new score:</b> independently adjudicate one endpoint per test stage;
+              exclude series aggregates; keep reused samples and related protocol groups in the same holdout;
+              evaluate admissibility against expert judgments. Any separate outcome-transfer experiment must use the same eligible records
+              for training and evaluation, a fold-specific majority baseline, and report abstention coverage. Beyond-evidence cases must abstain.</p>
+            <p>No replacement scientific accuracy or operational safety claim is made by this audit.</p>
           </section>
 
           <section className="v3-grid-2 v3-section">

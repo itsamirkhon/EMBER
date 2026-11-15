@@ -60,7 +60,7 @@ describe('EMBER v2 HTTP API & Store', () => {
 
     expect(status).toBe(200);
     expect(body.status).toBe('ok');
-    expect(body.versions.corpus).toBe('2.0.1-scientific-fixes');
+    expect(body.versions.corpus).toBe('2.0.2-bass-provenance');
     expect(body.versions.jevPrompt).toBe('heuristic-triage-v1');
     expect(body.data?.healthy).toBe(true);
     expect(body.data?.counts.investigations).toBe(15);

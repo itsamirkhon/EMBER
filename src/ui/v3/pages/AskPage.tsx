@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import type { AnswerBoundary, CorpusV2, Review } from '../../../core';
+import type { AnswerBoundary, CorpusV2, Review, SourceRef } from '../../../core';
 import { createReview } from '../../apiClient';
 import { useEmber } from '../../context/EmberContext';
 import { invColor } from '../EvidenceMap';
@@ -9,7 +9,7 @@ import { safeExternalHost } from '../../safeUrl';
 import { Ext, Loading, PageHead } from '../ui';
 
 type Citation =
-  | { id: string; kind: 'test'; inv: string; fuel: string | null; o2: number | null; pressureKpa: number | null; flowCmS: number | null; gravityG: number | null; outcome: string; terminal: string | null; note: string | null; url: string | null; table: string | null; row: number | null }
+  | { id: string; kind: 'test'; inv: string; fuel: string | null; o2: number | null; pressureKpa: number | null; flowCmS: number | null; gravityG: number | null; outcome: string; terminal: string | null; note: string | null; url: string | null; table: string | null; row: number | null; conditionSources?: { oxygen?: SourceRef; pressure?: SourceRef; observations?: SourceRef } }
   | { id: string; kind: 'source'; title: string; text: string; quote: string | null; url: string | null; inv: string | null; status: string }
   | { id: string; kind: 'investigation'; inv: string; name: string; url: string | null };
 
@@ -64,6 +64,7 @@ export function fromReview(question: string, review: Review, corpus: CorpusV2 | 
         id, kind: 'test', inv: t.inv, fuel: t.fuel, o2: t.atmosphere.o2.value, pressureKpa: t.atmosphere.pressure.value, flowCmS: t.flow.initialFlowCmS.value,
         gravityG: t.gravity.gravityG.value, outcome: t.initialOutcome, terminal: t.terminalEvent, note: t.outcomeRaw, url: t.sourceRef.url,
         table: t.sourceRef.locator?.table ?? null, row: t.sourceRef.locator?.row ?? null,
+        conditionSources: t.observationSourceRef ? { oxygen: t.atmosphere.o2.sourceRef, pressure: t.atmosphere.pressure.sourceRef, observations: t.observationSourceRef } : undefined,
       });
       continue;
     }
@@ -197,6 +198,9 @@ function AnswerView({ a }: { a: Answer }) {
                 <div className="v3-small v3-muted">
                   <Ext href={c.url}>{c.table ?? 'PSI record'}</Ext>
                   {c.row !== null ? `, row ${c.row}` : ''}
+                  {c.conditionSources?.oxygen?.locator && <><br />Atmosphere/observations: {c.conditionSources.oxygen.locator.table},
+                    {' '}sheet “{c.conditionSources.oxygen.locator.sheet}”, row {c.conditionSources.oxygen.locator.row}
+                    {' '}({c.conditionSources.oxygen.locator.cell}; {c.conditionSources.pressure?.locator?.cell}; {c.conditionSources.observations?.locator?.cell}).</>}
                 </div>
               </>
             ) : c.kind === 'investigation' ? (

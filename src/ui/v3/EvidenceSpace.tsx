@@ -1,3 +1,4 @@
+import { overlaps, placeLabel, type LabelRect } from './labelLayout';
 /**
  * The evidence as a physical model on an engineering pad: flight records with reported oxygen (x, log scale),
  * pressure (y) and gravity (z), at their exact source coordinates. Missing dimensions are omitted rather than imputed
@@ -459,31 +460,34 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       pucks.forEach((p, i) => (p.mesh.position.y = yOf(p.group[0].pressureKpa as number) + (p.group[0].gravityG ? bob * (i % 2 ? 1 : -1) : 0)));
       outsideMeshes.forEach((m) => m.lookAt(camera.position));
 
-      const placed: { x: number; y: number; w: number }[] = [];
-      for (const lb of labels) {
+      const bounds = wrap.getBoundingClientRect();
+      const occupied: LabelRect[] = [];
+      // Read foreground geometry before writing annotation transforms. This also follows text reflow.
+      wrap.closest('.v3-hero3d')?.querySelectorAll('.v3-hero3d-copy, .v3-hero3d-steps, .v3-readout').forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.width && rect.height) occupied.push({ x: rect.left - bounds.left, y: rect.top - bounds.top, width: rect.width, height: rect.height });
+      });
+      for (const lb of [...labels].sort((a, b) => Number(a.kind === 'axis') - Number(b.kind === 'axis'))) {
         v.copy(lb.pos).project(camera);
         if (v.z > 1 || v.z < -1) {
           lb.el.style.visibility = 'hidden';
           continue;
         }
-        lb.el.style.visibility = 'visible';
+        const width = lb.el.offsetWidth;
+        const height = lb.el.offsetHeight;
         const x = (v.x * 0.5 + 0.5) * w;
-        let y = (-v.y * 0.5 + 0.5) * h;
-        if (lb.kind === 'mission' || lb.kind === 'outside') {
-          const lw = lb.el.offsetWidth || 160;
-          const lh = lb.el.offsetHeight || 34;
-          // the tolerance and the cap stop float rounding from re-triggering the same overlap forever
-          for (let i = 0, guard = 0; i < placed.length && guard < 64; i++) {
-            const p = placed[i];
-            if (Math.abs(p.x - x) < Math.max(p.w, lw) && Math.abs(p.y - y) < lh + 3.5) {
-              y = p.y + lh + 4;
-              i = -1;
-              guard++;
-            }
-          }
-          placed.push({ x, y, w: lw });
-          lb.el.style.transform = `translate(${x + 18}px, ${y}px) translate(0, -50%)`;
-        } else lb.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+        const y = (-v.y * 0.5 + 0.5) * h;
+        const side = lb.kind === 'mission' || lb.kind === 'outside';
+        const anchor = { x: side ? x + 18 : x - width / 2, y: y - height / 2, width, height };
+        // Axis ticks must stay at their projected coordinates; hide obstructed ticks rather than move a scale.
+        const axisFits = anchor.x >= 8 && anchor.y >= 8 && anchor.x + width <= w - 8 && anchor.y + height <= h - 8
+          && !occupied.some((rect) => overlaps(anchor, rect));
+        const position = lb.kind === 'axis' ? (axisFits ? anchor : null) : placeLabel(anchor, w, h, occupied);
+        lb.el.style.visibility = position ? 'visible' : 'hidden';
+        if (position) {
+          occupied.push(position);
+          lb.el.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        }
       }
       renderer.render(scene, camera);
     };
