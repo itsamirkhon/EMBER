@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { FuelPhase } from '../../../core';
 import { EvidenceMap, MapLegend } from '../EvidenceMap';
 import { cliffStats, fmt, useCompact } from '../data';
-import { Loading, PageHead } from '../ui';
+import { Loading, PageHead, Term } from '../ui';
 
 const PHASES: [FuelPhase | 'all', string][] = [
   ['all', 'All fuels'],
@@ -21,12 +21,12 @@ export function MapPage() {
 
   return (
     <div className="v3-page">
-      <PageHead eyebrow="The evidence map" title="Where NASA’s fire data ends.">
+      <PageHead eyebrow="Evidence map" title="Where NASA’s fire data ends">
         {cliff ? (
           <>
-            Every microgravity test in NASA PSI, by oxygen and pressure. The {cliff.solidFlight} solid-material flight tests with measured oxygen
+            Every microgravity fire test in NASA <Term k="psi">PSI</Term>, placed by <Term k="o2">oxygen</Term> and <Term k="kpa">pressure</Term>. The {cliff.solidFlight} solid-material flight tests with measured oxygen
             sit between {fmt(cliff.o2Min)}% and {fmt(cliff.o2Max)}% O₂ near sea-level pressure. The cabins planned for the Moon and Mars are off
-            to the right, past the evidence cliff.
+            to the right, past the <Term k="cliff">evidence cliff</Term>.
           </>
         ) : null}
       </PageHead>
@@ -45,7 +45,7 @@ export function MapPage() {
                   </button>
                 ))}
               </div>
-              <span className="v3-muted v3-small">Click a cabin to check it in the mission lens</span>
+              <span className="v3-muted v3-small">Hover a mark for details · click a cabin to check it</span>
             </div>
             <MapLegend investigations={data.investigations} phase={phase} highlight={highlight} onHighlight={setHighlight} />
             <EvidenceMap
@@ -61,7 +61,7 @@ export function MapPage() {
 
           <section className="v3-grid-3 v3-section">
             <article className="v3-card">
-              <div className="v3-big">{fmt(cliff.o2Max)}%</div>
+              <div className="v3-big cliff">{fmt(cliff.o2Max)}%</div>
               <h3>Highest O₂ in a solid-material flight test</h3>
               <p className="v3-muted">
                 {cliff.solidFlight} tests from BASS, BASS-II and Saffire ran at {fmt(cliff.o2Min)}–{fmt(cliff.o2Max)}% O₂ and {fmt(cliff.kPaMin)}–
@@ -87,7 +87,7 @@ export function MapPage() {
           </section>
 
           <section className="v3-callout v3-section">
-            <b>What this map does and does not say.</b> It covers <i>flight</i> data in NASA PSI. Ground tests at elevated oxygen exist (for
+            <b>What this map does and does not say</b><br /> It covers <i>flight</i> data in NASA PSI. Ground tests at elevated oxygen exist (for
             example NASA-STD-6001 Test 1), and NASA work found that 1 g limiting oxygen concentrations were up to 4 points higher than in
             microgravity: materials burned in orbit where the ground test would pass them. So the gap is not “nobody tested this”; it is
             “no microgravity flight data for cabin materials at exploration atmospheres”. {cliff.assumedSmoke} SAME / SAME-R smoke records
@@ -96,7 +96,7 @@ export function MapPage() {
 
           <div className="v3-row v3-section">
             <Link to="/lens?mission=lunar-rover" className="v3-btn v3-btn-primary">
-              Check the lunar rover in the mission lens
+              Check the lunar rover
             </Link>
             <Link to="/investigations" className="v3-btn">
               Browse the 15 investigations

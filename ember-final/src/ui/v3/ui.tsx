@@ -108,3 +108,27 @@ export function Loading({ what }: { what: string }) {
     </div>
   );
 }
+
+/** Plain-language definitions for the jargon a judge meets first. */
+export const GLOSSARY = {
+  o2: ['Oxygen (O₂ %)', 'Share of the cabin air that is oxygen. Air on Earth is 20.9%. More oxygen makes materials burn more easily.'],
+  kpa: ['Pressure (kPa)', 'Total cabin pressure in kilopascals. Sea level is 101.3 kPa; lunar cabins plan 56–70 kPa to make spacewalk prep easier.'],
+  po2: ['Oxygen partial pressure (pO₂)', 'How much of the pressure is oxygen: O₂ fraction × total pressure. 21.2 kPa matches sea-level air.'],
+  psi: ['NASA PSI', 'Physical Sciences Informatics: NASA’s public database of results from experiments flown on the ISS and other spacecraft.'],
+  ug: ['Microgravity', 'Near-weightless conditions in orbit. Flames have no buoyancy, so hot gas does not rise and they burn as spheres.'],
+  cliff: ['Evidence cliff', 'The highest oxygen level at which any solid material has been flight-tested in NASA PSI. Past it, there is no flight data.'],
+  g: ['Gravity (g)', '1 g is Earth. The Moon is 0.166 g, Mars 0.38 g. Every fire test in PSI ran in orbit, near 0 g.'],
+} as const;
+
+export function Term({ k, children }: { k: keyof typeof GLOSSARY; children: ReactNode }) {
+  const [title, body] = GLOSSARY[k];
+  return (
+    <span className="v3-term" tabIndex={0}>
+      {children}
+      <span className="v3-term-tip" role="tooltip">
+        <b>{title}</b>
+        {body}
+      </span>
+    </span>
+  );
+}
