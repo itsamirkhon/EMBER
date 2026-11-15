@@ -148,7 +148,7 @@ export const TASKS: { id: Task; label: string; hint: string }[] = [
   { id: 'material_screening', label: 'Prevent', hint: 'Will this material burn and spread?' },
   { id: 'smoke_detection', label: 'Detect', hint: 'What smoke does it make?' },
   { id: 'fire_suppression', label: 'Suppress', hint: 'What puts the flame out?' },
-  { id: 'atmosphere_selection', label: 'Choose the atmosphere', hint: 'How do O₂ and pressure change it?' },
+  // Atmosphere coverage is controlled by the oxygen/pressure inputs below; it cannot select a safe atmosphere.
 ];
 
 export interface LensInput {
@@ -284,9 +284,9 @@ export function fmtG(g: number): string {
 export type Plain = 'measured' | 'nearby' | 'beyond';
 
 export const PLAIN: Record<Plain, { label: string; short: string; help: string }> = {
-  measured: { label: 'Measured', short: 'Real flight tests match these conditions', help: 'At least one NASA flight test passes every applicability rule for these conditions.' },
-  nearby: { label: 'Data nearby', short: 'Close tests exist, with caveats', help: 'Tests are close, but at least one rule needs a caveat (for example assumed atmosphere or a gravity gap).' },
-  beyond: { label: 'Beyond the evidence', short: 'No NASA flight test covers this', help: 'No flight test in PSI passes the applicability rules. The outcome is not established by the data.' },
+  measured: { label: 'Historical match', short: 'Existing NASA records pass the applicability rules for this question', help: 'This identifies previously recorded matching tests. It does not certify a spacecraft design or predict a new fire.' },
+  nearby: { label: 'Related records', short: 'Related tests exist but require caveats', help: 'Existing tests are relevant, but at least one rule has a caveat such as assumed atmosphere or a gravity gap.' },
+  beyond: { label: 'No matching flight test', short: 'No existing flight-test record passes the applicability rules', help: 'This is a comparison to historical PSI data, not the result of a newly performed test. It cannot establish a combustion outcome.' },
 };
 
 const OUTCOME_TEXT: Record<string, string> = {
