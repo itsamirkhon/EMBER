@@ -267,7 +267,7 @@ export function ReviewWorkspacePage() {
         <div>
           <h1>Full scientific review</h1>
           <p className="page-lead">
-            Every rule decision, retrieved passage and verification check behind an answer. For a quick answer use <Link to="/ask">Ask EMBER</Link>; for your cabin use the <Link to="/lens">mission lens</Link>.
+            Every rule decision, retrieved passage and verification check behind an answer. For a quick answer use <Link to="/ask">Ask EMBER</Link>; for your cabin use <Link to="/lens">Check a cabin</Link>.
           </p>
         </div>
 
@@ -675,7 +675,7 @@ export function ReviewWorkspacePage() {
               <span className="mono muted">({review.envelope.runId} · {review.envelope.timingMs.total} ms)</span>
             </div>
             <div className="btn-group">
-              <Link to="/lens" className="btn btn-sm">Open the mission lens</Link>
+              <Link to="/lens" className="btn btn-sm">Check a cabin</Link>
               <Link to="/export" className="btn btn-sm">Export this review</Link>
             </div>
           </div>
