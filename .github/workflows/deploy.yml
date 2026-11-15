@@ -1,7 +1,6 @@
 name: Deploy EMBER static site to Lightsail
 
-# main is the working Git branch. The current submission app on that branch
-# lives in ember-final/ (see the root README). web/ is an older prototype.
+# main is the release branch; the app lives at the repository root.
 # This publishes static assets only; live AI needs a separately managed API.
 on:
   push:
@@ -19,9 +18,6 @@ jobs:
   build-and-deploy:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ember-final
 
     steps:
       - name: Checkout repository
@@ -70,9 +66,9 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USER }}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          source: "ember-final/dist/*"
+          source: "dist/*"
           target: "/tmp/ember-stage-${{ github.run_id }}-${{ github.run_attempt }}"
-          strip_components: 2
+          strip_components: 1
           overwrite: true
 
       - name: Verify staged release and promote with rollback

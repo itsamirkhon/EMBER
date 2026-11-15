@@ -1,11 +1,25 @@
 node_modules/
 dist/
+.pytest_cache/
 __pycache__/
 *.pyc
-.venv/
-data/raw/**/*.mp4
-data/raw/**/*.avi
-data/raw/**/*.mov
 .env
 .env.*
 !.env.example
+*.log
+
+# Generated server-side provider artifact
+data/openrouter_embeddings.json
+data/openrouter_embeddings.json.*.tmp
+
+# Local review history is created by the server, not distributed as source
+data/reviews_store.json
+data/reviews_store.json.*.tmp
+
+# Python
+.venv/
+
+# Raw NASA videos are never committed
+data/raw/**/*.mp4
+data/raw/**/*.avi
+data/raw/**/*.mov

@@ -1,47 +1,77 @@
 # EMBER — Evidence Map for Burn & Extinction Risk
 
-**NASA Space Apps Challenge 2026 · “Flame in Freefall”**
+**Team EMBER · NASA Space Apps Challenge 2026 · Flame in Freefall**
 
-> Every NASA fire experiment in one place — and the line where the evidence ends.
+15 NASA PSI investigations with test tables · 261 solid-material flight tests with reported oxygen · none above **22.7% O₂**.
 
 ![EMBER: every NASA PSI microgravity fire test as a 3D model on an engineering pad, with the evidence cliff at 22.7% O₂ and the lunar cabins past it](docs/media/ember-hero.png)
 
-None of the 261 solid-material flight tests with measured oxygen in NASA’s Physical Sciences Informatics (PSI) repository ran above **22.7% O₂** (outside PSI, Saffire-VI burned one cloth sample at 31% O₂ and 54 kPa in 2024, [NTRS 20240002981](https://ntrs.nasa.gov/citations/20240002981)), and all ran near 98–102 kPa. Lunar cabins plan **30–34% O₂ at 56–70 kPa**. EMBER shows a spacecraft fire-safety engineer which NASA investigations apply to their cabin, the nearest real tests and how far away they are, and which flight test would close the gap. It never gives a fire-risk percentage.
+**One job:** Compare proposed spacecraft fire conditions with the historical experimental record in NASA's Physical Sciences Informatics (PSI) database. EMBER identifies recorded flight tests that match a question, related tests that need caveats, and conditions outside the tested evidence.
 
-- **Live site:** https://itsamirkhon.github.io/EMBER/ (static, no login, no API key)
-- **Project page text, NASA data list, Use of AI, references, video script:** [`ember-final/docs/SUBMISSION_2026.md`](ember-final/docs/SUBMISSION_2026.md)
+Scope note: the oxygen boundary is the highest reported O₂ among solid-material flight tests **in PSI** (22.7%). Outside PSI, NASA’s Saffire-VI burned one SIBAL cloth sample at 31% O₂ and 54.1 kPa in January 2024 ([NTRS 20240002981](https://ntrs.nasa.gov/citations/20240002981)); EMBER shows it as a labelled annotation, never as a corpus record.
 
-## The screens
+EMBER **does not run a new combustion experiment**, calculate a flammability threshold, predict fire probability, or certify spacecraft safety.
 
-| Route | Screen |
-|---|---|
-| `#/` | 3D intro (flame at 1 g vs microgravity, then a lunar cabin) and the finding |
-| `#/map` | Evidence map: all tests by O₂ × pressure with mission atmospheres and the evidence cliff |
-| `#/lens` | Mission lens: environment, task, material → *Measured* / *Data nearby* / *Beyond the evidence*, three ranking scales, nearest real tests with axis gaps, next experiment |
-| `#/ask` | Ask EMBER: cited answers; ten pre-computed answers work without a server |
-| `#/investigations`, `#/compare`, `#/export` | Cards for the 15 investigations, protocol comparison, CSV/JSON with source row for every record |
-| `#/earth`, `#/trust` | Back to Earth (NASA Spinoff) and the self-check page (backtest vs baseline, claim checks, limits) |
+## Try the workflow
 
-## Run it
+1. **Choose a mission scenario** and a material in **Mission lens** (`#/lens`); **Check your cabin** on the home page opens it with the lunar rover and PMMA. Adjust oxygen and pressure if necessary. Research task, airflow, and gravity can be edited under **Advanced**.
+2. Click **Check historical evidence**. The result comes from source-backed applicability rules applied to indexed NASA PSI records, not a simulated fire.
+3. Read the **nearest recorded flight tests**, their experimental conditions, and linked source table rows. Use **Evidence map** (`#/map`) when you need to inspect the broader dataset.
 
-The active project is **[`ember-final/`](ember-final/)**.
+The homepage (`#/`) illustrates the actual indexed test coordinates in an interactive 3D field. Records missing plotted dimensions are excluded rather than represented as zero. Mission markers are proposed scenarios, not recorded tests. WebGL has a functional 2D fallback.
+
+## Scientific boundary
+
+The reviewed corpus contains **1,678 normalized records across the 15 PSI investigations that have test tables**. Among its **261 solid-material flight-test records with reported oxygen**, the upper recorded oxygen fraction is **22.7%**. This is a **coverage boundary for a specific subset**, not a universal NASA threshold and not a statement that higher-oxygen experiments never existed. Some atmospheric values are reconstructed or assumed; the UI flags those limitations.
+
+See [technical documentation](docs/TECHNICAL.md), [scientific interpretation](docs/INTERPRET_STATUS.md), [submission sources](docs/SUBMISSION_2026.md) and the [concept](docs/CONCEPT.md).
+
+## Supporting tools (secondary)
+
+- `#/map`: plottable PSI records and mission markers
+- `#/investigations`, `#/compare`: investigation details, source protocols, comparisons
+- `#/export`: source-linked corpus JSON and CSV, modeling exports, review reports
+- `#/ask`, `#/trust`: cited question answering, checks and backtests
+- `#/earth`, `#/review`: NASA spinoffs and advanced research workspace
+- `/intro.html`: separate educational flame illustration (not a combustion simulation)
+
+These remain in the repository; reducing what appears first must never erase scientific capabilities or provenance.
+
+## Develop
+
+One project, at the repository root.
 
 ```sh
-cd ember-final
-npm install
-npm run dev          # site + optional API at the printed URL
-npm test             # 187 core, regression and API tests
-npm run test:intro   # 36 tests for the 3D intro's evidence gate
-npm run build        # static site in dist/ (what GitHub Pages serves)
+npm install --no-audit --no-fund
+npm run lint
+npm test
+npm run test:intro
+npm run build        # static site in dist/ (what gets deployed)
+npm run dev
 ```
 
-Without keys everything runs in the browser. With a server-side `.env` (see `ember-final/.env.example`), the Node API adds live retrieval decisions and model-written answers; secrets never reach the frontend.
+Static deployment requires no API key. Live model-written answers require the separate server-side API and are not the default scientific evidence flow. Never add provider credentials to frontend code or commits.
 
-Rebuild the derived data after a corpus change: `npm run data:compact`, `npm run data:trust`, `npm run intro`, and (paid, needs `OPENAI_API_KEY`) `npm run data:ask`.
+## Layout
 
-## More
+| Path | What lives there |
+|---|---|
+| `src/core/` | Scientific engine: applicability, comparison, retrieval, verifier. Shared by the browser and the API |
+| `src/ui/` | React app. `v3/` is the public site (home, lens, map, ask, trust); `pages/` is the research workbench |
+| `server/` | Node API and optional live-model adapters (also mounted into `npm run dev`) |
+| `tests/` | Vitest suites and the 3D intro gate (`tests/presentation/`) |
+| `eval/` | Benchmark cases, runners and reports |
+| `pipeline/` | `build_corpus.py` builds the corpus, index and SQLite mirror. `seed/` holds the original PSI/NTRS fetch and normalisation scripts that produced `data/legacy_seed/` |
+| `scripts/` | Builders for the derived files in `public/data/` and the 3D intro |
+| `intro-src/` | Source of the 3D intro, compiled into `public/intro.html` |
+| `data/` | `raw/` NASA PSI and NTRS downloads, `legacy_seed/`, source cache, SQLite mirror |
+| `public/` | Static files shipped as-is, including the generated `public/data/*.json` |
+| `docs/` | Submission text, demo guide, technical reference, audits. `archive/` holds documents of the first prototype |
 
-- [Technical README](ember-final/README.md) · [Implementation status](ember-final/docs/IMPLEMENTATION_STATUS.md) · [Interpret status](ember-final/docs/INTERPRET_STATUS.md)
-- Older prototypes (`web/`, `ember-win/`) are kept for reference; `ember-final/` is the submission.
+The earlier prototypes (`web/`, `ember-win/`) were removed from the tree; they remain in Git history up to commit `77a28bb`.
 
-Data: NASA PSI (CC0 for reviewed records) and NTRS. Not an official NASA product and not a certification tool. License: GPL-3.0.
+## Release and collaboration
+
+`main` is the only release branch. Changes to application code should be reviewed on a short-lived feature branch. The `main` deployment workflow publishes to AWS Lightsail after merge; do not merge incomplete redesigns while teammates have pending work. The source-level checks do not substitute for a browser smoke test in desktop/mobile or an AWS deploy verification.
+
+Data: NASA PSI and NTRS. Not affiliated with or endorsed by NASA. License: GPL-3.0.
