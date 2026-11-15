@@ -666,6 +666,8 @@ export interface GeneratedSynthesis {
   conflictsPreserved: ConflictSummaryItem[];
   rawSummary: string;
   modelName?: string | null;
+  /** Safe failure category; provider response bodies and credentials are never exposed. */
+  fallbackReason?: 'provider_error' | 'invalid_response' | 'verification_failed';
 }
 
 export interface VerificationCheckResult {

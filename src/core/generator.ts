@@ -82,7 +82,12 @@ function sanitizeChunkSnippet(raw: string, maxLen: number): string {
     .replace(/\s+/g, ' ')
     .replace(/\[([^\]]+)\]/g, '($1)')
     .trim();
-  return clean.length > maxLen ? `${clean.slice(0, maxLen - 3)}...` : clean;
+  if (clean.length <= maxLen) return clean;
+  // Treat maxLen as a soft limit: cutting a sentence can change a quantity's
+  // unit ("53 cm/s" -> "53 cm") or remove a scientific qualification.
+  const ends = [...clean.matchAll(/[.!?](?=\s|$)/g)].map((m) => m.index! + 1);
+  const end = ends.filter((n) => n <= maxLen - 3).at(-1) ?? ends[0] ?? clean.length;
+  return end < clean.length ? `${clean.slice(0, end)} …` : clean;
 }
 
 function buildObservedFacts(pkg: EvidencePackage): SynthesisClaimItem[] {
@@ -238,7 +243,7 @@ function buildConflictsPreserved(pkg: EvidencePackage): ConflictSummaryItem[] {
     return {
       chunkId: c.chunkId,
       inv: c.inv,
-      summary: txt.length > 220 ? `${txt.slice(0, 217)}...` : txt,
+      summary: sanitizeChunkSnippet(txt, 220),
       sourceRef: c.sourceRef,
     };
   });
@@ -313,6 +318,7 @@ export async function generateSynthesis(
   const promptPayload = {...context, sourceBoundDraft:{observedFact:det.observedFact,engineeringImplication:det.engineeringImplication}, answerBoundary:det.answerBoundary,
     applicabilityConditions:det.applicabilityConditions, conflicts:det.conflictsPreserved};
 
+  let fallbackReason: NonNullable<GeneratedSynthesis['fallbackReason']> = 'provider_error';
   try {
     const res = await fetchFn(endpoint, {
       method: 'POST',
@@ -332,16 +338,18 @@ export async function generateSynthesis(
       }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    fallbackReason = 'invalid_response';
     const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
     const raw = data.choices?.[0]?.message?.content;
     if (!raw) throw new Error('Empty synthesis response');
     const synthesis = parseSynthesis(JSON.parse(raw),context.allowedCitationIds,det);
     validateAuthorAttribution(synthesis,pkg);
     enforceDescriptiveBoundary(synthesis);
+    fallbackReason = 'verification_failed';
     if (!verifySynthesis(synthesis,pkg).passed) throw new Error('Generated synthesis failed evidence verification');
     return {...synthesis, modelName:model};
   } catch (err) {
     if (options.strictLive) throw err;
-    return det;
+    return {...det, fallbackReason};
   }
 }

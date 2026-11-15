@@ -691,7 +691,13 @@ export function createApiHandler(
           fetchImpl: options.fetchImpl,
         });
         if (apiKey && review.synthesis.mode !== 'LIVE_AI') {
-          warnings.push('Live AI synthesis failed or was unreachable; fell back explicitly to DETERMINISTIC_ENGINE.');
+          const reasons = {
+            provider_error: 'Live AI synthesis request failed or was unreachable',
+            invalid_response: 'Live AI synthesis returned an invalid response or unsupported claims',
+            verification_failed: 'Live AI synthesis was rejected by EMBER’s evidence checks',
+          };
+          const reason = review.synthesis.fallbackReason;
+          warnings.push(`${reason ? reasons[reason] : 'Live AI synthesis was unavailable'}; fell back explicitly to DETERMINISTIC_ENGINE.`);
         }
       } catch {
         warnings.push('Live provider pipeline unavailable (check server key and current embedding artifact); showing deterministic retrieval, heuristic passage triage and templated synthesis.');
