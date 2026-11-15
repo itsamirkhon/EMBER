@@ -40,7 +40,7 @@ export function HomePage() {
           <p className="v3-focus-kicker">NASA SPACE APPS / THE MISSING EXPERIMENT</p>
           <h1 id="focus-heading">The missing <em>flight test.</em></h1>
           <p className="v3-focus-lede">
-            A NASA-documented lunar exploration atmosphere uses
+            NASA’s published lunar exploration-atmosphere reference proposes
             <strong> {lunarReference?.o2Pct ?? 34}% oxygen at {fmt(lunarReference?.pressureKpa ?? 56.5)} kPa</strong>.
             In EMBER’s reviewed NASA PSI corpus, the <strong>{cliff?.solidFlight ?? '261'} solid-material
             flight records</strong> with reported oxygen reach only <strong>{cliff ? fmt(cliff.o2Max) : '22.7'}%</strong>.
