@@ -4,7 +4,9 @@
 
 > Every NASA fire experiment in one place — and the line where the evidence ends.
 
-None of the 261 solid-material flight tests with measured oxygen in NASA’s Physical Sciences Informatics (PSI) repository ran above **22.7% O₂**, and all ran near 98–102 kPa. Lunar cabins plan **30–34% O₂ at 56–70 kPa**. EMBER shows a spacecraft fire-safety engineer which NASA investigations apply to their cabin, the nearest real tests and how far away they are, and which flight test would close the gap. It never gives a fire-risk percentage.
+![EMBER: every NASA PSI microgravity fire test as a 3D model on an engineering pad, with the evidence cliff at 22.7% O₂ and the lunar cabins past it](docs/media/ember-hero.png)
+
+None of the 261 solid-material flight tests with measured oxygen in NASA’s Physical Sciences Informatics (PSI) repository ran above **22.7% O₂** (outside PSI, Saffire-VI burned one cloth sample at 31% O₂ and 54 kPa in 2024, [NTRS 20240002981](https://ntrs.nasa.gov/citations/20240002981)), and all ran near 98–102 kPa. Lunar cabins plan **30–34% O₂ at 56–70 kPa**. EMBER shows a spacecraft fire-safety engineer which NASA investigations apply to their cabin, the nearest real tests and how far away they are, and which flight test would close the gap. It never gives a fire-risk percentage.
 
 - **Live site:** https://itsamirkhon.github.io/EMBER/ (static, no login, no API key)
 - **Project page text, NASA data list, Use of AI, references, video script:** [`ember-final/docs/SUBMISSION_2026.md`](ember-final/docs/SUBMISSION_2026.md)
