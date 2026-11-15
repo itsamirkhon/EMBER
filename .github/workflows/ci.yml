@@ -37,6 +37,6 @@ jobs:
           path: dist/
           retention-days: 2
       - name: Install pipeline test dependencies
-        run: python -m pip install pytest numpy scikit-learn
+        run: python -m pip install pytest numpy scikit-learn openpyxl
       - name: Test scientific pipeline
         run: python -m pytest pipeline -q
