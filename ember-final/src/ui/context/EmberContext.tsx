@@ -79,6 +79,7 @@ export function EmberProvider({ children }: { children: ReactNode }) {
   const [corpusLoading, setCorpusLoading] = useState(false);
   const [sourceModal, setSourceModal] = useState<SourceModalTarget | null>(null);
   const [announcement, setAnnouncement] = useState('');
+  const activeRequestId = useRef(0);
 
   const announce = useCallback((msg: string) => {
     setAnnouncement('');
@@ -92,38 +93,46 @@ export function EmberProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const loadReview = useCallback(async (reviewId: string) => {
+    const requestId = ++activeRequestId.current;
     setActiveLoading(true);
     setActiveError(null);
     try {
       const res = await getReviewSnapshot(reviewId);
+      // Navigating quickly between reviews must never display a stale response.
+      if (requestId !== activeRequestId.current) return;
       setActiveSnapshot(res.snapshot);
       setWarnings(res.meta.warnings);
       setBackendSource(res.meta.backendSource);
     } catch (err) {
-      setActiveError(err instanceof Error ? err.message : 'Failed to load review.');
+      if (requestId === activeRequestId.current)
+        setActiveError(err instanceof Error ? err.message : 'Failed to load review.');
     } finally {
-      setActiveLoading(false);
+      if (requestId === activeRequestId.current) setActiveLoading(false);
     }
   }, []);
 
   const submitReview = useCallback(
     async (params: CreateReviewParams) => {
+      const requestId = ++activeRequestId.current;
       setActiveLoading(true);
       setActiveError(null);
       try {
         const res = await createReview(params);
-        setActiveSnapshot(res.snapshot);
-        setWarnings(res.meta.warnings);
-        setBackendSource(res.meta.backendSource);
+        if (requestId === activeRequestId.current) {
+          setActiveSnapshot(res.snapshot);
+          setWarnings(res.meta.warnings);
+          setBackendSource(res.meta.backendSource);
+        }
         await refreshReviews();
-        announce(`Completed review ${res.snapshot.title} in ${res.snapshot.review.synthesis.mode} mode.`);
+        if (requestId === activeRequestId.current)
+          announce(`Completed review ${res.snapshot.title} in ${res.snapshot.review.synthesis.mode} mode.`);
         return res.snapshot;
       } catch (err) {
         const msg = err instanceof Error ? err.message : 'Failed to run review.';
-        setActiveError(msg);
+        if (requestId === activeRequestId.current) setActiveError(msg);
         throw err;
       } finally {
-        setActiveLoading(false);
+        if (requestId === activeRequestId.current) setActiveLoading(false);
       }
     },
     [announce, refreshReviews],
@@ -177,8 +186,12 @@ export function EmberProvider({ children }: { children: ReactNode }) {
 
   const updateActiveSnapshot = useCallback(
     (snap: SavedReviewSnapshot) => {
+      ++activeRequestId.current; // a user-approved update supersedes pending loads
       setActiveSnapshot(snap);
-      void refreshReviews();
+      setActiveLoading(false);
+      void refreshReviews().catch(() => {
+        // The active local snapshot is valid even if the index refresh fails.
+      });
     },
     [refreshReviews],
   );
