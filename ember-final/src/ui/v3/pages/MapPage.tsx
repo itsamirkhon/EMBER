@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { FuelPhase } from '../../../core';
 import { EvidenceMap, MapLegend } from '../EvidenceMap';
 import { cliffStats, fmt, useCompact } from '../data';
-import { Loading, PageHead, Term } from '../ui';
+import { Loading, PageHead } from '../ui';
 
 const PHASES: [FuelPhase | 'all', string][] = [
   ['all', 'All fuels'],
