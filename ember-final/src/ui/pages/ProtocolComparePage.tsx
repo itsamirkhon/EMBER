@@ -179,9 +179,11 @@ export function ProtocolComparePage() {
     <div className="stack-lg">
       <div className="page-header">
         <div>
-          <h1>Compare experiments</h1>
+          <h1>{requestedInv ? `Recorded protocol · ${requestedInv}` : 'Compare experiments'}</h1>
           <p className="page-lead">
-            Put two tests or investigations side by side: their conditions, the sequence of each test, and what differs. Similar records describe; they do not prove cause and effect.
+            {requestedInv
+              ? 'Inspect the selected experiment’s actual stage-bound protocol, then compare recorded tests from the same investigation. Missing records are shown as missing, never replaced by an unrelated experiment.'
+              : 'Put tests or investigations side by side: their conditions, the sequence of each test, and what differs. Similar records describe; they do not prove cause and effect.'}
           </p>
         </div>
       </div>
