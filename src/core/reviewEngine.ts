@@ -35,7 +35,7 @@ import type {
 } from './types';
 import { verifySynthesis } from './verifier';
 
-export const ENGINE_VERSION = '2.1.0-interpret';
+export const ENGINE_VERSION = '2.1.1-ask-evidence';
 
 export interface ReviewInput {
   question: string;
@@ -52,6 +52,9 @@ export interface ReviewInput {
   model?: string;
   savedSnapshot?: GeneratedSynthesis;
   fetchImpl?: typeof fetch;
+  signal?: AbortSignal;
+  consumeResponse?: GeneratorOptions['consumeResponse'];
+  onProgress?: (stage: 'retrieval' | 'applicability' | 'synthesis' | 'verification') => void;
   /** Async server adapters keep provider credentials out of the scientific core/browser. */
   retrieve?: (query: ResearchQuery, index: ChunksIndex, k: number, mode: RetrievalMode) => Promise<RetrievalHit[]>;
   embeddingModel?: string;
@@ -72,7 +75,7 @@ function collectGaps(
   if (decisions.some((d) => d.marginalOverlapButJointMissing)) {
     gaps.push('Unsupported joint (O2, pressure, flow) combination despite 1D marginal range overlap.');
   }
-  if (decisions.some((d) => d.reasonCodes.includes('assumed_provenance_cap'))) {
+  if ((!query.material || query.targetEndpoint === 'smoke_particle_size') && decisions.some((d) => d.reasonCodes.includes('assumed_provenance_cap'))) {
     gaps.push('Atmospheric O2/pressure for smoke-sizing data (SAME/SAME-R) are assumed, not measured.');
   }
   if (decisions.every((d) => d.verdict !== 'admissible')) {
@@ -351,6 +354,7 @@ export function runReviewSync(input: ReviewInput): Review {
 
 export async function runReview(input: ReviewInput): Promise<Review> {
   assertQuestionScope(input.question, input.overrides);
+  input.onProgress?.('retrieval');
   if (!input.apiKey && !input.proxyUrl && !input.retrieve && !input.passageEvaluator && input.synthesisMode !== 'LIVE_AI') {
     return runReviewSync(input);
   }
@@ -383,6 +387,7 @@ export async function runReview(input: ReviewInput): Promise<Review> {
   const tJev1 = Date.now();
 
   const tApp0 = Date.now();
+  input.onProgress?.('applicability');
   const { decisions, rankings, evaluatedTests } = evaluateCorpusTests(query, input.corpus, retrievedHits, input.ablations);
   const evidencePackage = buildEvidencePackageFromParts(
     query,
@@ -402,8 +407,12 @@ export async function runReview(input: ReviewInput): Promise<Review> {
     model: input.model,
     savedSnapshot: input.savedSnapshot,
     fetchImpl: input.fetchImpl,
+    signal: input.signal,
+    consumeResponse: input.consumeResponse,
   };
+  input.onProgress?.('synthesis');
   const synthesis = await generateSynthesis(evidencePackage, genOpts);
+  input.onProgress?.('verification');
   const tSyn1 = Date.now();
 
   const review = finalizeReview(

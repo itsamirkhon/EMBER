@@ -185,6 +185,9 @@
         "summary": "Create or idempotently replay a full scientific review",
         "operationId": "createReview",
         "parameters": [
+          { "name": "Accept", "in": "header", "required": false, "schema": { "type": "string", "enum": ["application/json", "text/event-stream"] }, "description": "Opt in to SSE: stage events, individually checked claim previews, then a result event containing the final verified/fallback ApiEnvelope. Partial previews are replaced by the final result." }
+        ],
+        "parameters": [
           {
             "name": "Idempotency-Key",
             "in": "header",
