@@ -168,7 +168,9 @@ const ENV: Record<string, ResearchQuery['habitableEnvironment']> = {
 
 export function lensFromMission(m: Mission, prev: LensInput): LensInput {
   const f = m.flowCmS;
-  const flow: [number, number] = Array.isArray(f) ? [f[0], f[1]] : typeof f === 'number' ? [f, f] : prev.flow;
+  // Missing ventilation speed must not silently inherit the previous mission's values.
+  // The form will mark this [0, 20] exploratory range as an assumption.
+  const flow: [number, number] = Array.isArray(f) ? [f[0], f[1]] : typeof f === 'number' ? [f, f] : [0, 20];
   return { ...prev, missionId: m.id, o2: m.o2Pct ?? prev.o2, kPa: m.pressureKpa ?? prev.kPa, flow, g: m.gravityG ?? prev.g };
 }
 
@@ -236,7 +238,8 @@ export function nearestTests(l: LensInput, rows: Row[], k = 3): Nearest[] {
   const out: Nearest[] = [];
   for (const s of scored) {
     // skip exact repeats of the same condition so three different tests are shown
-    const key = `${s.row.inv}|${s.row.fuel}|${s.row.o2}|${s.row.kPa}|${s.row.flow}`;
+    // Do not collapse opposing outcomes from experiments at identical conditions.
+    const key = `${s.row.inv}|${s.row.fuel}|${s.row.o2}|${s.row.kPa}|${s.row.flow}|${s.row.outcome}|${s.row.terminal}`;
     if (seen.has(key)) continue;
     seen.add(key);
     out.push({ ...s, gaps: gapsFor(l, s.row) });
@@ -276,7 +279,8 @@ export function gapsFor(l: LensInput, r: Row): AxisGap[] {
 }
 
 export function fmtG(g: number): string {
-  return g <= 0.01 ? '0 g' : `${g.toFixed(g < 1 ? 3 : 0).replace(/0+$/, '').replace(/\.$/, '')} g`;
+  if (g === 0) return '0 g';
+  return `${g.toLocaleString('en-US', { maximumFractionDigits: g < 1 ? 3 : 1 })} g`;
 }
 
 // ------------------------------------------------------------------ plain language
