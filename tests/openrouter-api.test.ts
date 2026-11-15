@@ -32,6 +32,17 @@ describe('OpenRouter HTTP review path',()=>{
   if(oldGenerationKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldGenerationKey;
   await rm(root,{recursive:true,force:true});
  });
+ it.each([true,false])('rejects an unrelated question before provider calls or review creation (live=%s)',async(useLiveAi)=>{
+  const before=fetchImpl.mock.calls.length;
+  const response=await fetch(url+'/api/reviews',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:'Who won the World Cup?',useLiveAi})});
+  expect(response.status).toBe(422);
+  const body=await response.json();
+  expect(body.status).toBe('error');
+  expect(body.error.code).toBe('QUESTION_OUT_OF_SCOPE');
+  expect(body.error.message).toContain('I help explore NASA research');
+  expect(body.data).toBeUndefined();
+  expect(fetchImpl.mock.calls.length).toBe(before);
+ });
  it('shows missing embedding artifact as explicit deterministic fallback without paid requests',async()=>{
   const response=await fetch(url+'/api/reviews',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:'PMMA flame spread',useLiveAi:true,retrievalK:2})});
   expect(response.status).toBe(201);

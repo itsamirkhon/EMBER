@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import type { AnswerBoundary, CorpusV2, Review, SourceRef } from '../../../core';
+import { isResearchQuestion, QUESTION_SCOPE_REPLY } from '../../../core/questionScope';
 import { createReview } from '../../apiClient';
 import { useEmber } from '../../context/EmberContext';
 import { invColor } from '../EvidenceMap';
@@ -225,12 +226,23 @@ function AnswerView({ a }: { a: Answer }) {
   );
 }
 
+export function ScopeReplyView({ question }: { question: string }) {
+  return (
+    <article className="v3-card v3-answer" aria-live="polite">
+      <div className="v3-muted v3-small">Your question</div>
+      <h2 className="v3-answer-q">{question}</h2>
+      <p>{QUESTION_SCOPE_REPLY}</p>
+    </article>
+  );
+}
+
 export function AskPage() {
   const [file, setFile] = useState<AnswerFile | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string>('lunar-rover');
   const [question, setQuestion] = useState('');
   const [custom, setCustom] = useState<Answer | null>(null);
+  const [scopeQuestion, setScopeQuestion] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const { ensureCorpus } = useEmber();
@@ -245,10 +257,19 @@ export function AskPage() {
   async function ask(e: FormEvent) {
     e.preventDefault();
     const q = question.trim();
-    if (q.length < 8) return;
-    setBusy(true);
+    if (!q) return;
     setNote(null);
     setCustom(null);
+    setScopeQuestion(null);
+    if (!isResearchQuestion(q)) {
+      setScopeQuestion(q);
+      return;
+    }
+    if (q.length < 8) {
+      setNote('Please add a little more detail about what you would like to know.');
+      return;
+    }
+    setBusy(true);
     try {
       const { snapshot, meta } = await createReview({ question: q, useLiveAi: true, title: q.slice(0, 72) });
       const corpus = await ensureCorpus().catch(() => null);
@@ -283,16 +304,16 @@ export function AskPage() {
           placeholder="e.g. How does airflow change flame spread over Nomex in microgravity?"
           aria-label="Your question"
         />
-        <button type="submit" className="v3-btn v3-btn-primary" disabled={busy || question.trim().length < 8}>
+        <button type="submit" className="v3-btn v3-btn-primary" disabled={busy || !question.trim()}>
           {busy ? 'Searching…' : 'Ask'}
         </button>
       </form>
       {note && <p className="v3-small v3-muted">{note}</p>}
 
       <div className="v3-split v3-split-ask">
-        <nav className="v3-card v3-qlist" aria-label="Checked questions">
-          <h2 className="v3-h3">Ten checked answers</h2>
-          <p className="v3-small v3-muted">Pre-computed for this static site, so they work without a server or API key.</p>
+        <nav className="v3-card v3-qlist" aria-label="Example questions">
+          <h2 className="v3-h3">Example questions</h2>
+          <p className="v3-small v3-muted">Explore saved examples, or ask your own question above for a live review. Saved examples are also available offline.</p>
           {error && <p role="alert" className="v3-small v3-warn-text">Could not load the answers ({error}).</p>}
           {staleAnswers && <p role="alert" className="v3-small v3-warn-text">These cached answers were generated for a different corpus version. They are hidden until regenerated.</p>}
           {!file && !error && <Loading what="Loading…" />}
@@ -301,9 +322,11 @@ export function AskPage() {
               key={a.id}
               type="button"
               className="v3-q"
-              aria-pressed={!custom && selected === a.id}
+              aria-pressed={!custom && !scopeQuestion && selected === a.id}
               onClick={() => {
                 setCustom(null);
+                setScopeQuestion(null);
+                setNote(null);
                 setSelected(a.id);
               }}
             >
@@ -321,14 +344,14 @@ export function AskPage() {
           )}
         </nav>
         <div>
-          {current ? <AnswerView a={current} /> : staleAnswers ? (
+          {scopeQuestion ? <ScopeReplyView question={scopeQuestion} /> : current ? <AnswerView a={current} /> : staleAnswers ? (
             <div className="v3-callout v3-callout-warn" role="alert">Cached answers do not match the current PSI corpus. Ask a question to run a fresh local review, or regenerate the cached answers.</div>
           ) : error ? (
             <div className="v3-callout v3-callout-warn" role="alert">The cached answers are unavailable. You can still ask a new question.</div>
           ) : file ? null : <Loading what="Loading answers…" />}
-          <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
+          {!scopeQuestion && <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
             Want every rule decision behind an answer? <Link to="/review">Open the full scientific review</Link>.
-          </p>
+          </p>}
         </div>
       </div>
     </div>

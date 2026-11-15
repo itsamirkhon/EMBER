@@ -224,6 +224,14 @@
                 "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
               }
             }
+          },
+          "422": {
+            "description": "QUESTION_OUT_OF_SCOPE: ask about combustion, smoke or spacecraft fire safety; no review is created and no live provider is called",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorEnvelope" }
+              }
+            }
           }
         }
       }
