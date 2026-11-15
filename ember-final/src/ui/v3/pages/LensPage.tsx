@@ -136,7 +136,24 @@ export function LensPage() {
               <span>your own values</span>
             </button>
           </div>
-          {mission?.assumption && <p className="v3-small v3-warn-text">Some values for this environment are EMBER assumptions, not NASA specifications.</p>}
+          {mission && (
+            <div className="v3-small v3-muted">
+              {mission.assumption || Object.values(mission.assumptionDetail ?? {}).some(Boolean) ? (
+                <p className="v3-warn-text">
+                  Scenario values are not all NASA operational specifications.
+                  {Object.entries(mission.assumptionDetail ?? {}).filter(([, assumed]) => assumed)
+                    .map(([field]) => field === 'flowCmS' ? 'airflow' : field === 'o2Pct' ? 'oxygen' : field === 'pressureKpa' ? 'pressure' : 'gravity')
+                    .join(', ') && (
+                    <> Assumed: {Object.entries(mission.assumptionDetail ?? {}).filter(([, assumed]) => assumed)
+                      .map(([field]) => field === 'flowCmS' ? 'airflow' : field === 'o2Pct' ? 'oxygen' : field === 'pressureKpa' ? 'pressure' : 'gravity')
+                      .join(', ')}.</>
+                  )}
+                </p>
+              ) : null}
+              {mission.flowCmS === null && <p className="v3-warn-text">NASA ventilation speed was not reported for this preset. The 0–20 cm/s input is an exploratory assumption.</p>}
+              {mission.sources.length > 0 && <p>Preset basis: <Ext href={mission.sources[0].url}>{mission.sources[0].label}</Ext>. Inspect the source before using these conditions.</p>}
+            </div>
+          )}
 
           <h2 className="v3-h3">2 · Task</h2>
           <div className="v3-seg v3-seg-wrap" role="group" aria-label="Task">
@@ -182,7 +199,7 @@ export function LensPage() {
               <output htmlFor="lens-o2">{fmt(l.o2)}%</output>
             </div>
             <input id="lens-o2" type="range" min={10} max={100} step={0.5} value={l.o2} onChange={(e) => setCustom({ o2: Number(e.target.value) })} />
-            {cliff && (
+            {cliff && Number.isFinite(cliff.o2Max) && (
               <div className="v3-slider-mark" style={{ left: `${((cliff.o2Max - 10) / 90) * 100}%` }} aria-hidden>
                 <span>last solid flight test {fmt(cliff.o2Max)}%</span>
               </div>
