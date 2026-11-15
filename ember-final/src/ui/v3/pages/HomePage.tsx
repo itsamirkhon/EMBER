@@ -20,7 +20,7 @@ export function HomePage() {
           <p className="v3-hero-lede">
             In the reviewed NASA PSI corpus, {cliff.solidFlight} solid-material flight-test records with reported oxygen
             stop at <strong>{fmt(cliff.o2Max)}% O₂</strong>. Where pressure is reported,
-            these records lie between {fmt(cliff.kPaMin)} and {fmt(cliff.kPaMax)} kPa.
+            these records lie between {fmt(cliff.kPaMin)} and {fmt(cliff.kPaMax)} kPa where reported.
             {lunarO2.length && lunarP.length ? (
               <> The selected lunar design scenarios use <strong>{Math.min(...lunarO2)}–{Math.max(...lunarO2)}% O₂ at {Math.min(...lunarP)}–{Math.max(...lunarP)} kPa</strong>;
               rover values are exploratory, not a published vehicle specification.</>
