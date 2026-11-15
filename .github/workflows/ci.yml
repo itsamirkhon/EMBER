@@ -29,6 +29,13 @@ jobs:
         run: node --test tests/presentation/support.test.cjs
       - name: Build
         run: npm run build
+      - name: Save isolated redesign preview for visual QA
+        if: github.ref == 'refs/heads/redesign/focused-evidence'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ember-focused-preview
+          path: dist/
+          retention-days: 2
       - name: Install pipeline test dependencies
         run: python -m pip install pytest numpy scikit-learn
       - name: Test scientific pipeline

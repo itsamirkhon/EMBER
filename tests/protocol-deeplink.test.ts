@@ -56,17 +56,15 @@ describe('protocol deep links from recorded investigation tests', () => {
   });
 });
 
-// The standalone presentation has its own light shell. The web app must embed
-// only its dark chamber so the page does not contain two headers/navigation UIs.
-describe('embedded 3D presentation', () => {
-  it('uses chamber-only mode on the homepage without changing the full-screen URL', () => {
+// The standalone experiment remains accessible as a research appendix. It must
+// not be nested into the focused evidence homepage or duplicate its navigation.
+describe('standalone flame presentation is kept but not forced into the homepage', () => {
+  it('uses the real NASA 3D evidence field on the homepage', () => {
     const page = readFileSync(new URL('../src/ui/v3/pages/HomePage.tsx', import.meta.url), 'utf8');
     const intro = readFileSync(new URL('../public/intro.html', import.meta.url), 'utf8');
-    expect(page).toContain('src="./intro.html?embed=1"');
-    expect(page).toContain('href="./intro.html"');
+    expect(page).toContain('EvidenceSpace');
+    expect(page).not.toContain('<iframe');
     expect(intro).toContain("new URLSearchParams(location.search).get('embed') === '1'");
     expect(intro).toContain('html.embed-mode .header');
-    expect(intro).toContain('html.embed-mode .stage');
-    expect(intro).toContain('html.embed-mode .controls');
   });
 });

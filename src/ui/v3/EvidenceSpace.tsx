@@ -1,7 +1,8 @@
 /**
- * The evidence in 3D: every PSI microgravity test placed by oxygen (x, log scale), pressure (y) and gravity (z).
- * All tests sit on the 0 g plane, left of the evidence cliff; the cabins NASA plans for the Moon and Mars float
- * past the cliff at 1/6 g and 3/8 g. Same data as the 2D evidence map, drawn with three.js.
+ * The evidence in 3D: flight records with reported oxygen, pressure, and gravity.
+ * Missing dimensions are omitted rather than imputed as zero. The highlighted
+ * oxygen boundary belongs only to the solid-material flight-test subset.
+ * Mission markers are scenarios, never test results.
  */
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -26,9 +27,9 @@ const xOf = (o2: number) => (Math.log10(Math.min(100, Math.max(10, o2))) - 1) * 
 const yOf = (kPa: number) => (kPa / KPA_MAX) * BOX.y;
 const zOf = (g: number) => -g * BOX.z;
 
-const PHASE_COLOR: Record<string, string> = { solid: '#8fb2ff', liquid: '#4fd1c5', gas: '#b9a6ff' };
-const CLIFF = '#ff6a2b';
-const LINE = new THREE.Color('#96b4ff');
+const PHASE_COLOR: Record<string, string> = { solid: '#ecebe2', liquid: '#9fa99c', gas: '#908278' };
+const CLIFF = '#a74c58';
+const LINE = new THREE.Color('#777e70');
 
 /** Camera stops for the three story steps: [position, target]. */
 const VIEWS: Record<SpaceStep, [THREE.Vector3, THREE.Vector3]> = {
@@ -69,12 +70,12 @@ function ringTexture(): THREE.Texture {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
   const g = c.getContext('2d') as CanvasRenderingContext2D;
-  g.strokeStyle = '#e9eef7';
+  g.strokeStyle = '#f1f0e8';
   g.lineWidth = 10;
   g.beginPath();
   g.arc(64, 64, 50, 0, Math.PI * 2);
   g.stroke();
-  g.fillStyle = '#e9eef7';
+  g.fillStyle = '#f1f0e8';
   g.beginPath();
   g.arc(64, 64, 14, 0, Math.PI * 2);
   g.fill();
@@ -126,14 +127,14 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor('#05070d');
+    renderer.setClearColor('#121411');
     wrap.prepend(renderer.domElement);
     // absolutely placed so the canvas never sizes its own container
     Object.assign(renderer.domElement.style, { display: 'block', position: 'absolute', left: '0', top: '0' });
     renderer.domElement.setAttribute('aria-hidden', 'true');
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog('#05070d', 34, 70);
+    scene.fog = new THREE.Fog('#121411', 34, 70);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
     camera.position.copy(reduced ? VIEWS[stepRef.current][0] : START);
 
@@ -143,29 +144,17 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     controls.enableZoom = false;
     controls.enablePan = false;
     controls.rotateSpeed = 0.6;
+    // Continuous slow motion makes the source-derived evidence field spatially
+    // legible. Honor reduced-motion, and stop orbiting when the visitor interacts.
+    controls.autoRotate = !reduced;
+    controls.autoRotateSpeed = 0.22;
+    controls.addEventListener('start', () => { controls.autoRotate = false; });
     controls.minPolarAngle = 0.15;
     controls.maxPolarAngle = Math.PI * 0.495;
     controls.target.copy(VIEWS[stepRef.current][1]);
 
     const disposables: { dispose: () => void }[] = [];
     const track = <T extends { dispose: () => void }>(x: T) => (disposables.push(x), x);
-
-    // ---------------------------------------------------------------- stars, far and faint
-    {
-      const n = 1400;
-      const pos = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) {
-        const u = Math.random() * 2 - 1;
-        const t = Math.random() * Math.PI * 2;
-        const r = 70 + Math.random() * 30;
-        const s = Math.sqrt(1 - u * u);
-        pos.set([r * s * Math.cos(t), r * u, r * s * Math.sin(t)], i * 3);
-      }
-      const geo = track(new THREE.BufferGeometry());
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      const mat = track(new THREE.PointsMaterial({ color: '#9fb3d9', size: 1.3, sizeAttenuation: false, transparent: true, opacity: 0.45, fog: false }));
-      scene.add(new THREE.Points(geo, mat));
-    }
 
     // ---------------------------------------------------------------- frame and grid
     const frame = new THREE.Group();
@@ -187,10 +176,10 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     frame.add(line([new THREE.Vector3(0, Y, 0), new THREE.Vector3(0, Y, Z)], LINE, 0.12));
     frame.add(line([new THREE.Vector3(0, 0, Z), new THREE.Vector3(X, 0, Z)], LINE, 0.12));
     frame.add(line([new THREE.Vector3(0, 0, Z), new THREE.Vector3(0, Y, Z)], LINE, 0.12));
-    // the 0 g plane where every test ran
+    // The 0 g reference plane for microgravity records, not a claim about missing values.
     const orbitPlane = new THREE.Mesh(
       track(new THREE.PlaneGeometry(X, Y)),
-      track(new THREE.MeshBasicMaterial({ color: '#3d7bff', transparent: true, opacity: 0.035, depthWrite: false, side: THREE.DoubleSide })),
+      track(new THREE.MeshBasicMaterial({ color: '#6b7668', transparent: true, opacity: 0.035, depthWrite: false, side: THREE.DoubleSide })),
     );
     orbitPlane.position.set(X / 2, Y / 2, 0);
     frame.add(orbitPlane);
@@ -212,20 +201,18 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     scene.add(wallEdge);
 
     // ---------------------------------------------------------------- tests as points
-    const pts = rows.filter((r) => r.o2 !== null && r.kPa !== null && r.kPa <= KPA_MAX);
+    const pts = rows.filter((r) => r.gravityMode === 'actual_flight' && r.g !== null && r.o2 !== null && r.kPa !== null && r.kPa <= KPA_MAX);
     const pos = new Float32Array(pts.length * 3);
     const col = new Float32Array(pts.length * 3);
     const alpha = new Float32Array(pts.length);
     const solid = new Float32Array(pts.length);
     const c = new THREE.Color();
     pts.forEach((r, i) => {
-      const jx = (Math.random() - 0.5) * 0.16;
-      const jy = (Math.random() - 0.5) * 0.12;
-      const jz = -Math.random() * 0.16;
-      pos.set([xOf(r.o2 as number) + jx, yOf(r.kPa as number) + jy, zOf(r.g ?? 0) + jz], i * 3);
-      c.set(PHASE_COLOR[r.phase ?? 'solid'] ?? '#8fb2ff');
+      // Exact source coordinates: no random 'data cloud' jitter that invents readings.
+      pos.set([xOf(r.o2 as number), yOf(r.kPa as number), zOf(r.g as number)], i * 3);
+      c.set(PHASE_COLOR[r.phase ?? 'solid'] ?? '#ecebe2');
       col.set([c.r, c.g, c.b], i * 3);
-      alpha[i] = r.o2Prov === 'assumed' ? 0.3 : 0.9;
+      alpha[i] = r.o2Prov === 'assumed' || r.kPaProv === 'assumed' ? 0.3 : 0.9;
       solid[i] = r.phase === 'solid' ? 1 : 0;
     });
     const pGeo = track(new THREE.BufferGeometry());
@@ -249,7 +236,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     const ring = track(ringTexture());
     const groups = new Map<string, Mission[]>();
     for (const m of missions) {
-      if (m.o2Pct === null || m.pressureKpa === null) continue;
+      if (m.o2Pct === null || m.pressureKpa === null || m.gravityG === null) continue;
       const k = `${m.o2Pct}|${m.pressureKpa}|${m.gravityG ?? 0}`;
       groups.set(k, [...(groups.get(k) ?? []), m]);
     }
@@ -268,8 +255,8 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
       sprites.push({ sprite: s, group: g });
       if ((m.gravityG ?? 0) > 0) {
         // drop to the floor, and a trace back to the 0 g plane where the evidence is
-        cabinLines.add(line([p, new THREE.Vector3(p.x, 0, p.z)], '#e9eef7', 0.35, true));
-        cabinLines.add(line([new THREE.Vector3(p.x, 0, p.z), new THREE.Vector3(p.x, 0, 0)], '#e9eef7', 0.18, true));
+        cabinLines.add(line([p, new THREE.Vector3(p.x, 0, p.z)], '#f1f0e8', 0.35, true));
+        cabinLines.add(line([new THREE.Vector3(p.x, 0, p.z), new THREE.Vector3(p.x, 0, 0)], '#f1f0e8', 0.18, true));
       }
     }
 
@@ -293,7 +280,7 @@ export default function EvidenceSpace({ rows, missions, cliff, step, onPickMissi
     for (const k of [0, 40, 80, 120]) addLabel(new THREE.Vector3(-0.45, yOf(k), 0), `${k}`, 'axis', 'axis');
     addLabel(new THREE.Vector3(-0.3, Y + 0.45, 0), 'Pressure, kPa', 'axis-title', 'axis');
     for (const [g, l] of gTicks) addLabel(new THREE.Vector3(X + 0.35, 0, zOf(g)), l, 'axis', 'axis');
-    addLabel(new THREE.Vector3(cx, Y + 0.45, 0), `Evidence cliff · ${fmt(cliff.o2Max)}% O₂`, 'cliff', 'cliff');
+    addLabel(new THREE.Vector3(cx, Y + 0.45, 0), `Solid-flight coverage · ${fmt(cliff.o2Max)}% O₂`, 'cliff', 'cliff');
     for (const { group } of sprites) {
       const m = group[0];
       const name = group.map((x) => MISSION_SHORT[x.id] ?? x.label).join(' · ');
