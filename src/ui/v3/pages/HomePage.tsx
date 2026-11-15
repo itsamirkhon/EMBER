@@ -101,17 +101,18 @@ export function HomePage() {
             The flight evidence stops at <span className="hl">{cliff ? `${fmt(cliff.o2Max)}%` : '22.7%'}</span>.
           </h1>
           <p className="v3-hero-lede">
-            Choose a spacecraft environment and a material. EMBER checks which NASA <Term k="psi">PSI</Term> fire experiments match the
-            conditions, which are only related, and where the record stops.
+            Ask EMBER’s AI a question about fire in space. Explore NASA <Term k="psi">PSI</Term> experiments through
+            answers linked to sources, and see where the evidence stops.
           </p>
           <div className="v3-row v3-hero-cta">
-            <Link to="/lens?mission=lunar-rover&material=PMMA" className="v3-btn v3-btn-primary v3-btn-lg">
+            <Link to="/ask" className="v3-btn v3-btn-primary v3-btn-lg">
+              Ask EMBER <span aria-hidden="true">↗</span>
+            </Link>
+            <Link to="/lens?mission=lunar-rover&material=PMMA" className="v3-btn v3-btn-lg">
               Check your cabin <span aria-hidden="true">↗</span>
             </Link>
-            <Link to={tourHref(1)} className="v3-btn v3-btn-lg">
-              Judges’ tour · 2 minutes
-            </Link>
           </div>
+          <p className="v3-hero-tour"><Link to={tourHref(1)} className="v3-textlink">Judges’ tour · 2 minutes <span aria-hidden="true">↗</span></Link></p>
           <p className="v3-hero-disclaimer">A historical evidence check. Not a fire simulation or a safety certification.</p>
           {error && <div role="alert" className="v3-callout v3-callout-warn">NASA evidence data could not load: {error}</div>}
           {webgl && !renderFailed && (

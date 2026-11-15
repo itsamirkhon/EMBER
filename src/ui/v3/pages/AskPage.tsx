@@ -236,6 +236,23 @@ export function ScopeReplyView({ question }: { question: string }) {
   );
 }
 
+function ThinkingAnswer({ question }: { question: string }) {
+  return (
+    <div className="v3-card v3-answer v3-thinking" role="status" aria-live="polite">
+      <div className="v3-muted v3-small">Your question</div>
+      <h2 className="v3-answer-q">{question}</h2>
+      <div className="v3-thinking-head">
+        <span className="v3-thinking-orb" aria-hidden="true"><span /></span>
+        <div>
+          <strong>EMBER is thinking<span className="v3-thinking-dots" aria-hidden="true"><i /><i /><i /></span></strong>
+          <p>Reviewing NASA evidence to prepare a source-linked answer. This may take a moment.</p>
+        </div>
+      </div>
+      <div className="v3-thinking-lines" aria-hidden="true"><span /><span /><span /></div>
+    </div>
+  );
+}
+
 export function AskPage() {
   const [file, setFile] = useState<AnswerFile | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -244,6 +261,7 @@ export function AskPage() {
   const [custom, setCustom] = useState<Answer | null>(null);
   const [scopeQuestion, setScopeQuestion] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pendingQuestion, setPendingQuestion] = useState('');
   const [note, setNote] = useState<string | null>(null);
   const { ensureCorpus } = useEmber();
   const { data: compact } = useCompact();
@@ -257,7 +275,7 @@ export function AskPage() {
   async function ask(e: FormEvent) {
     e.preventDefault();
     const q = question.trim();
-    if (!q) return;
+    if (!q || busy) return;
     setNote(null);
     setCustom(null);
     setScopeQuestion(null);
@@ -269,6 +287,7 @@ export function AskPage() {
       setNote('Please add a little more detail about what you would like to know.');
       return;
     }
+    setPendingQuestion(q);
     setBusy(true);
     try {
       const { snapshot, meta } = await createReview({ question: q, useLiveAi: true, title: q.slice(0, 72) });
@@ -303,9 +322,10 @@ export function AskPage() {
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="e.g. How does airflow change flame spread over Nomex in microgravity?"
           aria-label="Your question"
+          disabled={busy}
         />
         <button type="submit" className="v3-btn v3-btn-primary" disabled={busy || !question.trim()}>
-          {busy ? 'Searching…' : 'Ask'}
+          {busy ? 'Thinking…' : 'Ask'}
         </button>
       </form>
       {note && <p className="v3-small v3-muted">{note}</p>}
@@ -321,8 +341,9 @@ export function AskPage() {
             <button
               key={a.id}
               type="button"
+              disabled={busy}
               className="v3-q"
-              aria-pressed={!custom && !scopeQuestion && selected === a.id}
+              aria-pressed={!busy && !custom && !scopeQuestion && selected === a.id}
               onClick={() => {
                 setCustom(null);
                 setScopeQuestion(null);
@@ -344,12 +365,12 @@ export function AskPage() {
           )}
         </nav>
         <div>
-          {scopeQuestion ? <ScopeReplyView question={scopeQuestion} /> : current ? <AnswerView a={current} /> : staleAnswers ? (
+          {busy ? <ThinkingAnswer question={pendingQuestion} /> : scopeQuestion ? <ScopeReplyView question={scopeQuestion} /> : current ? <AnswerView a={current} /> : staleAnswers ? (
             <div className="v3-callout v3-callout-warn" role="alert">Cached answers do not match the current PSI corpus. Ask a question to run a fresh local review, or regenerate the cached answers.</div>
           ) : error ? (
             <div className="v3-callout v3-callout-warn" role="alert">The cached answers are unavailable. You can still ask a new question.</div>
           ) : file ? null : <Loading what="Loading answers…" />}
-          {!scopeQuestion && <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
+          {!busy && !scopeQuestion && <p className="v3-small v3-muted" style={{ marginTop: 12 }}>
             Want every rule decision behind an answer? <Link to="/review">Open the full scientific review</Link>.
           </p>}
         </div>
