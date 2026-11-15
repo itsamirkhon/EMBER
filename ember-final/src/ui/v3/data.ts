@@ -114,8 +114,10 @@ export interface Cliff {
 }
 
 /** "Evidence cliff": solid-material flight tests with a reported (not assumed) oxygen value. */
-export function cliffStats(rows: Row[]): Cliff {
+export function cliffStats(rows: Row[]): Cliff | null {
   const solid = rows.filter((r) => r.phase === 'solid' && r.o2 !== null && r.o2Prov !== 'assumed' && r.gravityMode === 'actual_flight');
+  // Zero matching flight records is NOT evidence for an O2=0% threshold.
+  if (solid.length === 0) return null;
   const withP = solid.filter((r) => r.kPa !== null && r.kPaProv !== 'assumed');
   const above = solid.filter((r) => (r.o2 ?? 0) > 22.5);
   const gas = rows.filter((r) => r.phase === 'gas' && r.o2 !== null && r.o2Prov !== 'assumed');
@@ -123,12 +125,12 @@ export function cliffStats(rows: Row[]): Cliff {
     solidFlight: solid.length,
     o2Min: Math.min(...solid.map((r) => r.o2 as number)),
     o2Max: Math.max(...solid.map((r) => r.o2 as number)),
-    kPaMin: Math.min(...withP.map((r) => r.kPa as number)),
-    kPaMax: Math.max(...withP.map((r) => r.kPa as number)),
+    kPaMin: withP.length ? Math.min(...withP.map((r) => r.kPa as number)) : Number.NaN,
+    kPaMax: withP.length ? Math.max(...withP.map((r) => r.kPa as number)) : Number.NaN,
     above225: above.length,
     above225Inv: [...new Set(above.map((r) => r.inv))],
     assumedSmoke: rows.filter((r) => r.phase === 'solid' && r.o2Prov === 'assumed').length,
-    gasMaxO2: Math.max(...gas.map((r) => r.o2 as number)),
+    gasMaxO2: gas.length ? Math.max(...gas.map((r) => r.o2 as number)) : Number.NaN,
   };
 }
 
