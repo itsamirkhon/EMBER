@@ -45,6 +45,12 @@ export interface EngineResult {
   warnings: string[];
 }
 
+/** Browser number inputs are not a guarantee against pasted out-of-range values. */
+export function clampFlowInput(raw: string): number {
+  const value = Number(raw);
+  return Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0;
+}
+
 export function runEngine(corpus: CorpusV2, l: LensInput): EngineResult {
   const q = parseResearchQuery('', lensOverrides(l), { applyEnvironmentDefaults: false });
   const rankings = rankInvestigationsV2(q, corpus);
@@ -217,11 +223,17 @@ export function LensPage() {
           <div className="v3-fields v3-fields-3">
             <label>
               <span>Airflow min, cm/s</span>
-              <input type="number" min={0} max={100} value={l.flow[0]} onChange={(e) => setCustom({ flow: [Number(e.target.value) || 0, Math.max(Number(e.target.value) || 0, l.flow[1])] })} />
+              <input type="number" min={0} max={100} value={l.flow[0]} onChange={(e) => {
+                const low = clampFlowInput(e.target.value);
+                setCustom({ flow: [low, Math.max(low, l.flow[1])] });
+              }} />
             </label>
             <label>
               <span>Airflow max, cm/s</span>
-              <input type="number" min={0} max={100} value={l.flow[1]} onChange={(e) => setCustom({ flow: [Math.min(l.flow[0], Number(e.target.value) || 0), Number(e.target.value) || 0] })} />
+              <input type="number" min={0} max={100} value={l.flow[1]} onChange={(e) => {
+                const high = clampFlowInput(e.target.value);
+                setCustom({ flow: [Math.min(l.flow[0], high), high] });
+              }} />
             </label>
             <label>
               <span>Gravity, g</span>
