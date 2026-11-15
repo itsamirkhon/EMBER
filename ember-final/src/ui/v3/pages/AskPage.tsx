@@ -43,9 +43,10 @@ const BOUNDARY: Record<AnswerBoundary, { label: string; cls: string; help: strin
 const strip = (t: string) => t.replace(/\s*\[[^\]]+\]/g, '').trim();
 
 /** Turns an in-browser review into the same shape as the pre-computed answers. */
-function fromReview(question: string, review: Review, corpus: CorpusV2 | null): Answer {
+export function fromReview(question: string, review: Review, corpus: CorpusV2 | null): Answer {
   const s = review.synthesis;
-  const live = s.mode === 'LIVE_AI';
+  // Never present unverified model text as verified scientific evidence.
+  const live = s.mode === 'LIVE_AI' && review.verification.passed;
   const items = (list: Review['synthesis']['observedFact']) => list.map((c) => ({ text: strip(c.text), citations: c.citations, provenance: c.provenance }));
   const ids = live
     ? [...new Set([...s.observedFact, ...s.authorInterpretation, ...s.engineeringImplication].flatMap((c) => c.citations))]
