@@ -1,6 +1,6 @@
 import { Suspense, lazy, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { EvidenceMap } from '../EvidenceMap';
+import { EvidenceFallback } from '../EvidenceFallback';
 import { cliffStats, fmt, useCompact } from '../data';
 import { Loading } from '../ui';
 
@@ -77,14 +77,10 @@ export function HomePage() {
               </Suspense>
             ) : (
               <div className="v3-focus-map-fallback">
-                <EvidenceMap
+                <EvidenceFallback
                   rows={data.rows}
-                  investigations={data.investigations}
                   missions={data.missions}
                   cliff={cliff}
-                  phase="solid"
-                  compact
-                  onPickMission={(mission) => checkMission(mission.id)}
                 />
               </div>
             )
@@ -93,10 +89,12 @@ export function HomePage() {
               {error ? '3D evidence unavailable while source data is offline.' : <Loading what="Loading NASA PSI evidence…" />}
             </div>
           )}
-          <div className="v3-focus-visual-bottom">
-            <span>Dots = indexed tests with plottable conditions</span>
-            <span>Mission markers = proposed scenarios, not flight tests</span>
-          </div>
+          {webgl && !renderFailed && (
+            <div className="v3-focus-visual-bottom">
+              <span>Points show indexed PSI records with reported plotting dimensions</span>
+              <span>Mission markers are scenarios, not flight experiments</span>
+            </div>
+          )}
         </div>
       </section>
 
