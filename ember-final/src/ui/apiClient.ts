@@ -183,26 +183,38 @@ export function getLastBackendSource(): ClientMeta['backendSource'] {
 
 export async function loadStaticCorpus(): Promise<CorpusV2> {
   if (!cachedCorpusPromise) {
-    cachedCorpusPromise = fetch('./data/corpus_v2.json').then(async (res) => {
-      if (!res.ok) {
-        cachedCorpusPromise = null;
-        throw new Error(`Failed to load static corpus (${res.status})`);
-      }
-      return (await res.json()) as CorpusV2;
-    });
+    cachedCorpusPromise = fetch('./data/corpus_v2.json')
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Failed to load static corpus (${res.status})`);
+        const data = await res.json() as CorpusV2;
+        if (!Array.isArray(data.tests) || !Array.isArray(data.investigations) || !data.corpusVersion) {
+          throw new Error('Static PSI corpus is missing required scientific data fields.');
+        }
+        return data;
+      })
+      .catch((error: unknown) => {
+        cachedCorpusPromise = null; // allow recovery after a transient or malformed response
+        throw error;
+      });
   }
   return cachedCorpusPromise;
 }
 
 export async function loadStaticChunksIndex(): Promise<ChunksIndex> {
   if (!cachedIndexPromise) {
-    cachedIndexPromise = fetch('./data/chunks_index.json').then(async (res) => {
-      if (!res.ok) {
+    cachedIndexPromise = fetch('./data/chunks_index.json')
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Failed to load static chunks index (${res.status})`);
+        const data = await res.json() as ChunksIndex;
+        if (!data.corpusVersion || !Array.isArray(data.chunks)) {
+          throw new Error('Static chunks index is missing required fields.');
+        }
+        return data;
+      })
+      .catch((error: unknown) => {
         cachedIndexPromise = null;
-        throw new Error(`Failed to load static chunks index (${res.status})`);
-      }
-      return (await res.json()) as ChunksIndex;
-    });
+        throw error;
+      });
   }
   return cachedIndexPromise;
 }
