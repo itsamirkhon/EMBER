@@ -119,10 +119,10 @@ export function LensPage() {
   const env = l.missionId === 'custom' ? 'Custom cabin' : MISSION_SHORT[l.missionId] ?? mission?.label ?? 'Cabin';
 
   return (
-    <div className="v3-page">
-      <PageHead eyebrow="Mission lens" title="Does NASA’s data cover your cabin?">
-        Select a hypothetical environment, task and material. Then check how {data.counts.tests.toLocaleString('en-US')} existing NASA PSI records
-        compare under nine applicability rules. No physical tests are run, and these results do not predict fire risk or certify safety.
+    <div className="v3-page v3-lens-focused">
+      <PageHead eyebrow="Mission evidence" title="What does NASA actually know?">
+        Choose a scenario and a material, then compare them with {data.counts.tests.toLocaleString('en-US')} historical PSI records.
+        No new test is run and no safety claim is made.
       </PageHead>
 
       <div className="v3-split">
@@ -181,9 +181,9 @@ export function LensPage() {
             <label>
               <span>Fuel type</span>
               <select value={l.phase} onChange={(e) => set({ phase: e.target.value as FuelPhase, material: '' })}>
-                <option value="solid">Solid (fabric, plastic, lining)</option>
-                <option value="liquid">Liquid (droplets)</option>
-                <option value="gas">Gas (burner flame)</option>
+                <option value="solid">Solid materials</option>
+                <option value="liquid">Liquid droplets</option>
+                <option value="gas">Gas flames</option>
               </select>
             </label>
             <label>
