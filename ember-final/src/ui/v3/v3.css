@@ -508,3 +508,17 @@ html, body { overflow-x: hidden; }
   .v3-focus-metrics { gap: 21px; }
   .v3-focus-finding { padding: 28px 16px 56px; }
 }
+
+
+/* Lens: simple by default, expert controls remain available on demand. */
+.v3-lens-advanced { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--v3-border); }
+.v3-lens-advanced > summary {
+  cursor: pointer; color: var(--v3-text-2); font: 500 .85rem/1.6 var(--v3-font);
+  list-style-position: inside; padding: 4px 0;
+}
+.v3-lens-advanced > summary:hover { color: var(--v3-text); }
+.v3-lens-advanced[open] > summary { color: var(--v3-text); margin-bottom: 13px; }
+.v3-lens-advanced .v3-h3 { margin-top: 8px; }
+.v3-lens-advanced.v3-card { margin: 0; padding: 18px 24px; }
+.v3-lens-advanced.v3-card > summary { padding: 3px 0; }
+.v3-lens-advanced.v3-card > section { padding-top: 8px; }
