@@ -522,3 +522,23 @@ html, body { overflow-x: hidden; }
 .v3-lens-advanced.v3-card { margin: 0; padding: 18px 24px; }
 .v3-lens-advanced.v3-card > summary { padding: 3px 0; }
 .v3-lens-advanced.v3-card > section { padding-top: 8px; }
+
+
+/* A clean, measured 2D fallback: one SVG and one caption, no nested dashboard. */
+.v3-focus-map-fallback {
+  display: flex; align-items: center; justify-content: center;
+  padding: 54px 25px 25px; overflow: hidden; text-align: left;
+}
+.v3-focus-map-fallback > .v3-focus-fallback { width: 100%; max-width: 670px; }
+.v3-focus-fallback { margin: 0; display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.v3-focus-fallback svg { display: block; width: 100%; height: auto; max-height: 370px; overflow: visible; }
+.v3-focus-fallback figcaption { font-size: .77rem; line-height: 1.55; color: var(--v3-muted); max-width: 62ch; margin: 0 auto; }
+.v3-focus-fallback figcaption b { color: var(--v3-text); font-weight: 500; }
+.v3-focus-svg-tick { font: 11px var(--v3-mono); fill: var(--v3-muted); }
+.v3-focus-svg-boundary { font: 12px var(--v3-mono); fill: var(--v3-cliff-text); }
+.v3-focus-svg-scenario { font: 13px var(--v3-font); fill: var(--v3-text); }
+@media (max-width: 530px) {
+  .v3-focus-map-fallback { padding: 48px 12px 10px; }
+  .v3-focus-fallback { gap: 4px; }
+  .v3-focus-fallback figcaption { font-size: .67rem; line-height: 1.36; }
+}
