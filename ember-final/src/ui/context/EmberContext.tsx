@@ -97,6 +97,8 @@ export function EmberProvider({ children }: { children: ReactNode }) {
     const requestId = ++activeRequestId.current;
     setActiveLoading(true);
     setActiveError(null);
+    // Never show the previous review while another review ID is loading.
+    setActiveSnapshot((current) => current?.reviewId === reviewId ? current : null);
     try {
       const res = await getReviewSnapshot(reviewId);
       // Navigating quickly between reviews must never display a stale response.
