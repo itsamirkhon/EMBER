@@ -60,7 +60,7 @@ export function HomePage() {
 
         <div className="v3-focus-visual" aria-label="Interactive NASA PSI evidence visualization">
           <div className="v3-focus-visual-top">
-            <span>Recorded evidence / 3D</span>
+            <span>Recorded evidence / {webgl && !renderFailed ? '3D' : '2D'}</span>
             <span>{webgl && !renderFailed ? 'Drag to examine' : '2D evidence view'}</span>
           </div>
           {data && cliff ? (
