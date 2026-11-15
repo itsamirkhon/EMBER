@@ -542,3 +542,13 @@ html, body { overflow-x: hidden; }
   .v3-focus-fallback { gap: 4px; }
   .v3-focus-fallback figcaption { font-size: .67rem; line-height: 1.36; }
 }
+
+
+/* Give the one mission-check form enough room to breathe. */
+@media (min-width: 1000px) {
+  .v3-lens-focused .v3-split { grid-template-columns: minmax(400px, 465px) minmax(0, 1fr); gap: 24px; }
+}
+@media (max-width: 550px) {
+  .v3-lens-focused .v3-fields { grid-template-columns: minmax(0, 1fr); }
+  .v3-lens-focused .v3-controls, .v3-lens-focused .v3-verdict { padding: 20px; }
+}
