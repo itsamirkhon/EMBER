@@ -17,7 +17,7 @@ function hasWebGL(): boolean {
 }
 
 const STEPS: { title: string; body: (n: string, o2: string) => string; cliff?: boolean }[] = [
-  { title: 'Every test NASA flew', body: (n) => `${n} fire tests from NASA flight experiments, all run in orbit near 0 g` },
+  { title: 'Every test in PSI', body: (n) => `${n} fire tests from NASA PSI investigations with test tables, all run in orbit near 0 g` },
   { title: 'The evidence cliff', body: (_n, o2) => `Solid materials, the stuff cabins are made of, were never flight-tested above ${o2}% oxygen`, cliff: true },
   { title: 'Where we are going', body: () => 'Moon and Mars cabins sit past the cliff, at higher oxygen and in real gravity' },
 ];
@@ -102,7 +102,7 @@ export function HomePage() {
             <strong>
               {lunar.length ? `${Math.min(...lunarP)}–${Math.max(...lunarP)}` : '56.5–70.3'} <Term k="kpa">kPa</Term>
             </strong>
-            . EMBER puts every fire experiment in NASA’s <Term k="psi">PSI</Term> database in one place and shows where the evidence ends for your cabin.
+            . EMBER puts the fire experiments in NASA’s <Term k="psi">PSI</Term> database that have test tables in one place and shows where the evidence ends for your cabin.
           </p>
           <div className="v3-row v3-hero-cta">
             <Link to="/lens" className="v3-btn v3-btn-primary v3-btn-lg">
@@ -164,7 +164,7 @@ export function HomePage() {
             <section className="v3-kpis" aria-label="What is in EMBER">
               <div>
                 <b>{data.counts.investigations}</b>
-                <span>NASA flight experiments</span>
+                <span>PSI investigations with test tables</span>
               </div>
               <div>
                 <b>{data.counts.tests.toLocaleString('en-US')}</b>

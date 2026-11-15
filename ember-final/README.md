@@ -4,7 +4,7 @@
 
 **Spacecraft Fire Evidence Lab** — a scientific workbench for finding, comparing and interpreting NASA combustion evidence for a specified configuration, and identifying what requires additional research.
 
-The current corpus contains **15 investigations, 1,678 records, 145 source-linked claims, 68 source records and 2,463 retrieval chunks**. The 1,678 records include series aggregates and reconstructed protocol representations; they are **not 1,678 independent experimental runs**. Claim quotations were checked against cached source text. That check does not independently validate their scientific meaning, attribution or applicability.
+The current corpus contains **15 investigations with test tables, 1,678 records, 145 source-linked claims, 68 source records and 2,463 retrieval chunks**. The 1,678 records include series aggregates and reconstructed protocol representations; they are **not 1,678 independent experimental runs**. Claim quotations were checked against cached source text. That check does not independently validate their scientific meaning, attribution or applicability.
 
 `Engine: 2.1.0-interpret / corpus: 2.0.1-scientific-fixes`. The product separates question relevance, observation applicability and evidence quality, preserves unknown data and protocol-dependent outcomes, and supports configuration comparison, review snapshots and export. It is a research-support tool, not hardware qualification or a spacecraft safety certification.
 

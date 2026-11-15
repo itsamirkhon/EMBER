@@ -24,7 +24,7 @@ export function MapPage() {
       <PageHead eyebrow="Evidence map" title="Where NASA’s fire data ends">
         {cliff ? (
           <>
-            Every microgravity fire test in NASA <Term k="psi">PSI</Term>, placed by <Term k="o2">oxygen</Term> and <Term k="kpa">pressure</Term>. The {cliff.solidFlight} solid-material flight tests with measured oxygen
+            Every microgravity fire test from the 15 NASA <Term k="psi">PSI</Term> investigations with test tables, placed by <Term k="o2">oxygen</Term> and <Term k="kpa">pressure</Term>. The {cliff.solidFlight} solid-material flight tests with measured oxygen
             sit between {fmt(cliff.o2Min)}% and {fmt(cliff.o2Max)}% O₂ near sea-level pressure. The cabins planned for the Moon and Mars are off
             to the right, past the <Term k="cliff">evidence cliff</Term>.
           </>
@@ -90,7 +90,7 @@ export function MapPage() {
             <b>What this map does and does not say</b><br /> It covers <i>flight</i> data in NASA PSI. Ground tests at elevated oxygen exist (for
             example NASA-STD-6001 Test 1), and NASA work found that 1 g limiting oxygen concentrations were up to 4 points higher than in
             microgravity: materials burned in orbit where the ground test would pass them. So the gap is not “nobody tested this”; it is
-            “no microgravity flight data for cabin materials at exploration atmospheres”. {cliff.assumedSmoke} SAME / SAME-R smoke records
+            “no microgravity flight data for cabin materials at exploration atmospheres”. Short tests at partial gravity from drop towers and parabolic flights exist in the literature (for example Olson and Ferkul, 2012, NTRS 20130010991, at Martian gravity), but they are not in PSI and their test times are short. {cliff.assumedSmoke} SAME / SAME-R smoke records
             are drawn hollow: their atmosphere is assumed to be ISS cabin air, not measured.
           </section>
 

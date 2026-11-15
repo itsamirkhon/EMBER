@@ -10,7 +10,7 @@ Every field below is written for the Space Apps project page, in English. Number
 
 ## High-Level Summary
 
-EMBER puts every NASA microgravity fire experiment in NASA’s Physical Sciences Informatics (PSI) repository on one map, and shows where that evidence ends. Its central finding: none of the 261 solid-material flight tests with measured oxygen ran above 22.7% O₂, and all ran near 98–102 kPa, while lunar cabins plan 30–34% O₂ at 56–70 kPa, so material choices for the Moon rest on extrapolation. A safety engineer picks a cabin and a material and, in two minutes, sees which NASA investigations apply, the nearest real tests and how far away they are, and which flight test would close the gap. EMBER never gives a fire-risk percentage.
+EMBER puts the 15 NASA microgravity fire investigations that have test tables in NASA’s Physical Sciences Informatics (PSI) repository on one map, and shows where that evidence ends. Its central finding: none of the 261 solid-material flight tests with measured oxygen ran above 22.7% O₂, and all ran near 98–102 kPa, while lunar cabins plan 30–34% O₂ at 56–70 kPa, so material choices for the Moon rest on extrapolation. A safety engineer picks a cabin and a material and, in two minutes, sees which NASA investigations apply, the nearest real tests and how far away they are, and which flight test would close the gap. EMBER never gives a fire-risk percentage.
 
 ## Links
 
@@ -20,9 +20,9 @@ EMBER puts every NASA microgravity fire experiment in NASA’s Physical Sciences
 
 ## Detailed Description
 
-**The problem.** Fire is one of the worst things that can happen in a spacecraft (Apollo 1, the 1997 Mir fire). NASA has flown 15 combustion investigations whose data sit in PSI, but they are scattered across tables, reports and formats. An engineer choosing a cabin lining for an Artemis rover cannot quickly tell which experiments apply to their atmosphere, or whether any do.
+**The problem.** Fire is one of the worst things that can happen in a spacecraft (Apollo 1, the 1997 Mir fire). PSI holds test tables for 15 combustion investigations, but they are scattered across tables, reports and formats. An engineer choosing a cabin lining for an Artemis rover cannot quickly tell which experiments apply to their atmosphere, or whether any do.
 
-**The finding: the evidence cliff.** We normalized 1,678 test records from all 15 PSI investigations. The 261 solid-material flight tests with a reported oxygen value (BASS, BASS-II, Saffire) ran at 13.6–22.7% O₂ and 98.3–102.2 kPa; only 11 BASS tests went above 22.5%. NASA’s lunar exploration atmosphere is 34% O₂ at 56.5 kPa; the challenge’s rover scenario is 30% at 70.3 kPa. No solid-material flight data overlap these points. Gas flames were flown up to 85% O₂ (ACME CFI-G), but in an oxidizer stream with gaseous fuel, which transfers to fabrics and plastics only qualitatively. NASA work also found that 1 g limiting oxygen concentrations were up to 4 points higher than in microgravity, so ground screening alone can pass materials that burn in orbit. Scope matters: this is about *flight* data in PSI; ground tests at elevated oxygen exist.
+**The finding: the evidence cliff.** We normalized 1,678 test records from the 15 PSI investigations with test tables. The 261 solid-material flight tests with a reported oxygen value (BASS, BASS-II, Saffire) ran at 13.6–22.7% O₂ and 98.3–102.2 kPa; only 11 BASS tests went above 22.5%. NASA’s lunar exploration atmosphere is 34% O₂ at 56.5 kPa; the challenge’s rover scenario is 30% at 70.3 kPa. No solid-material flight data overlap these points. Gas flames were flown up to 85% O₂ (ACME CFI-G), but in an oxidizer stream with gaseous fuel, which transfers to fabrics and plastics only qualitatively. NASA work also found that 1 g limiting oxygen concentrations were up to 4 points higher than in microgravity, so ground screening alone can pass materials that burn in orbit. Scope matters: this is about *flight* data in PSI; ground tests at elevated oxygen exist, and short drop-tower and parabolic-flight tests at partial gravity exist in the literature (for example NTRS 20130010991) but are not in PSI.
 
 **Who it is for.** A spacecraft fire-safety engineer choosing a cabin material for a lunar rover; second, researchers and students who need cards, comparisons and clean data.
 
@@ -38,7 +38,7 @@ EMBER puts every NASA microgravity fire experiment in NASA’s Physical Sciences
 **How applicability works.** A test supports a question only if it passes all nine rules: recorded outcome, material, geometry, unknown values never count as a match, oxygen in cabin air vs a burner stream, assumed atmospheres capped, no transfer of 0 g or 1 g results to the Moon or Mars, crew flow shut-off is not an extinction limit, and O₂ / pressure / airflow must have been tested together. Rules, not a black box.
 
 **What we checked, and what we did not.**
-- Grouped leave-out backtest (each test hidden with its replicates): solid materials 89% vs an 84% always-“it burns” baseline, and *Measured* answers (93%) beat *Data nearby* (77%), so the labels carry information. Gas flames: 76% vs 85% baseline, *worse* than the baseline, shown as such.
+- Grouped leave-out backtest (each test hidden with its replicates): solid materials 89% vs an 84% always-“it burns” baseline, *Measured* answers were right 94% of the time against a 91% baseline (a small gain, since most solids burn) and did better against *Data nearby* (78% vs a 64% baseline), but the labels say how close the evidence is, not how likely a fire is. Gas flames: 76% vs 85% baseline, *worse* than the baseline, shown as such.
 - 145 AI-extracted claims, every quote found verbatim in the source (145/145); a 36-claim sample re-read: 29 correct, 7 partial, 0 wrong (same model family graded, so optimistic).
 - BASS outcomes parsed from free-text notes: 30 random rows read in full, 29/30 agree, 0 wrong.
 - While finishing EMBER we found and fixed a bug in our own engine: tests with an unreported airflow skipped the joint-conditions rule, so 16% O₂ tests counted as evidence for a 30% O₂ cabin. A regression test now guards it.
@@ -48,7 +48,7 @@ EMBER puts every NASA microgravity fire experiment in NASA’s Physical Sciences
 
 ## NASA Data and Resources
 
-All 15 combustion investigations in NASA PSI (CC0 for reviewed records), with their test tables and analysed-data files:
+The 15 combustion investigations in NASA PSI that have test tables (CC0 for reviewed records), with their analysed-data files:
 
 | ID | Investigation | PSI | DOI | Fuel | Records |
 |---|---|---|---|---|---|
@@ -103,17 +103,17 @@ Subtitles: [`demo-video.en.srt`](./demo-video.en.srt). Suggested capture: the li
 |---|---|---|
 | 0:00–0:02 | Team name card | Team <name>, Tashkent |
 | 0:02–0:05 | Intro: flame at 1 g vs microgravity | Fire in space follows different rules. |
-| 0:05–0:10 | Home headline | EMBER: every NASA fire experiment — and where the evidence ends. |
+| 0:05–0:10 | Home headline | EMBER: NASA’s fire experiments in one place — and where the evidence ends. |
 | 0:10–0:20 | Evidence map, then the lunar rover in the mission lens (“Beyond the evidence”) | No solid-material flight test in NASA PSI went above 22.7% O₂. Lunar cabins plan 30%+. |
 | 0:20–0:27 | Nearest real tests with axis gaps, then the next-experiment card | EMBER shows the nearest real test — and the experiment that would close the gap. |
 | 0:27–0:30 | Site URL | Built on NASA PSI data. |
 
 ## Backup: seven slides
 
-1. **EMBER** — team, challenge “Flame in Freefall”, one line: *Every NASA fire experiment in one place — and the line where the evidence ends.*
-2. **Problem** — Apollo 1 and Mir; Artemis cabins at 30–34% O₂; 15 investigations scattered across PSI.
+1. **EMBER** — team, challenge “Flame in Freefall”, one line: *NASA’s fire experiments in one place — and the line where the evidence ends.*
+2. **Problem** — Apollo 1 and Mir; Artemis cabins at 30–34% O₂; 15 investigations with test tables, scattered across PSI.
 3. **Finding** — the evidence map: 261 solid flight tests at ≤ 22.7% O₂ and ~100 kPa vs lunar cabins at 30–34% and 56–70 kPa.
 4. **Product** — mission lens for the lunar rover: *Beyond the evidence*, nearest tests with gaps, the next experiment.
 5. **Why trust it** — nine rules; backtest vs baseline (solids 89% vs 84%, gas flames below baseline, shown); verbatim quotes 145/145; the bug we found and fixed.
-6. **NASA data and AI** — 15 PSI investigations + 52 NTRS reports; AI extracts claims and writes checked prose, rules decide.
+6. **NASA data and AI** — 15 PSI investigations with test tables + 52 NTRS reports; AI extracts claims and writes checked prose, rules decide.
 7. **Next** — the flight test that closes the gap; Back to Earth (smoke detectors, firefighter gear, water mist, mine and submarine fire models).

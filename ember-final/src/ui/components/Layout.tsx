@@ -12,7 +12,7 @@ const PRIMARY = [
 
 /** Reference material, one click away. Back to Earth lives on the home page and in the footer instead. */
 const MORE = [
-  { to: '/investigations', label: 'Investigations', hint: 'The 15 NASA experiments' },
+  { to: '/investigations', label: 'Investigations', hint: 'The 15 PSI investigations with test tables' },
   { to: '/compare', label: 'Compare tests', hint: 'Two protocols side by side' },
   { to: '/export', label: 'Data', hint: 'Download with a source row per record' },
   { to: '/trust', label: 'How far to trust it', hint: 'Backtest, checks and limits' },

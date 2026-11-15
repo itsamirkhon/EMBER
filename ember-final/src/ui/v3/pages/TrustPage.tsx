@@ -112,8 +112,12 @@ export function TrustPage() {
                 <ul className="v3-list">
                   <li>
                     <b>Solid materials:</b> {pct(trust.phases.solid.all.correct / trust.phases.solid.all.n)} vs{' '}
-                    {pct(trust.phases.solid.all.baselineCorrect / trust.phases.solid.all.n)} baseline. Answers labelled <i>Measured</i> are more often
-                    right than those labelled <i>Data nearby</i>, so the labels carry information. Most solids burned, so the baseline is already high.
+                    {pct(trust.phases.solid.all.baselineCorrect / trust.phases.solid.all.n)} baseline. <i>Measured</i> answers were right{' '}
+                    {pct(trust.phases.solid.byStatus.measured.correct / trust.phases.solid.byStatus.measured.n)} of the time against a{' '}
+                    {pct(trust.phases.solid.byStatus.measured.baselineCorrect / trust.phases.solid.byStatus.measured.n)} baseline: a small gain, because most solids
+                    burned. They did better against <i>Data nearby</i> ({pct(trust.phases.solid.byStatus.nearby.correct / trust.phases.solid.byStatus.nearby.n)} vs{' '}
+                    {pct(trust.phases.solid.byStatus.nearby.baselineCorrect / trust.phases.solid.byStatus.nearby.n)} baseline), but the labels say how close the evidence
+                    is, not how likely a fire is.
                   </li>
                   <li>
                     <b>Gas flames:</b> {pct(trust.phases.gas.all.correct / trust.phases.gas.all.n)} vs{' '}
