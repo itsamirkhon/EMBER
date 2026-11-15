@@ -434,3 +434,8 @@ a:hover { color: var(--v3-text); text-decoration: underline; text-underline-offs
 .v3 .v3-main, .v3 .v3-page, .v3-split > *, .v3-stack > * { min-width: 0; }
 html, body { overflow-x: hidden; }
 .app-shell.v3 { grid-template-columns: minmax(0, 1fr); }
+
+/* home: quiet pointer to the Back to Earth page */
+.v3-earth-link { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 24px; border: 1px solid var(--v3-border); border-radius: var(--v3-radius); background: var(--v3-surface); }
+.v3-earth-link p { margin: 0; color: var(--v3-text-2); max-width: 56ch; }
+.v3-earth-link .v3-h2 { margin-bottom: 4px; }

@@ -10,12 +10,11 @@ const PRIMARY = [
   { to: '/ask', label: 'Ask EMBER' },
 ];
 
-/** Reference material, one click away. */
+/** Reference material, one click away. Back to Earth lives on the home page and in the footer instead. */
 const MORE = [
   { to: '/investigations', label: 'Investigations', hint: 'The 15 NASA experiments' },
   { to: '/compare', label: 'Compare tests', hint: 'Two protocols side by side' },
   { to: '/export', label: 'Data', hint: 'Download with a source row per record' },
-  { to: '/earth', label: 'Back to Earth', hint: 'What fire research gave us' },
   { to: '/trust', label: 'How far to trust it', hint: 'Backtest, checks and limits' },
 ];
 
@@ -42,7 +41,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
-  const moreActive = MORE.some((m) => loc.pathname.startsWith(m.to)) || loc.pathname.startsWith('/review');
+  const moreActive = MORE.some((m) => loc.pathname.startsWith(m.to));
 
   useEffect(() => {
     setNavOpen(false);
@@ -120,8 +119,8 @@ export function Layout({ children }: { children: ReactNode }) {
             and NTRS. Not an official NASA product, not a certification tool.
           </span>
           <span className="v3-row">
+            <Link to="/earth">Back to Earth</Link>
             <Link to="/trust">How far to trust it</Link>
-            <Link to="/review">Full scientific review</Link>
             <a href="./intro.html">Flame chamber</a>
           </span>
         </div>

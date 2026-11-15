@@ -261,6 +261,16 @@ export function HomePage() {
                 </div>
               </div>
             </section>
+
+            <section className="v3-section v3-earth-link">
+              <div>
+                <h2 className="v3-h2">Back to Earth</h2>
+                <p>Smoke detectors, firefighter gear and water-mist extinguishers trace back to the same NASA fire research.</p>
+              </div>
+              <Link to="/earth" className="v3-btn">
+                See what it gave us →
+              </Link>
+            </section>
           </>
         )}
       </div>
