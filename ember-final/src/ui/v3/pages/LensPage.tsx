@@ -127,20 +127,21 @@ export function LensPage() {
 
       <div className="v3-split">
         <section className="v3-card v3-controls" aria-label="Your scenario">
-          <h2 className="v3-h3"><span className="v3-step-n">1</span> Pick a cabin</h2>
-          <div className="v3-missions" role="group" aria-label="Environment">
-            {data.missions.map((m) => (
-              <button key={m.id} type="button" className="v3-mission" aria-pressed={l.missionId === m.id} onClick={() => setL((p) => lensFromMission(m, p))}>
-                <b>{MISSION_SHORT[m.id] ?? m.label}</b>
-                <span>
-                  {fmt(m.o2Pct)}% O₂ · {fmt(m.pressureKpa)} kPa · {m.gravityG === null ? 'gravity not reported' : fmtG(m.gravityG)}
-                </span>
-              </button>
-            ))}
-            <button type="button" className="v3-mission" aria-pressed={l.missionId === 'custom'} onClick={() => set({ missionId: 'custom' })}>
-              <b>Custom</b>
-              <span>your own values</span>
-            </button>
+          <h2 className="v3-h3"><span className="v3-step-n">1</span> Mission scenario</h2>
+          <div className="v3-fields">
+            <label htmlFor="lens-mission">
+              <span>Environment to compare</span>
+              <select id="lens-mission" value={l.missionId} onChange={(e) => {
+                const next = data.missions.find((m) => m.id === e.target.value);
+                if (next) setL((prev) => lensFromMission(next, prev));
+                else set({ missionId: 'custom' });
+              }}>
+                {data.missions.map((m) => (
+                  <option key={m.id} value={m.id}>{MISSION_SHORT[m.id] ?? m.label}</option>
+                ))}
+                <option value="custom">Custom conditions</option>
+              </select>
+            </label>
           </div>
           {mission && (
             <div className="v3-small v3-muted">
@@ -161,6 +162,8 @@ export function LensPage() {
             </div>
           )}
 
+          <details className="v3-lens-advanced">
+            <summary>Advanced: research question</summary>
           <h2 className="v3-h3"><span className="v3-step-n">2</span> What are you checking?</h2>
           <div className="v3-seg v3-seg-wrap" role="group" aria-label="Task">
             {TASKS.map((t) => (
@@ -171,7 +174,9 @@ export function LensPage() {
           </div>
           <p className="v3-small v3-muted">{TASKS.find((t) => t.id === l.task)?.hint}</p>
 
-          <h2 className="v3-h3"><span className="v3-step-n">3</span> Material</h2>
+          </details>
+
+          <h2 className="v3-h3"><span className="v3-step-n">2</span> Material</h2>
           <div className="v3-fields">
             <label>
               <span>Fuel type</span>
@@ -194,7 +199,7 @@ export function LensPage() {
             </label>
           </div>
 
-          <h2 className="v3-h3">4 · Atmosphere to check</h2>
+          <h2 className="v3-h3">3 · Atmosphere to compare</h2>
           <p className="v3-small v3-muted">
             These controls define a scenario for comparison with existing records. They do not select a safe atmosphere,
             run a combustion simulation or recommend oxygen and pressure settings.
@@ -220,6 +225,8 @@ export function LensPage() {
             </div>
             <input id="lens-p" type="range" min={20} max={110} step={0.5} value={l.kPa} onChange={(e) => setCustom({ kPa: Number(e.target.value) })} />
           </div>
+          <details className="v3-lens-advanced">
+            <summary>Advanced: airflow {l.flow[0]}–{l.flow[1]} cm/s · gravity {fmtG(l.g)}</summary>
           <div className="v3-fields v3-fields-3">
             <label>
               <span>Airflow min, cm/s</span>
@@ -241,6 +248,7 @@ export function LensPage() {
             </label>
           </div>
           <AtmosphereBar o2={l.o2} kPa={l.kPa} />
+          </details>
         </section>
 
         <div className="v3-stack">
@@ -295,6 +303,7 @@ export function LensPage() {
             )}
           </section>
 
+          {engine && (
           <section className="v3-card" aria-labelledby="near-h">
             <h2 id="near-h" className="v3-h2">Nearest real flight tests</h2>
             <p className="v3-small v3-muted">
@@ -328,9 +337,12 @@ export function LensPage() {
               ))}
             </div>
           </section>
+          )}
 
           {engine && (
-            <section className="v3-card" aria-labelledby="rank-h">
+            <details className="v3-card v3-lens-advanced">
+              <summary>Advanced: investigation rankings</summary>
+              <section aria-labelledby="rank-h">
               <h2 id="rank-h" className="v3-h2">Investigations, ranked for your question</h2>
               <p className="v3-small v3-muted">
                 Three separate scales, never merged into one risk number: does it <b>answer your question</b> (fuel, material, task), does it{' '}
@@ -355,7 +367,8 @@ export function LensPage() {
                   </li>
                 ))}
               </ol>
-            </section>
+              </section>
+            </details>
           )}
 
           {engine && engine.status !== 'measured' && nearest[0] && (
@@ -375,14 +388,7 @@ export function LensPage() {
             </section>
           )}
 
-          <div className="v3-row">
-            <Link to="/ask" className="v3-btn">
-              Ask a question about this
-            </Link>
-            <Link to="/compare" className="v3-btn v3-btn-ghost">
-              Compare protocols →
-            </Link>
-          </div>
+
         </div>
       </div>
     </div>
