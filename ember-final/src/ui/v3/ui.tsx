@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { safeExternalUrl } from '../safeUrl';
 import { PLAIN, fmt, kpaToPsi, type AxisGap, type Plain } from './data';
 
 export function PageHead({ eyebrow, title, children }: { eyebrow?: string; title: ReactNode; children?: ReactNode }) {
@@ -93,9 +94,10 @@ export function ScaleBar({ label, value, hint }: { label: string; value: number;
 }
 
 export function Ext({ href, children }: { href: string | null | undefined; children: ReactNode }) {
-  if (!href) return <>{children}</>;
+  const safe = safeExternalUrl(href);
+  if (!safe) return <>{children}</>;
   return (
-    <a href={href} target="_blank" rel="noreferrer">
+    <a href={safe} target="_blank" rel="noreferrer noopener">
       {children}
     </a>
   );
