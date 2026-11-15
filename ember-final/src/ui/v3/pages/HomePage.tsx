@@ -41,13 +41,26 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="v3-stage" aria-label="Intro: fire in microgravity">
-        <iframe src="./intro.html" title="EMBER intro: the same flame at 1 g and in microgravity, then a lunar cabin" loading="lazy" allow="fullscreen" />
-        <div className="v3-stage-note">
-          3D illustration, not a calculation. The flame shape is procedural; the evidence rows it cites are real PSI records.{' '}
-          <a href="./intro.html" target="_blank" rel="noreferrer">
-            Open full screen ↗
+      <section className="v3-stage" aria-labelledby="v3-stage-title">
+        <div className="v3-stage-header">
+          <div>
+            <div className="v3-eyebrow">Interactive concept · 1 g versus microgravity</div>
+            <h2 id="v3-stage-title">How gravity changes a flame</h2>
+            <p>Compare buoyant flow on Earth with the near-weightless environment of orbit.</p>
+          </div>
+          <a href="./intro.html" target="_blank" rel="noopener noreferrer" className="v3-btn">
+            Explore full presentation ↗
           </a>
+        </div>
+        <iframe
+          src="./intro.html?embed=1"
+          title="Interactive 3D chamber: compare fire at Earth gravity and microgravity"
+          loading="lazy"
+          allow="fullscreen"
+        />
+        <div className="v3-stage-note">
+          <span>Drag to orbit · Conceptual 3D illustration, not a physical simulation or a safety prediction.</span>
+          <Link to="/map">Explore the actual NASA flight evidence →</Link>
         </div>
       </section>
 
