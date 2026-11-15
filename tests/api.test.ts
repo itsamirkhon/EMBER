@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createApiHandler, emberApiPlugin, type ApiEnvelope } from '../server/api';
 import { createStandaloneServer } from '../server/index';
-import { COMPARISON_VERSION, ENGINE_VERSION, type ComparisonResult, type Review } from '../src/core';
+import { COMPARISON_VERSION, ENGINE_VERSION, runReviewSync, type ChunksIndex, type CorpusV2, type ComparisonResult, type Review } from '../src/core';
 
 const EMBER_ROOT = resolve(__dirname, '..');
 
@@ -342,13 +342,27 @@ describe('EMBER v2 HTTP API & Store', () => {
     expect(list.body.data?.reviews.filter((r) => r.reviewId === createdReviewId).length).toBe(1);
   });
 
-  it('POST /api/reviews falls back explicitly to DETERMINISTIC_ENGINE with warning when useLiveAi fails or key missing', async () => {
+  it.each([
+    ['provider_error', 'request failed or was unreachable'],
+    ['invalid_response', 'invalid response or unsupported claims'],
+    ['verification_failed', 'rejected by EMBER’s evidence checks'],
+  ])('POST /api/reviews explains %s when live synthesis falls back', async (reason, warning) => {
     const prevKey = process.env.OPENAI_API_KEY;
     process.env.OPENAI_API_KEY = 'sk-test-redacted-dummy';
     const failingServer = createServer(
       createApiHandler(EMBER_ROOT, {
         storePath,
-        fetchImpl: async () => new Response('unauthorized', { status: 401 }),
+        fetchImpl: async () => {
+          if (reason === 'provider_error') return new Response('private provider detail', { status: 401 });
+          if (reason === 'invalid_response') return new Response('{broken JSON');
+          const { synthesis } = runReviewSync({
+            question: 'Cotton fabric flame spread in BASS-II', retrievalK: 2,
+            corpus: JSON.parse(readFileSync(join(EMBER_ROOT, 'public/data/corpus_v2.json'), 'utf8')) as CorpusV2,
+            index: JSON.parse(readFileSync(join(EMBER_ROOT, 'public/data/chunks_index.json'), 'utf8')) as ChunksIndex,
+          });
+          synthesis.observedFact[0].text += ' Pressure was 98765 kPa.';
+          return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify(synthesis) } }] }));
+        },
       }),
     );
     await new Promise<void>((resolveListen) => {
@@ -359,20 +373,23 @@ describe('EMBER v2 HTTP API & Store', () => {
     const url = `http://127.0.0.1:${addr.port}`;
 
     try {
-      const res = await requestJson<{ review: { synthesis: { mode: string } } }>(url, '/api/reviews', {
+      const res = await requestJson<{ review: Review }>(url, '/api/reviews', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: 'Cotton fabric flame spread in BASS-II',
           useLiveAi: true,
           forceNew: true,
+          retrievalK: 2,
         }),
       });
       expect(res.status).toBe(201);
       expect(res.body.mode).toBe('DETERMINISTIC_ENGINE');
       expect(res.body.data?.review.synthesis.mode).toBe('DETERMINISTIC_ENGINE');
-      expect(res.body.warnings.length).toBeGreaterThan(0);
+      expect(res.body.data?.review.synthesis.fallbackReason).toBe(reason);
+      expect(res.body.warnings.join(' ')).toContain(warning);
       expect(JSON.stringify(res.body)).not.toContain('sk-test-redacted-dummy');
+      expect(JSON.stringify(res.body)).not.toContain('private provider detail');
     } finally {
       if (prevKey === undefined) delete process.env.OPENAI_API_KEY;
       else process.env.OPENAI_API_KEY = prevKey;
