@@ -116,9 +116,9 @@ export interface Cliff {
 /** "Evidence cliff": solid-material flight tests with a reported (not assumed) oxygen value. */
 export function cliffStats(rows: Row[]): Cliff {
   const solid = rows.filter((r) => r.phase === 'solid' && r.o2 !== null && r.o2Prov !== 'assumed' && r.gravityMode === 'actual_flight');
-  const withP = solid.filter((r) => r.kPa !== null);
+  const withP = solid.filter((r) => r.kPa !== null && r.kPaProv !== 'assumed');
   const above = solid.filter((r) => (r.o2 ?? 0) > 22.5);
-  const gas = rows.filter((r) => r.phase === 'gas' && r.o2 !== null);
+  const gas = rows.filter((r) => r.phase === 'gas' && r.o2 !== null && r.o2Prov !== 'assumed');
   return {
     solidFlight: solid.length,
     o2Min: Math.min(...solid.map((r) => r.o2 as number)),
@@ -222,7 +222,7 @@ const sign = (x: number, digits = 1) => `${x > 0 ? '+' : x < 0 ? '−' : '±'}${
  */
 export function nearestTests(l: LensInput, rows: Row[], k = 3): Nearest[] {
   // A test whose atmosphere was not reported (or was assumed) cannot be shown as "nearest": its distance is unknown.
-  const pool = rows.filter((r) => r.phase === l.phase && r.gravityMode === 'actual_flight' && r.o2Prov !== 'assumed' && r.o2 !== null && r.kPa !== null);
+  const pool = rows.filter((r) => r.phase === l.phase && r.gravityMode === 'actual_flight' && r.o2Prov !== 'assumed' && r.kPaProv !== 'assumed' && r.o2 !== null && r.kPa !== null);
   const mat = l.material.trim().toLowerCase();
   const scored = pool.map((r) => {
     const dO2 = r.o2 === null ? 1 : (l.o2 - r.o2) / SCALE.o2;
@@ -262,9 +262,11 @@ export function gapsFor(l: LensInput, r: Row): AxisGap[] {
     const d = flowGap(l.flow, r.flow);
     gaps.push({ axis: 'flow', label: 'Airflow', text: d < 2 ? 'within range' : `${r.flow} cm/s (${sign(r.flow < l.flow[0] ? -d : d)} cm/s)`, size: d < 2 ? 0 : d <= 8 ? 1 : 2 });
   }
-  const tg = r.g ?? 0;
-  const sameG = Math.abs(tg - l.g) <= 0.01;
-  gaps.push({ axis: 'g', label: 'Gravity', text: sameG ? 'same' : `${fmtG(tg)} → ${fmtG(l.g)}`, size: sameG ? 0 : 2 });
+  if (r.g === null) gaps.push({ axis: 'g', label: 'Gravity', text: 'not reported', size: 3 });
+  else {
+    const sameG = Math.abs(r.g - l.g) <= 0.01;
+    gaps.push({ axis: 'g', label: 'Gravity', text: sameG ? 'same' : `${fmtG(r.g)} → ${fmtG(l.g)}`, size: sameG ? 0 : 2 });
+  }
   const mat = l.material.trim();
   if (mat) {
     const same = (r.fuel ?? '').toLowerCase() === mat.toLowerCase();

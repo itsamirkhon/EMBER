@@ -1,8 +1,15 @@
-name: Deploy Ember to Lightsail
+name: Deploy EMBER static site to Lightsail
 
+# main is the working Git branch. The current submission app on that branch
+# lives in ember-final/ (see the root README). web/ is an older prototype.
+# This publishes static assets only; live AI needs a separately managed API.
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: deploy-lightsail
@@ -10,10 +17,11 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: web
+        working-directory: ember-final
 
     steps:
       - name: Checkout repository
@@ -23,42 +31,80 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 26
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Lint TypeScript
         run: npm run lint
 
-      - name: Run unit tests
+      - name: Run core and API tests
         run: npm test
 
-      - name: Run backtest
-        # regenerate validation.json from the committed data (skipped if tests.json is absent)
-        run: if [ -f public/data/tests.json ]; then npm run backtest; fi
+      - name: Test the 3D intro evidence gate
+        run: npm run test:intro
 
       - name: Build production bundle
         run: npm run build
 
-      - name: Clean old files on Lightsail
-        if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.LIGHTSAIL_HOST }}
-          username: ${{ secrets.LIGHTSAIL_USER }}
-          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          script: rm -rf /var/www/ember/*
+      - name: Validate the complete static submission
+        run: |
+          set -eu
+          test -s dist/index.html
+          test -s dist/intro.html
+          test -s dist/data/compact.json
+          test -s dist/data/ask_answers.json
+          test -s dist/data/trust.json
+          test -s dist/data/corpus_v2.json
+          test -s dist/data/chunks_index.json
+          test -d dist/assets
+          find dist/assets -type f | grep -q .
+          test ! -e dist/.env
+          printf '%s\n' "${{ github.sha }}" > dist/ember-version.txt
 
-      - name: Deploy build files to Lightsail via SCP
-        if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+      # Never wipe the live site before transfer. Copy a complete release to
+      # a unique staging directory so a failed SCP leaves production intact.
+      - name: Stage complete build on Lightsail
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USER }}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          source: "web/dist/*"
-          target: "/var/www/ember"
+          source: "ember-final/dist/*"
+          target: "/tmp/ember-stage-${{ github.run_id }}-${{ github.run_attempt }}"
           strip_components: 2
           overwrite: true
+
+      - name: Verify staged release and promote with rollback
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: |
+            set -eu
+            stage="/tmp/ember-stage-${{ github.run_id }}-${{ github.run_attempt }}"
+            live="/var/www/ember"
+            backup="/tmp/ember-backup-${{ github.run_id }}-${{ github.run_attempt }}"
+
+            test -s "$stage/index.html"
+            test -s "$stage/intro.html"
+            test -s "$stage/data/compact.json"
+            test -s "$stage/data/ask_answers.json"
+            test -s "$stage/ember-version.txt"
+            test -d "$stage/assets"
+            command -v rsync >/dev/null 2>&1 || {
+              echo "rsync is required on Lightsail; live files not changed" >&2
+              exit 1
+            }
+
+            mkdir -p "$live" "$backup"
+            rsync -a "$live/" "$backup/"
+            if rsync -a --delete "$stage/" "$live/"; then
+              echo "Published EMBER commit $(cat "$live/ember-version.txt")"
+              rm -rf -- "$stage" "$backup"
+            else
+              echo "Promotion failed; restoring previous files" >&2
+              rsync -a --delete "$backup/" "$live/"
+              exit 1
+            fi
