@@ -1,4 +1,5 @@
 import {comparisonReport} from './comparisonReport';
+import { assertQuestionScope } from './questionScope';
 /**
  * End-to-end EMBER v2 scientific review orchestrator & export formatters.
  * Pipeline:
@@ -289,6 +290,7 @@ function finalizeReview(
 }
 
 export function runReviewSync(input: ReviewInput): Review {
+  assertQuestionScope(input.question, input.overrides);
   const t0 = Date.now();
   const retrievalMode: RetrievalMode = input.retrievalMode ?? 'hybrid';
   const budgetRuns = input.budgetRuns ?? 10;
@@ -348,6 +350,7 @@ export function runReviewSync(input: ReviewInput): Review {
 }
 
 export async function runReview(input: ReviewInput): Promise<Review> {
+  assertQuestionScope(input.question, input.overrides);
   if (!input.apiKey && !input.proxyUrl && !input.retrieve && !input.passageEvaluator && input.synthesisMode !== 'LIVE_AI') {
     return runReviewSync(input);
   }

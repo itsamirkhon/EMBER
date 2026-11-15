@@ -6,6 +6,8 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Connect, Plugin } from 'vite';
 import {
   ENGINE_VERSION,
+  assertQuestionScope,
+  QuestionScopeError,
   DEFAULT_SYNTHESIS_MODEL,
   JEV_PROMPT_VERSION,
   exportFormatters,
@@ -606,6 +608,8 @@ export function createApiHandler(
     const body = await readJsonBody(req);
     const { question, overrides, parserOptions } = validateQuestionAndOverrides(body);
     const params = validateReviewParams(body);
+    // Check before cached replay as well as before provider calls.
+    assertQuestionScope(question, overrides);
 
     const headerIdem = req.headers['idempotency-key'];
     const headerKey = typeof headerIdem === 'string' && headerIdem.trim() ? headerIdem.trim() : undefined;
@@ -985,6 +989,10 @@ export function createApiHandler(
       await dispatch(req, res);
     } catch (err) {
       if (res.headersSent) return;
+      if (err instanceof QuestionScopeError) {
+        sendError(res, 422, err.code, err.message);
+        return;
+      }
       if (err instanceof HttpError) {
         sendError(res, err.statusCode, err.code, err.message);
         return;

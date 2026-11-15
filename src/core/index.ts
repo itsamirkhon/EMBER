@@ -1,5 +1,6 @@
 export * from './types';
 export * from './queryParser';
+export * from './questionScope';
 export * from './protocol';
 export * from './applicability';
 export * from './dependencies';
