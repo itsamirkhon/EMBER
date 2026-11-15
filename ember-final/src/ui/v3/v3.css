@@ -144,9 +144,16 @@ a:hover { color: var(--v3-link); text-decoration: underline; text-underline-offs
 .v3-hero-lede { font-size: 1.22rem; line-height: 1.45; color: var(--v3-text-2); max-width: 64ch; letter-spacing: -0.012em; }
 .v3-hero-lede strong { color: var(--v3-text); }
 .v3-hero-cta { margin-top: 22px; }
-.v3-stage { border-radius: 24px; overflow: hidden; border: 1px solid var(--v3-border); background: #000; }
-.v3-stage iframe { display: block; width: 100%; height: min(78vh, 720px); border: 0; }
-.v3-stage-note { padding: 10px 16px; font-size: 0.8rem; color: var(--v3-muted); background: var(--v3-surface); border-top: 1px solid var(--v3-border); }
+/* Embedded chamber inherits the v3 site's hierarchy; the iframe is only a viewport. */
+.v3-stage { margin-top: 24px; border-radius: var(--v3-radius); overflow: hidden; border: 1px solid var(--v3-border); background: var(--v3-surface); }
+.v3-stage-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; padding: 22px 24px; }
+.v3-stage-header .v3-eyebrow { margin: 0 0 7px; }
+.v3-stage-header h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); letter-spacing: -.025em; margin: 0 0 6px; }
+.v3-stage-header p { color: var(--v3-text-2); font-size: .92rem; margin: 0; }
+.v3-stage-header .v3-btn { flex-shrink: 0; border: 1px solid var(--v3-border-2); }
+.v3-stage iframe { display: block; width: 100%; height: clamp(340px, 45vw, 520px); border: 0; background: #141519; }
+.v3-stage-note { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding: 14px 24px; font-size: .82rem; color: var(--v3-muted); background: var(--v3-surface); border-top: 1px solid var(--v3-border); }
+.v3-stage-note a { white-space: nowrap; }
 .v3-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin: 30px 0 10px; border-top: 1px solid var(--v3-border); }
 .v3-kpis > div { padding: 18px 18px 0 0; }
 .v3-kpis b { display: block; font-size: 2.1rem; font-weight: 650; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
@@ -293,7 +300,9 @@ a:hover { color: var(--v3-link); text-decoration: underline; text-underline-offs
   .v3-main, .v3 .main-container { padding: 26px 16px 56px; }
   .v3-top-inner { padding: 0 14px; gap: 8px; }
   .v3-card { padding: 18px; border-radius: 18px; }
-  .v3-stage iframe { height: 72vh; }
+  .v3-stage-header { padding: 18px; }
+  .v3-stage-note { padding: 12px 18px; }
+  .v3-stage iframe { height: 360px; }
   .v3-ask { flex-direction: column; }
   .v3-timeline li { grid-template-columns: 1fr; gap: 4px; }
 }
