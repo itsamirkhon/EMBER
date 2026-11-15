@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   compareTests,
   hasCoolFlameContinuation,
@@ -10,65 +10,103 @@ import {
 import { MultiLineSeriesSvg, ScatterPlotSvg, type ScatterPoint } from '../components/ScientificCharts';
 import { GasRoleBadge, ProvenanceBadge, StatusPill, VerdictBadge } from '../components/StatusPill';
 import { formatLocator, useEmber } from '../context/EmberContext';
+import { comparisonSeed, resolveProtocolTest, scopedProtocolTests } from '../protocolSelection';
 
 const DEFAULT_PROTOCOL_PRESETS = ['BASS-II-B1', 'BASS-II-B10', 'BASS-II-M1', 'CFI-1206', 'SAME-R-51a'];
+const EMPTY_TESTS: Test[] = [];
 
 export function ProtocolComparePage() {
-  const [searchParams] = useSearchParams();
-  const initialTestId = searchParams.get('testId');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedTestId = searchParams.get('testId');
+  const requestedInv = searchParams.get('inv');
   const { corpus, corpusLoading, ensureCorpus, activeSnapshot, openSourceRef } = useEmber();
 
   const [activeTab, setActiveTab] = useState<'protocol' | 'compare'>('protocol');
-  const [selectedTestId, setSelectedTestId] = useState<string>(initialTestId ?? 'BASS-II-B1');
+  const [selectedTestId, setSelectedTestId] = useState<string | null>(requestedTestId);
   const [testFilter, setTestFilter] = useState('');
-  const [compareIds, setCompareIds] = useState<string[]>(['BASS-II-B1', 'BASS-II-B10', 'BASS-II-M1']);
-  const [candidateAddId, setCandidateAddId] = useState('BASS-II-O1');
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [candidateAddId, setCandidateAddId] = useState('');
+  const [corpusError, setCorpusError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!corpus) {
-      void ensureCorpus();
+      void ensureCorpus().catch((err: unknown) => setCorpusError(err instanceof Error ? err.message : String(err)));
+    } else {
+      setCorpusError(null);
     }
   }, [corpus, ensureCorpus]);
 
+  const tests = corpus?.tests ?? EMPTY_TESTS;
+  const scopedTests = useMemo(() => scopedProtocolTests(tests, requestedInv), [tests, requestedInv]);
+  const testById = useMemo(() => new Map(scopedTests.map((t) => [t.testId, t])), [scopedTests]);
+  const activeTest: Test | null = useMemo(
+    () => resolveProtocolTest(scopedTests, selectedTestId, requestedInv, DEFAULT_PROTOCOL_PRESETS),
+    [scopedTests, selectedTestId, requestedInv],
+  );
+
+  // Deep links, including navigation between different investigations, reset the
+  // selected protocol. Never substitute another investigation's default record.
   useEffect(() => {
-    if (initialTestId) {
-      setSelectedTestId(initialTestId);
-      setActiveTab('protocol');
-    }
-  }, [initialTestId]);
+    setSelectedTestId(requestedTestId);
+    setActiveTab('protocol');
+    setTestFilter('');
+  }, [requestedTestId, requestedInv]);
 
-  const tests = corpus?.tests ?? [];
+  // On corpus arrival, seed comparisons from the requested test and its
+  // investigation rather than the previous hard-coded BASS-II examples.
+  useEffect(() => {
+    if (!corpus) return;
+    const seed = comparisonSeed(scopedTests, requestedTestId, requestedInv, DEFAULT_PROTOCOL_PRESETS);
+    setCompareIds(seed);
+    setCandidateAddId(scopedTests.find((t) => !seed.includes(t.testId))?.testId ?? '');
+  }, [corpus, scopedTests, requestedTestId, requestedInv]);
 
-  const testById = useMemo(() => new Map(tests.map((t) => [t.testId, t])), [tests]);
-
-  const activeTest: Test | null = useMemo(() => {
-    if (testById.has(selectedTestId)) return testById.get(selectedTestId) ?? null;
-    for (const pid of DEFAULT_PROTOCOL_PRESETS) {
-      if (testById.has(pid)) return testById.get(pid) ?? null;
-    }
-    return tests[0] ?? null;
-  }, [testById, selectedTestId, tests]);
+  const selectTest = (id: string) => {
+    if (!scopedTests.some((t) => t.testId === id)) return;
+    setSelectedTestId(id);
+    const seed = comparisonSeed(scopedTests, id, requestedInv, DEFAULT_PROTOCOL_PRESETS);
+    setCompareIds(seed);
+    setCandidateAddId(scopedTests.find((t) => !seed.includes(t.testId))?.testId ?? '');
+    setSearchParams(requestedInv ? { inv: requestedInv, testId: id } : { testId: id }, { replace: true });
+  };
 
   const matchingTestOptions = useMemo(() => {
     const q = testFilter.trim().toLowerCase();
     const list = q
-      ? tests.filter((t) =>
+      ? scopedTests.filter((t) =>
           `${t.testId} ${t.inv} ${t.fuel ?? ''} ${t.terminalEvent ?? ''}`.toLowerCase().includes(q),
         )
-      : tests;
+      : scopedTests;
     const sliced = list.slice(0, 120);
     if (activeTest && !sliced.some((t) => t.testId === activeTest.testId)) {
       return [activeTest, ...sliced];
     }
     return sliced;
-  }, [tests, testFilter, activeTest]);
+  }, [scopedTests, testFilter, activeTest]);
 
-  const activeQuery = useMemo(
-    () =>
-      activeSnapshot?.review.query ??
-      parseResearchQuery('PMMA flame spread and extinction under flow reduction in concurrent flow'),
-    [activeSnapshot],
+  const availableAddTests = useMemo(
+    () => scopedTests.filter((t) => !compareIds.includes(t.testId)).slice(0, 120),
+    [scopedTests, compareIds],
   );
+  const effectiveCandidateId = availableAddTests.some((t) => t.testId === candidateAddId)
+    ? candidateAddId
+    : availableAddTests[0]?.testId ?? '';
+
+  const activeQuery = useMemo(() => {
+    if (!requestedInv && activeSnapshot?.review.query) return activeSnapshot.review.query;
+    if (!activeTest) return parseResearchQuery('Compare recorded experimental outcomes');
+    return parseResearchQuery(
+      `Compare ${activeTest.inv} ${activeTest.fuel ?? 'fuel'} experimental outcomes`,
+      {
+        fuelPhase: activeTest.fuelPhase,
+        material: activeTest.fuel,
+        o2Pct: activeTest.atmosphere.o2.value,
+        pressureKpa: activeTest.atmosphere.pressure.value,
+        gravityG: activeTest.gravity.gravityG.value,
+      },
+      { applyEnvironmentDefaults: false },
+    );
+  }, [activeSnapshot, activeTest, requestedInv]);
 
   const comparedTests = useMemo(
     () => compareIds.map((id) => testById.get(id)).filter((test): test is Test => Boolean(test)),
@@ -84,7 +122,7 @@ export function ProtocolComparePage() {
 
   // Extract BASS-II Table 5.1 spread rate series & SAME-R aging series & O2 vs Flow scatter
   const o2FlowPoints = useMemo<ScatterPoint[]>(() => {
-    const bassAndCfi = tests
+    const bassAndCfi = scopedTests
       .filter((t) => t.atmosphere.o2.value !== null && t.flow.initialFlowCmS.value !== null)
       .slice(0, 180);
     return bassAndCfi.map((t) => ({
@@ -98,11 +136,11 @@ export function ProtocolComparePage() {
           ? '#ff453a'
           : '#64d2ff',
     }));
-  }, [tests, compareIds]);
+  }, [scopedTests, compareIds]);
 
   const bassTableSeries = useMemo(() => {
     const palette = ['#ff9f0a', '#64d2ff', '#30d158', '#bf5af2', '#ffd60a'];
-    const matching = tests.filter((t) => t.inv === 'BASS-II' && t.extra && typeof t.extra.tmTable5_1 === 'object' && t.extra.tmTable5_1 !== null);
+    const matching = scopedTests.filter((t) => t.inv === 'BASS-II' && t.extra && typeof t.extra.tmTable5_1 === 'object' && t.extra.tmTable5_1 !== null);
     return matching.slice(0, 5).map((t, idx) => {
       const tbl = t.extra.tmTable5_1 as { velocitiesCmS?: number[]; spreadRatesMmS?: number[] };
       const vel = tbl.velocitiesCmS ?? [];
@@ -115,10 +153,10 @@ export function ProtocolComparePage() {
         points,
       };
     });
-  }, [tests]);
+  }, [scopedTests]);
 
   const sameRPoints = useMemo<ScatterPoint[]>(() => {
-    return tests
+    return scopedTests
       .filter((t) => t.inv === 'SAME-R' && t.particleSizeNm.value !== null && t.extra?.['Net aging time (sec)'] != null)
       .map((t) => ({
         id: t.testId,
@@ -128,7 +166,7 @@ export function ProtocolComparePage() {
         color: '#30d158',
       }))
       .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
-  }, [tests]);
+  }, [scopedTests]);
 
   const handleTabKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Home' || e.key === 'End') {
